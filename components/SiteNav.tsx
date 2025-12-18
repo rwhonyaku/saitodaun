@@ -22,6 +22,10 @@ export default function SiteNav() {
           <Link href="/terms" className="text-slate-600 hover:text-slate-900">
             利用規約
           </Link>
+          <Link href="/contact" className="text-slate-600 hover:text-slate-900">
+            お問い合わせ
+          </Link>
+
         </nav>
       </div>
     </header>
