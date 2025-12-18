@@ -1,8 +1,8 @@
+// app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import SiteNav from "@/components/SiteNav";
-import SiteFooter from "@/components/SiteFooter";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
@@ -11,12 +11,8 @@ export const metadata: Metadata = {
     template: `%s｜${SITE.name}`,
   },
   description: SITE.description,
-
   metadataBase: new URL(SITE.origin),
-  alternates: {
-    canonical: "/",
-  },
-
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${SITE.name}｜接続チェック`,
     description: SITE.description,
@@ -25,7 +21,6 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     type: "website",
   },
-
   twitter: {
     card: "summary",
     title: `${SITE.name}｜接続チェック`,
@@ -41,7 +36,6 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        {/* Google AdSense script */}
         <Script
           id="adsbygoogle-js"
           async
@@ -50,7 +44,6 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* FAQ structured data (JSON-LD) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -92,8 +85,12 @@ export default function RootLayout({
       </head>
 
       <body className="bg-slate-50 min-h-screen flex flex-col">
+        {/* Top navigation (this is what makes your /contact link appear) */}
+        <SiteNav />
+
         <div className="flex-1 flex flex-col pb-16">{children}</div>
 
+        {/* Fixed footer */}
         <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-slate-50">
           <div className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-3 px-4 py-3 text-xs text-slate-400">
             <p>© {new Date().getFullYear()} サイトダウン</p>
@@ -108,6 +105,10 @@ export default function RootLayout({
             <span className="h-3 w-px bg-slate-300" />
             <a href="/about" className="hover:text-slate-600">
               このサイトについて
+            </a>
+            <span className="h-3 w-px bg-slate-300" />
+            <a href="/contact" className="hover:text-slate-600">
+              お問い合わせ
             </a>
           </div>
         </footer>
