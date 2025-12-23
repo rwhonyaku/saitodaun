@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { STATUS_SITES } from "@/lib/statusSites";
+import { STATUS_SITES, CATEGORY_ORDER } from "@/lib/statusSites";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://xn--ecke7b4bzb0s.com";
@@ -12,11 +12,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/about`, changeFrequency: "yearly", priority: 0.3 },
   ];
 
+  const categoryRoutes: MetadataRoute.Sitemap = CATEGORY_ORDER.map((cat) => ({
+    url: `${base}/status/category/${cat}`,
+    changeFrequency: "daily",
+    priority: 0.6,
+  }));
+
   const statusDetailRoutes: MetadataRoute.Sitemap = STATUS_SITES.map((s) => ({
     url: `${base}/status/${s.id}`,
     changeFrequency: "daily",
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...statusDetailRoutes];
+  return [...staticRoutes, ...categoryRoutes, ...statusDetailRoutes];
 }

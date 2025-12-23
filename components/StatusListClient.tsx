@@ -4,6 +4,12 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { STATUS_SITES, type SiteConfig } from "@/lib/statusSites";
 import { AdSenseBlock } from "@/components/AdSenseBlock";
+import {
+  SITE_CATEGORIES,
+  CATEGORY_ORDER,
+  getCategoryCounts,
+} from "@/lib/statusSites";
+
 
 type CheckResult = {
   online: boolean;
@@ -22,6 +28,8 @@ export default function StatusListClient() {
   const [checkingAll, setCheckingAll] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
 
+  const categoryCounts = getCategoryCounts();
+  
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -188,6 +196,35 @@ export default function StatusListClient() {
           <AdSenseBlock />
         </div>
 
+      <section className="mt-8">
+  <h2 className="text-sm font-semibold text-slate-900 mb-3">
+    カテゴリ別に探す
+  </h2>
+
+  <div className="flex flex-wrap gap-2">
+    {CATEGORY_ORDER.map((cat) => {
+      const count = categoryCounts[cat];
+      if (!count) return null;
+
+      return (
+        <Link
+          key={cat}
+          href={`/status/category/${cat}`}
+          className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
+        >
+          {SITE_CATEGORIES[cat]}（{count}）
+        </Link>
+      );
+    })}
+  </div>
+
+  <p className="mt-2 text-[11px] text-slate-500">
+    各カテゴリごとに、関連サービスのステータス一覧をまとめています。
+  </p>
+</section>
+
+
+      
         <div className="mt-6 overflow-x-auto rounded-xl bg-white shadow-sm">
           <table className="min-w-full text-sm text-left text-slate-700">
             <thead className="bg-slate-100 text-xs uppercase text-slate-500">
