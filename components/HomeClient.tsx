@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { AdSenseBlock } from "@/components/AdSenseBlock";
 import { SITE } from "@/lib/siteMeta";
 import { STATUS_SITES } from "@/lib/statusSites";
-
 
 type CheckResult = {
   online: boolean;
@@ -20,6 +19,25 @@ export default function HomeClient() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState<CheckResult | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Curated, stable "top" list for homepage (AdSense + UX)
+  // Only shows these IDs if they exist in STATUS_SITES.
+  const topSites = useMemo(() => {
+    const TOP_IDS = [
+      "google",
+      "amazon-jp",
+      "yahoo-japan",
+      "line",
+      "twitter",
+      "youtube",
+      "instagram",
+      "paypay",
+      "rakuten",
+    ] as const;
+
+    const map = new Map(STATUS_SITES.map((s) => [s.id, s]));
+    return TOP_IDS.map((id) => map.get(id)).filter(Boolean);
+  }, []);
 
   const handleCheck = async () => {
     const raw = url.trim();
@@ -166,7 +184,9 @@ export default function HomeClient() {
 
           <div className="mt-4 text-xs text-slate-500 space-y-1">
             <p>※ 本ツールは、サーバー側から指定URLへの接続を試み、応答状況を簡易表示します。</p>
-            <p>※ 結果は目安です。継続監視や通知が必要な場合は、専門の監視サービスをご利用ください。</p>
+            <p>
+              ※ 結果は目安です。継続監視や通知が必要な場合は、専門の監視サービスをご利用ください。
+            </p>
           </div>
         </section>
 
@@ -180,15 +200,14 @@ export default function HomeClient() {
           </h2>
 
           <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:grid-cols-3">
-            {STATUS_SITES.slice(0, 18).map((s) => (
-              <li key={s.id}>
-                <Link href={`/status/${s.id}`} className="text-sky-600 underline">
-                  {s.name} 障害
+            {topSites.map((s) => (
+              <li key={s!.id}>
+                <Link href={`/status/${s!.id}`} className="text-sky-600 underline">
+                  {s!.name} 障害
                 </Link>
               </li>
             ))}
           </ul>
-
         </section>
 
         <div className="mt-10 text-center">
