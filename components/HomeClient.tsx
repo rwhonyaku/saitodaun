@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { AdSenseBlock } from "@/components/AdSenseBlock";
 import { SITE } from "@/lib/siteMeta";
+import { STATUS_SITES } from "@/lib/statusSites";
+
 
 type CheckResult = {
   online: boolean;
@@ -178,17 +180,15 @@ export default function HomeClient() {
           </h2>
 
           <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:grid-cols-3">
-            <li><Link href="/status/google" className="text-sky-600 underline">Google 障害</Link></li>
-            <li><Link href="/status/amazon-jp" className="text-sky-600 underline">Amazon 障害</Link></li>
-            <li><Link href="/status/yahoo-japan" className="text-sky-600 underline">Yahoo! JAPAN 障害</Link></li>
-            <li><Link href="/status/youtube" className="text-sky-600 underline">YouTube 障害</Link></li>
-            <li><Link href="/status/twitter" className="text-sky-600 underline">X（旧Twitter） 障害</Link></li>
-            <li><Link href="/status/instagram" className="text-sky-600 underline">Instagram 障害</Link></li>
-            <li><Link href="/status/line" className="text-sky-600 underline">LINE 障害</Link></li>
-            <li><Link href="/status/rakuten" className="text-sky-600 underline">楽天市場 障害</Link></li>
-            <li><Link href="/status/mercari" className="text-sky-600 underline">メルカリ 障害</Link></li>
-            <li><Link href="/status/paypay" className="text-sky-600 underline">PayPay 障害</Link></li>
+            {STATUS_SITES.slice(0, 18).map((s) => (
+              <li key={s.id}>
+                <Link href={`/status/${s.id}`} className="text-sky-600 underline">
+                  {s.name} 障害
+                </Link>
+              </li>
+            ))}
           </ul>
+
         </section>
 
         <div className="mt-10 text-center">

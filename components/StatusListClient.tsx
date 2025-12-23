@@ -63,15 +63,23 @@ export default function StatusListClient() {
 
   const quickLinks = useMemo(() => {
     const ids = [
-      "cloudflare",
-      "github",
-      "aws",
       "google",
-      "stripe",
-      "openai",
-      "vercel",
-      "notion",
+      "amazon-jp",
+      "yahoo-japan",
+      "youtube",
+      "twitter",
+      "instagram",
+      "line",
+      "rakuten",
+      "mercari",
+      "paypay",
+      "discord",
+      "playstation-network",
+      "nintendo",
+      "apple",
+      "mynaportal",
     ];
+
     const map = new Map(STATUS_SITES.map((s) => [s.id, s]));
     return ids.map((id) => map.get(id)).filter(Boolean) as SiteConfig[];
   }, []);
