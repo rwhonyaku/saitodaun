@@ -1,4 +1,3 @@
-// app/status/category/[category]/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,11 +7,11 @@ import {
   type SiteCategory,
 } from "@/lib/statusSites";
 
-type MetaProps = { params: Promise:{ category: string } };
-type PageProps = { params: Promise<{ category: string }> };
+type MetaProps = { params: { category: string } };
+type PageProps = { params: { category: string } };
 
 export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
-  const { category } = await params;
+  const { category } = params;
   const label = SITE_CATEGORIES[category as SiteCategory];
   if (!label) return {};
 
@@ -24,7 +23,7 @@ export async function generateMetadata({ params }: MetaProps): Promise<Metadata>
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-  const { category: raw } = await params;
+  const { category: raw } = params;
   const category = raw as SiteCategory;
 
   const label = SITE_CATEGORIES[category];
