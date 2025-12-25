@@ -6,21 +6,28 @@ import SiteNav from "@/components/SiteNav";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://サイトダウン.com"),
+
   title: {
     default: `${SITE.name}｜接続チェック`,
     template: `%s｜${SITE.name}`,
   },
+
   description: SITE.description,
-  metadataBase: new URL(SITE.origin),
-  alternates: { canonical: "/" },
+
+  alternates: {
+    canonical: "/",
+  },
+
   openGraph: {
     title: `${SITE.name}｜接続チェック`,
     description: SITE.description,
-    url: SITE.origin,
+    url: "https://サイトダウン.com",
     siteName: SITE.name,
     locale: "ja_JP",
     type: "website",
   },
+
   twitter: {
     card: "summary",
     title: `${SITE.name}｜接続チェック`,
@@ -85,12 +92,10 @@ export default function RootLayout({
       </head>
 
       <body className="bg-slate-50 min-h-screen flex flex-col">
-        {/* Top navigation (this is what makes your /contact link appear) */}
         <SiteNav />
 
         <div className="flex-1 flex flex-col pb-16">{children}</div>
 
-        {/* Fixed footer */}
         <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-slate-50">
           <div className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-3 px-4 py-3 text-xs text-slate-400">
             <p>© {new Date().getFullYear()} サイトダウン</p>
