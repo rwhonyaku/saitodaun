@@ -24,3 +24,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* TEMP: hide Google ad containers while AdSense is disabled/denied */
+ins.adsbygoogle,
+iframe[id^="google_ads_iframe"],
+iframe[src*="googlesyndication"],
+iframe[src*="doubleclick"] {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+}
