@@ -1,90 +1,118 @@
-import type { Metadata } from "next";
+import EvergreenPageShell from "@/components/EvergreenPageShell";
 import { SITE } from "@/lib/siteMeta";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "よくある質問（FAQ）",
-  description: `${SITE.name}のよくある質問（結果の見方、違いが出る理由、対処手順）をまとめています。`,
+export const metadata = {
+  title: "よくある質問（FAQ） | サイトダウン",
+  description: `${SITE.name}の使い方や、接続判定結果の見方、トラブルシューティングの手順を分かりやすく解説します。`,
 };
 
 export default function FaqPage() {
+  // Schema.org Structured Data for Google Rich Results
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "「オンライン」と表示されれば完全に正常ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ。当サイトは外部からの疎通確認を行う簡易チェックツールです。サーバーとの通信は確立できていても、画面表示の崩れやログイン後の不具合、決済システムの障害などは判定できません。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "自分だけが見れない（オフライン判定）場合の対処法は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "地域差や回線（ISP）固有の問題が考えられます。DNS設定の変更や、Wi-Fiからモバイル通信への切り替えをお試しください。解決しない場合はVPNの利用も有効です。"
+        }
+      }
+    ]
+  };
+
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10 text-slate-800 text-sm leading-relaxed">
-      <h1 className="text-2xl font-bold mb-4">よくある質問（FAQ）</h1>
-
-      <p className="mb-4">
-        {SITE.name}の使い方や、結果の見方、うまく判定できない場合の対処をまとめました。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. 「オンライン」と表示されれば完全に正常ですか？</h2>
-      <p className="mb-4">
-        いいえ。{SITE.name}は簡易チェックです。「このサーバーから接続できた」ことは確認できますが、
-        画面表示の崩れ、ログイン後の不具合、特定機能（検索・決済・投稿など）の障害までは判断できません。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. 「オフライン」でも実際は見れることがあります</h2>
-      <p className="mb-4">
-        あります。地域差・回線状況・DNS・一時的なネットワークエラー・WAF/CDNの制限などで、
-        当サイトのサーバーからは接続できないが、あなたの環境では表示できる（またはその逆）ということが起こります。
-        数十秒〜数分おいて再チェックし、別回線（Wi-Fi/4G/5G）でも確認してください。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. HTTPステータスコードは何を意味しますか？</h2>
-      <ul className="list-disc list-inside mb-4 space-y-1">
-        <li><strong>200</strong>：正常応答の可能性が高い</li>
-        <li><strong>301/302</strong>：リダイレクト（転送）</li>
-        <li><strong>403</strong>：拒否（アクセス制限、WAF、地域制限など）</li>
-        <li><strong>404</strong>：ページが見つからない</li>
-        <li><strong>500/502/503</strong>：サーバー側の問題の可能性</li>
-      </ul>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. 応答時間（ms）は正確ですか？</h2>
-      <p className="mb-4">
-        参考値です。回線や混雑、相手サーバーの負荷などで変動します。継続監視や厳密な性能測定が必要な場合は、
-        専門の監視・計測サービスの利用をおすすめします。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. チェックできないURLがあります</h2>
-      <p className="mb-4">
-        ボット対策、レート制限、アクセス制限（WAF）、ログインが必須のページなどは、
-        正しく判定できない場合があります。その場合は公式ステータスやサポート情報も確認してください。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. どこを見れば最新の障害情報が分かりますか？</h2>
-      <p className="mb-4">
-        サービスによって異なりますが、一般的には「公式ステータスページ」「公式サポート」「公式X（旧Twitter）」が最も確実です。
-        {SITE.name}のステータスページには、可能な範囲で公式リンクを掲載しています。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">Q. 通知や継続監視はできますか？</h2>
-      <p className="mb-4">
-        現時点では「いますぐ確認」の簡易チェックを中心にしています。通知や継続監視が必要な場合は、
-        監視サービスの利用をご検討ください。
-      </p>
-
-      <h2 className="font-semibold mt-6 mb-2">関連ページ</h2>
-      <ul className="list-disc list-inside mb-4 space-y-1">
-        <li>
-          <Link href="/how-it-works" className="text-sky-600 underline hover:text-sky-700">
-            仕組み・チェック内容について
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/what-is-website-downtime"
-            className="text-sky-600 underline hover:text-sky-700"
-          >
-            サイトが落ちているとは？
-          </Link>
-        </li>
-        <li>
-          <Link href="/status" className="text-sky-600 underline hover:text-sky-700">
-            ステータス一覧
-          </Link>
-        </li>
-      </ul>
-
-      <p className="text-xs text-slate-500 mt-6">最終更新日：2025-12-17</p>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <EvergreenPageShell
+        h1="よくある質問（FAQ）"
+        updatedAt="2026-02-22"
+        lead={[
+          `${SITE.name}の使い方や判定結果の見方について、利用者様から多く寄せられる質問をまとめました。`,
+          "インターネット上のサイト障害は、サーバー、DNS、ネットワーク経路、回線環境など様々な要因によって発生します。このページでは、当サイトのチェック結果の意味や、サイトが見れない場合に考えられる原因を分かりやすく解説しています。",
+          "問題が解決しない場合は、ページ下部の関連ガイドも併せてご確認ください。"
+        ]}
+        sections={[
+          {
+            type: "p",
+            title: "判定結果と実態が異なる場合",
+            body: [
+              <strong key="q1">Q. 「オンライン」なのにサイトが見れないのはなぜ？</strong>,
+              "当サイトの判定は「サーバーへの疎通」を確認するシンプルな通信チェックです。つまり、対象サイトのサーバーが応答していれば「オンライン」と表示されます。しかし実際のウェブサイトは、サーバー以外にも多くの仕組みによって動いています。",
+              "例えばデータベース、ログイン認証、広告配信、外部API、JavaScript処理など、ページ表示には様々な要素が関係しています。これらの内部処理でエラーが発生している場合、サーバー自体は応答していてもページが正しく表示されないことがあります。",
+              "また、特定の地域やインターネット回線（ISP）だけで発生する通信障害も珍しくありません。CDN（コンテンツ配信ネットワーク）の経路障害やDNSキャッシュの不整合、ISP側のルーティング問題などが原因の場合、当サイトのチェックでは問題が検出されないことがあります。",
+              <strong key="q2" className="block mt-4">Q. 「オフライン」なのに自分は見れるのはなぜ？</strong>,
+              "この場合、対象サイト自体は正常に稼働している可能性があります。当サイトの判定サーバーから対象サイトへ向かう通信経路のどこかで一時的なエラーが発生している可能性があります。",
+              "また最近では、セキュリティ対策としてボットアクセスや海外IPからのアクセスを制限するサイトも増えています。その場合、実際のユーザーは問題なく閲覧できても、チェックツールなどの自動アクセスだけが拒否されることがあります。"
+            ]
+          },
+          {
+            type: "p",
+            title: "接続トラブルの解決策",
+            body: [
+              "「自分だけが繋がらない」「特定のデバイスだけ表示できない」と感じる場合、原因の多くはローカル環境や回線経路にあります。以下の手順を順番に試すことで、多くの接続問題は解消できます。",
+              <ul key="fix-list" className="list-decimal list-inside space-y-2 my-2 bg-slate-50 p-4 rounded-xl text-xs">
+                <li>デバイスのWi-Fiを切り、モバイル通信（4G/5G）で試す</li>
+                <li>ブラウザのキャッシュとクッキーを削除する</li>
+                <li>
+                  <Link href="/troubleshooting-dns" className="text-sky-600 underline">DNS設定をGoogle Public DNS(8.8.8.8)に変更する</Link>
+                </li>
+              </ul>,
+              "回線経路そのものに問題がある場合、VPNを利用することで接続経路を変更でき、正常にアクセスできるようになることがあります。",
+              "またDNSキャッシュの更新には数分から数時間かかる場合があるため、時間を置いて再度アクセスすることで解決するケースもあります。",
+              "特定のサイトだけ長時間接続できない場合は、そのサービス側で障害が発生している可能性もあるため、公式アナウンスやSNSでの障害報告を確認するとよいでしょう。",
+              <Link key="link-rec" href="/recommendations" className="inline-block mt-2 font-bold text-sky-600 hover:underline">
+                → 推奨ツール・サービス一覧を見る
+              </Link>
+            ]
+          },
+          {
+            type: "list",
+            title: "主なステータスコードの意味",
+            items: [
+              "200 OK: サーバーが正常にリクエストを処理し、ページを返しています。通常は問題なく閲覧できます。",
+              "301 / 302: ページが別のURLへ転送されています。サイトのURL変更やHTTPS化などでよく使われます。",
+              "403 Forbidden: サーバーはリクエストを理解していますが、アクセスが許可されていません。IP制限、地域制限、WAF（Web Application Firewall）などが原因のことがあります。",
+              "404 Not Found: 指定されたページがサーバー上に存在しません。URLの入力ミスやページ削除が原因のことが多いです。",
+              "500 / 503: サーバー内部でエラーが発生しているか、一時的に処理能力を超えている状態です。サイト側の障害やメンテナンスの可能性があります。"
+            ]
+          },
+          {
+            type: "p",
+            title: "機能制限と正確性について",
+            body: [
+              <strong key="q3">Q. 応答時間（ms）は正確ですか？</strong>,
+              "当サイトの応答時間は、当サイトのチェックサーバーから対象サイトへ通信した際の参考値です。実際のユーザーが感じる表示速度は、利用している回線、端末性能、ブラウザキャッシュ、CDNの配信状況など多くの要因によって変化します。そのため、この数値はあくまで目安としてご利用ください。",
+              <strong key="q4" className="block mt-4">Q. 24時間の継続監視は可能ですか？</strong>,
+              "現在提供している機能は、ユーザーが手動で実行する簡易チェックです。24時間の自動監視や障害通知（メール・Slackなど）が必要な場合は、専用の監視サービスを利用するのが一般的です。",
+              "これらのサービスでは複数の地域から継続的にチェックを行い、障害が検出された場合に即座に通知を受け取ることができます。ビジネス用途や運用監視が必要な場合は、専門の監視ツールの利用を検討するとよいでしょう。"
+            ]
+          },
+          {
+            type: "note",
+            title: "解決しない場合",
+            body: [
+              "特定のサイトの不具合が続く場合は、そのサイトの「公式X（旧Twitter）」や「公式ステータスページ」を確認するのが最も確実です。多くの大規模サービスでは、障害発生時にリアルタイムで状況を報告しています。",
+              "また、検索エンジンやSNSで同様の障害報告が増えている場合は、サービス全体の障害である可能性が高くなります。自分の環境だけの問題なのか、サービス側の問題なのかを見極める参考になります。",
+              "当サイト自体の不具合については、お問い合わせ窓口までご連絡ください。"
+            ]
+          }
+        ]}
+      />
+    </>
   );
 }

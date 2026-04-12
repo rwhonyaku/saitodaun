@@ -5,6 +5,10 @@ import { useEffect, useRef } from "react";
 const AD_CLIENT = "ca-pub-2711217631458410";
 const AD_SLOT = "1867811511";
 
+// Set NEXT_PUBLIC_ADS_ENABLED="1" in Vercel only when you actually want ads on.
+// Default is off (prevents empty blocks and avoids loading ad logic while denied).
+const ADS_ENABLED = process.env.NEXT_PUBLIC_ADS_ENABLED === "1";
+
 declare global {
   interface Window {
     adsbygoogle?: any[];
@@ -16,6 +20,8 @@ export function AdSenseBlock() {
   const pushedRef = useRef(false);
 
   useEffect(() => {
+    if (!ADS_ENABLED) return;
+
     const el = insRef.current as any;
     if (!el) return;
 
@@ -35,6 +41,9 @@ export function AdSenseBlock() {
       // Don’t break the app if ads fail (dev + blockers)
     }
   }, []);
+
+  // Hard off by default
+  if (!ADS_ENABLED) return null;
 
   return (
     <ins

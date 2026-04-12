@@ -1,13 +1,24 @@
-// app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 import { SITE } from "@/lib/siteMeta";
+import { Inter, Noto_Sans_JP } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const noto = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-noto",
+});
+
+const GA_ID = "G-4QCK1BW1VL";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://サイトダウン.com"),
+  metadataBase: new URL(SITE.origin),
   title: {
-    default: `${SITE.name}｜接続チェック`,
+    default: `${SITE.name}｜接続・障害チェック`,
     template: `%s｜${SITE.name}`,
   },
   description: SITE.description,
@@ -15,16 +26,16 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: `${SITE.name}｜接続チェック`,
+    title: `${SITE.name}｜接続・障害チェック`,
     description: SITE.description,
-    url: "https://サイトダウン.com",
+    url: SITE.origin,
     siteName: SITE.name,
     locale: "ja_JP",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: `${SITE.name}｜接続チェック`,
+    title: `${SITE.name}｜接続・障害チェック`,
     description: SITE.description,
   },
 };
@@ -35,9 +46,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${inter.variable} ${noto.variable}`}>
       <head>
-        {/* Global JSON-LD (safe site-wide) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -45,40 +55,44 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: SITE.name,
-              url: "https://サイトダウン.com",
+              url: SITE.origin,
               inLanguage: "ja-JP",
               description: SITE.description,
             }),
           }}
         />
+        {/* Grow Script - Injected as raw HTML to ensure Mediavine verification succeeds */}
+        <script
+          data-grow-initializer=""
+          dangerouslySetInnerHTML={{
+            __html: `!(function(){window.growMe||((window.growMe=function(e){window.growMe._.push(e);}),(window.growMe._=[]));var e=document.createElement("script");(e.type="text/javascript"),(e.src="https://faves.grow.me/main.js"),(e.defer=!0),e.setAttribute("data-grow-faves-site-id","U2l0ZTo4NTg1MGRiOS0yN2VmLTQzNmMtOTE2Ny04ODc1ZDNkMmI5M2U=");var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t);})();`,
+          }}
+        />
       </head>
 
-      <body className="bg-slate-50 min-h-screen flex flex-col">
+      <body className="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900 antialiased">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+
+        <div className="fixed top-0 left-0 right-0 h-1 bg-sky-500 z-[60] opacity-20"></div>
+
         <SiteNav />
 
-        <div className="flex-1 flex flex-col pb-16">{children}</div>
+        <div className="flex-1 flex flex-col overflow-x-hidden">
+          {children}
+        </div>
 
-        <footer className="fixed bottom-0 left-0 right-0 border-t border-slate-200 bg-slate-50">
-          <div className="mx-auto flex max-w-xl flex-wrap items-center justify-center gap-3 px-4 py-3 text-xs text-slate-400">
-            <p>© {new Date().getFullYear()} サイトダウン</p>
-            <span className="h-3 w-px bg-slate-300" />
-            <a href="/privacy" className="hover:text-slate-600">
-              プライバシーポリシー
-            </a>
-            <span className="h-3 w-px bg-slate-300" />
-            <a href="/terms" className="hover:text-slate-600">
-              利用規約
-            </a>
-            <span className="h-3 w-px bg-slate-300" />
-            <a href="/about" className="hover:text-slate-600">
-              このサイトについて
-            </a>
-            <span className="h-3 w-px bg-slate-300" />
-            <a href="/contact" className="hover:text-slate-600">
-              お問い合わせ
-            </a>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -17,6 +17,26 @@ export const SITE_CATEGORIES = {
 
 export type SiteCategory = keyof typeof SITE_CATEGORIES;
 
+export type ServiceEditorial = {
+  /** このページの判定（到達性チェック）の意味 */
+  whatThisCheckMeans: string[];
+
+  /** サービス固有：よくある不調パターン */
+  commonOutagePatterns: string[];
+
+  /** サービス固有：影響が出やすい領域（機能/導線） */
+  affectedAreasFirst: string[];
+
+  /** このページが役立つケース */
+  usefulWhen: string[];
+
+  /** このページだけでは判断できないケース */
+  notSufficientWhen: string[];
+
+  /** 公式確認先（複数） */
+  officialConfirmation: { label: string; url: string }[];
+};
+
 export type SiteConfig = {
   /** URL slug & stable identifier (SEO-critical) */
   id: string;
@@ -41,6 +61,9 @@ export type SiteConfig = {
 
   /** サービス固有の注意点・よくある障害パターン（SEO差別化の核） */
   serviceNote: string;
+
+  /** AdSense対策：人間向けの固有解説（未入力でもOK） */
+  editorial?: ServiceEditorial;
 
   /** 日本語検索で使われやすい別名・旧名 */
   aliases?: string[];
@@ -70,6 +93,40 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "トップページは表示されても、メールやオークションなど一部機能のみ利用できない障害が発生することがあります。",
     aliases: ["ヤフー"],
+    editorial: {
+      whatThisCheckMeans: [
+        "このページの結果は「外部から yahoo.co.jp に到達できるか」を確認するものです（ログイン後の画面やアプリ内動作は対象外）。",
+        "到達不可の場合、Yahoo! JAPAN側の障害だけでなく、DNS・回線・端末環境の影響でも同様の結果になります。",
+        "到達可能でも、メール・オークション等の個別サービスだけ不調な「部分障害」はこのチェックだけでは判定できません。",
+      ],
+      commonOutagePatterns: [
+        "トップページは表示されるが、記事/詳細ページ・画像・コメントなど下層ページだけが開きにくい",
+        "検索結果は出るが、関連リンク先の遷移・画像/動画表示が不安定",
+        "アクセス集中時に、読み込みが極端に遅い／タイムアウトが断続的に起きる",
+      ],
+      affectedAreasFirst: [
+        "Yahoo!メール（送受信・添付）",
+        "ヤフオク! / Yahoo!ショッピング（入札・購入・決済・取引ナビなど手続き系）",
+        "Yahoo!ニュース（記事本文・コメントなど個別ページ）",
+      ],
+      usefulWhen: [
+        "複数端末（PC/スマホ）や別回線でも開けないため、サービス側の障害を疑っている",
+        "ブラウザでトップページ自体がタイムアウトする／白画面になる",
+        "SNS等で障害の話題を見かけ、まず到達性を確認したい",
+      ],
+      notSufficientWhen: [
+        "ログインできない（アカウント・認証・端末設定が絡むケースがある）",
+        "アプリだけ不調／特定機能だけ不調（DM、コメント、購入など）",
+        "自分の環境だけで発生（社内ネットワーク、DNS設定、広告ブロック等の影響の可能性）",
+      ],
+      officialConfirmation: [
+        {
+          label: "Yahoo! JAPAN（障害・メンテナンス等のお知らせ）",
+          url: "https://www.yahoo-help.jp/app/answers/detail/p/537/a_id/40959",
+        },
+        { label: "Yahoo! JAPAN サポート", url: "https://support.yahoo-net.jp/" },
+      ],
+    },
   },
 
   {
@@ -975,7 +1032,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "大学授業開始時間帯にアクセス集中で利用しづらくなることがあります。",
   },
-    {
+  {
     id: "bing",
     name: "Bing",
     url: "https://www.bing.com",
@@ -1077,8 +1134,10 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "d払い",
     url: "https://service.smt.docomo.ne.jp/keitai_payment/",
     category: "payments_finance",
-    officialStatusUrl: "https://service.smt.docomo.ne.jp/keitai_payment/info/trouble.html",
-    supportUrl: "https://service.smt.docomo.ne.jp/keitai_payment/support/",
+    officialStatusUrl:
+      "https://service.smt.docomo.ne.jp/keitai_payment/info/trouble.html",
+    supportUrl:
+      "https://service.smt.docomo.ne.jp/keitai_payment/support/",
     serviceNote:
       "バーコード決済やネット決済のみ利用できない、利用可能額の反映が遅いなど、決済関連に限定した障害が発生することがあります。",
     aliases: ["ディーバライ"],
@@ -1189,7 +1248,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "サイト閲覧は可能でもインストール（レジストリ）やログインのみ影響を受けることがあります。",
   },
-    {
+  {
     id: "yahoo-mail",
     name: "Yahoo!メール",
     url: "https://mail.yahoo.co.jp",
@@ -1376,7 +1435,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "閲覧は可能でも共同編集やコメントのみ不安定になるケースがあります。",
   },
-    {
+  {
     id: "google-maps",
     name: "Google マップ",
     url: "https://www.google.com/maps",
@@ -1574,7 +1633,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "特定リージョンや管理画面のみ影響を受ける障害が発生することがあります。",
   },
-    {
+  {
     id: "epark-medical",
     name: "EPARK（病院・クリニック予約）",
     url: "https://medical.epark.jp",
@@ -1715,7 +1774,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "マイナ保険証",
     url: "https://www.mhlw.go.jp/stf/newpage_08277.html",
     category: "government_public",
-    supportUrl: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00004.html",
+    supportUrl:
+      "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00004.html",
     serviceNote:
       "資格確認や連携処理のみ利用できない障害が発生することがあります。",
   },
@@ -1766,7 +1826,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "医師向け掲示板やログインのみ不安定になることがあります。",
   },
-    {
+  {
     id: "yahoo-news-jp",
     name: "Yahoo! News Japan",
     url: "https://news.yahoo.co.jp",
@@ -1963,7 +2023,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "Article reading may work while login or publishing features are unavailable.",
   },
-    {
+  {
     id: "google-search-console",
     name: "Google Search Console",
     url: "https://search.google.com/search-console",
@@ -2144,7 +2204,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "Lessons may not start while account access remains available.",
   },
-    {
+  {
     id: "uber-eats-jp",
     name: "Uber Eats (Japan)",
     url: "https://www.ubereats.com/jp",
@@ -2254,8 +2314,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.docomo.ne.jp/mydocomo/",
     category: "telecom_isp",
     supportUrl: "https://www.docomo.ne.jp/support/",
-    serviceNote:
-      "Login may fail while public pages remain accessible.",
+    serviceNote: "Login may fail while public pages remain accessible.",
   },
 
   {
@@ -2265,8 +2324,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "productivity_saas",
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/googleplay/",
-    serviceNote:
-      "Store browsing may work while downloads or payments fail.",
+    serviceNote: "Store browsing may work while downloads or payments fail.",
   },
   {
     id: "apple-tv",
@@ -2275,8 +2333,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "streaming_media",
     officialStatusUrl: "https://www.apple.com/support/systemstatus/",
     supportUrl: "https://support.apple.com/ja-jp/tv",
-    serviceNote:
-      "Playback may fail while catalog pages load normally.",
+    serviceNote: "Playback may fail while catalog pages load normally.",
   },
 
   {
@@ -2339,7 +2396,7 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "Video pages may load while playback or login is unavailable.",
   },
-    {
+  {
     id: "electric-power-tepco",
     name: "TEPCO Power Grid",
     url: "https://www.tepco.co.jp",
@@ -2434,8 +2491,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.chatwork.com",
     category: "productivity_saas",
     supportUrl: "https://help.chatwork.com/",
-    serviceNote:
-      "Message history may load while sending or notifications fail.",
+    serviceNote: "Message history may load while sending or notifications fail.",
   },
 
   {
@@ -2465,8 +2521,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.jrepoint.jp",
     category: "payments_finance",
     supportUrl: "https://www.jrepoint.jp/inquiry/",
-    serviceNote:
-      "Point balance display may fail while login remains possible.",
+    serviceNote: "Point balance display may fail while login remains possible.",
   },
   {
     id: "t-point",
@@ -2474,8 +2529,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.tsite.jp",
     category: "payments_finance",
     supportUrl: "https://tsite.jp/inquiry/",
-    serviceNote:
-      "Point usage may be unavailable even if account pages load.",
+    serviceNote: "Point usage may be unavailable even if account pages load.",
   },
 
   {
@@ -2504,8 +2558,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://plus.nhk.jp",
     category: "streaming_media",
     supportUrl: "https://www.nhk.or.jp/plus/help/",
-    serviceNote:
-      "Live streaming may fail while on-demand pages load normally.",
+    serviceNote: "Live streaming may fail while on-demand pages load normally.",
   },
   {
     id: "radiko",
@@ -2516,7 +2569,8 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "Playback may be unavailable in specific regions despite site accessibility.",
   },
-    {
+
+  {
     id: "yamato-track",
     name: "Yamato Tracking",
     url: "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
@@ -2540,8 +2594,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://trackings.post.japanpost.jp/services/srv/search/",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote:
-      "Status updates may be delayed or unavailable during peak periods.",
+    serviceNote: "Status updates may be delayed or unavailable during peak periods.",
   },
 
   {
@@ -2550,8 +2603,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://trackings.post.japanpost.jp/services/srv/search/?requestNoLang=EN",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/int/question/",
-    serviceNote:
-      "International tracking may lag behind actual shipment movement.",
+    serviceNote: "International tracking may lag behind actual shipment movement.",
   },
   {
     id: "dhl-track",
@@ -2596,8 +2648,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://logistics.rakuten.co.jp",
     category: "transport_travel",
     supportUrl: "https://logistics.rakuten.co.jp/support/",
-    serviceNote:
-      "Shipment dashboards may load while tracking updates are delayed.",
+    serviceNote: "Shipment dashboards may load while tracking updates are delayed.",
   },
 
   {
@@ -2625,8 +2676,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://member.kms.kuronekoyamato.co.jp",
     category: "productivity_saas",
     supportUrl: "https://faq.kuronekoyamato.co.jp/",
-    serviceNote:
-      "Login may fail while public tracking pages remain accessible.",
+    serviceNote: "Login may fail while public tracking pages remain accessible.",
   },
   {
     id: "yu-pack",
@@ -2634,8 +2684,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.post.japanpost.jp/service/you_pack/",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote:
-      "Service information may load while tracking updates are delayed.",
+    serviceNote: "Service information may load while tracking updates are delayed.",
   },
 
   {
@@ -2653,8 +2702,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.lawson.co.jp/service/",
     category: "ecommerce_marketplace",
     supportUrl: "https://www.lawson.co.jp/contact/",
-    serviceNote:
-      "Order linkage may be unavailable even if store information loads.",
+    serviceNote: "Order linkage may be unavailable even if store information loads.",
   },
   {
     id: "familymart-pickup",
@@ -2662,8 +2710,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.family.co.jp/services/",
     category: "ecommerce_marketplace",
     supportUrl: "https://www.family.co.jp/company/customer.html",
-    serviceNote:
-      "Pickup confirmation may be delayed during system congestion.",
+    serviceNote: "Pickup confirmation may be delayed during system congestion.",
   },
 
   {
@@ -2672,8 +2719,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.post.japanpost.jp/office_search/",
     category: "government_public",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote:
-      "Search results may fail to load while the main site remains accessible.",
+    serviceNote: "Search results may fail to load while the main site remains accessible.",
   },
   {
     id: "customs-japan",
@@ -2693,305 +2739,302 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote:
       "Trade processing systems may be unavailable even if informational pages load.",
   },
+
   {
-  id: "jgrants",
-  name: "jGrants",
-  url: "https://www.jgrants-portal.go.jp",
-  category: "government_public",
-  serviceNote: "Grant applications may fail near submission deadlines.",
-},
-{
-  id: "passport-online",
-  name: "Online Passport Application",
-  url: "https://www.mofa.go.jp/j_info/passport/",
-  category: "government_public",
-  serviceNote: "Online submission or status lookup may be unavailable.",
-},
-{
-  id: "immigration-online",
-  name: "Immigration Online Procedures",
-  url: "https://www.moj.go.jp/isa/applications/",
-  category: "government_public",
-  serviceNote: "Application tracking may fail during peak periods.",
-},
-{
-  id: "childcare-benefits",
-  name: "Childcare Benefit Application",
-  url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000135097.html",
-  category: "government_public",
-  serviceNote: "Benefit applications may be unavailable near deadlines.",
-},
-{
-  id: "disaster-prevention-portal",
-  name: "Cabinet Secretariat Disaster Portal",
-  url: "https://www.bousai.go.jp",
-  category: "government_public",
-  serviceNote: "Real-time updates may lag during emergencies.",
-},
-{
-  id: "housing-benefit",
-  name: "Housing Support Benefit",
-  url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000212318.html",
-  category: "government_public",
-  serviceNote: "Application pages may be inaccessible during high traffic.",
-},
-{
-  id: "local-tax-portal",
-  name: "Local Tax Portal",
-  url: "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/",
-  category: "government_public",
-  serviceNote: "Local tax filing systems may be unavailable near deadlines.",
-},
-{
-  id: "chugoku-electric",
-  name: "Chugoku Electric Power",
-  url: "https://www.energia.co.jp",
-  category: "government_public",
-  serviceNote: "Outage information may fail to update in real time.",
-},
-{
-  id: "hokuriku-electric",
-  name: "Hokuriku Electric Power",
-  url: "https://www.rikuden.co.jp",
-  category: "government_public",
-  serviceNote: "Regional outage updates may be delayed.",
-},
-{
-  id: "shikoku-electric",
-  name: "Shikoku Electric Power",
-  url: "https://www.yonden.co.jp",
-  category: "government_public",
-  serviceNote: "Restoration status pages may not load during incidents.",
-},
-{
-  id: "tokyo-gas-outage",
-  name: "Tokyo Gas Outage Information",
-  url: "https://home.tokyo-gas.co.jp/safety/",
-  category: "government_public",
-  serviceNote: "Service interruption notices may be delayed.",
-},
-{
-  id: "osaka-water",
-  name: "Osaka City Waterworks",
-  url: "https://www.city.osaka.lg.jp/suido/",
-  category: "government_public",
-  serviceNote: "Outage or maintenance information may be unavailable.",
-},
-{
-  id: "center-exam-results",
-  name: "University Entrance Exam Results",
-  url: "https://www.dnc.ac.jp",
-  category: "education_exam",
-  serviceNote: "Result lookup pages may be inaccessible during peak traffic.",
-},
-{
-  id: "nursing-exam",
-  name: "National Nursing Exam Portal",
-  url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
-  category: "education_exam",
-  serviceNote: "Exam result announcements may load slowly.",
-},
-{
-  id: "care-worker-exam",
-  name: "Certified Care Worker Exam",
-  url: "https://www.sssc.or.jp",
-  category: "education_exam",
-  serviceNote: "Application and result pages may be unavailable.",
-},
-{
-  id: "teacher-certification",
-  name: "Teacher Certification Portal",
-  url: "https://www.mext.go.jp",
-  category: "education_exam",
-  serviceNote: "Certification procedures may fail during peak seasons.",
-},
-{
-  id: "jibun-bank",
-  name: "au Jibun Bank",
-  url: "https://www.jibunbank.co.jp",
-  category: "payments_finance",
-  serviceNote: "Login or transfers may fail during maintenance.",
-},
-{
-  id: "sbj-bank",
-  name: "SBJ Bank",
-  url: "https://www.sbjbank.co.jp",
-  category: "payments_finance",
-  serviceNote: "Internet banking features may be unavailable.",
-},
-{
-  id: "shinsei-bank",
-  name: "Shinsei Bank",
-  url: "https://www.sbishinseibank.co.jp",
-  category: "payments_finance",
-  serviceNote: "Transfers or authentication may fail temporarily.",
-},
-{
-  id: "jaccs",
-  name: "JACCS",
-  url: "https://www.jaccs.co.jp",
-  category: "payments_finance",
-  serviceNote: "Card authentication or statement access may be unavailable.",
-},
-{
-  id: "orico",
-  name: "Orico Card",
-  url: "https://www.orico.co.jp",
-  category: "payments_finance",
-  serviceNote: "Member login or payment confirmation may fail.",
-},
-{
-  id: "passport-status",
-  name: "Passport Application Status",
-  url: "https://www.mofa.go.jp/mofaj/toko/passport/",
-  category: "government_public",
-  serviceNote: "Application status lookup may be unavailable during peak periods.",
-},
-{
-  id: "immigration-residence-online",
-  name: "Residence Status Online Application",
-  url: "https://www.moj.go.jp/isa/online/",
-  category: "government_public",
-  serviceNote: "Online application and tracking may fail during maintenance.",
-},
+    id: "jgrants",
+    name: "jGrants",
+    url: "https://www.jgrants-portal.go.jp",
+    category: "government_public",
+    serviceNote: "Grant applications may fail near submission deadlines.",
+  },
+  {
+    id: "passport-online",
+    name: "Online Passport Application",
+    url: "https://www.mofa.go.jp/j_info/passport/",
+    category: "government_public",
+    serviceNote: "Online submission or status lookup may be unavailable.",
+  },
+  {
+    id: "immigration-online",
+    name: "Immigration Online Procedures",
+    url: "https://www.moj.go.jp/isa/applications/",
+    category: "government_public",
+    serviceNote: "Application tracking may fail during peak periods.",
+  },
+  {
+    id: "childcare-benefits",
+    name: "Childcare Benefit Application",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000135097.html",
+    category: "government_public",
+    serviceNote: "Benefit applications may be unavailable near deadlines.",
+  },
+  {
+    id: "disaster-prevention-portal",
+    name: "Cabinet Secretariat Disaster Portal",
+    url: "https://www.bousai.go.jp",
+    category: "government_public",
+    serviceNote: "Real-time updates may lag during emergencies.",
+  },
+  {
+    id: "housing-benefit",
+    name: "Housing Support Benefit",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000212318.html",
+    category: "government_public",
+    serviceNote: "Application pages may be inaccessible during high traffic.",
+  },
+  {
+    id: "local-tax-portal",
+    name: "Local Tax Portal",
+    url: "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/",
+    category: "government_public",
+    serviceNote: "Local tax filing systems may be unavailable near deadlines.",
+  },
+  {
+    id: "chugoku-electric",
+    name: "Chugoku Electric Power",
+    url: "https://www.energia.co.jp",
+    category: "government_public",
+    serviceNote: "Outage information may fail to update in real time.",
+  },
+  {
+    id: "hokuriku-electric",
+    name: "Hokuriku Electric Power",
+    url: "https://www.rikuden.co.jp",
+    category: "government_public",
+    serviceNote: "Regional outage updates may be delayed.",
+  },
+  {
+    id: "shikoku-electric",
+    name: "Shikoku Electric Power",
+    url: "https://www.yonden.co.jp",
+    category: "government_public",
+    serviceNote: "Restoration status pages may not load during incidents.",
+  },
+  {
+    id: "tokyo-gas-outage",
+    name: "Tokyo Gas Outage Information",
+    url: "https://home.tokyo-gas.co.jp/safety/",
+    category: "government_public",
+    serviceNote: "Service interruption notices may be delayed.",
+  },
+  {
+    id: "osaka-water",
+    name: "Osaka City Waterworks",
+    url: "https://www.city.osaka.lg.jp/suido/",
+    category: "government_public",
+    serviceNote: "Outage or maintenance information may be unavailable.",
+  },
+  {
+    id: "center-exam-results",
+    name: "University Entrance Exam Results",
+    url: "https://www.dnc.ac.jp",
+    category: "education_exam",
+    serviceNote: "Result lookup pages may be inaccessible during peak traffic.",
+  },
+  {
+    id: "nursing-exam",
+    name: "National Nursing Exam Portal",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
+    category: "education_exam",
+    serviceNote: "Exam result announcements may load slowly.",
+  },
+  {
+    id: "care-worker-exam",
+    name: "Certified Care Worker Exam",
+    url: "https://www.sssc.or.jp",
+    category: "education_exam",
+    serviceNote: "Application and result pages may be unavailable.",
+  },
+  {
+    id: "teacher-certification",
+    name: "Teacher Certification Portal",
+    url: "https://www.mext.go.jp",
+    category: "education_exam",
+    serviceNote: "Certification procedures may fail during peak seasons.",
+  },
+  {
+    id: "jibun-bank",
+    name: "au Jibun Bank",
+    url: "https://www.jibunbank.co.jp",
+    category: "payments_finance",
+    serviceNote: "Login or transfers may fail during maintenance.",
+  },
+  {
+    id: "sbj-bank",
+    name: "SBJ Bank",
+    url: "https://www.sbjbank.co.jp",
+    category: "payments_finance",
+    serviceNote: "Internet banking features may be unavailable.",
+  },
+  {
+    id: "shinsei-bank",
+    name: "Shinsei Bank",
+    url: "https://www.sbishinseibank.co.jp",
+    category: "payments_finance",
+    serviceNote: "Transfers or authentication may fail temporarily.",
+  },
+  {
+    id: "jaccs",
+    name: "JACCS",
+    url: "https://www.jaccs.co.jp",
+    category: "payments_finance",
+    serviceNote: "Card authentication or statement access may be unavailable.",
+  },
+  {
+    id: "orico",
+    name: "Orico Card",
+    url: "https://www.orico.co.jp",
+    category: "payments_finance",
+    serviceNote: "Member login or payment confirmation may fail.",
+  },
+  {
+    id: "passport-status",
+    name: "Passport Application Status",
+    url: "https://www.mofa.go.jp/mofaj/toko/passport/",
+    category: "government_public",
+    serviceNote: "Application status lookup may be unavailable during peak periods.",
+  },
+  {
+    id: "immigration-residence-online",
+    name: "Residence Status Online Application",
+    url: "https://www.moj.go.jp/isa/online/",
+    category: "government_public",
+    serviceNote: "Online application and tracking may fail during maintenance.",
+  },
 
-{
-  id: "japan-pension-benefit",
-  name: "Pension Benefit Procedures",
-  url: "https://www.nenkin.go.jp/service/",
-  category: "government_public",
-  serviceNote: "Benefit claim pages may be inaccessible near payment deadlines.",
-},
+  {
+    id: "japan-pension-benefit",
+    name: "Pension Benefit Procedures",
+    url: "https://www.nenkin.go.jp/service/",
+    category: "government_public",
+    serviceNote: "Benefit claim pages may be inaccessible near payment deadlines.",
+  },
 
-{
-  id: "childcare-application",
-  name: "Childcare Facility Application Portal",
-  url: "https://www.cfa.go.jp/policies/childcare/",
-  category: "government_public",
-  serviceNote: "Applications may fail near municipal deadlines.",
-},
+  {
+    id: "childcare-application",
+    name: "Childcare Facility Application Portal",
+    url: "https://www.cfa.go.jp/policies/childcare/",
+    category: "government_public",
+    serviceNote: "Applications may fail near municipal deadlines.",
+  },
 
-{
-  id: "high-school-exam-results",
-  name: "High School Entrance Exam Results",
-  url: "https://www.mext.go.jp",
-  category: "education_exam",
-  serviceNote: "Result announcement pages may be inaccessible during release windows.",
-},
-{
-  id: "national-medical-exam",
-  name: "National Medical Examination Portal",
-  url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
-  category: "education_exam",
-  serviceNote: "Exam result pages may load slowly or fail during peak access.",
-},
+  {
+    id: "high-school-exam-results",
+    name: "High School Entrance Exam Results",
+    url: "https://www.mext.go.jp",
+    category: "education_exam",
+    serviceNote: "Result announcement pages may be inaccessible during release windows.",
+  },
+  {
+    id: "national-medical-exam",
+    name: "National Medical Examination Portal",
+    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
+    category: "education_exam",
+    serviceNote: "Exam result pages may load slowly or fail during peak access.",
+  },
 
-{
-  id: "city-bank-atm-network",
-  name: "City Bank ATM Network",
-  url: "https://www.zenginkyo.or.jp/abstract/efforts/system/",
-  category: "payments_finance",
-  serviceNote: "ATM availability information may lag during system disruptions.",
-},
-{
-  id: "bank-authentication",
-  name: "Online Banking Authentication Systems",
-  url: "https://www.zenginkyo.or.jp",
-  category: "payments_finance",
-  serviceNote: "Authentication failures may occur even if bank sites are reachable.",
-},
+  {
+    id: "city-bank-atm-network",
+    name: "City Bank ATM Network",
+    url: "https://www.zenginkyo.or.jp/abstract/efforts/system/",
+    category: "payments_finance",
+    serviceNote: "ATM availability information may lag during system disruptions.",
+  },
+  {
+    id: "bank-authentication",
+    name: "Online Banking Authentication Systems",
+    url: "https://www.zenginkyo.or.jp",
+    category: "payments_finance",
+    serviceNote:
+      "Authentication failures may occur even if bank sites are reachable.",
+  },
 
-{
-  id: "chugoku-gas",
-  name: "Chugoku Gas",
-  url: "https://www.chugokugas.co.jp",
-  category: "government_public",
-  serviceNote: "Service interruption notices may be delayed during incidents.",
-},
-{
-  id: "toho-gas",
-  name: "Toho Gas",
-  url: "https://www.tohogas.co.jp",
-  category: "government_public",
-  serviceNote: "Maintenance and outage pages may be temporarily unavailable.",
-},
+  {
+    id: "chugoku-gas",
+    name: "Chugoku Gas",
+    url: "https://www.chugokugas.co.jp",
+    category: "government_public",
+    serviceNote: "Service interruption notices may be delayed during incidents.",
+  },
+  {
+    id: "toho-gas",
+    name: "Toho Gas",
+    url: "https://www.tohogas.co.jp",
+    category: "government_public",
+    serviceNote: "Maintenance and outage pages may be temporarily unavailable.",
+  },
 
-{
-  id: "prefecture-disaster-info",
-  name: "Prefectural Disaster Information",
-  url: "https://www.bousai.go.jp",
-  category: "government_public",
-  serviceNote: "Local disaster updates may lag during emergencies.",
-},
+  {
+    id: "prefecture-disaster-info",
+    name: "Prefectural Disaster Information",
+    url: "https://www.bousai.go.jp",
+    category: "government_public",
+    serviceNote: "Local disaster updates may lag during emergencies.",
+  },
 
-{
-  id: "school-lunch-system",
-  name: "School Lunch Payment System",
-  url: "https://www.mext.go.jp",
-  category: "education_exam",
-  serviceNote: "Payment or confirmation pages may be unavailable.",
-},
+  {
+    id: "school-lunch-system",
+    name: "School Lunch Payment System",
+    url: "https://www.mext.go.jp",
+    category: "education_exam",
+    serviceNote: "Payment or confirmation pages may be unavailable.",
+  },
 
-{
-  id: "municipal-online-services",
-  name: "Municipal Online Services",
-  url: "https://www.digital.go.jp",
-  category: "government_public",
-  serviceNote: "Online applications may fail during high-traffic periods.",
-},
+  {
+    id: "municipal-online-services",
+    name: "Municipal Online Services",
+    url: "https://www.digital.go.jp",
+    category: "government_public",
+    serviceNote: "Online applications may fail during high-traffic periods.",
+  },
 
-{
-  id: "regional-tax-payment",
-  name: "Regional Tax Payment Portal",
-  url: "https://www.soumu.go.jp",
-  category: "government_public",
-  serviceNote: "Payment confirmation pages may not load near deadlines.",
-},
+  {
+    id: "regional-tax-payment",
+    name: "Regional Tax Payment Portal",
+    url: "https://www.soumu.go.jp",
+    category: "government_public",
+    serviceNote: "Payment confirmation pages may not load near deadlines.",
+  },
 
-{
-  id: "housing-registration",
-  name: "Housing Registration System",
-  url: "https://www.mlit.go.jp",
-  category: "government_public",
-  serviceNote: "Registration or lookup pages may be temporarily unavailable.",
-},
+  {
+    id: "housing-registration",
+    name: "Housing Registration System",
+    url: "https://www.mlit.go.jp",
+    category: "government_public",
+    serviceNote: "Registration or lookup pages may be temporarily unavailable.",
+  },
 
-{
-  id: "medical-insurance-qualification",
-  name: "Health Insurance Qualification Check",
-  url: "https://www.mhlw.go.jp",
-  category: "government_public",
-  serviceNote: "Eligibility confirmation may fail during system updates.",
-},
+  {
+    id: "medical-insurance-qualification",
+    name: "Health Insurance Qualification Check",
+    url: "https://www.mhlw.go.jp",
+    category: "government_public",
+    serviceNote: "Eligibility confirmation may fail during system updates.",
+  },
 
-{
-  id: "disaster-evacuation-info",
-  name: "Evacuation Information System",
-  url: "https://www.bousai.go.jp/taisaku/",
-  category: "government_public",
-  serviceNote: "Evacuation guidance pages may not update in real time.",
-},
+  {
+    id: "disaster-evacuation-info",
+    name: "Evacuation Information System",
+    url: "https://www.bousai.go.jp/taisaku/",
+    category: "government_public",
+    serviceNote: "Evacuation guidance pages may not update in real time.",
+  },
 
-{
-  id: "regional-water-service",
-  name: "Regional Water Utility Services",
-  url: "https://www.mlit.go.jp/mizukokudo/",
-  category: "government_public",
-  serviceNote: "Outage and maintenance information may be delayed.",
-},
+  {
+    id: "regional-water-service",
+    name: "Regional Water Utility Services",
+    url: "https://www.mlit.go.jp/mizukokudo/",
+    category: "government_public",
+    serviceNote: "Outage and maintenance information may be delayed.",
+  },
 
-{
-  id: "exam-application-portal",
-  name: "National Exam Application Portal",
-  url: "https://www.mext.go.jp",
-  category: "education_exam",
-  serviceNote: "Application submissions may fail near deadlines.",
-},
-
-
-
-
-
+  {
+    id: "exam-application-portal",
+    name: "National Exam Application Portal",
+    url: "https://www.mext.go.jp",
+    category: "education_exam",
+    serviceNote: "Application submissions may fail near deadlines.",
+  },
 ];
 
 export function getSiteById(id: string): SiteConfig | undefined {

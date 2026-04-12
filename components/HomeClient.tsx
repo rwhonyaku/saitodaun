@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { AdSenseBlock } from "@/components/AdSenseBlock";
 import { SITE } from "@/lib/siteMeta";
 import { STATUS_SITES } from "@/lib/statusSites";
+import { getGuideHrefFromResult } from "@/lib/errorGuideMap";
 
 type CheckResult = {
   online: boolean;
@@ -16,12 +18,22 @@ type CheckResult = {
 };
 
 export default function HomeClient() {
+  const searchParams = useSearchParams();
+
   const [url, setUrl] = useState("");
   const [result, setResult] = useState<CheckResult | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Curated, stable "top" list for homepage (AdSense + UX)
-  // Only shows these IDs if they exist in STATUS_SITES.
+  // Allow error articles to deep-link back into the checker:
+  // /?url=example.com (or full https://...)
+  useEffect(() => {
+    const qp = searchParams?.get("url")?.trim();
+    if (!qp) return;
+
+    // Don't clobber user typing or post-check normalized url
+    setUrl((prev) => (prev.trim().length > 0 ? prev : qp));
+  }, [searchParams]);
+
   const topSites = useMemo(() => {
     const TOP_IDS = [
       "google",
@@ -59,9 +71,7 @@ export default function HomeClient() {
       const data: CheckResult = await res.json();
       setResult(data);
 
-      if (data.checkedUrl) {
-        setUrl(data.checkedUrl);
-      }
+      if (data.checkedUrl) setUrl(data.checkedUrl);
     } catch {
       setResult({
         online: false,
@@ -70,7 +80,8 @@ export default function HomeClient() {
         timestamp: new Date().toLocaleString("ja-JP", {
           timeZone: "Asia/Tokyo",
         }),
-        error: "チェック中にエラーが発生しました。時間をおいて再度お試しください。",
+        error:
+          "チェック中にエラーが発生しました。時間をおいて再度お試しください。",
       });
     }
 
@@ -83,24 +94,21 @@ export default function HomeClient() {
 
   const statusLabel = result?.online ? "オンライン" : "オフライン";
 
+  const guideHref = result
+    ? getGuideHrefFromResult({ status: result.status, error: result.error })
+    : "/status-codes";
+
   return (
     <main className="flex-1 bg-slate-50 flex flex-col">
       <div className="mx-auto max-w-xl w-full px-4 py-10">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center">
-          このサイト、今見れますか？（接続チェック）
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center tracking-tight">
+          このサイト、今見れますか？
         </h1>
         <p className="mt-3 text-sm sm:text-base text-slate-600 text-center">
           {SITE.tagline}
         </p>
 
         <section aria-labelledby="site-check-section" className="mt-8">
-          <h2
-            id="site-check-section"
-            className="text-sm font-semibold text-slate-900 mb-3"
-          >
-            URLを入力してチェック
-          </h2>
-
           <div className="flex gap-2">
             <input
               type="text"
@@ -109,149 +117,202 @@ export default function HomeClient() {
               autoCorrect="off"
               spellCheck={false}
               placeholder="例：google.com / https://example.com"
-              className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-sky-500"
+              className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-sky-500 transition-all"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={onKeyDown}
             />
             <button
               onClick={handleCheck}
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
+              className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-60 shadow-md transition-all active:scale-95"
               disabled={loading}
             >
-              {loading ? "確認中..." : "チェックする"}
+              {loading ? "確認中..." : "チェック"}
             </button>
           </div>
 
-          <p className="mt-2 text-xs text-slate-500">
-            入力例： <span className="font-medium">example.com</span> /{" "}
-            <span className="font-medium">https://example.com</span> /{" "}
-            <span className="font-medium">https://sub.example.com</span>
+          <p className="mt-3 text-[11px] text-slate-400 text-center">
+            入力例:{" "}
+            <span className="font-medium text-slate-500">example.com</span> /{" "}
+            <span className="font-medium text-slate-500">
+              https://sub.example.com
+            </span>
           </p>
 
-          <div className="mt-6 rounded-xl bg-white p-4 shadow-sm text-sm text-slate-700 min-h-[110px]">
-            {!result && (
-              <div className="space-y-2">
-                <p className="text-slate-500">
-                  まだ結果がありません。上の入力欄にURLを入力して「チェックする」を押してください。
+          {/* Result Area */}
+          <div className="mt-8 min-h-[140px]">
+            {!result && !loading && (
+              <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center bg-white/50">
+                <p className="text-sm text-slate-500">
+                  URLを入力して「チェック」を押すと、
+                  <br />
+                  外部サーバーからの接続可否をリアルタイムで判定します。
                 </p>
-                <p className="text-xs text-slate-500">
-                  「自分だけ見れないのか」「相手側が落ちているのか」を切り分ける目安になります。
+              </div>
+            )}
+
+            {loading && (
+              <div className="rounded-xl border border-slate-200 p-8 text-center bg-white animate-pulse">
+                <p className="text-sm text-slate-400 font-medium italic">
+                  サーバーに接続して応答を確認しています...
                 </p>
               </div>
             )}
 
             {result && (
-              <div className="space-y-2">
-                {result.checkedUrl && (
-                  <p className="text-xs text-slate-500 break-all">
-                    チェックしたURL：{result.checkedUrl}
-                  </p>
-                )}
+              <div
+                className={`rounded-xl border-2 p-5 transition-all shadow-sm ${
+                  result.online
+                    ? "border-green-100 bg-green-50/30"
+                    : "border-red-100 bg-red-50/30"
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="relative flex h-3 w-3">
+                        {result.online && (
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        )}
+                        <span
+                          className={`relative inline-flex rounded-full h-3 w-3 ${
+                            result.online ? "bg-green-500" : "bg-red-500"
+                          }`}
+                        ></span>
+                      </span>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        判定：{statusLabel}
+                      </h3>
+                    </div>
+                    {result.checkedUrl && (
+                      <p className="text-xs text-slate-500 truncate max-w-[280px] sm:max-w-md font-mono">
+                        {result.checkedUrl}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex gap-3">
+                    <div className="bg-white rounded-lg px-3 py-2 shadow-sm border border-slate-100 min-w-[96px] text-center">
+                      <p className="text-[10px] text-slate-400 uppercase font-bold">
+                        HTTP
+                      </p>
+                      <p
+                        className={`text-sm font-mono font-bold ${
+                          result.status === 200
+                            ? "text-green-600"
+                            : "text-amber-600"
+                        }`}
+                      >
+                        {result.status ?? "ERR"}
+                      </p>
+
+                      <Link
+                        href={guideHref}
+                        className="inline-block mt-1 text-[10px] font-bold text-sky-600 underline underline-offset-2 hover:text-sky-700"
+                      >
+                        解説 →
+                      </Link>
+                    </div>
+
+                    <div className="bg-white rounded-lg px-3 py-2 shadow-sm border border-slate-100 min-w-[96px] text-center">
+                      <p className="text-[10px] text-slate-400 uppercase font-bold">
+                        応答速度
+                      </p>
+                      <p className="text-sm font-mono font-bold text-slate-700">
+                        {result.responseTime ?? "―"}
+                        <span className="text-[10px] ml-0.5 font-sans">ms</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 {result.error && (
-                  <p className="text-xs text-red-500">{result.error}</p>
+                  <div className="mt-4 p-3 bg-red-100/50 rounded-lg text-xs text-red-700 border border-red-200">
+                    {result.error}
+                  </div>
                 )}
 
-                <div className="flex items-center gap-2">
-                  <p className="text-base font-semibold text-slate-900">
-                    結果：
-                    <span
-                      className={
-                        result.online ? "text-green-600" : "text-red-600"
-                      }
-                    >
-                      {" "}
-                      {statusLabel}
+                <div className="mt-4 pt-4 border-t border-slate-200/60 flex justify-between items-center text-[10px] text-slate-400 font-medium">
+                  <span>チェック時刻: {result.timestamp}</span>
+                  {!result.online && (
+                    <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+                      接続に失敗しました
                     </span>
-                  </p>
+                  )}
                 </div>
-
-                <div className="text-sm text-slate-700 space-y-1">
-                  <p>HTTPステータス：{result.status ?? "―"}</p>
-                  <p>応答時間：{result.responseTime ?? "―"} ms</p>
-                  <p>最終チェック：{result.timestamp}</p>
-                </div>
-
-                {!result.online && !result.error && (
-                  <p className="text-xs text-slate-500">
-                    オフライン表示でも、地域や回線により一時的に失敗する場合があります。数十秒おいて再チェックしてください。
-                  </p>
-                )}
               </div>
             )}
           </div>
-
-          <div className="mt-4 text-xs text-slate-500 space-y-1">
-            <p>※ 本ツールは、サーバー側から指定URLへの接続を試み、応答状況を簡易表示します。</p>
-            <p>
-              ※ 結果は目安です。継続監視や通知が必要な場合は、専門の監視サービスをご利用ください。
-            </p>
-          </div>
         </section>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <AdSenseBlock />
         </div>
 
-        <section className="mt-10">
-          <h2 className="mb-4 text-sm font-semibold text-slate-900">
+        <section className="mt-12 bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h2 className="mb-4 text-sm font-bold text-slate-900 uppercase tracking-widest text-center">
             人気の障害チェック
           </h2>
 
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:grid-cols-3">
+          <ul className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-3">
             {topSites.map((s) => (
               <li key={s!.id}>
-                <Link href={`/status/${s!.id}`} className="text-sky-600 underline">
-                  {s!.name} 障害
+                <Link
+                  href={`/status/sites/${s!.id}`}
+                  className="flex items-center justify-center p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-sky-50 hover:text-sky-600 hover:border-sky-100 transition-colors font-medium text-slate-700"
+                >
+                  {s!.name}
                 </Link>
               </li>
             ))}
           </ul>
+
+          <div className="mt-6 text-center">
+            <Link
+              href="/status"
+              className="inline-block text-sky-600 text-sm font-bold hover:text-sky-700 underline underline-offset-4"
+            >
+              全てのサービス一覧を見る →
+            </Link>
+          </div>
         </section>
 
-        <div className="mt-10 text-center">
-          <Link
-            href="/status"
-            className="text-sky-600 text-sm underline hover:text-sky-700"
-          >
-            人気サービスの障害・稼働状況一覧を見る →
-          </Link>
-        </div>
-
-        {/* Added: content layer for AdSense + SEO (non-invasive) */}
-        <section className="mt-12 border-t border-slate-200 pt-6 text-sm text-slate-700">
-          <h2 className="text-base font-semibold text-slate-900 mb-4">
+        {/* SEO Layer */}
+        <section className="mt-12 text-sm text-slate-700 bg-slate-100/50 rounded-2xl p-6">
+          <h2 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-900 rounded-full"></span>
             このツールで分かること
           </h2>
 
-          <div className="space-y-3 text-xs sm:text-sm text-slate-700">
+          <div className="space-y-4 text-xs sm:text-sm leading-relaxed">
             <p>
               {SITE.name}は、指定したURLに対して「いま接続できるか」を確認するための簡易チェックです。
-              まずは“自分の環境だけの問題か、相手側の障害っぽいか”を切り分ける第一歩として使えます。
-            </p>
-            <p>
-              ただし、地域差・回線状況・DNS・CDN/WAFの制限などにより、実際の体感と一致しない場合があります。
-              詳しく知りたい方は、以下もあわせてご覧ください。
+              “自分の環境だけの問題か、相手側の障害か”を切り分ける第一歩として活用してください。
             </p>
 
-            <ul className="list-disc list-inside space-y-1">
+            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <li>
-                <Link href="/how-it-works" className="text-sky-600 underline">
-                  仕組み（何を確認しているか／結果の見方）
+                <Link
+                  href="/how-it-works"
+                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
+                >
+                  仕組み・見方
                 </Link>
               </li>
               <li>
                 <Link
                   href="/what-is-website-downtime"
-                  className="text-sky-600 underline"
+                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
                 >
-                  サイトが落ちるとは（原因・基本の確認手順）
+                  落ちるとは？
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-sky-600 underline">
-                  FAQ（よくある質問）
+                <Link
+                  href="/faq"
+                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
+                >
+                  よくある質問
                 </Link>
               </li>
             </ul>
