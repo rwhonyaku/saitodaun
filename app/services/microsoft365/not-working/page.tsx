@@ -50,6 +50,9 @@ export default function Microsoft365NotWorkingPage() {
           Microsoft 365の不具合は、Microsoft側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、アプリ、端末、認証設定でも起きます。
           最初に問題の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-600">
+          ログインできない・Outlookが使えない・Teamsが使えないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

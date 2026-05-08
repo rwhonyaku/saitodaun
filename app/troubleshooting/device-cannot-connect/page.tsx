@@ -3,143 +3,256 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "端末だけインターネットにつながらない原因と対処法",
+  title: "端末・ネットワーク差の切り分けハブ",
   description:
-    "スマホやパソコンなど特定の端末だけインターネットにつながらないときの原因と対処法を解説します。Wi-Fi設定、DNS、VPN、端末側の不具合を切り分ける方法を紹介します。",
+    "特定の端末だけつながらない、スマホでは開くのにPCで開かない、Wi-Fiではだめだがモバイル回線では開く、といった端末・ネットワーク差を切り分けるためのハブページです。",
   alternates: { canonical: "/troubleshooting/device-cannot-connect" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="端末だけインターネットにつながらない原因と対処法"
+      h1="端末・ネットワーク差の切り分けハブ"
       lead={[
-        "家のWi-Fiや回線自体は動いているのに、自分のスマホやパソコンだけインターネットにつながらないことがあります。この場合は回線全体ではなく、端末側の設定や一時的な不具合を疑うべきです。",
-        "同じネットワークでも別の端末では使えるなら、ルーターやプロバイダ障害よりも、その端末固有の問題である可能性が高くなります。",
-        "このページでは、特定の端末だけ通信できないときに確認したい原因と対処法を順番に整理しています。",
+        "同じサイトや同じ回線でも、ある端末では開くのに別の端末では開かないことがあります。この場合はサイト全体より、端末差・回線差・ブラウザ差を見分けることが重要です。",
+        "このページは端末差・回線差を素早く切り分けるためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
       ]}
       sections={[
         {
-          type: "p",
-          title: "まず本当に端末だけの問題か確認する",
-          body: [
-            "最初に確認したいのは、ほかの端末では正常に通信できるかどうかです。家族のスマホ、別のノートPC、タブレットなどで同じWi-Fiに接続してみると、問題の範囲が見えやすくなります。",
-            "ほかの端末でも同時に通信できない場合は、端末ではなくルーターや回線全体の問題かもしれません。",
-            <>
-              複数端末で同時に通信できない場合は{" "}
-              <Link
-                href="/troubleshooting/internet-not-working"
-                className="underline hover:no-underline"
-              >
-                インターネットにつながらない原因
-              </Link>{" "}
-              も確認してください。
-            </>,
-          ],
-        },
-        {
           type: "list",
-          title: "端末だけつながらない主な原因",
+          title: "最短で切り分けるなら",
           items: [
-            "Wi-Fi設定の不具合",
-            "機内モードや通信設定の誤り",
-            "VPNやセキュリティアプリの影響",
-            "端末側のDNS設定やキャッシュの問題",
-            "IPアドレス取得の失敗",
-            "OSやネットワーク設定の一時的不具合",
+            "スマホでは開くのにPCで開かないなら、PC側ブラウザ、社内ネットワーク、証明書、DNS差を疑う",
+            "モバイル回線では開くのにWi-Fiだと開かないなら、Wi-Fi、ルーター、回線、制限の可能性が高い",
+            "1台の端末だけどのサイトも開かないなら、その端末の設定やVPN、DNS、接続状態を疑う",
+            "家の複数端末で同時にだめなら、端末固有ではなく回線やルーター側を優先して見る",
+            "特定サイトだけ差が出るなら、端末より接続先サイト・DNS・制限の可能性もある",
+          ],
+        },
+        {
+          type: "div",
+          title: "状況から選ぶ",
+          body: [
+            <div key="cases" className="space-y-3">
+              <p>
+                スマホでは開くのにPCで開かない →{" "}
+                <Link
+                  href="/troubleshooting/site-works-on-phone-not-computer"
+                  className="underline hover:no-underline"
+                >
+                  スマホでは開くのにパソコンで開かない原因
+                </Link>
+              </p>
+              <p>
+                モバイル回線では開くのにWi-Fiだと開かない →{" "}
+                <Link
+                  href="/troubleshooting/website-loads-on-phone-not-wifi"
+                  className="underline hover:no-underline"
+                >
+                  スマホでは開くのにWi-Fiだと開かない原因
+                </Link>
+              </p>
+              <p>
+                1台の端末だけインターネット全体につながらない →{" "}
+                <Link
+                  href="/troubleshooting/internet-not-working"
+                  className="underline hover:no-underline"
+                >
+                  インターネットにつながらない原因
+                </Link>
+              </p>
+              <p>
+                Wi-Fi全体やルーターも怪しい →{" "}
+                <Link
+                  href="/troubleshooting/router-not-working"
+                  className="underline hover:no-underline"
+                >
+                  ルーターがつながらない原因
+                </Link>
+              </p>
+              <p>
+                ブラウザだけで失敗する →{" "}
+                <Link
+                  href="/troubleshooting/browser-not-loading-sites"
+                  className="underline hover:no-underline"
+                >
+                  ブラウザエラーの切り分けハブ
+                </Link>
+              </p>
+              <p>
+                特定のサイトだけ差が出る →{" "}
+                <Link
+                  href="/troubleshooting/specific-site-not-working"
+                  className="underline hover:no-underline"
+                >
+                  特定のサイトだけ開かない原因
+                </Link>
+              </p>
+              <p>
+                DNSや名前解決が怪しい →{" "}
+                <Link
+                  href="/troubleshooting-dns"
+                  className="underline hover:no-underline"
+                >
+                  DNS・接続エラーの切り分けハブ
+                </Link>
+              </p>
+              <p>
+                VPNや会社・学校ネットワークの制限が怪しい →{" "}
+                <Link
+                  href="/troubleshooting/site-blocked-by-firewall"
+                  className="underline hover:no-underline"
+                >
+                  サイトがファイアウォールでブロックされる原因
+                </Link>
+              </p>
+            </div>,
           ],
         },
         {
           type: "p",
-          title: "Wi-Fiの再接続を試す",
+          title: "端末側の問題に近いケース",
           body: [
-            "端末だけ接続できない場合は、まずWi-Fiを一度オフにして再接続してみてください。保存済みネットワークを削除して、再度パスワードを入力し直すと直ることもあります。",
-            "特にスマホでは、見た目上は接続済みでも内部的には通信できていない状態になることがあります。",
+            "1台だけ失敗する、別端末では正常、同じ回線でも結果が変わるなら、端末設定、保存データ、VPN、セキュリティアプリ、端末の接続状態を優先して見ます。",
             <>
-              Wi-Fi全体のトラブルが疑われる場合は{" "}
+              ブラウザ差が強いなら{" "}
               <Link
-                href="/troubleshooting/wifi-not-working"
+                href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                Wi-Fiがつながらない原因
+                ブラウザエラーの切り分けハブ
               </Link>{" "}
-              も参考になります。
+              が近いページです。
             </>,
           ],
         },
         {
           type: "p",
-          title: "モバイル回線でも試してみる",
+          title: "Wi-Fi・回線差の問題に近いケース",
           body: [
-            "スマホであれば、Wi-Fiを切ってモバイル通信で同じサイトやアプリを試してみてください。モバイル回線では正常なら、その端末のWi-Fi設定か自宅ネットワークとの相性が原因の可能性が高くなります。",
-            "逆にWi-Fiでもモバイルでも同じ症状が出る場合は、端末のDNS設定、VPN、アプリ設定などを疑った方が自然です。",
-          ],
-        },
-        {
-          type: "p",
-          title: "VPNやセキュリティアプリの影響を確認する",
-          body: [
-            "VPN、広告ブロッカー、セキュリティアプリが原因で通信が止まることがあります。特に海外VPNや企業向けセキュリティ設定を入れている端末では起こりやすいです。",
-            "一時的にVPNや関連アプリをオフにして試すと、原因の切り分けがしやすくなります。",
-          ],
-        },
-        {
-          type: "p",
-          title: "DNSやネットワーク設定の問題",
-          body: [
-            "端末に手動DNS設定を入れている場合、それが古い設定や不安定なDNSサーバーになっている可能性があります。DNSキャッシュが壊れているケースもあります。",
+            "Wi-Fiではだめだがモバイル回線では開く、家の中の端末で広く不安定、場所や回線を変えると結果が変わるなら、端末単体より回線差を優先します。",
             <>
-              DNSの仕組みや切り分け方法については{" "}
+              この場合は{" "}
+              <Link
+                href="/troubleshooting/website-loads-on-phone-not-wifi"
+                className="underline hover:no-underline"
+              >
+                スマホでは開くのにWi-Fiだと開かない原因
+              </Link>
+              、{" "}
+              <Link
+                href="/troubleshooting/router-vs-isp-problem"
+                className="underline hover:no-underline"
+              >
+                ルーターが原因か回線障害か見分ける方法
+              </Link>{" "}
+              が近道です。
+            </>,
+          ],
+        },
+        {
+          type: "p",
+          title: "DNS・名前解決の問題に近いケース",
+          body: [
+            "同じサイトでも端末や回線で結果が変わる場合、DNS設定差やキャッシュ差が原因のことがあります。特に『サーバーが見つからない』系ならDNS寄りです。",
+            <>
+              この系統は{" "}
               <Link
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"
               >
-                DNSトラブルシューティング
+                DNS・接続エラーの切り分けハブ
               </Link>{" "}
-              を確認してください。
+              や{" "}
+              <Link
+                href="/errors/err-name-not-resolved"
+                className="underline hover:no-underline"
+              >
+                ERR_NAME_NOT_RESOLVED
+              </Link>{" "}
+              を見てください。
             </>,
-          ],
-        },
-        {
-          type: "list",
-          title: "順番に試したい確認手順",
-          items: [
-            "ほかの端末では正常か確認する",
-            "Wi-Fiをオフにして再接続する",
-            "保存済みWi-Fiを削除して再設定する",
-            "スマホならモバイル通信でも試す",
-            "VPNやセキュリティアプリを一時的に無効にする",
-            "端末を再起動する",
-            "DNSやネットワーク設定を見直す",
-          ],
-        },
-        {
-          type: "note",
-          title: "判断のコツ",
-          body: [
-            "同じWi-Fiでほかの端末は正常なら、ルーターや回線全体よりも、その端末の設定やアプリが原因である可能性が高くなります。問題の範囲を狭く見ると対処しやすくなります。",
           ],
         },
         {
           type: "p",
-          title: "まとめ",
+          title: "制限・VPN・社内学校ネットワークの問題に近いケース",
           body: [
-            "特定の端末だけインターネットにつながらないときは、Wi-Fi設定、VPN、DNS、端末側の一時的不具合などが主な原因です。",
-            "回線全体の問題か端末だけの問題かを先に切り分けることで、無駄な設定変更を減らしながら原因を特定しやすくなります。",
+            "会社PCだけ、社内Wi-Fiだけ、VPN接続時だけ失敗するなら、サイト全体より接続条件による制限や中継経路の影響が強いです。",
             <>
-              特定のサイトだけ開かない場合は{" "}
+              この場合は{" "}
               <Link
-                href="/troubleshooting/specific-site-not-working"
+                href="/troubleshooting/site-blocked-by-firewall"
                 className="underline hover:no-underline"
               >
-                特定のサイトだけ開かない原因
+                サイトがファイアウォールでブロックされる原因
               </Link>{" "}
-              も役立ちます。
+              や{" "}
+              <Link
+                href="/errors/err-tunnel-connection-failed"
+                className="underline hover:no-underline"
+              >
+                ERR_TUNNEL_CONNECTION_FAILED
+              </Link>{" "}
+              が近いページです。
             </>,
           ],
         },
+        {
+          type: "div",
+          title: "よくある差から探す",
+          body: [
+            <div key="messages" className="space-y-3">
+              <p>
+                PCだけだめ、スマホは開く →{" "}
+                <Link
+                  href="/troubleshooting/site-works-on-phone-not-computer"
+                  className="underline hover:no-underline"
+                >
+                  スマホでは開くのにパソコンで開かない原因
+                </Link>
+              </p>
+              <p>
+                Wi-Fiだけだめ、モバイル回線は開く →{" "}
+                <Link
+                  href="/troubleshooting/website-loads-on-phone-not-wifi"
+                  className="underline hover:no-underline"
+                >
+                  スマホでは開くのにWi-Fiだと開かない原因
+                </Link>
+              </p>
+              <p>
+                ブラウザだけだめ →{" "}
+                <Link
+                  href="/troubleshooting/browser-not-loading-sites"
+                  className="underline hover:no-underline"
+                >
+                  ブラウザエラーの切り分けハブ
+                </Link>
+              </p>
+              <p>
+                名前解決エラーが出る →{" "}
+                <Link
+                  href="/errors/err-name-not-resolved"
+                  className="underline hover:no-underline"
+                >
+                  ERR_NAME_NOT_RESOLVED
+                </Link>
+              </p>
+              <p>
+                まず全体障害か確認したい →{" "}
+                <Link
+                  href="/outages/japan"
+                  className="underline hover:no-underline"
+                >
+                  ネット障害情報
+                </Link>
+              </p>
+            </div>,
+          ],
+        },
       ]}
-      updatedAt="2026-03-06"
+      updatedAt="2026-04-12"
     />
   );
 }

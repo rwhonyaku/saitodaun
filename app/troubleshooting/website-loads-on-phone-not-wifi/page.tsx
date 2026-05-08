@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
+import SurfsharkAffiliateBlock from "@/components/SurfsharkAffiliateBlock";
 
 export const metadata: Metadata = {
   title: "サイトはスマホ回線で開くのにWi-Fiだと開かない原因と対処法",
@@ -157,6 +158,14 @@ export default function Page() {
           title: "判断のコツ",
           body: [
             "モバイル回線では開くという事実はかなり強い手がかりです。問題の重心はサイト全体ではなく Wi-Fi 側にあることが多いので、DNS、制限、ルーター、公共Wi-Fi 認証の順で見ると無駄が少なくなります。",
+            <>
+              回線差や地域差を短く確認したいときは{" "}
+              <Link href="/vpn" className="underline hover:no-underline">
+                VPNが役立つケース
+              </Link>{" "}
+              もあります。ただし、サービス側の障害は VPN では解決できません。
+            </>,
+            <SurfsharkAffiliateBlock key="surfshark-block" />,
           ],
         },
         {

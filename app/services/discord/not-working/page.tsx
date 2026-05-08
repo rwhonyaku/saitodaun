@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.discord;
 const issue = service.issues["not-working"];
@@ -50,6 +51,9 @@ export default function DiscordNotWorkingPage() {
           Discordの不具合は、単純な障害だけでなく、回線、Wi-Fi、DNS、アプリ状態、VPN、音声通話の品質でも起きます。
           最初に問題の方向を絞るだけで、無駄な再設定や再インストールをかなり減らせます。
         </p>
+        <p className="text-sm text-neutral-700">
+          ログインできない・接続できない・メッセージが送れない・ボイスチャットが使えない・通知が来ないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
@@ -87,6 +91,8 @@ export default function DiscordNotWorkingPage() {
           </ol>
         </div>
       </header>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Discordは障害？</h2>

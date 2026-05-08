@@ -1,111 +1,247 @@
+import ConoHaPromoCard from "@/components/ConoHaPromoCard";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
+import Link from "next/link";
 
 export const metadata = {
-  title: "DNSエラーでサイトが見れない時の直し方 | サイトダウン",
+  title: "DNS・接続エラーの切り分けハブ | サイトダウン",
   description:
-    "特定のサイトだけが見れない原因の多くはDNSにあります。パブリックDNS（Google/Cloudflare）への切り替え方法をデバイス別に詳しく解説します。",
+    "DNSや接続エラーを素早く切り分けるためのハブページです。名前解決エラー、Wi-Fi差、回線差、ブラウザ差ごとに次に見るべきページへ案内します。",
 };
 
 export default function DnsGuidePage() {
   return (
     <EvergreenPageShell
-      h1="DNSエラーの直し方とパブリックDNS設定ガイド"
-      updatedAt="2026-02-22"
+      h1="DNS・接続エラーの切り分けハブ"
+      updatedAt="2026-04-12"
       lead={[
-        "サイトダウンのチェック結果で「オンライン」と表示されているのに、あなたのブラウザでだけエラー（DNS_PROBE_FINISHED_NXDOMAIN 等）が出る場合、原因の多くはDNS（名前解決）にあります。",
-        "DNSは「ドメイン名（example.com）をIPアドレスに変換する仕組み」です。ここで詰まると、サイト自体が稼働していてもブラウザは宛先を見つけられず、結果として“サイトが落ちている”ように見えます。",
-        "ご契約のプロバイダー（ISP）のDNSが一時的に不安定な場合、GoogleやCloudflareが提供する『パブリックDNS』に切り替えることで、数分以内に改善することがあります。"
+        "サイトが開かないときでも、原因がDNSなのか、回線なのか、ブラウザなのかで確認すべき場所は変わります。",
+        "このページはDNSと接続系トラブルを素早く振り分けるためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
       ]}
       sections={[
         {
-          type: "p",
-          title: "パブリックDNSとは？",
-          body: [
-            "DNS（Domain Name System）は、私たちが入力するURL（google.com など）を、コンピューターが理解できる数字（IPアドレス）に翻訳する「インターネット上の電話帳」です。ブラウザはまずDNSで宛先（IP）を調べ、次にその宛先へ通信してページを取得します。",
-            "通常この翻訳作業は、回線契約しているプロバイダー（ISP）が提供するDNSサーバーが自動で行います。しかし、このDNSサーバーが混雑したり障害を起こしたり、古い情報（キャッシュ）を返してしまうと、特定のサイトだけ開けない、あるいは“急に開けなくなった”といった現象が起こります。",
-            "パブリックDNSとは、GoogleやCloudflareなどが無料で公開している代替DNSです。一般に可用性が高く、応答が速い傾向があります。DNSを切り替えることは「回線を変える」のではなく「電話帳を変える」イメージで、設定を戻せば元通りにできます。"
-          ]
-        },
-        {
-          type: "p",
-          title: "DNSエラーっぽい症状の例（当てはまればDNSを疑う）",
-          body: [
-            "次のような症状が出ている場合は、DNSが原因である可能性が高いです。",
-            "・特定のサイトだけ開けない（他のサイトは普通に見れる）",
-            "・同じサイトでも、スマホの4G/5Gでは開けるのに、自宅Wi-Fiでは開けない（またはその逆）",
-            "・ブラウザに「DNS_PROBE_FINISHED_NXDOMAIN」「このサイトにアクセスできません」などが出る",
-            "・時間を置くと急に直ったり、場所や回線によって結果が変わる",
-            "これらは「サイトがダウンしている」というより、あなたの環境が“宛先を引けていない”状態で起きやすい現象です。"
-          ]
-        },
-        {
           type: "list",
-          title: "推奨される主要なパブリックDNS",
+          title: "最短で切り分けるなら",
           items: [
-            "Google Public DNS：優先[8.8.8.8] / 代替[8.8.4.4]（最も一般的で安定。まず迷ったらこれ）",
-            "Cloudflare DNS：優先[1.1.1.1] / 代替[1.0.0.1]（高速性とプライバシー配慮が特徴）",
-            "Quad9：優先[9.9.9.9]（悪意のあるドメインをブロックするセキュリティ重視）"
-          ]
+            "ドメインが見つからない、server not found系ならDNSを優先して疑う",
+            "モバイル回線では開くのにWi-Fiだと失敗するなら、DNSだけでなくWi-Fiや回線差も疑う",
+            "どのサイトも開かないなら、DNSより先に回線・ルーター・障害情報を確認する",
+            "ブラウザだけで失敗するなら、DNSよりブラウザや端末設定差の可能性が高い",
+            "エラー名が出ているなら、そのエラーページから入るほうが早い",
+          ],
+        },
+        {
+          type: "div",
+          title: "状況から選ぶ",
+          body: [
+            <div key="cases" className="space-y-3">
+              <p>
+                ドメインが見つからない、サイト名を引けない →{" "}
+                <Link
+                  href="/errors/err-name-not-resolved"
+                  className="underline hover:no-underline"
+                >
+                  ERR_NAME_NOT_RESOLVED
+                </Link>
+              </p>
+              <p>
+                DNS_PROBE_FINISHED_NXDOMAIN が出る →{" "}
+                <Link
+                  href="/errors/dns-probe-finished-nxdomain"
+                  className="underline hover:no-underline"
+                >
+                  DNS_PROBE_FINISHED_NXDOMAIN
+                </Link>
+              </p>
+              <p>
+                特定のサイトだけ開かない →{" "}
+                <Link
+                  href="/troubleshooting/specific-site-not-working"
+                  className="underline hover:no-underline"
+                >
+                  特定のサイトだけ開かない原因
+                </Link>
+              </p>
+              <p>
+                モバイル回線では開くのにWi-Fiだと開かない →{" "}
+                <Link
+                  href="/troubleshooting/device-cannot-connect"
+                  className="underline hover:no-underline"
+                >
+                  端末・ネットワーク差の切り分けハブ
+                </Link>
+              </p>
+              <p>
+                どのサイトも開かない →{" "}
+                <Link
+                  href="/troubleshooting/device-cannot-connect"
+                  className="underline hover:no-underline"
+                >
+                  端末・ネットワーク差の切り分けハブ
+                </Link>
+              </p>
+              <p>
+                Wi-Fi全体が怪しい、ルーターも疑わしい →{" "}
+                <Link
+                  href="/troubleshooting/device-cannot-connect"
+                  className="underline hover:no-underline"
+                >
+                  端末・ネットワーク差の切り分けハブ
+                </Link>
+              </p>
+              <p>
+                読み込み途中で経路が変わる、回線切り替えで失敗する →{" "}
+                <Link
+                  href="/errors/err-network-changed"
+                  className="underline hover:no-underline"
+                >
+                  ERR_NETWORK_CHANGED
+                </Link>
+              </p>
+              <p>
+                まずサイト側障害か確認したい →{" "}
+                <Link
+                  href="/outages/japan"
+                  className="underline hover:no-underline"
+                >
+                  ネット障害情報
+                </Link>
+              </p>
+            </div>,
+          ],
         },
         {
           type: "p",
-          title: "設定前の注意（ここだけ押さえればOK）",
+          title: "DNSが原因のことが多いケース",
           body: [
-            "DNSを変更すると、同じ回線でも“名前解決の結果”が変わるため、表示が改善することがあります。一方で、社内ネットワークや学校など、特殊なDNS設定が必要な環境では意図しない挙動になる場合があります。",
-            "不安な場合は、まずスマホのWi-Fi（自宅）だけ変更するなど、影響範囲の小さいところから試すのがおすすめです。設定はいつでも元に戻せます。"
-          ]
+            "名前解決エラー、特定サイトだけの失敗、回線を変えると開くといった症状ならDNSが有力です。",
+            <>
+              まず{" "}
+              <Link
+                href="/errors/err-name-not-resolved"
+                className="underline hover:no-underline"
+              >
+                ERR_NAME_NOT_RESOLVED
+              </Link>{" "}
+              や{" "}
+              <Link
+                href="/errors/dns-probe-finished-nxdomain"
+                className="underline hover:no-underline"
+              >
+                DNS_PROBE_FINISHED_NXDOMAIN
+              </Link>{" "}
+              を確認してください。
+            </>,
+            <ConoHaPromoCard key="conoha-dns" variant="dns" />,
+          ],
         },
         {
           type: "p",
-          title: "Windows 10 / 11 での設定方法",
+          title: "回線や経路の問題に近いケース",
           body: [
-            "1. 「設定」メニューから「ネットワークとインターネット」を選択します。",
-            "2. 使用中の接続（Wi-Fiまたはイーサネット）の「プロパティ」をクリックします。",
-            "3. 「DNSサーバーの割り当て」の横にある「編集」をクリックします。",
-            "4. 「手動」を選択し、IPv4をオンにします。",
-            "5. 「優先DNS」に 8.8.8.8、「代替DNS」に 8.8.4.4 を入力して保存します。",
-            "6. 変更後に反映が遅い場合は、Wi-Fiを一度オフ→オン、またはPCを再起動すると改善することがあります。"
-          ]
+            "名前は引けていそうなのに届かない、回線を変えると結果が変わる、途中で接続条件が変わるなら経路側も候補です。",
+            <>
+              この系統は{" "}
+              <Link
+                href="/errors/err-address-unreachable"
+                className="underline hover:no-underline"
+              >
+                ERR_ADDRESS_UNREACHABLE
+              </Link>{" "}
+              や{" "}
+              <Link
+                href="/errors/err-network-changed"
+                className="underline hover:no-underline"
+              >
+                ERR_NETWORK_CHANGED
+              </Link>{" "}
+              が近いページです。
+            </>,
+          ],
         },
         {
           type: "p",
-          title: "macOS での設定方法",
+          title: "Wi-Fi・ルーター・ISP側を先に見るべきケース",
           body: [
-            "1. 「システム設定」から「ネットワーク」を開きます。",
-            "2. 使用中のネットワーク（Wi-Fi等）を選択し、「詳細」をクリックします。",
-            "3. 「DNS」タブを選択し、「＋」ボタンで 1.1.1.1 などのアドレスを追加します。",
-            "4. 既存のプロバイダーDNSよりも上に配置して「OK」をクリックし、適用します。",
-            "5. 変更後も挙動が変わらない場合は、ブラウザを再起動し、必要に応じてWi-Fiをつなぎ直してください。"
-          ]
+            "どのサイトも開かない、家のすべての端末でだめ、モバイル回線だと正常なら、DNS単体よりWi-Fiや回線側を優先して見ます。",
+            <>
+              この場合は{" "}
+              <Link
+                href="/troubleshooting/device-cannot-connect"
+                className="underline hover:no-underline"
+              >
+                端末・ネットワーク差の切り分けハブ
+              </Link>{" "}
+              へ進むのが早いです。
+            </>,
+          ],
         },
         {
           type: "p",
-          title: "iPhone / iPad (iOS) での設定方法",
+          title: "ブラウザ・端末差の問題に近いケース",
           body: [
-            "1. 設定アプリから「Wi-Fi」を開きます。",
-            "2. 接続しているネットワークの右側にある「i」マークをタップします。",
-            "3. 下にスクロールして「DNSを構成」をタップし、「手動」を選択します。",
-            "4. 既存のDNSがある場合は削除し、「サーバを追加」から 1.1.1.1 や 8.8.8.8 などを入力して保存します。",
-            "5. 反映が遅い場合は、Wi-Fiを一度オフ→オンしてから再度アクセスしてみてください。"
-          ]
+            "同じ回線でもブラウザや端末で結果が変わるなら、DNSだけでなくブラウザ保存データ、拡張機能、端末設定差も候補です。",
+            <>
+              この場合は{" "}
+              <Link
+                href="/troubleshooting/device-cannot-connect"
+                className="underline hover:no-underline"
+              >
+                端末・ネットワーク差の切り分けハブ
+              </Link>{" "}
+              へ進むのが近道です。
+            </>,
+          ],
         },
         {
-          type: "p",
-          title: "変更後の確認（直ったかどうかを最短で判断）",
+          type: "div",
+          title: "エラー名から探す",
           body: [
-            "DNSを切り替えたら、同じURLに再アクセスして改善したかを確認します。もしすぐに変化がない場合でも、数分程度で反映されることがあります。",
-            "それでも改善しない場合は、①別回線で開けるか（Wi-Fi⇔4G/5G） ②別端末で開けるか、を確認してください。回線や端末で結果が変わるなら、引き続き“環境起因”の可能性が高いです。"
-          ]
+            <div key="messages" className="space-y-3">
+              <p>
+                ドメインが見つからない →{" "}
+                <Link
+                  href="/errors/err-name-not-resolved"
+                  className="underline hover:no-underline"
+                >
+                  ERR_NAME_NOT_RESOLVED
+                </Link>
+              </p>
+              <p>
+                DNS_PROBE_FINISHED_NXDOMAIN →{" "}
+                <Link
+                  href="/errors/dns-probe-finished-nxdomain"
+                  className="underline hover:no-underline"
+                >
+                  DNS_PROBE_FINISHED_NXDOMAIN
+                </Link>
+              </p>
+              <p>
+                届かない、到達できない →{" "}
+                <Link
+                  href="/errors/err-address-unreachable"
+                  className="underline hover:no-underline"
+                >
+                  ERR_ADDRESS_UNREACHABLE
+                </Link>
+              </p>
+              <p>
+                回線切り替えや経路変化で失敗する →{" "}
+                <Link
+                  href="/errors/err-network-changed"
+                  className="underline hover:no-underline"
+                >
+                  ERR_NETWORK_CHANGED
+                </Link>
+              </p>
+              <p>
+                まず一覧から探したい →{" "}
+                <Link href="/errors" className="underline hover:no-underline">
+                  エラー解説一覧
+                </Link>
+              </p>
+            </div>,
+          ],
         },
-        {
-          type: "note",
-          title: "設定しても直らない場合は？",
-          body: [
-            "DNS設定を変更しても解決しない場合、原因はDNS以外（回線経路の障害、ISP側の通信制限、サイト側のアクセス制御、SSL/TLSの問題など）にある可能性があります。特に「その回線だけ開けない」「特定サービスだけ弾かれる」場合は、ISP側の経路や制限が関係していることがあります。",
-            "このようなケースでは、通信経路を変えられる『VPN』が有効なことがあります。VPNは接続元を切り替えることで、経路上の問題や一部の制限を回避できる場合があります。国内でも利用者の多い MillenVPN や NordVPN などの導入を検討してみてください。",
-            "ただし、会社や学校のネットワークでの利用は規約により制限される場合があるため、許可されている範囲でご利用ください。"
-          ]
-        }
       ]}
     />
   );

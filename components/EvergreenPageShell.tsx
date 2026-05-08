@@ -196,6 +196,8 @@ export default function EvergreenPageShell({
                 </ul>
               </div>
 
+              {false ? (
+                <>
               {/* FEATURED AD CARD */}
               <div className="bg-gradient-to-br from-sky-500 to-sky-600 rounded-3xl p-6 text-white shadow-md">
                 <div className="flex items-center gap-2 mb-3">
@@ -209,7 +211,7 @@ export default function EvergreenPageShell({
                 </p>
                 <div className="space-y-2">
                   <a
-                    href="https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=69093"
+                    href="https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340"
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     className="block w-full text-center py-2.5 bg-white text-sky-600 rounded-xl text-xs font-bold hover:bg-sky-50 transition-colors shadow-sm"
@@ -224,7 +226,7 @@ export default function EvergreenPageShell({
                   </Link>
                 </div>
                 <img
-                  src="https://i.moshimo.com/af/i/impression?a_id=5400008&p_id=2312&pc_id=4967&pl_id=69093"
+                  src="https://i.moshimo.com/af/i/impression?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340"
                   width="1"
                   height="1"
                   style={{ border: "none" }}
@@ -232,6 +234,8 @@ export default function EvergreenPageShell({
                   alt=""
                 />
               </div>
+                </>
+              ) : null}
 
               {/* QUICK CHECK */}
               <div className="rounded-3xl bg-slate-900 p-6 text-white">

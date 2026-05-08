@@ -1,3 +1,4 @@
+import ConoHaPromoCard from "@/components/ConoHaPromoCard";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
@@ -66,7 +67,8 @@ export default function WhatIsDowntimePage() {
           body: [
             "もしあなたが管理しているサイトが頻繁に不安定になる場合、サーバーの同時接続数・CPU・メモリ・DB性能などがボトルネックになっている可能性があります。特にアクセスが増えた時にだけ落ちる場合は、インフラの限界に達しているサインです。",
             "対策は「原因を隠す」ではなく「耐えられる構成にする」ことです。キャッシュ（CDN/サーバーキャッシュ）の活用、画像最適化、不要な外部スクリプト削減、そして必要ならより安定したホスティング環境への移行が現実的です。",
-            "国内で安定性に定評のあるエックスサーバーや、負荷に強いConoHa WINGなどに移行することで、アクセス増加による機会損失を減らせます。サイトの稼働率は信頼・売上に直結するため、早めの対策を推奨します。"
+            "国内で安定性に定評のあるエックスサーバーや、負荷に強いConoHa WINGなどに移行することで、アクセス増加による機会損失を減らせます。サイトの稼働率は信頼・売上に直結するため、早めの対策を推奨します。",
+            <ConoHaPromoCard key="conoha-downtime" />
           ]
         },
         {

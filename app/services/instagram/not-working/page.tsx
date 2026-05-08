@@ -50,6 +50,9 @@ export default function InstagramNotWorkingPage() {
           Instagramの不具合は、障害だけでなく、回線、Wi-Fi、DNS、アプリ状態、キャッシュ、権限、アカウント周りでも起きます。
           最初に問題の方向を切り分けておくと、無駄な再設定を減らしながら早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-600">
+          見れない・表示されない・投稿できない・ログインできないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

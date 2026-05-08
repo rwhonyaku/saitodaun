@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+function isBlockedProbeStatus(status: number) {
+  return status === 401 || status === 403 || status === 405 || status === 429;
+}
+
 export async function POST(req: Request) {
   try {
     const { url } = (await req.json()) as { url?: string };
@@ -7,6 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           online: false,
+          probeBlocked: false,
           status: null,
           responseTime: null,
           timestamp: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
@@ -19,9 +24,11 @@ export async function POST(req: Request) {
     const start = Date.now();
     const res = await fetch(url, { method: "GET", redirect: "follow" });
     const ms = Date.now() - start;
+    const probeBlocked = isBlockedProbeStatus(res.status);
 
     return NextResponse.json({
       online: res.ok,
+      probeBlocked,
       status: res.status,
       responseTime: ms,
       timestamp: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
@@ -31,6 +38,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         online: false,
+        probeBlocked: false,
         status: null,
         responseTime: null,
         timestamp: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),

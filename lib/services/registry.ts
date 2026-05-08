@@ -4,6 +4,7 @@ export type ServiceId =
   | "youtube"
   | "line"
   | "x"
+  | "notion"
   | "instagram"
   | "amazon"
   | "chatgpt"
@@ -163,6 +164,45 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         officialSources: [{ label: "Xサポート（X）", href: "https://x.com/Support" }],
         statusPageHref: "/status/sites/twitter",
+        mainToolHref: "/",
+      },
+    },
+  },
+
+  notion: {
+    id: "notion",
+    name: "Notion",
+    shortBlurb: "開かない・重い・ログインできない・同期しない時の切り分け。",
+    hubHref: "/services/notion",
+    issues: {
+      "not-working": {
+        id: "not-working",
+        title: "Notionが開かない・重い・ログインできない？（障害か自分側か）",
+        description:
+          "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の切り分けを行います。",
+        intentPhrases: [
+          "notion 障害",
+          "notion 開かない",
+          "notion 重い",
+          "notion ログインできない",
+        ],
+        relatedErrorSlugs: [
+          "err-connection-timed-out",
+          "err-connection-reset",
+          "dns-probe-finished-nxdomain",
+          "ssl-handshake-failed",
+          "503-service-unavailable",
+          "504-gateway-timeout",
+        ],
+        troubleshootingLinks: [
+          { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
+          { label: "ステータスコード一覧", href: "/status-codes" },
+        ],
+        officialSources: [
+          { label: "Notion Status", href: "https://status.notion.so/" },
+          { label: "Notion Help", href: "https://www.notion.so/help" },
+        ],
+        statusPageHref: "/status/sites/notion",
         mainToolHref: "/",
       },
     },

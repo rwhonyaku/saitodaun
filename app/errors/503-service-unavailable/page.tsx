@@ -1,3 +1,4 @@
+import ConoHaPromoCard from "@/components/ConoHaPromoCard";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
@@ -150,6 +151,7 @@ export default function Error503ServiceUnavailablePage() {
               </Link>{" "}
               の整理も近い症状です。
             </>,
+            <ConoHaPromoCard key="conoha-503" />,
           ],
         },
 

@@ -160,7 +160,7 @@ export default function Page() {
                 href="/errors/your-connection-is-not-private"
                 className="underline hover:no-underline"
               >
-                Your connection is not private
+                この接続ではプライバシーが保護されません
               </Link>{" "}
               も近い症状です。
             </>,

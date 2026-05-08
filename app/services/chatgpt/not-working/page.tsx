@@ -51,6 +51,9 @@ export default function ChatGPTNotWorkingPage() {
           最初に原因の方向を切り分けておくと、無駄な設定変更を避けて早く復旧できます。
         </p>
 
+        <p className="text-sm text-neutral-600">
+          使えない・ログインできない・エラーが出る・読み込めないなど、症状によって原因の切り分けが変わります。
+        </p>
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">

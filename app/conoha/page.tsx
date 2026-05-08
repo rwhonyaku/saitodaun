@@ -3,18 +3,18 @@
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 const LINKS = {
-  conoha: "https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=69093",
+  conoha: "https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340",
   pencil: "https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=89336",
 };
 
 export default function ConoHaDeepDive() {
   return (
     <EvergreenPageShell
-      h1="ConoHa WING（コノハウィング）の評判と実力：国内最速No.1サーバーを徹底検証"
+      h1="ConoHa WING（コノハウィング）の特徴と使いどころを整理"
       updatedAt="2026-02-24"
       lead={[
         "ウェブサイトの「表示速度」と「安定性」は、ユーザー体験だけでなくSEO（検索順位）にも直結する極めて重要な要素です。",
-        "当サイトが技術的視点からConoHa WINGを推奨する理由と、他社サーバーとの徹底比較、そして最大14,000円の還元を受けるための具体的な手順を解説します。"
+        "表示速度や運用しやすさの観点から、ConoHa WING を比較候補として整理します。広告・アフィリエイトリンクを含みます。"
       ]}
       sections={[
         {
@@ -113,9 +113,9 @@ export default function ConoHaDeepDive() {
             <div key="final-cta" className="text-center p-8 bg-slate-900 rounded-3xl text-white">
               <h4 className="text-lg font-bold mb-4">今すぐ最速のサイト運営を始める</h4>
               <p className="text-xs opacity-70 mb-6">期間限定：最大53%OFFキャンペーン実施中</p>
-              <a href={LINKS.conoha} target="_blank" rel="noopener noreferrer nofollow" className="inline-block px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black text-sm transition-all shadow-lg shadow-sky-900/20">
+              <a href={LINKS.conoha} target="_blank" rel="noopener noreferrer nofollow sponsored" className="inline-block px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black text-sm transition-all shadow-lg shadow-sky-900/20">
                 ConoHa WING 公式サイトを確認する
-                <img src="https://i.moshimo.com/af/i/impression?a_id=5400008&p_id=2312&pc_id=4967&pl_id=69093" width="1" height="1" className="hidden" alt="" />
+                <img src="https://i.moshimo.com/af/i/impression?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340" width="1" height="1" className="hidden" alt="" />
               </a>
             </div>
           ]
@@ -124,6 +124,7 @@ export default function ConoHaDeepDive() {
           type: "note",
           title: "広告主情報および正確性について",
           body: [
+            "広告・アフィリエイトリンクを含みます。",
             "サービス提供元：GMOインターネットグループ株式会社",
             "キャンペーンの詳細条件や還元額は、時期により変動する可能性があるため、必ずリンク先の「もしもアフィリエイト」および「ConoHa公式サイト」にて最新情報をご確認ください。"
           ]

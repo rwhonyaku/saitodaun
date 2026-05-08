@@ -50,6 +50,9 @@ export default function GoogleNotWorkingPage() {
           Googleの不具合は、Google側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、VPNやプロキシでも起きます。
           先に原因の方向を切り分けるだけで、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-600">
+          検索できない・表示されない・ログインできない・つながらないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

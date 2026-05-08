@@ -50,6 +50,9 @@ export default function MercariNotWorkingPage() {
           メルカリの不具合は、メルカリ側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調でも起きます。
           最初に問題の方向を切り分けておくと、無駄な再ログインや設定変更を減らしながら、より早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-600">
+          ログインできない・購入できない・出品できないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

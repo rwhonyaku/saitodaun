@@ -50,6 +50,9 @@ export default function AmazonNotWorkingPage() {
           Amazonの不具合は、単純な障害だけでなく、回線、Wi-Fi、DNS、ブラウザ、アプリ、アカウント、決済条件などでも起きます。
           先に原因の方向を絞るだけで、無駄な再設定や再インストールをかなり減らせます。
         </p>
+        <p className="text-sm text-neutral-700">
+          ログインできない・注文できない・決済エラーが出る・表示されないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

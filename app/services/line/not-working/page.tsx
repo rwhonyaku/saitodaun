@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.line;
 const issue = service.issues["not-working"];
@@ -50,6 +51,9 @@ export default function LineNotWorkingPage() {
           LINEの不具合は、LINE側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調、権限設定でも起きます。
           最初に原因の方向を切り分けておくと、不要な再インストールや設定変更を避けながら、より早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-700">
+          LINEが使えない場合、メッセージが送れない、通知が来ない、通話できない、繋がらないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
@@ -87,6 +91,8 @@ export default function LineNotWorkingPage() {
           </ol>
         </div>
       </header>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、LINEは障害？</h2>

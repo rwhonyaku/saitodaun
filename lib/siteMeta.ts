@@ -8,7 +8,7 @@ export const SITE = {
     "サイトダウンは、指定したURLにいま接続できるか（オンライン／オフライン）を素早く確認できるシンプルな接続チェックツールです。障害切り分けや一次確認に役立ちます。",
   // Canonical origin
   origin: "https://xn--ecke7b4bzb0s.com",
-} as const
+} as const;
 
 export const NAV_LINKS = [
   { href: "/", label: "接続チェック" },
@@ -22,4 +22,4 @@ export const NAV_LINKS = [
   { href: "/contact", label: "お問い合わせ" },
   { href: "/privacy", label: "プライバシー" },
   { href: "/terms", label: "利用規約" },
-] as const
+] as const;

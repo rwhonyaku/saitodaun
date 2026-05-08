@@ -8,86 +8,71 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10 text-slate-800 text-sm leading-relaxed">
-      <h1 className="text-2xl font-bold mb-6 border-b pb-2">このサイトについて</h1>
+    <div className="mx-auto max-w-2xl px-4 py-10 text-sm leading-relaxed text-slate-800">
+      <h1 className="mb-6 border-b pb-2 text-2xl font-bold">このサイトについて</h1>
 
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">運営目的とミッション</h2>
+        <h2 className="mb-3 text-lg font-semibold">運営目的とミッション</h2>
         <p className="mb-4">
-          {SITE.name} は、インターネット利用者が直面する「つながらない」という不安を解消するために構築された、中立的な接続検証ツールです。
-          急なサービス停止やアクセス不能が発生した際、それが「サービス側の障害」なのか「利用者自身の環境問題」なのかを第三者視点で切り分けるための客観的なデータを提供することを目的としています。
+          {SITE.name}
+          は、インターネット利用者が直面する「つながらない」という不安を切り分けるための接続確認サイトです。急なサービス停止やアクセス不能が起きた際に、それがサービス側の障害なのか、利用者自身の環境要因なのかを見分けるための参考情報を提供します。
         </p>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">接続チェックの技術的仕組み</h2>
+        <h2 className="mb-3 text-lg font-semibold">接続チェックの技術的な仕組み</h2>
         <p className="mb-3">
-          当サイトのチェック機能は、ユーザーのブラウザからではなく、**当サイトが管理する外部サーバー**から対象URLに対して直接リクエストを送信します。
+          当サイトのチェック機能は、ユーザーのブラウザからではなく、当サイトが管理する外部サーバーから対象URLへリクエストを送信して確認します。
         </p>
-        <div className="bg-slate-50 p-4 rounded-md mb-4 border border-slate-100">
-          <p className="font-medium mb-2">検証プロセス：</p>
-          <ul className="list-disc list-inside space-y-1">
-            <li>対象URLへのHTTP/HTTPSプロトコルによる疎通確認</li>
-            <li>サーバーから返却される「HTTPステータスコード」の解析</li>
-            <li>リクエスト送信からレスポンス受領までの応答速度（レイテンシ）の計測</li>
+        <div className="mb-4 rounded-md border border-slate-100 bg-slate-50 p-4">
+          <p className="mb-2 font-medium">検証プロセス:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>対象URLへの HTTP / HTTPS リクエスト</li>
+            <li>返却された HTTP ステータスコードの確認</li>
+            <li>応答時間の計測</li>
           </ul>
         </div>
         <p>
-          これにより、ユーザー個人の端末設定や地域プロバイダーの影響を排除した、「外部からの到達可能性」を可視化します。
+          これにより、個別の端末設定や一部回線条件の影響を受けにくい形で、外部から見た到達性を確認できます。
         </p>
       </section>
 
-      <section className="mb-8 border-l-4 border-sky-500 pl-4 py-1 bg-sky-50/30">
-        <h2 className="text-lg font-semibold mb-3">広告配信と収益について（PR表記）</h2>
+      <section className="mb-8 border-l-4 border-sky-500 bg-sky-50/30 py-1 pl-4">
+        <h2 className="mb-3 text-lg font-semibold">広告配信と収益について（PR表記）</h2>
         <p className="mb-4">
-          {SITE.name} は、すべての機能を無料で提供しています。サイトの維持管理費（サーバー費用・開発費）を賄うため、Googleアドセンスによる広告配信および、もしもアフィリエイト等のアフィリエイトプログラムを利用しています。
+          {SITE.name}
+          は、すべての機能を無料で提供しています。サイトの維持管理費をまかなうため、第三者配信の広告サービスおよびアフィリエイトプログラムを利用する場合があります。
         </p>
         <p className="mb-4">
-          記事内やツール結果画面にて商品・サービスの紹介を行う場合がありますが、これらはアフィリエイトリンクとなっており、購入や成約時に当サイトに紹介料が支払われる仕組みとなっています。
+          記事内や一部ページで商品・サービスを紹介する場合がありますが、必要に応じてPR表記や広告・アフィリエイト表記を付けています。
         </p>
-        <p className="text-xs text-slate-500 italic">
-          ※アフィリエイトプログラムの利用により、ユーザー側に発生する費用は一切ございません。また、特定のサービスを不当に高く評価することなく、客観的なデータに基づいた運営を徹底しています。
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">情報の正確性とE-A-Tへの取り組み</h2>
-        <p className="mb-4">
-          私たちは、提供する情報の透明性を重視しています。公式発表（ステータスページ等）と当サイトの結果が異なる場合がありますが、これは以下の要因による「事実の差異」であり、誤報ではありません。
-        </p>
-        <ul className="list-disc list-inside space-y-2 mb-4">
-          <li><strong>ネットワーク経路：</strong> 特定のデータセンターやCDN（Contents Delivery Network）の経由地点による差異。</li>
-          <li><strong>制限事項：</strong> サイト側のセキュリティ設定（WAFやレートリミット）による外部自動チェックの遮断。</li>
-          <li><strong>部分的障害：</strong> 「ログインはできるが投稿ができない」といった機能単位の不具合は、外形監視では検知できない場合があります。</li>
-        </ul>
-        <p>
-          当サイトの結果は、あくまで「特定の時点・特定の地点」からの接続可否を示すひとつの参考指標としてご利用ください。
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">ご利用にあたっての指針</h2>
-        <p className="mb-4">
-          本ツールは、簡易的な切り分けを迅速に行うためのユーティリティです。ビジネス上の重要な意思決定や、継続的なインフラ監視を目的としたものではありません。
-          公式なサービス稼働状況については、各サービス運営者が提供する公式ステータスページを併せて参照されることを強く推奨します。
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-3">プライバシーと安全性</h2>
-        <p className="mb-4">
-          ユーザーのプライバシー保護を第一に考えています。入力されたURLはリアルタイムの接続チェックにのみ使用され、特定の個人と結びつける形での保存や、第三者への販売は一切行いません。
+        <p className="text-xs italic text-slate-500">
           クッキーの利用や広告配信に関する詳細は、<a href="/privacy" className="text-blue-600 underline">プライバシーポリシー</a>をご確認ください。
         </p>
       </section>
 
-      <footer className="border-t pt-6 mt-10">
-        <p className="text-xs text-slate-500">
-          運営：{SITE.name} 運営チーム
+      <section className="mb-8">
+        <h2 className="mb-3 text-lg font-semibold">情報の正確性と運営方針</h2>
+        <p className="mb-4">
+          公式発表と当サイトの結果が一致しない場合があります。これは確認地点や時刻、アクセス制限、部分障害などの差によるもので、必ずしも誤りを意味するものではありません。
         </p>
-        <p className="text-xs text-slate-500 mt-1">
-          最終更新日：2026-02-22
+        <ul className="list-disc space-y-2 pl-5">
+          <li><strong>ネットワーク経路:</strong> CDN や経由地点によって見え方が変わることがあります。</li>
+          <li><strong>アクセス制限:</strong> WAF やレート制限で外部チェックが遮断されることがあります。</li>
+          <li><strong>部分障害:</strong> ログインや投稿だけが失敗するような症状は、外形監視だけでは検知できない場合があります。</li>
+        </ul>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="mb-3 text-lg font-semibold">ご利用にあたって</h2>
+        <p className="mb-4">
+          本サイトは、状況確認と初期切り分けを素早く行うための参考ツールです。正式な稼働状況や障害情報は、各サービスの公式案内もあわせてご確認ください。
         </p>
+      </section>
+
+      <footer className="mt-10 border-t pt-6">
+        <p className="text-xs text-slate-500">運営: {SITE.name} 運営チーム</p>
+        <p className="mt-1 text-xs text-slate-500">最終更新日: 2026-05-03</p>
       </footer>
     </div>
   );

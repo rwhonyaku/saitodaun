@@ -50,6 +50,9 @@ export default function ZoomNotWorkingPage() {
           Zoomの不具合は、Zoom側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリ、ブラウザ、会議URLや参加条件でも起きます。
           最初に原因の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
+        <p className="text-sm text-neutral-600">
+          会議に入れない・接続できない・ログインできない・音声や映像がつながらないなど、症状によって原因の切り分けが変わります。
+        </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>

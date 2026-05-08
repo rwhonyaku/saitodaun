@@ -7,116 +7,99 @@ export default function SiteFooter() {
   return (
     <footer className="border-t bg-slate-50">
       <div className="mx-auto max-w-5xl px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-
-          {/* Column 1: Brand */}
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
-            <div className="text-sm font-bold text-slate-900 mb-2">{SITE.name}</div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <div className="mb-2 text-sm font-bold text-slate-900">{SITE.name}</div>
+            <p className="text-xs leading-relaxed text-slate-600">
               {SITE.tagline}
               <br />
-              外部サーバーからの視点でウェブサイトの稼働状況をリアルタイムに判定します。
+              外部サーバーからの視点でウェブサイトの稼働状況をリアルタイムに確認します。
             </p>
           </div>
 
-          {/* Column 2: Troubleshooting & Guides */}
           <div>
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+            <div className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">
               対処法・関連ガイド
             </div>
 
             <ul className="space-y-2 text-sm">
-
-              {/* Core sections */}
               <li>
-                <Link href="/services" className="text-slate-700 hover:text-sky-600 font-bold">
+                <Link href="/services" className="font-bold text-slate-700 hover:text-sky-600">
                   サービス別トラブル確認
                 </Link>
               </li>
-
               <li>
-                <Link href="/outages/japan" className="text-slate-700 hover:text-sky-600 font-bold">
+                <Link href="/outages/japan" className="font-bold text-slate-700 hover:text-sky-600">
                   ネット障害情報
                 </Link>
               </li>
-
               <li>
-                <Link href="/troubleshooting/specific-site-not-working" className="text-slate-700 hover:text-sky-600 font-bold">
+                <Link
+                  href="/troubleshooting/specific-site-not-working"
+                  className="font-bold text-slate-700 hover:text-sky-600"
+                >
                   特定サイトが開かないとき
                 </Link>
               </li>
-
-              {/* Main troubleshooting pillar */}
               <li>
                 <Link href="/troubleshooting-guide" className="text-slate-600 hover:text-sky-600">
                   サイトが見れない時の解消ガイド
                 </Link>
               </li>
-
               <li>
                 <Link href="/troubleshooting-dns" className="text-slate-600 hover:text-sky-600">
                   DNSエラーの直し方
                 </Link>
               </li>
-
               <li>
                 <Link href="/status-codes" className="text-slate-600 hover:text-sky-600">
                   HTTPエラーコード解説
                 </Link>
               </li>
-
               <li>
                 <Link href="/site-performance" className="text-slate-600 hover:text-sky-600">
                   サイトが重い時の対策
                 </Link>
               </li>
-
               <li>
                 <Link href="/what-is-website-downtime" className="text-slate-600 hover:text-sky-600">
                   サイトが落ちているとは？
                 </Link>
               </li>
-
               <li>
                 <Link href="/glossary" className="text-slate-600 hover:text-sky-600">
                   ウェブ用語集
                 </Link>
               </li>
-
               <li>
                 <Link href="/faq" className="text-slate-600 hover:text-sky-600">
                   よくある質問（FAQ）
                 </Link>
               </li>
-
-              {/* Monetization section */}
               <li className="pt-2">
                 <Link
                   href="/recommendations"
-                  className="text-sky-600 hover:text-sky-700 font-bold"
+                  className="font-bold text-sky-600 hover:text-sky-700"
                 >
                   推奨ツール・サービス
                 </Link>
               </li>
-
               <li>
                 <Link
                   href="/conoha"
-                  className="text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1"
+                  className="flex items-center gap-1 font-bold text-indigo-600 hover:text-indigo-700"
                 >
-                  <span className="text-[10px] bg-indigo-100 px-1.5 py-0.5 rounded text-indigo-700">
+                  <span className="rounded bg-indigo-100 px-1.5 py-0.5 text-[10px] text-indigo-700">
                     特集
                   </span>
                   ConoHa WING 徹底解説
                 </Link>
               </li>
-
             </ul>
           </div>
 
-          {/* Column 3: Site Links & Legal */}
           <div>
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+            <div className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">
               運営情報
             </div>
 
@@ -126,25 +109,21 @@ export default function SiteFooter() {
                   このサイトについて
                 </Link>
               </li>
-
               <li>
                 <Link href="/how-it-works" className="text-slate-600 hover:text-sky-600">
                   チェックの仕組み
                 </Link>
               </li>
-
               <li>
                 <Link href="/privacy" className="text-slate-600 hover:text-sky-600">
                   プライバシーポリシー
                 </Link>
               </li>
-
               <li>
                 <Link href="/terms" className="text-slate-600 hover:text-sky-600">
                   利用規約
                 </Link>
               </li>
-
               <li>
                 <Link href="/contact" className="text-slate-600 hover:text-sky-600">
                   お問い合わせ
@@ -154,7 +133,7 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row">
           <div className="text-xs text-slate-500">
             © {new Date().getFullYear()} {SITE.name}
           </div>

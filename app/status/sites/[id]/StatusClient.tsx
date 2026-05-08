@@ -8,6 +8,7 @@ import { getEditorialById } from "@/lib/statusEditorial";
 
 type CheckResult = {
   online: boolean;
+  probeBlocked?: boolean;
   status: number | null;
   responseTime: number | null;
   timestamp: string;
@@ -17,6 +18,7 @@ type CheckResult = {
 
 function getGuideHrefFromResult(result: CheckResult | null): string | null {
   if (!result) return null;
+  if (result.probeBlocked) return null;
 
   const status = result.status;
 
@@ -88,6 +90,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
     } catch {
       setResult({
         online: false,
+        probeBlocked: false,
         status: null,
         responseTime: null,
         timestamp: new Date().toLocaleString("ja-JP", {
@@ -124,15 +127,28 @@ export default function StatusClient({ id: propId }: { id: string }) {
     );
   }
 
-  const statusLabel = !result ? "未判定" : result.online ? "オンライン" : "オフライン";
+  const statusLabel = !result
+    ? "未判定"
+    : result.probeBlocked
+    ? "判定保留"
+    : result.online
+    ? "オンライン"
+    : "オフライン";
   const statusColor = !result
     ? "text-slate-400"
+    : result.probeBlocked
+    ? "text-amber-600"
     : result.online
     ? "text-green-600"
     : "text-red-600";
 
   const hasOfficialLinks = Boolean(site.officialStatusUrl || site.supportUrl || site.xUrl);
   const guideHref = getGuideHrefFromResult(result);
+  const isTwitterStatus = site.id === "twitter";
+  const isLineStatus = site.id === "line";
+  const isNotionStatus = site.id === "notion";
+  const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
+  const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
 
   return (
     <main className="flex-1 bg-slate-50">
@@ -141,10 +157,18 @@ export default function StatusClient({ id: propId }: { id: string }) {
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {site.name} は今落ちてる？（障害・稼働状況チェック）
+              {isLineStatus
+                ? "LINE 障害？今つながらない？"
+                : isNotionStatus
+                ? "Notion 障害？今開かない？"
+                : `${serviceLabel} は今落ちてる？（障害・稼働状況チェック）`}
             </h1>
             <p className="mt-2 text-sm text-slate-600">
-              「{site.name} が見れない」「障害が出てる？」という時に、いま接続できるかを簡易チェックします。
+              {isLineStatus
+                ? "このページは、LINE が今広く落ちているかの目安を見るためのものです。広く落ちていないなら、次は自分側か一部機能だけの不具合かを分けます。"
+                : isNotionStatus
+                ? "このページは、Notion が今広く落ちているかの目安を見るためのものです。広く落ちていないなら、次は自分側か一部機能だけの不具合かを分けます。"
+                : `「${serviceLabel} が見れない」「障害が出てる？」という時に、いま接続できるかを簡易チェックします。`}
             </p>
           </div>
 
@@ -183,6 +207,11 @@ export default function StatusClient({ id: propId }: { id: string }) {
           {result && (
             <div className="mt-3 space-y-1">
               {result.error && <p className="text-xs text-red-500">{result.error}</p>}
+              {result.probeBlocked && !result.error && (
+                <p className="text-xs text-amber-700">
+                  このサイトは当サイトのチェック環境から確認できませんでした。実際には利用できる場合があります。
+                </p>
+              )}
               {result.checkedUrl && (
                 <p className="text-[11px] text-slate-500 break-all">
                   実際にチェックしたURL：{result.checkedUrl}
@@ -190,7 +219,9 @@ export default function StatusClient({ id: propId }: { id: string }) {
               )}
 
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs">HTTPステータス：{result.status ?? "―"}</p>
+                <p className="text-xs">
+                  {isNotionStatus ? "現在の接続状態" : "HTTPステータス"}：{result.status ?? "―"}
+                </p>
                 {guideHref && (
                   <Link
                     href={guideHref}
@@ -207,14 +238,139 @@ export default function StatusClient({ id: propId }: { id: string }) {
               </p>
               <p className="text-[11px] text-slate-500">最終チェック：{result.timestamp}</p>
 
-              {!result.online && !result.error && (
+              {!result.online && !result.probeBlocked && !result.error && (
                 <p className="mt-2 text-[11px] text-slate-500">
                   オフライン表示でも、一時的な通信エラーや地域差で失敗することがあります。数十秒おいて再チェックしてください。
+                </p>
+              )}
+              {result.probeBlocked && !result.error && (
+                <p className="mt-2 text-[11px] text-slate-500">
+                  ブラウザで開ける場合は、障害ではなくチェック制限の可能性があります。公式情報もあわせて確認してください。
                 </p>
               )}
             </div>
           )}
         </div>
+
+        {isTwitterStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">
+              まず切り分ける
+            </h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  全体障害かもしれない
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  複数端末や別回線でも同じなら、まずこのページの結果と公式案内を優先します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  自分だけの不具合かもしれない
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  広く落ちていないのに使えないなら、端末・回線・ログイン状態の切り分けに進みます。
+                </p>
+                <Link
+                  href="/services/x/not-working"
+                  className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
+                >
+                  X（旧Twitter）が使えないときの切り分け →
+                </Link>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  一部機能だけおかしい可能性
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  タイムラインは見えるのに投稿、通知、DMだけ不安定なら、部分不具合の可能性があります。
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {isLineStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">
+              まず切り分ける
+            </h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  全体障害の可能性
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  複数端末や別回線でも同じなら、まずこのページの結果と公式案内を優先します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  自分だけの不具合
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  広く落ちていないのに使えないなら、端末・回線・アプリ側の切り分けに進みます。
+                </p>
+                <Link
+                  href="/services/line/not-working"
+                  className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
+                >
+                  LINE が使えないときの切り分け →
+                </Link>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  一部機能の問題
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  メッセージ、通話、通知のどれだけが不安定なのかで切り分けが変わります。
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {isNotionStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">
+              まず切り分ける
+            </h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  全体障害の可能性
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  複数端末や別回線でも同じなら、まずこのページの結果と公式案内を優先します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  自分だけの不具合
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  広く落ちていないのに開かない、重い、ログインできないなら、自分側の切り分けに進みます。
+                </p>
+                <Link
+                  href="/services/notion/not-working"
+                  className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
+                >
+                  Notion が使えないときの切り分け →
+                </Link>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  一部機能の問題
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  同期、検索、表示内容だけが不安定なら、部分不具合の可能性があります。
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Editorial blocks (AdSense-safe depth) */}
         {editorial && (
@@ -222,7 +378,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
             {/* What it means if down */}
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
               <h2 className="text-sm font-semibold text-slate-900">
-                「{site.name} が落ちている」とは何を意味しますか
+                「{serviceLabel} が落ちている」とは何を意味しますか
               </h2>
               <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
                 {(
@@ -235,110 +391,109 @@ export default function StatusClient({ id: propId }: { id: string }) {
               </ul>
             </section>
 
-            {/* Useful / Not useful */}
-            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">このページが役立つ場面／役立たない場面</h2>
+            {!isLeanRouter ? (
+              <>
+                <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+                  <h2 className="text-sm font-semibold text-slate-900">このページが役立つ場面／役立たない場面</h2>
 
-              <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="text-xs font-semibold text-slate-900">役立つ場面</p>
-                  <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                    {editorial.usefulWhen.map((t, i) => (
-                      <li key={i}>{t}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-slate-900">役立たない場面</p>
-                  <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                    {editorial.notUsefulWhen.map((t, i) => (
-                      <li key={i}>{t}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Service-specific */}
-            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">このサービスで起きやすいパターン（サービス別）</h2>
-
-              <div className="mt-3 space-y-4">
-                <div>
-                  <p className="text-xs font-semibold text-slate-900">よくある障害の出方</p>
-                  <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                    {editorial.serviceSpecific.commonPatterns.map((t, i) => (
-                      <li key={i}>{t}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                {editorial.serviceSpecific.tendsToBreakFirst && (
-                  <div>
-                    <p className="text-xs font-semibold text-slate-900">影響が出やすい領域</p>
-                    <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                      {editorial.serviceSpecific.tendsToBreakFirst.map((t, i) => (
-                        <li key={i}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {editorial.serviceSpecific.siteUpButFeatureBrokenExamples && (
-                  <div>
-                    <p className="text-xs font-semibold text-slate-900">
-                      「サイトは開くが機能だけ壊れる」例
-                    </p>
-                    <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                      {editorial.serviceSpecific.siteUpButFeatureBrokenExamples.map((t, i) => (
-                        <li key={i}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            {/* What to check next (informational) */}
-            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">次に確認できること（情報整理・切り分け）</h2>
-              <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                {editorial.whatToCheckNext.map((t, i) => (
-                  <li key={i}>{t}</li>
-                ))}
-              </ul>
-
-              {/* Semantic internal links */}
-              {editorial.internalLinks && editorial.internalLinks.length > 0 && (
-                <div className="mt-4 space-y-3">
-                  {editorial.internalLinks.map((l, i) => (
-                    <div key={i} className="text-xs">
-                      <Link href={l.href} className="text-sky-600 underline hover:text-sky-700">
-                        {l.label} →
-                      </Link>
-                      <p className="mt-1 text-[11px] text-slate-500">{l.reason}</p>
+                  <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <p className="text-xs font-semibold text-slate-900">役立つ場面</p>
+                      <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                        {editorial.usefulWhen.map((t, i) => (
+                          <li key={i}>{t}</li>
+                        ))}
+                      </ul>
                     </div>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            {/* Related services (optional) */}
-            {editorial.relatedServices && editorial.relatedServices.length > 0 && (
-              <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-                <h2 className="text-sm font-semibold text-slate-900">関連サービス（切り分けに使える）</h2>
-                <div className="mt-3 space-y-3">
-                  {editorial.relatedServices.map((s, i) => (
-                    <div key={i}>
-                      <Link href={s.href} className="text-xs text-sky-600 underline hover:text-sky-700">
-                        {s.label} →
-                      </Link>
-                      <p className="mt-1 text-[11px] text-slate-500">{s.note}</p>
+                    <div>
+                      <p className="text-xs font-semibold text-slate-900">役立たない場面</p>
+                      <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                        {editorial.notUsefulWhen.map((t, i) => (
+                          <li key={i}>{t}</li>
+                        ))}
+                      </ul>
                     </div>
-                  ))}
-                </div>
-              </section>
-            )}
+                  </div>
+                </section>
+
+                <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+                  <h2 className="text-sm font-semibold text-slate-900">このサービスで起きやすいパターン（サービス別）</h2>
+
+                  <div className="mt-3 space-y-4">
+                    <div>
+                      <p className="text-xs font-semibold text-slate-900">よくある障害の出方</p>
+                      <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                        {editorial.serviceSpecific.commonPatterns.map((t, i) => (
+                          <li key={i}>{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {editorial.serviceSpecific.tendsToBreakFirst && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-900">影響が出やすい領域</p>
+                        <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                          {editorial.serviceSpecific.tendsToBreakFirst.map((t, i) => (
+                            <li key={i}>{t}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {editorial.serviceSpecific.siteUpButFeatureBrokenExamples && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-900">
+                          「サイトは開くが機能だけ壊れる」例
+                        </p>
+                        <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                          {editorial.serviceSpecific.siteUpButFeatureBrokenExamples.map((t, i) => (
+                            <li key={i}>{t}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+                  <h2 className="text-sm font-semibold text-slate-900">次に確認できること（情報整理・切り分け）</h2>
+                  <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                    {editorial.whatToCheckNext.map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ul>
+
+                  {editorial.internalLinks && editorial.internalLinks.length > 0 && (
+                    <div className="mt-4 space-y-3">
+                      {editorial.internalLinks.map((l, i) => (
+                        <div key={i} className="text-xs">
+                          <Link href={l.href} className="text-sky-600 underline hover:text-sky-700">
+                            {l.label} →
+                          </Link>
+                          <p className="mt-1 text-[11px] text-slate-500">{l.reason}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </section>
+
+                {editorial.relatedServices && editorial.relatedServices.length > 0 && (
+                  <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+                    <h2 className="text-sm font-semibold text-slate-900">関連サービス（切り分けに使える）</h2>
+                    <div className="mt-3 space-y-3">
+                      {editorial.relatedServices.map((s, i) => (
+                        <div key={i}>
+                          <Link href={s.href} className="text-xs text-sky-600 underline hover:text-sky-700">
+                            {s.label} →
+                          </Link>
+                          <p className="mt-1 text-[11px] text-slate-500">{s.note}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </>
+            ) : null}
           </>
         )}
 
@@ -408,66 +563,67 @@ export default function StatusClient({ id: propId }: { id: string }) {
           </section>
         )}
 
-        {/* Existing service note (kept) */}
-        <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-          <h2 className="text-sm font-semibold text-slate-900">このサービスでよくある影響</h2>
+        {!isLeanRouter ? (
+          <>
+            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+              <h2 className="text-sm font-semibold text-slate-900">このサービスでよくある影響</h2>
 
-          <p className="mt-3 text-xs text-slate-600 leading-relaxed">{site.serviceNote}</p>
+              <p className="mt-3 text-xs text-slate-600 leading-relaxed">{site.serviceNote}</p>
 
-          <p className="mt-3 text-[11px] text-slate-500">
-            目立つ障害がなくても、ログインのみ／読み込みのみ等の「部分的な不具合」として現れることがあります。
-          </p>
-        </section>
-
-        {/* Generic triage (kept as fallback content, but editorial is the main depth) */}
-        <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-          <h2 className="text-sm font-semibold text-slate-900">まず確認すること（切り分け）</h2>
-          <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
-            <li>数十秒おいて再チェック（瞬間的な混雑・一時エラーのことがあります）</li>
-            <li>別回線（Wi-Fi / 4G / 5G）でも確認</li>
-            <li>別の端末・別ブラウザ（拡張機能の影響を切り分け）</li>
-            <li>公式発表（公式情報の確認先）を確認</li>
-            <li>DNS / CDN / アクセス制限の影響で、地域や回線によって結果が異なる場合があります</li>
-          </ul>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link href="/" className="text-xs text-sky-600 underline hover:text-sky-700">
-              URL入力でサイト接続チェック →
-            </Link>
-            <Link href="/status" className="text-xs text-sky-600 underline hover:text-sky-700">
-              他サービスの一覧へ →
-            </Link>
-          </div>
-        </section>
-
-        {/* Mini FAQ */}
-        <section className="mt-8 border-t border-slate-200 pt-6">
-          <h2 className="text-sm font-semibold text-slate-900 mb-3">よくある質問</h2>
-          <div className="space-y-4 text-xs sm:text-sm">
-            <div>
-              <p className="font-semibold">
-                Q. 「{site.name} 障害」「{site.name} 落ちてる」で検索したら、このページで分かりますか？
+              <p className="mt-3 text-[11px] text-slate-500">
+                目立つ障害がなくても、ログインのみ／読み込みのみ等の「部分的な不具合」として現れることがあります。
               </p>
-              <p className="mt-1 text-slate-600">
-                本ページは「このサーバーから接続できるか」を簡易チェックします。公式が障害を発表していなくても、地域差や一時的な障害で接続できないケースがあります。
-              </p>
-            </div>
+            </section>
 
-            <div>
-              <p className="font-semibold">Q. 公式ステータスと違う結果になることがありますか？</p>
-              <p className="mt-1 text-slate-600">
-                あります。公式は全体状況、本ページは接続可否の確認です。時間をおいて再チェックしてください。
-              </p>
-            </div>
+            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+              <h2 className="text-sm font-semibold text-slate-900">まず確認すること（切り分け）</h2>
+              <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
+                <li>数十秒おいて再チェック（瞬間的な混雑・一時エラーのことがあります）</li>
+                <li>別回線（Wi-Fi / 4G / 5G）でも確認</li>
+                <li>別の端末・別ブラウザ（拡張機能の影響を切り分け）</li>
+                <li>公式発表（公式情報の確認先）を確認</li>
+                <li>DNS / CDN / アクセス制限の影響で、地域や回線によって結果が異なる場合があります</li>
+              </ul>
 
-            <div>
-              <p className="font-semibold">Q. 結果はどれくらい正確ですか？</p>
-              <p className="mt-1 text-slate-600">
-                目安です。回線状況やアクセス制限（WAF/レート制限）等で失敗する場合があります。
-              </p>
-            </div>
-          </div>
-        </section>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link href="/" className="text-xs text-sky-600 underline hover:text-sky-700">
+                  URL入力でサイト接続チェック →
+                </Link>
+                <Link href="/status" className="text-xs text-sky-600 underline hover:text-sky-700">
+                  他サービスの一覧へ →
+                </Link>
+              </div>
+            </section>
+
+            <section className="mt-8 border-t border-slate-200 pt-6">
+              <h2 className="text-sm font-semibold text-slate-900 mb-3">よくある質問</h2>
+              <div className="space-y-4 text-xs sm:text-sm">
+                <div>
+                  <p className="font-semibold">
+                    Q. 「{site.name} 障害」「{site.name} 落ちてる」で検索したら、このページで分かりますか？
+                  </p>
+                  <p className="mt-1 text-slate-600">
+                    本ページは「このサーバーから接続できるか」を簡易チェックします。公式が障害を発表していなくても、地域差や一時的な障害で接続できないケースがあります。
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-semibold">Q. 公式ステータスと違う結果になることがありますか？</p>
+                  <p className="mt-1 text-slate-600">
+                    あります。公式は全体状況、本ページは接続可否の確認です。時間をおいて再チェックしてください。
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-semibold">Q. 結果はどれくらい正確ですか？</p>
+                  <p className="mt-1 text-slate-600">
+                    目安です。回線状況やアクセス制限（WAF/レート制限）等で失敗する場合があります。
+                  </p>
+                </div>
+              </div>
+            </section>
+          </>
+        ) : null}
 
         <p className="mt-6 text-[11px] text-slate-500">
           ※ このページは {site.name} の稼働状況を確認するための簡易チェックです。継続監視・通知を保証するものではありません。

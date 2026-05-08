@@ -17,7 +17,21 @@ export const AFFILIATE_LINKS = {
   },
   nordvpn: {
     name: "NordVPN",
-    url: "https://nordvpn.com/ja/",
-    isPlaceholder: true
+    url: "https://go.nordvpn.net/aff_c?offer_id=15&aff_id=145604&url_id=880",
+    isPlaceholder: false
+  },
+  surfshark: {
+    name: "Surfshark",
+    url:
+      process.env.NEXT_PUBLIC_SURFSHARK_AFFILIATE_URL ||
+      "https://get.surfshark.net/aff_c?offer_id=926&aff_id=46200",
+    isPlaceholder: false
+  },
+  expressvpn: {
+    name: "ExpressVPN",
+    url:
+      process.env.NEXT_PUBLIC_EXPRESSVPN_AFFILIATE_URL ||
+      "https://go.expressvpn.com/c/4281306/1697959/16063",
+    isPlaceholder: false
   }
 };

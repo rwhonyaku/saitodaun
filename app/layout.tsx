@@ -61,13 +61,11 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Grow Script - Injected as raw HTML to ensure Mediavine verification succeeds */}
         <script
-          data-grow-initializer=""
-          dangerouslySetInnerHTML={{
-            __html: `!(function(){window.growMe||((window.growMe=function(e){window.growMe._.push(e);}),(window.growMe._=[]));var e=document.createElement("script");(e.type="text/javascript"),(e.src="https://faves.grow.me/main.js"),(e.defer=!0),e.setAttribute("data-grow-faves-site-id","U2l0ZTo4NTg1MGRiOS0yN2VmLTQzNmMtOTE2Ny04ODc1ZDNkMmI5M2U=");var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t);})();`,
-          }}
-        />
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2711217631458410"
+          crossOrigin="anonymous"
+        ></script>
       </head>
 
       <body className="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900 antialiased">
@@ -88,9 +86,7 @@ export default function RootLayout({
 
         <SiteNav />
 
-        <div className="flex-1 flex flex-col overflow-x-hidden">
-          {children}
-        </div>
+        <div className="flex-1 flex flex-col overflow-x-hidden">{children}</div>
 
         <SiteFooter />
       </body>
