@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.youtube;
 const issue = service.issues["not-working"];
@@ -10,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "YouTubeが見れない・開かない？（障害か自分側か） | サイトダウン",
   description:
-    "YouTubeが見れない・読み込めない・再生できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "YouTubeが見れない・読み込めない・再生できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function YouTubeNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +49,10 @@ export default function YouTubeNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           YouTubeの不具合は、YouTube側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、ブラウザ、アプリ、拡張機能の影響でも起きます。
-          最初に原因の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          最初に原因の方向を確認しておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          見れない・再生できない・読み込めない・ログインできないなど、症状によって原因の切り分けが変わります。
+          見れない・再生できない・読み込めない・ログインできないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function YouTubeNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、YouTubeは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function YouTubeNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +176,7 @@ export default function YouTubeNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -211,6 +213,8 @@ export default function YouTubeNotWorkingPage() {
         </div>
       </section>
 
+      <IMobileAd slot="notworking_mid" />
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
@@ -235,7 +239,7 @@ export default function YouTubeNotWorkingPage() {
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">「開けるが一部機能だけ使えない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>検索、再生、コメント、ログインなど、どの機能だけ不安定かを切り分けます。</li>
+            <li>検索、再生、コメント、ログインなど、どの機能だけ不安定かを確認します。</li>
             <li>ブラウザ版とアプリ版の両方で試すと、どちら側の問題かを見分けやすくなります。</li>
             <li>Wi-Fiとモバイル通信の両方で試して、回線差が出るか確認します。</li>
           </ul>
@@ -322,7 +326,7 @@ export default function YouTubeNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと見れるのに、Wi-Fiだとだめなのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              自宅や職場の回線側にあるDNS、ルーター、VPN、プロキシの問題が濃厚です。まずは回線差を確認し、DNSやルーター側の切り分けを進めてください。
+              自宅や職場の回線側にあるDNS、ルーター、VPN、プロキシの問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
             </p>
           </div>
 

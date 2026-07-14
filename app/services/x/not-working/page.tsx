@@ -9,9 +9,9 @@ const service = SERVICES.x;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "X（旧Twitter）が使えないときの切り分け | サイトダウン",
+  title: "X（旧Twitter）が開かない・ログインできない時の原因確認 | サイトダウン",
   description:
-    "X（旧Twitter）が広く落ちていないのに使えないときに、回線、DNS、端末、ブラウザ、アプリ、ログイン状態など自分側の原因を切り分けるためのページです。",
+    "X（旧Twitter）が広く落ちていないのに開かない、読み込めない、ログインできない時に、自分側の回線・アプリ・端末が原因かを確認します。",
 };
 
 const ERROR_LABELS: Record<string, string> = {
@@ -38,7 +38,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function XNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -52,19 +52,19 @@ export default function XNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          X（旧Twitter）が開かない・読み込めない・ログインできない？（自分側かを最短判定）
+          X（旧Twitter）が開かない・読み込めない・ログインできない？（自分側かを確認）
         </h1>
 
         <p className="text-base text-neutral-600">
-          X（旧Twitter）が広く落ちていないのに使えないときは、回線、Wi-Fi、DNS、端末、ブラウザ、アプリ、ログイン状態など自分側の条件を切り分ける方が早いです。
+          X（旧Twitter）が広く落ちていないのに使えない時は、回線、Wi-Fi、DNS、端末、ブラウザ、アプリ、ログイン状態など自分側の条件を確認する方が早いです。
           まず全体障害を除外したうえで、このページでは「自分だけかもしれない」不具合を整理します。
         </p>
         <p className="text-sm text-neutral-700">
-          見れない・投稿できない・ログインできない・通知が来ないなど、症状によって原因の切り分けが変わります。
+          タイムラインは見れるが投稿だけできない、通知だけ来ない、ログインだけ失敗する場合は、見るべき原因が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 bg-slate-50 p-5">
-          <h2 className="text-lg font-semibold">最初に分けること</h2>
+          <h2 className="text-lg font-semibold">最初に確認すること</h2>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
             <li>
               まず広く落ちていないか確認：
@@ -82,18 +82,17 @@ export default function XNotWorkingPage() {
               {" "}
               を優先
             </li>
-            <li>X（旧Twitter）だけ使いにくいなら、このページで自分側の不具合を切り分ける</li>
+            <li>X（旧Twitter）だけ使いにくいなら、このページで自分側の原因を確認する</li>
           </ol>
         </div>
       </header>
 
-      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、X（旧Twitter）は広く落ちている？</h2>
         <p className="text-sm text-neutral-700">
           まずここから確認します。広く落ちているなら、端末やブラウザの設定を触っても改善しないことが多いです。
-          逆に広く落ちていないなら、この先の切り分けが有効です。
+          逆に広く落ちていないなら、この先の確認が有効です。
         </p>
 
         <div className="flex flex-wrap gap-3">
@@ -112,7 +111,7 @@ export default function XNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          広く落ちていないことを確認してから自分側の切り分けに進む方が、無駄が少なくなります。
+          広く落ちていないことを確認してから自分側の原因を見る方が、無駄が少なくなります。
         </p>
       </section>
 
@@ -129,7 +128,7 @@ export default function XNotWorkingPage() {
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">3) 最短の切り分け</h2>
+        <h2 className="text-xl font-semibold">3) 最短で確認すること</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
             <li>Wi-Fi とモバイル通信を切り替えて差が出るか確認する</li>
@@ -151,6 +150,8 @@ export default function XNotWorkingPage() {
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) よくある原因</h2>

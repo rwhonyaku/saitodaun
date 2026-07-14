@@ -9,9 +9,9 @@ const service = SERVICES.line;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "LINEが使えない？（障害か自分側か） | サイトダウン",
+  title: "LINEが使えない・送れない時の原因確認｜障害か自分側か | サイトダウン",
   description:
-    "LINEが開かない・送れない・通話できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "LINEが開かない、送れない、通話できない、通知が来ない時に、LINE側の障害か回線・Wi-Fi・DNS・端末・アプリ側かを確認します。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -30,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function LineNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -44,15 +44,15 @@ export default function LineNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          LINEが開かない・送れない・通話できない？（障害か自分側かを最短判定）
+          LINEが開かない・送れない・通話できない？（障害か自分側かを確認）
         </h1>
 
         <p className="text-base text-neutral-600">
           LINEの不具合は、LINE側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調、権限設定でも起きます。
-          最初に原因の方向を切り分けておくと、不要な再インストールや設定変更を避けながら、より早く復旧しやすくなります。
+          最初に原因の方向を確認しておくと、不要な再インストールや設定変更を避けながら、より早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-700">
-          LINEが使えない場合、メッセージが送れない、通知が来ない、通話できない、繋がらないなど、症状によって原因の切り分けが変わります。
+          メッセージは送れるが通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗する場合は、見るべき原因が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -92,7 +92,6 @@ export default function LineNotWorkingPage() {
         </div>
       </header>
 
-      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、LINEは障害？</h2>
@@ -117,12 +116,12 @@ export default function LineNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短で確認すること（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -133,7 +132,7 @@ export default function LineNotWorkingPage() {
               <b>別端末</b>で試す。同じWi-Fiで複数端末がだめなら、回線やルーター寄りです。端末ごとに差が出るなら、端末やアプリ寄りです。
             </li>
             <li>
-              <b>どの機能だけ使えないかを見る</b>。送受信だけ、通話だけ、ログインだけなど症状が分かれるなら、権限、アプリ状態、回線品質の切り分けがしやすくなります。
+              <b>どの機能だけ使えないかを見る</b>。送受信だけ、通話だけ、ログインだけなど症状が分かれるなら、権限、アプリ状態、回線品質を確認しやすくなります。
             </li>
           </ul>
 
@@ -177,7 +176,7 @@ export default function LineNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -213,6 +212,8 @@ export default function LineNotWorkingPage() {
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -326,7 +327,7 @@ export default function LineNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと動くのに、Wi-Fiだとだめなのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側のDNS、ルーター、VPN、プロキシの問題が濃厚です。まずは回線切り替えで差を確認し、DNSやルーター側の切り分けを進めてください。
+              Wi-Fi側のDNS、ルーター、VPN、プロキシの問題が濃厚です。まずは回線切り替えで差を確認し、DNSやルーター側を確認してください。
             </p>
           </div>
 

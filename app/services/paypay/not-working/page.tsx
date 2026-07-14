@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.paypay;
 const issue = service.issues["not-working"];
@@ -10,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "PayPayが使えない・支払いできない？（障害か自分側か） | サイトダウン",
   description:
-    "PayPayが開かない・使えない・支払いできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、アカウント）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "PayPayが開かない・使えない・支払いできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、アカウント）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function PayPayNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +49,10 @@ export default function PayPayNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           PayPayの不具合は、PayPay側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調、ログイン状態、支払い条件でも起きます。
-          最初に原因の方向を切り分けておくと、無駄な設定変更を減らしながら、より早く復旧しやすくなります。
+          最初に原因の方向を確認しておくと、無駄な設定変更を減らしながら、より早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          ログインできない・支払いできない・エラーが出るなど、症状によって原因の切り分けが変わります。
+          ログインできない・支払いできない・エラーが出るなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function PayPayNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、PayPayは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function PayPayNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +176,7 @@ export default function PayPayNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -205,7 +207,7 @@ export default function PayPayNotWorkingPage() {
             <h3 className="text-base font-semibold">アカウント・本人確認・支払い条件の問題</h3>
             <p className="mt-2 text-sm text-neutral-700">
               ログインできない、支払いだけ通らない、本人確認や利用制限で止まるケースもあります。
-              ただし、最初は「障害か」「回線か」「アプリか」を切り分けてから、この方向に進む方が効率的です。
+              ただし、最初は「障害か」「回線か」「アプリか」を確認してから、この方向に進む方が効率的です。
             </p>
           </div>
 
@@ -213,11 +215,13 @@ export default function PayPayNotWorkingPage() {
             <h3 className="text-base font-semibold">加盟店側やコード読取環境の問題</h3>
             <p className="mt-2 text-sm text-neutral-700">
               自分のPayPayではなく、店舗側端末や通信状況、QRコード表示環境の問題で決済が通らないこともあります。
-              ほかの決済方法や別店舗で再現するかを見ると、切り分けがしやすくなります。
+              ほかの決済方法や別店舗で再現するかを見ると、確認がしやすくなります。
             </p>
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -332,7 +336,7 @@ export default function PayPayNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと使えるのに、Wi-Fiだとだめなのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側のDNS、ルーター、VPN、通信制限の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の切り分けを進めてください。
+              Wi-Fi側のDNS、ルーター、VPN、通信制限の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
             </p>
           </div>
 

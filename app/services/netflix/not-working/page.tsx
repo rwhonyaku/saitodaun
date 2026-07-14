@@ -3,14 +3,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.netflix;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Netflixが再生できない？（障害か自分側か） | サイトダウン",
+  title: "Netflixが見れない・再生できない？（障害か自分側か） | サイトダウン",
   description:
-    "Netflixが再生できない・読み込めない・途中で止まる時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Netflixが再生できない・読み込めない・途中で止まる時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function NetflixNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -43,15 +44,15 @@ export default function NetflixNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Netflixが再生できない・止まる？（障害か自分側かを最短判定）
+          Netflixが見れない・再生できない・止まる？（障害か自分側かを最短判定）
         </h1>
 
         <p className="text-base text-neutral-600">
           Netflixの不具合は、Netflix側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調、VPN、テレビやストリーミング機器の問題でも起きます。
-          最初に原因の方向を切り分けておくと、無駄な設定変更を減らしながら、より早く復旧しやすくなります。
+          最初に原因の方向を確認しておくと、無駄な設定変更を減らしながら、より早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          見れない・再生できない・止まる・ログインできないなど、症状によって原因の切り分けが変わります。
+          見れない・再生できない・止まる・ログインできないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function NetflixNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Netflixは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function NetflixNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -171,7 +173,7 @@ export default function NetflixNotWorkingPage() {
             </p>
             <div className="mt-3 flex flex-wrap gap-3">
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -193,7 +195,7 @@ export default function NetflixNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -221,6 +223,8 @@ export default function NetflixNotWorkingPage() {
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>

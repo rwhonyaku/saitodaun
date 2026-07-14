@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.zoom;
 const issue = service.issues["not-working"];
@@ -10,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "Zoomが入れない・接続できない？（障害か自分側か） | サイトダウン",
   description:
-    "Zoomが開かない・会議に入れない・接続できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Zoomが開かない・会議に入れない・接続できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function ZoomNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +49,10 @@ export default function ZoomNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           Zoomの不具合は、Zoom側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリ、ブラウザ、会議URLや参加条件でも起きます。
-          最初に原因の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          最初に原因の方向を確認しておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          会議に入れない・接続できない・ログインできない・音声や映像がつながらないなど、症状によって原因の切り分けが変わります。
+          会議に入れない・接続できない・ログインできない・音声や映像がつながらないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function ZoomNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Zoomは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function ZoomNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -149,6 +151,13 @@ export default function ZoomNotWorkingPage() {
             </Link>
           </div>
         </div>
+
+        <div className="rounded-2xl border border-neutral-200 p-6">
+          <h3 className="text-base font-semibold">社内ネットワーク・VPN・参加条件を疑うケース</h3>
+          <p className="mt-2 text-sm text-neutral-700">
+            Zoomのサイトは開くのに会議参加だけ失敗する、会社PCだけ不安定、社内Wi-FiやVPN接続中だけ入れない場合は、サービス全体の障害よりも社内ファイアウォール、VPN、SSO、待機室や参加条件の影響を先に疑う方が早いです。
+          </p>
+        </div>
       </section>
 
       <section className="mt-10 space-y-3">
@@ -174,7 +183,7 @@ export default function ZoomNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -211,13 +220,15 @@ export default function ZoomNotWorkingPage() {
         </div>
       </section>
 
+      <IMobileAd slot="notworking_mid" />
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
 
         <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
           <li>Zoomアプリを完全に閉じて、もう一度開く。</li>
           <li>Wi-Fi ↔ モバイル通信に切り替える。</li>
-          <li>ブラウザ版でも試して、アプリ起因かどうかを切り分ける。</li>
+          <li>ブラウザ版でも試して、アプリ起因かどうかを確認する。</li>
           <li>端末を再起動する。</li>
           <li>アプリやブラウザが最新か確認して更新する。</li>
           <li>VPNやプロキシを一時的にOFFにする。</li>
@@ -334,7 +345,7 @@ export default function ZoomNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">Wi-Fiだとだめで、モバイル通信だと使えるのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の切り分けを進めてください。
+              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
             </p>
           </div>
 

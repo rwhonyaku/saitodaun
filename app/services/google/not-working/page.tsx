@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.google;
 const issue = service.issues["not-working"];
@@ -10,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "Googleが開けない？（障害か自分側か） | サイトダウン",
   description:
-    "Googleが開けない・検索できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、VPN）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Googleが開けない・検索できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、VPN）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function GoogleNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +49,10 @@ export default function GoogleNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           Googleの不具合は、Google側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、VPNやプロキシでも起きます。
-          先に原因の方向を切り分けるだけで、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          先に原因の方向を確認するだけで、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          検索できない・表示されない・ログインできない・つながらないなど、症状によって原因の切り分けが変わります。
+          検索できない・表示されない・ログインできない・つながらないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function GoogleNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Googleは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function GoogleNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +176,7 @@ export default function GoogleNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -202,6 +204,8 @@ export default function GoogleNotWorkingPage() {
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -295,7 +299,7 @@ export default function GoogleNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと開けるのに、Wi-Fiだとだめなのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、通信経路の順で確認すると切り分けやすくなります。
+              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、通信経路の順で確認すると見分けやすくなります。
             </p>
           </div>
 

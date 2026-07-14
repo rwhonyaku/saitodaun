@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { SITE } from "@/lib/siteMeta";
-import { STATUS_SITES } from "@/lib/statusSites";
 import { getGuideHrefFromResult } from "@/lib/errorGuideMap";
 
 type CheckResult = {
   online: boolean;
+  probeBlocked?: boolean;
   status: number | null;
   responseTime: number | null;
   timestamp: string;
@@ -32,23 +31,6 @@ export default function HomeClient() {
     // Don't clobber user typing or post-check normalized url
     setUrl((prev) => (prev.trim().length > 0 ? prev : qp));
   }, [searchParams]);
-
-  const topSites = useMemo(() => {
-    const TOP_IDS = [
-      "google",
-      "amazon-jp",
-      "yahoo-japan",
-      "line",
-      "twitter",
-      "youtube",
-      "instagram",
-      "paypay",
-      "rakuten",
-    ] as const;
-
-    const map = new Map(STATUS_SITES.map((s) => [s.id, s]));
-    return TOP_IDS.map((id) => map.get(id)).filter(Boolean);
-  }, []);
 
   const handleCheck = async () => {
     const raw = url.trim();
@@ -91,20 +73,30 @@ export default function HomeClient() {
     if (e.key === "Enter") handleCheck();
   };
 
-  const statusLabel = result?.online ? "オンライン" : "オフライン";
+  const resultUnconfirmed = Boolean(
+    result && (result.probeBlocked || result.error || result.status == null)
+  );
+
+  const statusLabel = resultUnconfirmed
+    ? "確認不可"
+    : result?.probeBlocked
+    ? "判定保留"
+    : result?.online
+    ? "オンライン"
+    : "オフライン";
 
   const guideHref = result
     ? getGuideHrefFromResult({ status: result.status, error: result.error })
     : "/status-codes";
 
   return (
-    <main className="flex-1 bg-slate-50 flex flex-col">
-      <div className="mx-auto max-w-xl w-full px-4 py-10">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center tracking-tight">
-          このサイト、今見れますか？
-        </h1>
+    <section className="bg-slate-50">
+      <div className="mx-auto max-w-xl w-full px-4 pt-2 pb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center tracking-tight">
+          URLを入力して接続状況を確認
+        </h2>
         <p className="mt-3 text-sm sm:text-base text-slate-600 text-center">
-          {SITE.tagline}
+          相手側の障害か、自分の回線・DNS・ブラウザ側の問題かを確認します。
         </p>
 
         <section aria-labelledby="site-check-section" className="mt-8">
@@ -145,7 +137,7 @@ export default function HomeClient() {
                 <p className="text-sm text-slate-500">
                   URLを入力して「チェック」を押すと、
                   <br />
-                  外部サーバーからの接続可否をリアルタイムで判定します。
+                  外部サーバーからの接続可否とHTTP応答を確認します。
                 </p>
               </div>
             )}
@@ -161,7 +153,9 @@ export default function HomeClient() {
             {result && (
               <div
                 className={`rounded-xl border-2 p-5 transition-all shadow-sm ${
-                  result.online
+                  resultUnconfirmed
+                    ? "border-amber-100 bg-amber-50/30"
+                    : result.online
                     ? "border-green-100 bg-green-50/30"
                     : "border-red-100 bg-red-50/30"
                 }`}
@@ -170,12 +164,16 @@ export default function HomeClient() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="relative flex h-3 w-3">
-                        {result.online && (
+                        {result.online && !result.probeBlocked && (
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                         )}
                         <span
                           className={`relative inline-flex rounded-full h-3 w-3 ${
-                            result.online ? "bg-green-500" : "bg-red-500"
+                            resultUnconfirmed
+                              ? "bg-amber-500"
+                              : result.online
+                              ? "bg-green-500"
+                              : "bg-red-500"
                           }`}
                         ></span>
                       </span>
@@ -231,11 +229,23 @@ export default function HomeClient() {
                   </div>
                 )}
 
+                {result.probeBlocked && !result.error && (
+                  <div className="mt-4 p-3 bg-amber-100/50 rounded-lg text-xs text-amber-700 border border-amber-200">
+                    このサイトは当サイトのチェック環境からの要求を拒否しました。HTTP応答は返っているため、サイト自体が落ちているとは限りません。
+                  </div>
+                )}
+
                 <div className="mt-4 pt-4 border-t border-slate-200/60 flex justify-between items-center text-[10px] text-slate-400 font-medium">
                   <span>チェック時刻: {result.timestamp}</span>
-                  {!result.online && (
-                    <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                      接続に失敗しました
+                  {(resultUnconfirmed || !result.online) && (
+                    <span
+                      className={`px-2 py-0.5 rounded-full ${
+                        resultUnconfirmed
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-red-100 text-red-600"
+                      }`}
+                    >
+                      {resultUnconfirmed ? "現在の状況を確認できませんでした" : "接続に失敗しました"}
                     </span>
                   )}
                 </div>
@@ -244,35 +254,6 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section className="mt-12 bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-          <h2 className="mb-4 text-sm font-bold text-slate-900 uppercase tracking-widest text-center">
-            人気の障害チェック
-          </h2>
-
-          <ul className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-3">
-            {topSites.map((s) => (
-              <li key={s!.id}>
-                <Link
-                  href={`/status/sites/${s!.id}`}
-                  className="flex items-center justify-center p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-sky-50 hover:text-sky-600 hover:border-sky-100 transition-colors font-medium text-slate-700"
-                >
-                  {s!.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-6 text-center">
-            <Link
-              href="/status"
-              className="inline-block text-sky-600 text-sm font-bold hover:text-sky-700 underline underline-offset-4"
-            >
-              全てのサービス一覧を見る →
-            </Link>
-          </div>
-        </section>
-
-        {/* SEO Layer */}
         <section className="mt-12 text-sm text-slate-700 bg-slate-100/50 rounded-2xl p-6">
           <h2 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-slate-900 rounded-full"></span>
@@ -281,8 +262,8 @@ export default function HomeClient() {
 
           <div className="space-y-4 text-xs sm:text-sm leading-relaxed">
             <p>
-              {SITE.name}は、指定したURLに対して「いま接続できるか」を確認するための簡易チェックです。
-              “自分の環境だけの問題か、相手側の障害か”を切り分ける第一歩として活用してください。
+              サイトダウンは、主要サービスの障害状況とURLの接続チェックをまとめて確認する入口です。
+              サービス側の広い障害か、自分の回線・DNS・ブラウザ側の問題かを確認する第一歩として活用してください。
             </p>
 
             <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -314,6 +295,6 @@ export default function HomeClient() {
           </div>
         </section>
       </div>
-    </main>
+    </section>
   );
 }

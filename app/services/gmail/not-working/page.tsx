@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.gmail;
 const issue = service.issues["not-working"];
@@ -10,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "Gmailが送受信できない？（障害か自分側か） | サイトダウン",
   description:
-    "Gmailが開かない・送れない・受信できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Gmailが開かない・送れない・受信できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function GmailNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +49,10 @@ export default function GmailNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           Gmailの不具合は、Google側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、アプリ、同期設定でも起きます。
-          最初に問題の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          最初に問題の方向を確認しておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          送れない・受信できない・ログインできない・同期できないなど、症状によって原因の切り分けが変わります。
+          送れない・受信できない・ログインできない・同期できないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function GmailNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Gmailは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function GmailNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -149,6 +151,13 @@ export default function GmailNotWorkingPage() {
             </Link>
           </div>
         </div>
+
+        <div className="rounded-2xl border border-neutral-200 p-6">
+          <h3 className="text-base font-semibold">Google Workspace・SSO・社内制限を疑うケース</h3>
+          <p className="mt-2 text-sm text-neutral-700">
+            個人Gmailではなく会社や学校のGoogle Workspaceアカウントでだけ不安定な場合は、全体障害よりもSSO、2段階認証、管理者制限、社内VPNやプロキシ、IMAP・同期設定の影響を先に見る方が判断しやすいです。
+          </p>
+        </div>
       </section>
 
       <section className="mt-10 space-y-3">
@@ -174,7 +183,7 @@ export default function GmailNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -204,11 +213,13 @@ export default function GmailNotWorkingPage() {
             <h3 className="text-base font-semibold">アプリの同期・通知・省電力設定</h3>
             <p className="mt-2 text-sm text-neutral-700">
               「受信できない」と感じても、実際は同期が止まっているだけということがあります。省電力設定やバックグラウンド制限が強い端末では特に起こりやすいです。
-              まずはWeb版で受信できているかを見ると切り分けが早くなります。
+              まずはWeb版で受信できているかを見ると確認が早くなります。
             </p>
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -226,7 +237,7 @@ export default function GmailNotWorkingPage() {
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">「送れない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>Web版で送信できるか試して、アプリ起因かどうかを切り分ける。</li>
+            <li>Web版で送信できるか試して、アプリ起因かどうかを確認する。</li>
             <li>別回線で試して、回線やDNSの問題を除外する。</li>
             <li>障害の可能性が高いときは、無理に連打せず少し待つ。</li>
           </ul>

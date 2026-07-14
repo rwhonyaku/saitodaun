@@ -4,23 +4,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import HomeClient from "@/components/HomeClient";
-import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
-  title: "接続チェック",
-  description: SITE.description,
+  title: "サイトダウン｜障害・不具合・接続エラーの確認",
+  description:
+    "主要サービスの障害状況、URL接続チェック、DNS/HTTPエラー、ログインできない・読み込めない原因を確認。広い障害か自分側の問題かを整理できます。",
   alternates: { canonical: "/" },
 };
 
-const popularServices = [
-  { href: "/services/youtube", label: "YouTube" },
-  { href: "/services/line", label: "LINE" },
-  { href: "/services/instagram", label: "Instagram" },
-  { href: "/services/amazon", label: "Amazon" },
-  { href: "/services/chatgpt", label: "ChatGPT" },
-  { href: "/services/x", label: "X" },
-  { href: "/services/netflix", label: "Netflix" },
-  { href: "/services/discord", label: "Discord" },
+const popularStatusLinks = [
+  { href: "/status/sites/twitter", label: "X（Twitter）障害", detail: "通信障害・落ちた・繋がらない" },
+  { href: "/status/sites/abema", label: "ABEMA障害", detail: "今繋がらない・今日見れない" },
+  { href: "/status/sites/chatwork", label: "Chatwork障害", detail: "落ちてる・メッセージ送信" },
+  { href: "/status/sites/prime-video", label: "Prime Video障害", detail: "見れない・再生できない" },
+  { href: "/status/sites/instagram", label: "Instagram障害", detail: "見れない・投稿できない" },
+  { href: "/status/sites/steam", label: "Steam障害", detail: "ログイン・接続できない" },
+  { href: "/status/sites/yahoo-japan", label: "Yahoo! JAPAN障害", detail: "繋がらない・一部サービス" },
+  { href: "/status/sites/notion", label: "Notion障害", detail: "落ちてる・DB不具合" },
+];
+
+const primaryNavLinks = [
+  { href: "/status", label: "サービス障害を見る" },
+  { href: "/outages/japan", label: "国内の障害を見る" },
+  { href: "/services", label: "サービス別に確認" },
+  { href: "/troubleshooting-dns", label: "DNSを確認" },
+  { href: "/errors", label: "HTTPエラーを見る" },
 ];
 
 const commonCauses = [
@@ -35,7 +43,7 @@ const troubleshootingLinks = [
   { href: "/troubleshooting-guide", label: "サイトが見れないときの確認手順" },
   { href: "/troubleshooting-dns", label: "DNSエラーの原因と対処法" },
   { href: "/errors", label: "HTTPエラー一覧" },
-  { href: "/outages/japan", label: "ネット障害かどうかの切り分け" },
+  { href: "/outages/japan", label: "ネット障害かどうかの確認" },
   { href: "/faq", label: "よくある質問" },
 ];
 
@@ -55,54 +63,12 @@ export default function Page() {
       <main className="flex-1 bg-slate-50 flex flex-col">
         <div className="mx-auto max-w-xl w-full px-4 pt-8 pb-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                  サイトがダウンしているか確認（接続チェックツール）
-                </h1>
-                <p className="text-sm leading-7 text-slate-700">
-                  URLを入力すると、そのサイト自体で障害が起きているのか、それとも自分のネットワーク環境やDNS、ブラウザ、端末側の問題なのかを確認しやすくなります。
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex flex-col gap-2">
-                  <p className="text-sm font-medium text-slate-800">
-                    よくある接続トラブル
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <Link
-                      href="/outages/japan"
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm underline hover:bg-slate-50"
-                    >
-                      ネット障害？（2分で切り分け） →
-                    </Link>
-                    <Link
-                      href="/services"
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm underline hover:bg-slate-50"
-                    >
-                      サービス別トラブル（YouTube/LINE等） →
-                    </Link>
-                    <Link
-                      href="/troubleshooting-dns"
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm underline hover:bg-slate-50"
-                    >
-                      DNSトラブルの確認方法 →
-                    </Link>
-                    <Link
-                      href="/errors"
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm underline hover:bg-slate-50"
-                    >
-                      HTTPエラーの原因 →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-500">
-                リアルタイムの接続チェックと、トラブル原因の解説を組み合わせて確認できます。
-              </p>
-            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              障害・不具合・接続エラーの確認
+            </h1>
+            <p className="mt-2 text-sm leading-7 text-slate-700">
+              サイトやサービスが今使えない時に、広い障害か、自分の回線・DNS・ブラウザ側の問題かを確認できます。
+            </p>
           </div>
         </div>
 
@@ -111,16 +77,40 @@ export default function Page() {
         <div className="mx-auto max-w-xl w-full px-4 py-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="text-base font-semibold text-slate-900">
-              よく確認されるサービス
+              よく確認される障害・不具合
             </h2>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {popularServices.map((service) => (
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {popularStatusLinks.map((service) => (
                 <Link
                   key={service.href}
                   href={service.href}
-                  className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm underline hover:bg-slate-50"
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
                 >
-                  {service.label}
+                  <span className="font-semibold underline underline-offset-2">
+                    {service.label}
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-slate-500">
+                    {service.detail}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-xl w-full px-4 pb-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="text-base font-semibold text-slate-900">
+              確認したい内容を選ぶ
+            </h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {primaryNavLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 underline underline-offset-2 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+                >
+                  {item.label} →
                 </Link>
               ))}
             </div>
@@ -152,7 +142,7 @@ export default function Page() {
             </h2>
             <div className="mt-4 space-y-3 text-sm leading-7 text-slate-700">
               <p>
-                サイトダウンは、ウェブサイトやオンラインサービスの接続トラブルを調べるための診断サイトです。URLの接続チェックを通じて、そのサイト自体で障害が起きているのか、それとも自分の回線・DNS・ブラウザ・端末側の問題なのかを切り分けやすくしています。
+                サイトダウンは、ウェブサイトやオンラインサービスの接続トラブルを調べるための診断サイトです。URLの接続チェックを通じて、そのサイト自体で障害が起きているのか、それとも自分の回線・DNS・ブラウザ・端末側の問題なのかを見分けやすくしています。
               </p>
               <p>
                 「サイトが見れない」「サイトが開かない」「ネットはあるのに特定のサイトだけ接続できない」といった状況の原因を調べたいときに、確認の入口として使いやすい構成にしています。
@@ -161,7 +151,7 @@ export default function Page() {
                 YouTube、LINE、Instagram、Amazon、ChatGPTなど主要サービスの障害状況や、「開かない」「使えない」「読み込めない」といった症状別の確認ポイントも案内しています。
               </p>
               <p>
-                さらに、DNSエラーやHTTPステータスコード、各種接続エラーの原因と対処法もわかりやすく整理し、次に何を確認すべきかを判断しやすい構成にしています。サイトが見れないときの切り分けや、サービスごとの不具合確認にご活用ください。
+                さらに、DNSエラーやHTTPステータスコード、各種接続エラーの原因と対処法もわかりやすく整理し、次に何を確認すべきかを判断しやすい構成にしています。サイトが見れないときの確認や、サービスごとの不具合確認にご活用ください。
               </p>
             </div>
           </div>
@@ -177,7 +167,7 @@ export default function Page() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm underline hover:bg-slate-50"
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 underline underline-offset-2 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
                 >
                   {item.label} →
                 </Link>

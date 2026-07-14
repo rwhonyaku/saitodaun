@@ -11,7 +11,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "Discordがつながらない？（障害か自分側か） | サイトダウン",
   description:
-    "Discordがつながらない・読み込めない・通話が不安定な時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、VPN）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Discordがつながらない・読み込めない・通話が不安定な時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、VPN）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -30,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function DiscordNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -52,7 +52,7 @@ export default function DiscordNotWorkingPage() {
           最初に問題の方向を絞るだけで、無駄な再設定や再インストールをかなり減らせます。
         </p>
         <p className="text-sm text-neutral-700">
-          ログインできない・接続できない・メッセージが送れない・ボイスチャットが使えない・通知が来ないなど、症状によって原因の切り分けが変わります。
+          ログインできない・接続できない・メッセージが送れない・ボイスチャットが使えない・通知が来ないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -92,7 +92,6 @@ export default function DiscordNotWorkingPage() {
         </div>
       </header>
 
-      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Discordは障害？</h2>
@@ -117,12 +116,12 @@ export default function DiscordNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -177,7 +176,7 @@ export default function DiscordNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -212,6 +211,8 @@ export default function DiscordNotWorkingPage() {
         </div>
       </section>
 
+      <IMobileAd slot="notworking_mid" />
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
 
@@ -219,7 +220,7 @@ export default function DiscordNotWorkingPage() {
           <li>アプリを完全終了して再起動する。PCなら端末ごと再起動も有効です。</li>
           <li>Wi-Fi ↔ モバイル通信に切り替える。</li>
           <li>VPNやプロキシを一時的にOFFにする。</li>
-          <li>ブラウザ版で試して、アプリ起因かどうかを切り分ける。</li>
+          <li>ブラウザ版で試して、アプリ起因かどうかを確認する。</li>
           <li>アプリを最新版に更新する。</li>
           <li>端末を再起動して、詰まった状態をリセットする。</li>
           <li>障害ではないと見えたら、ルーターを再起動する。</li>
@@ -314,7 +315,7 @@ export default function DiscordNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと動くのに、Wi-Fiだと不安定なのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、干渉や混雑の順で確認すると切り分けやすくなります。
+              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、干渉や混雑の順で確認すると見分けやすくなります。
             </p>
           </div>
 

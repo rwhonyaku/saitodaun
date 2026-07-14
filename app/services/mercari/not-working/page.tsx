@@ -3,14 +3,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.mercari;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "メルカリが開かない？（障害か自分側か） | サイトダウン",
+  title: "メルカリが購入できない・出品できない？（障害か自分側か） | サイトダウン",
   description:
-    "メルカリが開かない・ログインできない・出品や購入ができない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "メルカリが開かない・ログインできない・出品や購入ができない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function MercariNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -43,15 +44,15 @@ export default function MercariNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          メルカリが開かない・ログインできない・購入できない？（障害か自分側かを最短判定）
+          メルカリが開かない・購入できない・出品できない？（障害か自分側かを最短判定）
         </h1>
 
         <p className="text-base text-neutral-600">
           メルカリの不具合は、メルカリ側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調でも起きます。
-          最初に問題の方向を切り分けておくと、無駄な再ログインや設定変更を減らしながら、より早く復旧しやすくなります。
+          最初に問題の方向を確認しておくと、無駄な再ログインや設定変更を減らしながら、より早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          ログインできない・購入できない・出品できないなど、症状によって原因の切り分けが変わります。
+          ログインできない・購入できない・出品できないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function MercariNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、メルカリは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function MercariNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +176,7 @@ export default function MercariNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -205,11 +207,13 @@ export default function MercariNotWorkingPage() {
             <h3 className="text-base font-semibold">一部機能だけ止まっている状態</h3>
             <p className="mt-2 text-sm text-neutral-700">
               メルカリは、閲覧、検索、購入、出品、決済など機能が分かれています。
-              そのため、サイト全体が落ちていなくても、一部の機能だけ不安定になることがあります。症状がどこに出ているかを先に整理すると、切り分けが早くなります。
+              そのため、サイト全体が落ちていなくても、一部の機能だけ不安定になることがあります。症状がどこに出ているかを先に整理すると、確認が早くなります。
             </p>
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -227,7 +231,7 @@ export default function MercariNotWorkingPage() {
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">「ログインできない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>ブラウザ版とアプリ版の両方で試して、どちら側の問題かを切り分ける。</li>
+            <li>ブラウザ版とアプリ版の両方で試して、どちら側の問題かを確認する。</li>
             <li>別回線で試して、回線やDNSの問題を除外する。</li>
             <li>障害の可能性が高いときは、無理に何度も試さず少し待つ。</li>
           </ul>
@@ -323,7 +327,7 @@ export default function MercariNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">Wi-Fiだとだめで、モバイル通信だと使えるのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の切り分けを進めてください。
+              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
             </p>
           </div>
 

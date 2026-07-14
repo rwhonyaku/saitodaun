@@ -3,14 +3,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/lib/services/registry";
+import IMobileAd from "@/components/ads/IMobileAd";
 
 const service = SERVICES.amazon;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Amazonがログインできない・購入できない？（障害か自分側か） | サイトダウン",
+  title: "Amazonがログインできない・注文できない？（障害か自分側か） | サイトダウン",
   description:
-    "Amazonが開かない・ログインできない・購入できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アカウント）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Amazonが開かない・ログインできない・注文できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アカウント）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +30,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function AmazonNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -43,7 +44,7 @@ export default function AmazonNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Amazonが開かない・ログインできない？（障害か自分側かを最短判定）
+          Amazonが開かない・ログインできない・注文できない？（障害か自分側かを最短判定）
         </h1>
 
         <p className="text-base text-neutral-600">
@@ -51,7 +52,7 @@ export default function AmazonNotWorkingPage() {
           先に原因の方向を絞るだけで、無駄な再設定や再インストールをかなり減らせます。
         </p>
         <p className="text-sm text-neutral-700">
-          ログインできない・注文できない・決済エラーが出る・表示されないなど、症状によって原因の切り分けが変わります。
+          ログインできない・注文できない・決済エラーが出る・表示されないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -91,6 +92,7 @@ export default function AmazonNotWorkingPage() {
         </div>
       </header>
 
+
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">1) 今、Amazonは障害？</h2>
         <p className="text-sm text-neutral-700">
@@ -114,12 +116,12 @@ export default function AmazonNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +176,7 @@ export default function AmazonNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -189,7 +191,7 @@ export default function AmazonNotWorkingPage() {
             <h3 className="text-base font-semibold">ブラウザやアプリの状態（Cookie・キャッシュ・拡張機能）</h3>
             <p className="mt-2 text-sm text-neutral-700">
               ログイン周りの不具合は、Cookie、キャッシュ、拡張機能、アプリ側の一時不具合で起きやすいです。
-              まずはシークレットモードや別ブラウザで差が出るかを確認すると、かなり切り分けしやすくなります。
+              まずはシークレットモードや別ブラウザで差が出るかを確認すると、かなり確認しやすくなります。
             </p>
             <div className="mt-3 flex flex-wrap gap-3">
               <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
@@ -204,12 +206,14 @@ export default function AmazonNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-6">
             <h3 className="text-base font-semibold">アカウントや購入条件の問題</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              ログインできない、購入できないといった症状は、本人確認、不審判定、支払い方法、住所や配送条件でも止まることがあります。
-              ただし最初からここを疑うより、先に障害、回線、ブラウザを切り分けた方が早いです。
+              ログインできない、購入できないといった症状は、本人確認し、不審判定、支払い方法、住所や配送条件でも止まることがあります。
+              ただし最初からここを疑うより、先に障害、回線、ブラウザを確認た方が早いです。
             </p>
           </div>
         </div>
       </section>
+
+      <IMobileAd slot="notworking_mid" />
 
       <section className="mt-10 space-y-3">
         <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
@@ -218,7 +222,7 @@ export default function AmazonNotWorkingPage() {
           <li>アプリやブラウザを完全に閉じてから再起動し、もう一度読み込みます。</li>
           <li>Wi-Fi ↔ モバイル通信を切り替えて再確認します。</li>
           <li>VPNやプロキシを一時的にOFFにします。</li>
-          <li>シークレットモードや別ブラウザで試して、拡張機能やキャッシュの影響を切り分けます。</li>
+          <li>シークレットモードや別ブラウザで試して、拡張機能やキャッシュの影響を確認します。</li>
           <li>Amazonのサイトデータ（キャッシュ、Cookie）を削除して再ログインします。</li>
           <li>アプリやブラウザを最新版に更新します。</li>
           <li>障害ではないと見えたら、ルーターを再起動します。</li>
@@ -324,7 +328,7 @@ export default function AmazonNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">モバイル通信だと開けるのに、Wi-Fiだとダメなのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、通信経路の順で確認すると切り分けやすくなります。
+              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、通信経路の順で確認すると見分けやすくなります。
             </p>
           </div>
 
