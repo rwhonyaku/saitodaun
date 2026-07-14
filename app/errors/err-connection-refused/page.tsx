@@ -3,19 +3,19 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CONNECTION_REFUSEDとは？原因・直し方・切り分け方法 | サイトダウン",
+  title: "ERR_CONNECTION_REFUSEDとは？接続が拒否されましたの原因と確認方法 | サイトダウン",
   description:
-    "ERR_CONNECTION_REFUSED（接続が拒否されました）の意味、サイト側/ユーザー側の典型原因、最短の切り分け、社内ネットワークやVPNの影響、復旧までにできることを解説します。",
+    "ERR_CONNECTION_REFUSED（接続が拒否されました）の意味、サイト側/ユーザー側の典型原因、最短確認、社内ネットワークやVPNの影響を解説します。",
 };
 
 export default function ErrConnectionRefusedPage() {
   return (
     <EvergreenPageShell
-      h1="ERR_CONNECTION_REFUSED（接続が拒否されました）とは？原因と直し方"
+      h1="ERR_CONNECTION_REFUSED（接続が拒否されました）とは？原因と確認方法"
       updatedAt="2026-03-03"
       lead={[
         "ERR_CONNECTION_REFUSED は「相手が接続を受け付けなかった（拒否した）」ときに表示されるエラーです。",
-        "サイトが落ちている場合もあれば、ファイアウォール設定やネットワーク制限で拒否されている場合もあります。まずは“自分だけ”か“全体”かの切り分けが重要です。",
+        "サイトが落ちている場合もあれば、ファイアウォール設定やネットワーク制限で拒否されている場合もあります。まずは“自分だけ”か“全体”かの影響範囲の確認が重要です。",
       ]}
       sections={[
         {
@@ -24,7 +24,7 @@ export default function ErrConnectionRefusedPage() {
           items: [
             "サーバーには到達しようとしているが、接続の入口で「拒否」されている",
             "原因は「サイト側で拒否」または「途中のネットワークで拒否（社内ネット等）」のどちらかが多い",
-            "ユーザー側で解決できる場合もあるため、順番に切り分けるのが最短",
+            "ユーザー側で解決できる場合もあるため、順番に確認するのが最短",
           ],
         },
 
@@ -66,8 +66,8 @@ export default function ErrConnectionRefusedPage() {
           type: "list",
           title: "ユーザー側でできる対処（優先順）",
           items: [
-            "1) 別回線で試す（Wi-Fi→モバイル回線。最速の切り分け）",
-            "2) VPN/プロキシをオフにして試す（干渉の切り分け）",
+            "1) 別回線で試す（Wi-Fi→モバイル回線。最速の確認）",
+            "2) VPN/プロキシをオフにして試す（干渉の確認）",
             "3) シークレットモードで試す（拡張機能の影響を減らす）",
             "4) ルーター再起動（家庭内ネットワークの詰まり解消）",
             "5) VPNで接続元を変える（誤ブロックや経路問題の回避）",
@@ -128,7 +128,7 @@ export default function ErrConnectionRefusedPage() {
           type: "div",
           title: "このエラーが「サイト全体」か「自分だけ」か確認する",
           body: [
-            "接続拒否は、サイト側の停止でも、あなたの回線だけのブロックでも起こります。外部地点から疎通確認して切り分けましょう。",
+            "接続拒否は、サイト側の停止でも、あなたの回線だけのブロックでも起こります。外部地点から疎通確認して確認しましょう。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
@@ -166,10 +166,10 @@ export default function ErrConnectionRefusedPage() {
           title: "よくある質問",
           items: [
             "Q. 403（Forbidden）と何が違う？ → 403はHTTPで“アクセス禁止”が返ってきている状態、ERR_CONNECTION_REFUSEDはHTTP以前に接続自体が拒否されている状態です。",
-            "Q. 自分だけ拒否されている可能性は？ → あります。社内ネットワーク、VPN、セキュリティ製品、IPブロックで局所的に起きます。別回線で切り分けが最短です。",
+            "Q. 自分だけ拒否されている可能性は？ → あります。社内ネットワーク、VPN、セキュリティ製品、IPブロックで局所的に起きます。別回線で確認が最短です。",
             "Q. スマホでは開けるのにPCで拒否されるのはなぜ？ → 回線の違い、ローカルFW、ブラウザ差、VPNやセキュリティ製品の影響が考えられます。",
             "Q. 直るまでどれくらい？ → 手元要因なら数分で解消することもあります。サイト側の停止/遮断が原因なら運営者対応次第です。",
-            "Q. リロード連打は有効？ → 拒否系では改善しないことが多いです。回線切替やVPNオフなど“条件変更”で切り分けるのが先です。",
+            "Q. リロード連打は有効？ → 拒否系では改善しないことが多いです。回線切替やVPNオフなど“条件変更”で確認するのが先です。",
           ],
         },
 

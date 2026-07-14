@@ -3,19 +3,19 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 520エラーとは？原因と直し方 | サイトダウン",
+  title: "Cloudflare 520 Web server is returning an unknown errorとは？原因と確認方法 | サイトダウン",
   description:
-    "Cloudflare 520（Web server is returning an unknown error）の意味、よくある原因、ユーザー側でできる対処、運営者側の確認ポイントを解説します。",
+    "Cloudflare 520（Web server is returning an unknown error）の意味、サイト側か自分側かの確認、520/522/524との違い、運営者側の確認ポイントを解説します。",
 };
 
 export default function Cloudflare520Page() {
   return (
     <EvergreenPageShell
-      h1="Cloudflare 520エラーとは？原因と直し方"
+      h1="Cloudflare 520 Web server is returning an unknown errorとは？原因と確認方法"
       updatedAt="2026-03-03"
       lead={[
         "Cloudflare 520 は「Cloudflareがオリジンサーバーから“想定外の応答”を受け取った」時に表示されるエラーです。",
-        "Cloudflare自体が落ちているというより、背後のWebサーバー（オリジン）側で何かが起きているケースがほとんどです。まずは“自分だけ”か“サイト全体”かを切り分けるのが最短です。",
+        "Cloudflare自体が落ちているというより、背後のWebサーバー（オリジン）側で何かが起きているケースがほとんどです。まずは“自分だけ”か“サイト全体”かを確認するのが最短です。",
       ]}
       sections={[
         {
@@ -69,7 +69,7 @@ export default function Cloudflare520Page() {
           type: "div",
           title: "このエラーが「サイト全体」か「自分だけ」か確認する",
           body: [
-            "520はサイト側要因が多いですが、回線差や一時的な経路不調もあり得ます。外部地点から疎通確認して切り分けしましょう。",
+            "520はサイト側要因が多いですが、回線差や一時的な経路不調もあり得ます。外部地点から疎通確認して確認しましょう。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"

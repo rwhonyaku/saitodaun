@@ -3,19 +3,19 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CONNECTION_RESETとは？原因と直し方 | サイトダウン",
+  title: "ERR_CONNECTION_RESETとは？接続がリセットされた原因と確認方法 | サイトダウン",
   description:
-    "ERR_CONNECTION_RESET の意味、通信がリセットされる典型原因（回線/VPN/プロキシ/ファイアウォール/サーバー側切断）、ユーザー側でできる切り分け、運営者側の確認ポイントを解説します。",
+    "ERR_CONNECTION_RESET（接続がリセットされました）の意味、回線/VPN/プロキシ/ファイアウォール/サーバー側切断の切り分け、最短確認を解説します。",
 };
 
 export default function ConnectionResetPage() {
   return (
     <EvergreenPageShell
-      h1="ERR_CONNECTION_RESETとは？原因と直し方"
+      h1="ERR_CONNECTION_RESETとは？接続がリセットされた原因と確認方法"
       updatedAt="2026-03-03"
       lead={[
         "ERR_CONNECTION_RESET は、通信中に接続が途中で強制的に切断（リセット）されたことを意味します。",
-        "原因は「回線や端末側の干渉（VPN/セキュリティ/プロキシ等）」の場合もあれば、「サーバー側が接続を落としている」場合もあります。まずは“自分だけ”か“サイト側”かを切り分けるのが最短です。",
+        "原因は「回線や端末側の干渉（VPN/セキュリティ/プロキシ等）」の場合もあれば、「サーバー側が接続を落としている」場合もあります。まずは“自分だけ”か“サイト側”かを確認するのが最短です。",
       ]}
       sections={[
         {
@@ -24,7 +24,7 @@ export default function ConnectionResetPage() {
           items: [
             "ブラウザはサーバーと通信を開始したが、途中で接続が突然切断された（RST/Reset相当）",
             "「相手サーバー」だけでなく、「途中のネットワーク機器（ルーター/プロキシ/WAF）」が切断している場合もある",
-            "ユーザー側で直るケースもあるため、順番に切り分けるのが重要",
+            "ユーザー側で直るケースもあるため、順番に確認するのが重要",
           ],
         },
 
@@ -56,7 +56,7 @@ export default function ConnectionResetPage() {
           type: "list",
           title: "ユーザー側でできる対処（優先順）",
           items: [
-            "1) 別回線で試す：Wi-Fi→モバイル回線（4G/5G）へ（最速の切り分け）",
+            "1) 別回線で試す：Wi-Fi→モバイル回線（4G/5G）へ（最速の確認）",
             "2) VPN/プロキシをオフにして試す（一時的に無効化）",
             "3) シークレットモードで試す（拡張機能・キャッシュ影響を減らす）",
             "4) ルーター/端末の再起動（瞬断・DHCP再取得）",
@@ -96,7 +96,7 @@ export default function ConnectionResetPage() {
           type: "div",
           title: "このエラーが「サイト全体」か「自分だけ」か確認する",
           body: [
-            "ERR_CONNECTION_RESET は手元要因でも起きます。外部地点から到達できるかを確認して、まず切り分けましょう。",
+            "ERR_CONNECTION_RESET は手元要因でも起きます。外部地点から到達できるかを確認して、まず確認しましょう。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
@@ -122,7 +122,7 @@ export default function ConnectionResetPage() {
           title: "よくある質問",
           items: [
             "Q. これってサーバーダウンですか？ → 必ずしもそうではありません。途中のネットワーク機器や端末側の干渉でも起こります。",
-            "Q. リロード連打は有効ですか？ → 不安定な回線や遮断が原因だと悪化することがあります。別回線・VPNオフなどで切り分けるのが先です。",
+            "Q. リロード連打は有効ですか？ → 不安定な回線や遮断が原因だと悪化することがあります。別回線・VPNオフなどで確認するのが先です。",
             "Q. 特定のサイトだけ起きます。なぜ？ → そのドメインだけがフィルタ対象、または経路/中継設定の相性問題の可能性があります。",
             "Q. 直るまでどれくらい？ → 手元要因なら数分で解消することもあります。サイト側要因なら運営者対応次第です。",
           ],

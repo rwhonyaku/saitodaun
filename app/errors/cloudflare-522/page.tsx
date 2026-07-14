@@ -3,25 +3,25 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 522エラーとは？原因・直し方・切り分け方法 | サイトダウン",
+  title: "Cloudflare 522 Connection timed outとは？原因と確認方法 | サイトダウン",
   description:
-    "Cloudflare 522 の意味、ユーザー側でまず確認すべき最短の切り分け、待つべきケース、関連するCloudflareエラーへの進み方を簡潔に整理します。",
+    "Cloudflare 522 Connection timed out の意味、サイト側か自分側かの最短確認、待つべきケース、520/524など関連エラーとの違いを整理します。",
 };
 
 export default function Cloudflare522Page() {
   return (
     <EvergreenPageShell
-      h1="Cloudflare 522エラーとは？原因と直し方"
+      h1="Cloudflare 522 Connection timed outとは？原因と確認方法"
       updatedAt="2026-04-16"
       lead={[
-        "Cloudflareエラー522は、Cloudflareがオリジンサーバーに接続できず、タイムアウトしたときに発生します。",
+        "Cloudflareエラー522（Connection timed out）は、Cloudflareがオリジンサーバーに接続できず、タイムアウトしたときに発生します。",
         "多くの場合、これはサーバー側の問題であり、ユーザー側では解決できないケースがほとんどです。",
-        "まずは他の回線や端末でも同じかを確認し、状況を切り分けましょう。",
+        "まずは他の回線や端末でも同じかを確認し、状況を確認しましょう。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短の切り分け",
+          title: "最短の確認",
           items: [
             "他のサイトは正常に開けるか確認する",
             "スマホ回線（4G/5G）でも同じ522が出るか試す",
@@ -124,7 +124,7 @@ export default function Cloudflare522Page() {
           type: "div",
           title: "この問題がサイト全体か、自分だけかを確認する",
           body: [
-            "522はサイト側の問題であることが多いものの、回線や経路差がゼロとは限りません。外部から見ても応答できないか確認しておくと切り分けが早くなります。",
+            "522はサイト側の問題であることが多いものの、回線や経路差がゼロとは限りません。外部から見ても応答できないか確認しておくと確認が早くなります。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
