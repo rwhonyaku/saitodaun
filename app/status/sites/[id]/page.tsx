@@ -50,9 +50,9 @@ function renderList(items?: string[]) {
 
 const statusOverrides: Record<string, { title: string; description: string }> = {
   google: {
-    title: "Google障害・不具合｜検索できない・Gmail・ログインの現在状況",
+    title: "Google障害・不具合｜検索できない・各サービスの現在状況",
     description:
-      "Googleで障害や不具合が起きているか確認できます。検索できない、Gmailだけ遅い、ログインできない、画像検索やマップだけ開かない時に影響範囲を確認します。",
+      "Googleで障害や不具合が起きているか確認できます。検索できない、ログインできない、Gmail・マップ・Driveなど一部サービスだけ開かない時に影響範囲を確認します。",
   },
   slack: {
     title: "Slack障害・不具合｜繋がらない・メッセージが遅い時の現在状況",
@@ -85,12 +85,12 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "YouTubeが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。動画やライブ配信だけの不具合にも対応します。",
   },
   netflix: {
-    title: "Netflix障害・不具合｜今日見れない・繋がらない時の状況",
+    title: "Netflix（ネトフリ）障害・不具合｜今日見れない時の状況",
     description:
-      "Netflixが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。再生やログインだけの不具合にも対応します。",
+      "Netflix（ネトフリ）が今日見れない、再生できない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。ログインだけの不具合にも対応します。",
   },
   "disney-plus": {
-    title: "Disney+障害・不具合｜今日見れない・繋がらない時の状況",
+    title: "Disney+（ディズニープラス）障害｜今日見れない時の状況",
     description:
       "Disney+（ディズニープラス）が今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。再生だけの不具合にも対応します。",
   },
@@ -280,9 +280,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Prime Videoが今日見れない、再生できない、読み込めない、テレビアプリだけ止まる時に、Amazon側の障害か端末・回線側の問題かを確認できます。",
   },
   line: {
-    title: "LINE障害・不具合｜今日送れない・通話できない時の現在状況",
+    title: "LINE障害・不具合｜今日繋がらない・送れない時の現在状況",
     description:
-      "LINEで障害や不具合が起きているか確認できます。メッセージが送れない、通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗する時に影響範囲を確認します。",
+      "LINEで障害や不具合が起きているか確認できます。繋がらない、メッセージが送れない、通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗する時に影響範囲を確認します。",
   },
   expedia: {
     title: "Expedia障害・不具合｜今日どうなってる？今の状況を確認",
@@ -310,9 +310,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "楽天市場で現在広い障害や不具合が起きているか確認できます。商品ページ、ログイン、注文、決済、購入履歴だけ不安定な場合も確認できます。",
   },
   instagram: {
-    title: "Instagram（インスタ）障害・不具合｜見れない・投稿できない時の現在状況",
+    title: "Instagram（インスタ）障害｜見れない・開かない時の現在状況",
     description:
-      "Instagram（インスタ）が見れない、投稿できない、ログインできない、DMやストーリーズだけ不安定な時に、広い障害か自分側かを確認できます。",
+      "Instagram（インスタ）が見れない、開かない、投稿できない、ログインできない、DMやストーリーズだけ不安定な時に、広い障害か自分側かを確認できます。",
   },
   "amazon-jp": {
     title: "Amazon.co.jp障害・不具合｜注文できない・開かない時の現在状況",
@@ -351,6 +351,8 @@ const statusHero: Record<string, StatusHero> = {
     secondaryReinforcement:
       "検索だけ使えないのか、ログインやWorkspace系まで影響しているのかを見て、自分側かGoogle側かを確認します。",
     symptomChips: [
+      "障害",
+      "検索できない",
       "検索",
       "Gmail",
       "Drive",
@@ -360,6 +362,7 @@ const statusHero: Record<string, StatusHero> = {
     ],
     relatedStatusLinks: [
       { label: "Gmail", href: "/status/sites/gmail" },
+      { label: "YouTube", href: "/status/sites/youtube" },
       { label: "Google マップ", href: "/status/sites/google-maps" },
       { label: "Google Drive", href: "/status/sites/google-drive" },
       { label: "Search Console", href: "/status/sites/google-search-console" },
@@ -459,8 +462,8 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "使えない場合はこちら",
   },
   netflix: {
-    heading: "Netflix障害・不具合",
-    lead: "Netflixが今見れない・繋がらない原因が、広い障害か一部機能の不具合かを確認します。",
+    heading: "Netflix（ネトフリ）障害・不具合",
+    lead: "Netflixが今見れない・再生できない原因が、広い障害か一部機能の不具合かを確認します。",
     reinforcement:
       "通信障害・サーバーダウン・メンテナンスのほか、再生やログイン、特定端末だけ使えない場合もあります。",
     symptomChips: [
@@ -470,6 +473,11 @@ const statusHero: Record<string, StatusHero> = {
       "ログインできない",
       "メンテナンス",
       "通信障害",
+    ],
+    relatedStatusLinks: [
+      { label: "Prime Video", href: "/status/sites/prime-video" },
+      { label: "Disney+", href: "/status/sites/disney-plus" },
+      { label: "TVer", href: "/status/sites/tv-tver" },
     ],
     notWorkingHref: "/services/netflix/not-working",
     notWorkingLabel: "使えない場合はこちら",
@@ -486,6 +494,11 @@ const statusHero: Record<string, StatusHero> = {
       "アプリだけ",
       "メンテナンス",
       "サーバーダウン",
+    ],
+    relatedStatusLinks: [
+      { label: "Netflix", href: "/status/sites/netflix" },
+      { label: "Prime Video", href: "/status/sites/prime-video" },
+      { label: "U-NEXT", href: "/status/sites/u-next" },
     ],
     notWorkingHref: "",
     notWorkingLabel: "",
@@ -1203,12 +1216,18 @@ const statusHero: Record<string, StatusHero> = {
     secondaryReinforcement:
       "まず影響範囲を確認し、自分の端末・回線・アプリだけの問題か見分けます。",
     symptomChips: [
+      "繋がらない",
       "送れない",
       "通話できない",
       "通知が来ない",
       "画像だけ",
       "スタンプだけ",
       "ログインできない",
+    ],
+    relatedStatusLinks: [
+      { label: "X（旧Twitter）", href: "/status/sites/twitter" },
+      { label: "Instagram", href: "/status/sites/instagram" },
+      { label: "Discord", href: "/status/sites/discord" },
     ],
     notWorkingHref: "/services/line/not-working",
     notWorkingLabel: "LINEが使えない・送れない時の確認",
@@ -1232,6 +1251,7 @@ const statusHero: Record<string, StatusHero> = {
       "今日",
       "繋がらない",
       "遅い",
+      "検索できない",
       "接続障害",
       "サーバーダウン",
     ],
@@ -1316,7 +1336,7 @@ const statusHero: Record<string, StatusHero> = {
   },
   instagram: {
     heading: "Instagram障害・不具合",
-    lead: "Instagram（インスタ）が今見れない・投稿できない原因が、広い障害か一部機能の不具合かを確認します。",
+    lead: "Instagram（インスタ）が今見れない・開かない原因が、広い障害か一部機能の不具合かを確認します。",
     reinforcement:
       "フィードは見れるが投稿だけ失敗する、DMやストーリーズだけ読み込めない、ログインだけできない場合もあります。",
     secondaryReinforcement:
@@ -1329,6 +1349,11 @@ const statusHero: Record<string, StatusHero> = {
       "DM",
       "ストーリーズ",
       "読み込めない",
+    ],
+    relatedStatusLinks: [
+      { label: "X（旧Twitter）", href: "/status/sites/twitter" },
+      { label: "Threads", href: "/status/sites/threads" },
+      { label: "LINE", href: "/status/sites/line" },
     ],
     notWorkingHref: "/services/instagram/not-working",
     notWorkingLabel: "Instagramが使えない時の確認",
