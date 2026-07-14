@@ -170,14 +170,14 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Discordで障害や不具合が起きているか確認できます。つながらない、ログインできない、メッセージが送れない、ボイスチャットだけ使えない時に影響範囲を確認します。",
   },
   steam: {
-    title: "Steam障害・サーバー状況｜ログインできない・接続できない時の現在状況",
+    title: "Steam障害・サーバー状況｜落ちてる・ログインできない時の現在状況",
     description:
-      "Steamでログインできない、接続できない、ストアが重い、ダウンロードやフレンド機能だけ不安定な時に、障害か自分側の問題かを確認できます。",
+      "Steamが落ちてる、ログインできない、接続できない、ストアが重い、ダウンロードやフレンド機能だけ不安定な時に、障害か自分側の問題かを確認できます。",
   },
   teams: {
-    title: "Microsoft Teams障害情報｜リアルタイムで不具合・接続状況を確認",
+    title: "Microsoft Teams障害・不具合｜会議に入れない時の現在状況",
     description:
-      "Microsoft Teamsで今日障害や不具合が起きているかリアルタイムで確認できます。会議、チャット、通話、接続だけ不安定な場合は影響範囲も確認できます。",
+      "Microsoft Teamsで今日障害や不具合が起きているか確認できます。会議に入れない、チャットや通話、ログイン、接続だけ不安定な場合は影響範囲も確認できます。",
   },
   chatwork: {
     title: "Chatwork障害・不具合｜落ちてる・サーバーダウン時の現在状況",
@@ -731,18 +731,24 @@ const statusHero: Record<string, StatusHero> = {
   },
   steam: {
     heading: "Steam障害・サーバー状況",
-    lead: "Steamが今広く不安定かを確認します。",
+    lead: "Steamが今落ちてるか、ログインや接続に広い障害が出ているかを確認します。",
     reinforcement:
       "ログインだけ失敗する、ストアだけ重い、ダウンロードだけ進まない、フレンドやチャットだけ不安定な場合もあります。",
     secondaryReinforcement:
       "広い障害でなければ、アプリ・回線・DNS・Steamクライアント側の原因を確認します。",
     symptomChips: [
+      "落ちてる",
       "ログインできない",
       "接続できない",
       "ストアが重い",
       "ダウンロード不可",
       "フレンド不安定",
       "エラー",
+    ],
+    relatedStatusLinks: [
+      { label: "PlayStation Network", href: "/status/sites/playstation-network" },
+      { label: "Nintendo", href: "/status/sites/nintendo" },
+      { label: "Epic Games", href: "/status/sites/epic-games" },
     ],
     notWorkingHref: "/services/steam/not-working",
     notWorkingLabel: "Steamが使えない時の確認",
@@ -1205,6 +1211,11 @@ const statusHero: Record<string, StatusHero> = {
       "エラー",
       "ログインできない",
     ],
+    relatedStatusLinks: [
+      { label: "ABEMA", href: "/status/sites/abema" },
+      { label: "Netflix", href: "/status/sites/netflix" },
+      { label: "YouTube", href: "/status/sites/youtube" },
+    ],
     notWorkingHref: "/services/prime-video/not-working",
     notWorkingLabel: "Prime Videoが見れない時の確認",
   },
@@ -1397,6 +1408,11 @@ const statusHero: Record<string, StatusHero> = {
       "見れない",
       "投稿できない",
       "繋がらない",
+    ],
+    relatedStatusLinks: [
+      { label: "Instagram", href: "/status/sites/instagram" },
+      { label: "LINE", href: "/status/sites/line" },
+      { label: "Threads", href: "/status/sites/threads" },
     ],
     notWorkingHref: "/services/x/not-working",
     notWorkingLabel: "X（旧Twitter）が使えない時の確認",

@@ -6,9 +6,9 @@ import { Suspense } from "react";
 import HomeClient from "@/components/HomeClient";
 
 export const metadata: Metadata = {
-  title: "サイトダウン｜障害・不具合・接続エラーの確認",
+  title: "サイトダウン確認ツール｜障害・接続エラーをチェック",
   description:
-    "主要サービスの障害状況、URL接続チェック、DNS/HTTPエラー、ログインできない・読み込めない原因を確認。広い障害か自分側の問題かを整理できます。",
+    "URLを入力してサイトが落ちているか、接続エラー・DNS・HTTPエラーかを確認。主要サービスの障害状況も見ながら、自分側の問題か整理できます。",
   alternates: { canonical: "/" },
 };
 
@@ -64,10 +64,10 @@ export default function Page() {
         <div className="mx-auto max-w-xl w-full px-4 pt-8 pb-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              障害・不具合・接続エラーの確認
+              サイトダウン確認ツール
             </h1>
             <p className="mt-2 text-sm leading-7 text-slate-700">
-              サイトやサービスが今使えない時に、広い障害か、自分の回線・DNS・ブラウザ側の問題かを確認できます。
+              サイトやサービスが今使えない時に、広い障害か、自分の回線・DNS・ブラウザ側の接続エラーかを確認できます。
             </p>
           </div>
         </div>
