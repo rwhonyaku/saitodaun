@@ -55,9 +55,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Googleで障害や不具合が起きているか確認できます。検索できない、ログインできない、Gmail・マップ・Driveなど一部サービスだけ開かない時に影響範囲を確認します。",
   },
   slack: {
-    title: "Slack障害・不具合｜繋がらない・メッセージが遅い時の現在状況",
+    title: "Slack障害・不具合｜繋がらない・メッセージ送れない時の現在状況",
     description:
-      "Slackで現在広い障害や不具合が起きているか確認できます。繋がらない、メッセージや通知だけ遅い場合は、一部機能の問題か自分側の環境かも確認できます。",
+      "Slackで現在広い障害や不具合が起きているか確認できます。繋がらない、メッセージが送れない、通知だけ遅い、通話だけ不安定な場合は影響範囲も確認できます。",
   },
   aws: {
     title: "AWS障害・不具合｜今どうなってる？現在の状況を確認",
@@ -100,14 +100,14 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Huluが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。再生やアプリだけの不具合にも対応します。",
   },
   "u-next": {
-    title: "U-NEXT障害・不具合｜今日見れない・再生できない時の状況",
+    title: "U-NEXT障害・不具合｜見れない・再生できない時の現在状況",
     description:
-      "U-NEXTが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。再生や購入だけの不具合にも対応します。",
+      "U-NEXT（ユーネクスト）が見れない、再生できない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。購入だけの不具合にも対応します。",
   },
   "tv-tver": {
-    title: "TVer障害・不具合｜今日見れない・再生できない時の状況",
+    title: "TVer障害・不具合｜見逃し配信が見れない・再生できない時の状況",
     description:
-      "TVerが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。再生や広告読み込みだけの不具合にも対応します。",
+      "TVerが見れない、再生できない、見逃し配信や広告読み込みで止まる時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。",
   },
   wowow: {
     title: "WOWOW障害・不具合｜今日見れない・繋がらない時の状況",
@@ -165,9 +165,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Outlookで障害や不具合が起きているか確認できます。メール送受信だけ失敗する、ログインできない、予定表だけ不安定な時に影響範囲を確認します。",
   },
   discord: {
-    title: "Discord障害・不具合｜つながらない・通話できない時の現在状況",
+    title: "Discord障害・不具合｜接続できない・通話できない時の現在状況",
     description:
-      "Discordで障害や不具合が起きているか確認できます。つながらない、ログインできない、メッセージが送れない、ボイスチャットだけ使えない時に影響範囲を確認します。",
+      "Discordで障害や不具合が起きているか確認できます。接続できない、サーバーに入れない、ログインできない、メッセージやボイスチャットだけ使えない時に影響範囲を確認します。",
   },
   steam: {
     title: "Steam障害・サーバー状況｜落ちてる・ログインできない時の現在状況",
@@ -373,7 +373,7 @@ const statusHero: Record<string, StatusHero> = {
   },
   slack: {
     heading: "Slack障害・不具合",
-    lead: "Slackで現在広い障害や不具合が起きているか、リアルタイムの状況を確認します。",
+    lead: "Slackが今繋がらない、メッセージが送れない原因が広い障害かを確認します。",
     reinforcement:
       "画面は開くがメッセージや通知だけ遅い、通話やログインだけ失敗するなど、部分的な不具合もあります。",
     secondaryReinforcement:
@@ -382,6 +382,7 @@ const statusHero: Record<string, StatusHero> = {
       "障害",
       "リアルタイム",
       "繋がらない",
+      "送れない",
       "メッセージ遅延",
       "通知が遅い",
       "ログイン",
@@ -521,7 +522,7 @@ const statusHero: Record<string, StatusHero> = {
   },
   "u-next": {
     heading: "U-NEXT障害・不具合",
-    lead: "U-NEXTが今見れない・繋がらない原因が、広い障害か一部機能の不具合かを確認します。",
+    lead: "U-NEXT（ユーネクスト）が今見れない・再生できない原因が、広い障害か一部機能の不具合かを確認します。",
     reinforcement:
       "通信障害・サーバーダウン・メンテナンスのほか、再生開始や作品購入だけ失敗する場合もあります。",
     symptomChips: [
@@ -532,12 +533,17 @@ const statusHero: Record<string, StatusHero> = {
       "メンテナンス",
       "サーバーダウン",
     ],
+    relatedStatusLinks: [
+      { label: "Netflix", href: "/status/sites/netflix" },
+      { label: "Disney+", href: "/status/sites/disney-plus" },
+      { label: "TVer", href: "/status/sites/tv-tver" },
+    ],
     notWorkingHref: "",
     notWorkingLabel: "",
   },
   "tv-tver": {
     heading: "TVer障害・不具合",
-    lead: "TVerが今見れない・繋がらない原因が、広い障害か再生フローの不具合かを確認します。",
+    lead: "TVerが今見れない、見逃し配信が再生できない原因が広い障害かを確認します。",
     reinforcement:
       "通信障害・サーバーダウン・メンテナンスのほか、番組は開くが再生や広告読み込みだけ止まる場合もあります。",
     symptomChips: [
@@ -547,6 +553,11 @@ const statusHero: Record<string, StatusHero> = {
       "広告で止まる",
       "メンテナンス",
       "通信障害",
+    ],
+    relatedStatusLinks: [
+      { label: "ABEMA", href: "/status/sites/abema" },
+      { label: "U-NEXT", href: "/status/sites/u-next" },
+      { label: "YouTube", href: "/status/sites/youtube" },
     ],
     notWorkingHref: "",
     notWorkingLabel: "",
@@ -713,18 +724,23 @@ const statusHero: Record<string, StatusHero> = {
   },
   discord: {
     heading: "Discord障害・不具合",
-    lead: "Discordが今広く不安定になっているか確認します。",
+    lead: "Discordが今接続できない、サーバーに入れない原因が広い障害かを確認します。",
     reinforcement:
       "ログインだけ失敗する、メッセージだけ送れない、ボイスチャットだけ接続できない、通知だけ遅いなど、一部機能だけの不具合もあります。",
     secondaryReinforcement:
       "広い障害でなければ、アプリ・ブラウザ・VPN・端末・通話品質側の原因を確認します。",
     symptomChips: [
-      "つながらない",
+      "接続できない",
+      "サーバーに入れない",
       "ログインできない",
       "メッセージ不可",
       "通話できない",
       "通知が遅い",
-      "サーバー接続",
+    ],
+    relatedStatusLinks: [
+      { label: "Slack", href: "/status/sites/slack" },
+      { label: "LINE", href: "/status/sites/line" },
+      { label: "Telegram", href: "/status/sites/telegram" },
     ],
     notWorkingHref: "/services/discord/not-working",
     notWorkingLabel: "Discordがつながらない時の確認",
