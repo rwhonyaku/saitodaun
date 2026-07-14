@@ -70,7 +70,7 @@ export default async function CategoryPage(props: PageProps) {
   const params = await props.params;
   const key = normalize(params.category);
 
-  // DEV-ONLY: show what key is coming in, instead of silent 404
+  // Keep invalid category handling explicit.
   if (!isSiteCategory(key)) {
     if (process.env.NODE_ENV !== "production") {
       const validKeys = Object.keys(SITE_CATEGORIES);

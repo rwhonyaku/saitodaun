@@ -3,21 +3,32 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "サイトが開かないときの原因と切り分け",
+  title: "サイトが開かないときの原因と確認",
   description:
-    "website not loading、site won't open、website not opening といった広い検索意図に対応するハブページです。特定サイト、DNS、Wi-Fi、ブラウザ、エラー表示ごとに次に見るべきページへ案内します。",
+    "サイトが開かない・読み込めない時に、特定サイト、DNS、Wi-Fi、ブラウザ、エラー表示のどこから確認すべきかを整理します。",
   alternates: { canonical: "/troubleshooting/website-not-loading" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="サイトが開かないときの原因と切り分け"
+      h1="サイトが開かないときの原因と確認"
       lead={[
         "サイトが開かないとき、原因は一つではありません。特定のサイトだけなのか、ネット全体なのか、ブラウザだけなのか、Wi-Fiだけなのかで進むべき確認が変わります。",
-        "このページは『サイトが開かない』『サイトが読み込めない』といった広い症状を素早く切り分けるためのハブです。ここで状況を絞って、必要な深掘りページへ進んでください。",
+        "このページは『サイトが開かない』『サイトが読み込めない』といった広い症状を素早く確認するためのハブです。ここで状況を絞って、必要な深掘りページへ進んでください。",
+        "最初に結論を急がず、端末・回線・ブラウザ・表示されたエラー文の4つを分けると、無駄な設定変更を避けやすくなります。",
       ]}
       sections={[
+        {
+          type: "list",
+          title: "このページで分けること",
+          items: [
+            "サイト側が落ちているのか、自分の環境だけで失敗しているのか",
+            "DNSや回線の問題なのか、ブラウザ・端末の問題なのか",
+            "全ページが開かないのか、ログイン・画像・ボタンなど一部だけ失敗するのか",
+            "エラー名から直接エラー解説へ進むべきか、状況別ガイドへ進むべきか"
+          ],
+        },
         {
           type: "list",
           title: "最短で絞り込むなら",
@@ -50,7 +61,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -59,7 +70,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -68,7 +79,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -77,7 +88,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -101,10 +112,10 @@ export default function Page() {
               <p>
                 エラーメッセージやコードが出ている →{" "}
                 <Link
-                  href="/troubleshooting/browser-not-loading-sites"
+                  href="/errors"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  エラー解説一覧
                 </Link>
               </p>
               <p>
@@ -167,14 +178,14 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               と{" "}
               <Link
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               から入るのが近道です。
             </>,
@@ -191,7 +202,7 @@ export default function Page() {
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"
               >
-                DNS・接続エラーの切り分けハブ
+                DNS・接続エラーの確認ハブ
               </Link>{" "}
               を見てください。
             </>,
@@ -208,7 +219,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               を見て、広域障害確認が必要なら{" "}
               <Link
@@ -232,7 +243,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               へ進むのが近道です。
             </>,
@@ -246,6 +257,7 @@ export default function Page() {
             "自分の環境だけの可能性が高い: 自分の端末だけ失敗する、別ブラウザや別端末だと開く",
             "特定回線だけの可能性が高い: モバイル回線では開くが自宅Wi-Fiや社内Wi-Fiでは開かない",
             "特定ブラウザ・端末だけの可能性が高い: Chromeだけ失敗、PCだけ失敗、シークレットモードだと開く",
+            "部分障害の可能性が高い: トップページは開くが、ログイン、決済、投稿、画像表示など特定機能だけ失敗する",
           ],
         },
         {
@@ -324,7 +336,7 @@ export default function Page() {
           title: "最初に何を確認するか",
           items: [
             "1) 他のサイトも開かないのか、1つのサイトだけなのかを確認する",
-            "2) 別端末・別回線で比べて、全体障害か自分の環境だけかを切り分ける",
+            "2) 別端末・別回線で比べて、全体障害か自分の環境だけかを確認する",
             "3) エラー文があるなら、そのメッセージに対応するエラーページへ進む",
           ],
         },

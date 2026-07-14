@@ -4,25 +4,25 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import SurfsharkAffiliateBlock from "@/components/SurfsharkAffiliateBlock";
 
 export const metadata: Metadata = {
-  title: "サイトがブロックされているときの切り分けハブ",
+  title: "サイトがブロックされているときの確認ハブ",
   description:
-    "サイトがブロックされた、アクセスを拒否された、確認ループになるときの切り分けハブです。403、429、ファイアウォール、公共 Wi-Fi の制限、特定サイトだけの不調など、症状ごとに次に見るべきページへ案内します。",
+    "サイトがブロックされた、アクセスを拒否された、確認ループになるときの確認ハブです。403、429、ファイアウォール、公共 Wi-Fi の制限、特定サイトだけの不調など、症状ごとに次に見るべきページへ案内します。",
   alternates: { canonical: "/troubleshooting/website-blocked" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="サイトがブロックされているときの切り分けハブ"
+      h1="サイトがブロックされているときの確認ハブ"
       updatedAt="2026-04-12"
       lead={[
         "『サイト自体はありそうなのに入れない』『アクセス拒否や確認画面ばかり出る』『会社や学校の回線だとだけ開かない』という症状は、単純な接続断ではなく、制限や判定に引っかかっているケースが多いです。",
-        "このページは、ブロック、制限、認証ループ系の症状を最短で切り分けるためのミニハブです。まず何に止められているのかを分けて、必要な深掘りページへ進んでください。",
+        "このページは、ブロック、制限、認証ループ系の症状を最短で確認するためのミニハブです。まず何に止められているのかを分けて、必要な深掘りページへ進んでください。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "会社や学校の回線だけで開かないなら、ネットワーク制限やファイアウォールを優先して疑う",
             "403 が出るなら、未認証よりアクセス拒否やポリシー制限に近い",
@@ -82,7 +82,7 @@ export default function Page() {
                 </Link>
               </p>
               <p>
-                1つのサイトだけ blocked っぽい →{" "}
+                1つのサイトだけブロックされているように見える →{" "}
                 <Link
                   href="/troubleshooting/specific-site-not-working"
                   className="underline hover:no-underline"
@@ -172,7 +172,7 @@ export default function Page() {
               <Link href="/vpn" className="underline hover:no-underline">
                 VPNガイド
               </Link>{" "}
-              を補助的に見ると整理しやすくなります。VPN は制限の切り分けには役立ちますが、実際の障害を直すものではありません。
+              を補助的に見ると整理しやすくなります。VPN は制限の確認には役立ちますが、実際の障害を直すものではありません。
             </>,
             <SurfsharkAffiliateBlock key="surfshark-block" />,
           ],
@@ -210,7 +210,7 @@ export default function Page() {
         },
         {
           type: "p",
-          title: "特定サイトだけ blocked っぽいならサービス側との切り分けも必要",
+          title: "特定サイトだけブロックされているように見えるならサービス側との確認も必要",
           body: [
             "1つのサイトやサービスだけで起きているなら、単なる制限だけでなく、そのサービス側の地域制限、Bot 対策、部分障害、ログイン基盤の不調が混ざって見えていることもあります。",
             <>

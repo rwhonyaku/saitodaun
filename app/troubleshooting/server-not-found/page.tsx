@@ -3,31 +3,31 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "「サーバーが見つかりません」と出るときの切り分け",
+  title: "「サーバーが見つかりません」と出るときの確認",
   description:
-    "Server not found と出るときの切り分けページです。DNS、ドメイン名の入力ミス、回線ごとの差、特定サイトだけの不調など、次に見るべき既存ページへ案内します。",
+    "「サーバーが見つかりません」と出るときの確認ページです。DNS、ドメイン名の入力ミス、回線ごとの差、特定サイトだけの不調など、次に見るべき既存ページへ案内します。",
   alternates: { canonical: "/troubleshooting/server-not-found" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="「サーバーが見つかりません」と出るときの切り分け"
+      h1="「サーバーが見つかりません」と出るときの確認"
       updatedAt="2026-04-12"
       lead={[
         "『Server not found』『サーバーが見つかりません』は、多くの場合サーバー本体の停止ではなく、ドメイン名から接続先を見つけられていない状態です。つまり HTTP エラーより前の、DNS やドメイン解決の段階で止まっていることがよくあります。",
-        "このページは、そうした broad な browser wording から DNS 系の原因へ最短で入るための橋渡しページです。URL ミス、ドメイン失効、DNS 不調、回線差、特定サイトだけの症状を分けて、必要な既存ページへ進んでください。",
+        "このページは、そうしたブラウザ表示から DNS 系の原因へ最短で入るための橋渡しページです。URL ミス、ドメイン失効、DNS 不調、回線差、特定サイトだけの症状を分けて、必要な既存ページへ進んでください。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "URL の綴りや www の有無が違っていないかを最初に確認する",
             "他のサイトは開くなら、回線全体より対象ドメインや DNS を優先して疑う",
             "Wi-Fi では失敗するがモバイル回線では開くなら、自分の DNS 環境や回線差が強い",
             "どの端末・どの回線でも同じなら、サイト側のドメイン失効や DNS 設定不整合の可能性が高い",
-            "HTTP 403 や 404 ではなく server not found なら、まず errors より DNS 側から入るほうが早い",
+            "HTTP 403 や 404 ではなく「サーバーが見つかりません」なら、まず DNS 側から入るほうが早い",
           ],
         },
         {
@@ -77,7 +77,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -86,7 +86,7 @@ export default function Page() {
                   href="/troubleshooting-dns"
                   className="underline hover:no-underline"
                 >
-                  DNS・接続エラーの切り分けハブ
+                  DNS・接続エラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -95,7 +95,7 @@ export default function Page() {
                   href="/troubleshooting/this-site-cant-be-reached"
                   className="underline hover:no-underline"
                 >
-                  このサイトにアクセスできませんの切り分け
+                  このサイトにアクセスできませんの確認
                 </Link>
               </p>
             </div>,
@@ -103,9 +103,9 @@ export default function Page() {
         },
         {
           type: "p",
-          title: "server not found は『サーバー停止』とは限らない",
+          title: "サーバーが見つからない表示は『サーバー停止』とは限らない",
           body: [
-            "この表示は『接続先のサーバーが落ちている』というより、『そのサーバーの場所を見つけられない』ときに出やすい wording です。ドメイン名から IP を引けない時点で止まるので、404 や 500 よりかなり前の段階です。",
+            "この表示は『接続先のサーバーが落ちている』というより、『そのサーバーの場所を見つけられない』ときに出やすいものです。ドメイン名から IP を引けない時点で止まるので、404 や 500 よりかなり前の段階です。",
             <>
               そのため、まずは{" "}
               <Link
@@ -136,7 +136,7 @@ export default function Page() {
           type: "p",
           title: "URL ミスか DNS 失敗かを最初に分ける",
           body: [
-            "server not found は、単純な URL の打ち間違いでも出ます。www の有無、末尾の余計な文字、コピペ時の記号混入、ドメインの綴り違いだけで同じ見え方になることがあります。",
+            "「サーバーが見つかりません」は、単純な URL の打ち間違いでも出ます。www の有無、末尾の余計な文字、コピペ時の記号混入、ドメインの綴り違いだけで同じ見え方になることがあります。",
             <>
               入力が正しいのに失敗するなら、次は{" "}
               <Link
@@ -153,7 +153,7 @@ export default function Page() {
           type: "p",
           title: "1つのサイトだけなら対象ドメインやサイト単位で見る",
           body: [
-            "他のサイトは普通に開くのに、あるドメインだけ server not found になるなら、回線全体よりそのドメインに近い問題です。ドメイン失効、DNS 設定不整合、移転直後の反映差、地域ごとの差などが候補になります。",
+            "他のサイトは普通に開くのに、あるドメインだけ「サーバーが見つかりません」になるなら、回線全体よりそのドメインに近い問題です。ドメイン失効、DNS 設定不整合、移転直後の反映差、地域ごとの差などが候補になります。",
             <>
               この方向では{" "}
               <Link
@@ -181,7 +181,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分け
+                端末・ネットワーク差の確認
               </Link>
               、DNS 設定変更の流れは{" "}
               <Link
@@ -198,7 +198,7 @@ export default function Page() {
           type: "p",
           title: "新しいドメインや変更直後なら伝播待ちも候補になる",
           body: [
-            "最近公開したサイト、ネームサーバーを変えたサイト、移転したサイトで server not found が出るなら、単純な故障ではなく DNS 伝播や設定変更直後の不整合も考えるべきです。これはすぐには安定しないことがあります。",
+            "最近公開したサイト、ネームサーバーを変えたサイト、移転したサイトで「サーバーが見つかりません」と出るなら、単純な故障ではなく DNS 伝播や設定変更直後の不整合も考えるべきです。これはすぐには安定しないことがあります。",
             <>
               そのケースでは{" "}
               <Link
@@ -229,7 +229,7 @@ export default function Page() {
           type: "note",
           title: "判断のコツ",
           body: [
-            "server not found は、HTTP エラーより DNS 側に寄った症状です。URL が正しいか、1つのサイトだけか、回線差があるか、新しいドメインかを分けると、原因の当たりをかなり絞れます。",
+            "「サーバーが見つかりません」は、HTTP エラーより DNS 側に寄った症状です。URL が正しいか、1つのサイトだけか、回線差があるか、新しいドメインかを分けると、原因の当たりをかなり絞れます。",
           ],
         },
       ]}

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { SITE } from "@/lib/siteMeta";
 import Breadcrumbs from "./Breadcrumbs";
 
-// FIX: Added "div" to the union type so TypeScript accepts it
+// "div" is supported for custom section bodies.
 type Section =
   | { type: "p"; title: string; body: (string | React.ReactNode)[] }
   | { type: "div"; title: string; body: (string | React.ReactNode)[] }
@@ -96,8 +96,8 @@ export default function EvergreenPageShell({
 
                     {s.type === "note" && (
                       <div className="rounded-2xl border border-amber-100 bg-amber-50/40 p-5 text-slate-700 sm:text-[15px] text-sm leading-relaxed">
-                        <p className="text-xs font-bold text-amber-700 mb-2 uppercase tracking-tighter italic">
-                          Note / Tips
+                        <p className="text-xs font-bold text-amber-700 mb-2 tracking-tighter">
+                          補足
                         </p>
                         {s.body.map((t, j) => (
                           <div key={j} className="mb-2 last:mb-0">
@@ -164,7 +164,7 @@ export default function EvergreenPageShell({
                   </div>
 
                   <p className="mt-3 text-[11px] text-slate-500 leading-relaxed">
-                    目安：HTTPが4xxなら「制限・URL・権限」、5xxなら「サイト側の障害」、数値が出ないなら「DNS/SSL/経路」を疑うと切り分けが早いです。
+                    目安：HTTPが4xxなら「制限・URL・権限」、5xxなら「サイト側の障害」、数値が出ないなら「DNS/SSL/経路」を疑うと確認が早いです。
                   </p>
                 </div>
               </div>
@@ -177,10 +177,10 @@ export default function EvergreenPageShell({
 
           <aside className="hidden lg:block lg:col-span-4 space-y-6">
             <div className="sticky top-10 space-y-6">
-              {/* TABLE OF CONTENTS */}
+              {/* 目次 */}
               <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60">
                 <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-4">
-                  TABLE OF CONTENTS
+                  目次
                 </p>
                 <ul className="space-y-4">
                   {sections.map((s, i) => (
@@ -237,9 +237,9 @@ export default function EvergreenPageShell({
                 </>
               ) : null}
 
-              {/* QUICK CHECK */}
+              {/* クイックチェック */}
               <div className="rounded-3xl bg-slate-900 p-6 text-white">
-                <p className="text-xs font-bold opacity-60 mb-2">QUICK CHECK</p>
+                <p className="text-xs font-bold opacity-60 mb-2">クイックチェック</p>
                 <p className="text-sm font-bold mb-4 leading-snug">
                   他のサイトの稼働状況もリアルタイムで確認できます。
                 </p>

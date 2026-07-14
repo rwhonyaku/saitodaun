@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "『Are you human?』が何度も出る原因と対処法",
   description:
-    "『Are you human?』『私はロボットではありません』が何度も出て先に進めないときの原因と対処法を解説します。CAPTCHAループ、403、429、VPNや共有IP、ブラウザ不整合の切り分け方をまとめています。",
+    "『Are you human?』『私はロボットではありません』が何度も出て先に進めないときの原因と対処法を解説します。CAPTCHAループ、403、429、VPNや共有IP、ブラウザ不整合の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/website-keeps-asking-are-you-human" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "シークレットモードで通るなら、Cookie や保存データ、拡張機能の影響が強い",
             "VPN や共有 Wi-Fi を切ると通るなら、IP 評価や制限条件に近い",
@@ -77,7 +77,7 @@ export default function Page() {
                   href="/troubleshooting/website-blocked"
                   className="underline hover:no-underline"
                 >
-                  サイトがブロックされているときの切り分けハブ
+                  サイトがブロックされているときの確認ハブ
                 </Link>
               </p>
               <p>
@@ -136,14 +136,14 @@ export default function Page() {
                 href="/troubleshooting/site-blocked-by-firewall"
                 className="underline hover:no-underline"
               >
-                制限系の切り分け
+                制限系の確認
               </Link>
               や{" "}
               <Link
                 href="/troubleshooting/website-blocked"
                 className="underline hover:no-underline"
               >
-                website blocked ハブ
+                サイトがブロックされているときの確認
               </Link>
               が近いです。
             </>,
@@ -181,7 +181,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>
               が近い案内です。
             </>,
@@ -210,7 +210,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "『Are you human?』が何度も出て進めないときは、Cookie、JavaScript、共有 IP、VPN、回数制限、サービス側の認証部分障害を優先して切り分けるほうが早いです。見た目は同じでも、どこで判定が崩れているかで次に見るべきページが変わります。",
+            "『Are you human?』が何度も出て進めないときは、Cookie、JavaScript、共有 IP、VPN、回数制限、サービス側の認証部分障害を優先して確認するほうが早いです。見た目は同じでも、どこで判定が崩れているかで次に見るべきページが変わります。",
             <>
               必要に応じて{" "}
               <Link

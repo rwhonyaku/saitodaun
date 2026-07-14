@@ -3,27 +3,37 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "「このサイトにアクセスできません」と出るときの切り分け",
+  title: "「このサイトにアクセスできません」と出るときの確認",
   description:
-    "This site can't be reached と出るときの切り分けページです。DNS、タイムアウト、到達不能、接続拒否、回線差、特定サイトだけの不調など、次に見るべき既存ページへ案内します。",
+    "This site can't be reached／このサイトにアクセスできません と出る時に、DNS、タイムアウト、到達不能、接続拒否、回線差、特定サイトだけの不調を切り分けます。",
   alternates: { canonical: "/troubleshooting/this-site-cant-be-reached" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="「このサイトにアクセスできません」と出るときの切り分け"
+      h1="「このサイトにアクセスできません」と出るときの確認"
       updatedAt="2026-04-12"
       lead={[
         "ブラウザの『This site can't be reached』『このサイトにアクセスできません』は、1つの原因を指す表示ではありません。DNS で名前が引けない、接続先に届かない、応答が遅すぎる、ブラウザや回線条件が原因、特定サイトだけが不安定といった複数のケースで出ます。",
-        "このページは、その broad なブラウザ表示を最短で分けるための橋渡しページです。表示されたエラー文や、どの回線・どの端末で起きるかを手がかりに、必要な既存ページへ進んでください。",
+        "このページは、その広いブラウザ表示を最短で分けるための橋渡しページです。表示されたエラー文や、どの回線・どの端末で起きるかを手がかりに、必要な既存ページへ進んでください。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "まず見るポイント",
           items: [
-            "ドメイン名が見つからない、server not found に近いなら DNS を優先して疑う",
+            "エラー画面に ERR_NAME_NOT_RESOLVED、NXDOMAIN、TIMED_OUT などの補助コードが出ていないか",
+            "1つのサイトだけで出るのか、複数サイトで出るのか",
+            "Wi-Fi、モバイル回線、別ブラウザ、別端末で結果が変わるか",
+            "すぐ失敗するのか、長く待ってから失敗するのか",
+          ],
+        },
+        {
+          type: "list",
+          title: "最短で確認するなら",
+          items: [
+            "ドメイン名が見つからない、「サーバーが見つかりません」に近いなら DNS を優先して疑う",
             "長く待ったあと失敗するなら、タイムアウトや経路遅延に近い",
             "他のサイトは開くのに1つだけだめなら、対象サイト側やそのサイト向けの DNS・制限を疑う",
             "Wi-Fi ではだめでモバイル回線では開くなら、回線差やローカル環境の影響が強い",
@@ -95,7 +105,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -104,7 +114,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
             </div>,
@@ -115,13 +125,14 @@ export default function Page() {
           title: "この表示は『原因名』ではなく『届かなかった結果』",
           body: [
             "『This site can't be reached』は、404 や 403 のように原因が絞られた表示ではありません。名前解決の前で止まることもあれば、接続途中で落ちることもあり、単にサイト側が重くてタイムアウトしただけのこともあります。",
+            "そのため、画面の大きな見出しだけで判断せず、下に表示される補助コード、失敗までの時間、回線差を合わせて見ます。",
             <>
               まずは DNS 系か、接続経路系か、特定サイトだけの症状かを分けるために{" "}
               <Link
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"
               >
-                DNS・接続エラーの切り分けハブ
+                DNS・接続エラーの確認ハブ
               </Link>{" "}
               や{" "}
               <Link
@@ -169,7 +180,7 @@ export default function Page() {
           type: "p",
           title: "長く待ってから失敗するならタイムアウトや経路の問題に近い",
           body: [
-            "エラーが出るまでに時間がかかる、読み込み中のまま止まる、たまにだけ開くなら、名前解決よりも接続途中の遅延やサイト側の応答遅れが疑わしくなります。これはブラウザ表示が同じでも、DNS 失敗とは切り分けるべき症状です。",
+            "エラーが出るまでに時間がかかる、読み込み中のまま止まる、たまにだけ開くなら、名前解決よりも接続途中の遅延やサイト側の応答遅れが疑わしくなります。これはブラウザ表示が同じでも、DNS 失敗とは確認するべき症状です。",
             <>
               この方向なら{" "}
               <Link
@@ -228,7 +239,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>
               、{" "}
               <Link
@@ -242,7 +253,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分け
+                ブラウザエラーの確認
               </Link>{" "}
               が近い確認先です。
             </>,

@@ -3,26 +3,27 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
 export const metadata = {
-  title: "DNS・接続エラーの切り分けハブ | サイトダウン",
+  title: "DNS・接続エラーの確認ハブ | サイトダウン",
   description:
-    "DNSや接続エラーを素早く切り分けるためのハブページです。名前解決エラー、Wi-Fi差、回線差、ブラウザ差ごとに次に見るべきページへ案内します。",
+    "DNSや接続エラーを素早く切り分けるハブです。名前解決エラー、Wi-Fi差、回線差、ブラウザ差、特定サイトだけ開かない時の確認先へ案内します。",
 };
 
 export default function DnsGuidePage() {
   return (
     <EvergreenPageShell
-      h1="DNS・接続エラーの切り分けハブ"
+      h1="DNS・接続エラーの確認ハブ"
       updatedAt="2026-04-12"
       lead={[
         "サイトが開かないときでも、原因がDNSなのか、回線なのか、ブラウザなのかで確認すべき場所は変わります。",
         "このページはDNSと接続系トラブルを素早く振り分けるためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
+        "DNS設定を変える前に、まず別回線・別端末で再現するかを見ておくと、不要な設定変更を避けやすくなります。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
-            "ドメインが見つからない、server not found系ならDNSを優先して疑う",
+            "ドメインが見つからない、「サーバーが見つかりません」系ならDNSを優先して疑う",
             "モバイル回線では開くのにWi-Fiだと失敗するなら、DNSだけでなくWi-Fiや回線差も疑う",
             "どのサイトも開かないなら、DNSより先に回線・ルーター・障害情報を確認する",
             "ブラウザだけで失敗するなら、DNSよりブラウザや端末設定差の可能性が高い",
@@ -67,7 +68,7 @@ export default function DnsGuidePage() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -76,7 +77,7 @@ export default function DnsGuidePage() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -85,7 +86,7 @@ export default function DnsGuidePage() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -114,6 +115,7 @@ export default function DnsGuidePage() {
           title: "DNSが原因のことが多いケース",
           body: [
             "名前解決エラー、特定サイトだけの失敗、回線を変えると開くといった症状ならDNSが有力です。",
+            "ただし、DNSを変更してもログイン後の機能不良やアカウント制限は直りません。トップページは開くのに操作だけ失敗する場合は、サービス側の部分障害やブラウザ保存データも合わせて確認します。",
             <>
               まず{" "}
               <Link
@@ -169,7 +171,7 @@ export default function DnsGuidePage() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               へ進むのが早いです。
             </>,
@@ -186,10 +188,17 @@ export default function DnsGuidePage() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               へ進むのが近道です。
             </>,
+          ],
+        },
+        {
+          type: "note",
+          title: "設定を変える前の注意",
+          body: [
+            "DNS変更は有効な確認手段ですが、会社・学校・管理された端末では変更できない、または変更しないほうがよい場合があります。まず別回線で開くか、別ブラウザで再現するかを確認し、問題がDNS寄りだと分かってから進めるのが安全です。",
           ],
         },
         {

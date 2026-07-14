@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトが何度もログアウトされる原因と対処法",
   description:
-    "サイトに何度もログアウトされる、ログイン状態が維持されないときの原因と対処法を解説します。Cookie不整合、セッション切れ、ブラウザ保存データ、リダイレクトループ、会員機能の部分障害を切り分けます。",
+    "サイトに何度もログアウトされる、ログイン状態が維持されないときの原因と対処法を解説します。Cookie不整合、セッション切れ、ブラウザ保存データ、リダイレクトループ、会員機能の部分障害を確認します。",
   alternates: { canonical: "/troubleshooting/website-keeps-logging-me-out" },
 };
 
@@ -21,13 +21,13 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "シークレットモードでは維持されるなら、Cookie や保存データの不整合を優先して疑う",
             "ログイン後すぐ同じ画面に戻るなら、リダイレクトループや戻り先処理も候補になる",
             "別ブラウザでだけ維持されるなら、元のブラウザ拡張や保存セッションの影響が強い",
             "特定サービスだけ何度も切れるなら、そのサービス側の認証部分障害も見る",
-            "ログイン自体が通らないなら、この症状より login failure ページのほうが近い",
+            "ログイン自体が通らないなら、この症状よりログイン失敗の確認ページのほうが近い",
           ],
         },
         {
@@ -41,7 +41,7 @@ export default function Page() {
                   href="/troubleshooting/cant-log-in"
                   className="underline hover:no-underline"
                 >
-                  ログインできないときの切り分けハブ
+                  ログインできないときの確認ハブ
                 </Link>
               </p>
               <p>
@@ -68,7 +68,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -112,7 +112,7 @@ export default function Page() {
                 href="/troubleshooting/cant-log-in"
                 className="underline hover:no-underline"
               >
-                ログインできないときの切り分け
+                ログインできないときの確認
               </Link>
               のほうが近く、このページは『通るけれど維持できない』ときに合っています。
             </>,
@@ -129,7 +129,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>
               が近いです。
             </>,

@@ -20,6 +20,16 @@ export default function WhatIsDowntimePage() {
       ]}
       sections={[
         {
+          type: "list",
+          title: "このページで分かること",
+          items: [
+            "サイトダウン、サーバーダウン、部分障害の違い",
+            "落ちているように見える時に、サイト側と自分側をどう分けるか",
+            "503、504、500、接続拒否など代表的なエラーの見方",
+            "接続チェックで分かることと、ログイン後の機能までは分からないこと"
+          ]
+        },
+        {
           type: "p",
           title: "「ダウン」と「遅い・見れない」は別物（まずここが重要）",
           body: [
@@ -77,10 +87,30 @@ export default function WhatIsDowntimePage() {
           body: [
             "最も確実なのは「自分以外の地点からアクセスできるか」を確認することです。同じ回線・同じ端末だけで判断すると、DNSや回線障害を“サイト障害”と勘違いしやすくなります。",
             "当サイト（サイトダウン）のトップページからURLを入力してチェックすると、外部サーバーから対象サイトに到達できるかを判定できます。これにより「サイトが本当に落ちているのか」「自分の環境だけの問題なのか」を見分けやすくなります。",
+            "一方で、ログイン後の画面、会員限定機能、決済、アプリ内通知などは外部から直接確認できないため、公式障害情報やサービス別ページと合わせて判断する必要があります。",
             "もし当サイトで『オンライン』と出るのに自分の端末で見れない場合は、まず別回線（Wi-Fi⇔4G/5G）で試し、それでもダメならブラウザのキャッシュ削除やDNS設定の変更が有効です。",
             <Link key="trouble-link" href="/troubleshooting-guide" className="text-sky-600 font-bold underline">
               → 具体的な手順は「サイトが見れない時の解消ガイド」を見る
-            </Link>
+            </Link>,
+            <>
+              主要サービスの現在状況を見たい場合は{" "}
+              <Link
+                key="services-link"
+                href="/services"
+                className="text-sky-600 font-bold underline"
+              >
+                サービス別トラブルページ
+              </Link>{" "}
+              から、エラー名が出ている場合は{" "}
+              <Link
+                key="errors-link"
+                href="/errors"
+                className="text-sky-600 font-bold underline"
+              >
+                エラー解説一覧
+              </Link>{" "}
+              から確認できます。
+            </>
           ]
         }
       ]}

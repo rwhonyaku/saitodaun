@@ -87,8 +87,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Yahoo! JAPAN",
     url: "https://www.yahoo.co.jp",
     category: "search_portal",
-    officialStatusUrl:
-      "https://www.yahoo-help.jp/app/answers/detail/p/537/a_id/40959",
     supportUrl: "https://support.yahoo-net.jp/",
     serviceNote:
       "トップページは表示されても、メールやオークションなど一部機能のみ利用できない障害が発生することがあります。",
@@ -122,7 +120,7 @@ export const STATUS_SITES: SiteConfig[] = [
       officialConfirmation: [
         {
           label: "Yahoo! JAPAN（障害・メンテナンス等のお知らせ）",
-          url: "https://www.yahoo-help.jp/app/answers/detail/p/537/a_id/40959",
+          url: "https://support.yahoo-net.jp/",
         },
         { label: "Yahoo! JAPAN サポート", url: "https://support.yahoo-net.jp/" },
       ],
@@ -134,7 +132,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "楽天市場",
     url: "https://www.rakuten.co.jp",
     category: "ecommerce_marketplace",
-    officialStatusUrl: "https://status.rakuten.co.jp/",
     supportUrl: "https://ichiba.faq.rakuten.net/",
     serviceNote:
       "決済や注文履歴の表示に問題が出るケースが多く、アプリのみ影響する障害も報告されています。",
@@ -144,7 +141,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Amazon.co.jp",
     url: "https://www.amazon.co.jp",
     category: "ecommerce_marketplace",
-    officialStatusUrl: "https://health.aws.amazon.com/health/status",
     supportUrl: "https://www.amazon.co.jp/hz/contact-us",
     serviceNote:
       "サイト自体は表示されても、購入・決済・注文履歴が正常に動作しない場合は一時的な障害の可能性があります。",
@@ -156,7 +152,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "YouTube",
     url: "https://www.youtube.com",
     category: "streaming_media",
-    officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/youtube/",
     serviceNote:
       "動画の読み込み不良やライブ配信のみ視聴できないなど、機能限定の障害が発生することがあります。",
@@ -167,9 +162,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "X（旧Twitter）",
     url: "https://twitter.com",
     category: "social_messaging",
-    officialStatusUrl: "https://api.twitterstat.us/",
     supportUrl: "https://help.x.com/",
-    xUrl: "https://x.com/x",
+    xUrl: "https://x.com/Support",
     serviceNote:
       "タイムラインは表示されても投稿や通知が遅延するなど、部分的な障害として現れるケースが多いです。",
     aliases: ["ツイッター", "Twitter"],
@@ -189,7 +183,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "LINE",
     url: "https://line.me",
     category: "social_messaging",
-    officialStatusUrl: "https://line-status.github.io/",
+    officialStatusUrl: "https://api.line-status.info/",
     supportUrl: "https://help.line.me/",
     serviceNote:
       "メッセージ送信は可能でも通話やスタンプ購入が利用できないなど、機能限定の障害が起きやすいです。",
@@ -211,7 +205,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "PayPay",
     url: "https://paypay.ne.jp",
     category: "payments_finance",
-    officialStatusUrl: "https://www.paypay.ne.jp/notice/",
     supportUrl: "https://paypay.ne.jp/help/",
     serviceNote:
       "決済エラーや残高反映の遅延など、支払い関連に限定した障害が発生するケースが多いです。",
@@ -290,7 +283,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "マイナポータル",
     url: "https://myna.go.jp",
     category: "government_public",
-    officialStatusUrl: "https://www.digital.go.jp/policies/mynaportal",
+    officialStatusUrl: "https://www.digital.go.jp/news",
     supportUrl: "https://myna.go.jp/help",
     serviceNote:
       "ログイン不可や申請手続きが途中で止まるなど、利用集中時に障害が発生することがあります。",
@@ -334,8 +327,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Microsoft 365",
     url: "https://www.microsoft.com/ja-jp/microsoft-365",
     category: "productivity_saas",
-    officialStatusUrl: "https://portal.office.com/servicestatus",
     supportUrl: "https://support.microsoft.com/ja-jp",
+    xUrl: "https://x.com/MSFT365Status",
     serviceNote:
       "Outlook、Teams、OneDrive など複数サービスが同時に影響を受ける障害が発生することがあります。",
     aliases: ["Office365", "Microsoft"],
@@ -345,8 +338,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Microsoft Teams",
     url: "https://www.microsoft.com/ja-jp/microsoft-teams",
     category: "productivity_saas",
-    officialStatusUrl: "https://portal.office.com/servicestatus",
     supportUrl: "https://support.microsoft.com/ja-jp/teams",
+    xUrl: "https://x.com/MSFT365Status",
     serviceNote:
       "チャット送信遅延や会議への接続失敗など、リアルタイム機能に影響が出ることがあります。",
   },
@@ -355,8 +348,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "OneDrive",
     url: "https://onedrive.live.com/",
     category: "productivity_saas",
-    officialStatusUrl: "https://portal.office.com/servicestatus",
     supportUrl: "https://support.microsoft.com/ja-jp/onedrive",
+    xUrl: "https://x.com/MSFT365Status",
     serviceNote:
       "ファイル同期が止まる、アップロードが完了しないなどの障害が発生することがあります。",
   },
@@ -500,7 +493,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Steam",
     url: "https://store.steampowered.com",
     category: "gaming",
-    officialStatusUrl: "https://steamstat.us/",
     supportUrl: "https://help.steampowered.com/",
     serviceNote:
       "ストアは表示されてもログインやゲーム接続のみ失敗する障害が発生します。",
@@ -641,7 +633,8 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "NURO光",
     url: "https://www.nuro.jp",
     category: "telecom_isp",
-    officialStatusUrl: "https://www.nuro.jp/notice/",
+    officialStatusUrl:
+      "https://support.nuro.jp/faqsupport/nuro/web/general225.html?sortType=3",
     supportUrl: "https://www.nuro.jp/support/",
     serviceNote:
       "特定エリアで通信断や速度低下が発生するケースがあります。",
@@ -662,7 +655,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "三井住友銀行",
     url: "https://www.smbc.co.jp",
     category: "payments_finance",
-    officialStatusUrl: "https://www.smbc.co.jp/notice/",
     supportUrl: "https://www.smbc.co.jp/support/",
     serviceNote:
       "SMBCダイレクトへのログイン不可や残高反映遅延が起きることがあります。",
@@ -682,7 +674,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "ゆうちょ銀行",
     url: "https://www.jp-bank.japanpost.jp",
     category: "payments_finance",
-    officialStatusUrl: "https://www.jp-bank.japanpost.jp/oshirase/",
     supportUrl: "https://www.jp-bank.japanpost.jp/support/",
     serviceNote:
       "オンラインサービスや送金処理が停止するケースがあります。",
@@ -693,7 +684,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "LINE Pay",
     url: "https://linepay.line.me",
     category: "payments_finance",
-    officialStatusUrl: "https://linepay.line.me/notice",
     supportUrl: "https://help.line.me/linepay/",
     serviceNote:
       "決済エラーや残高反映遅延など、支払い関連の障害が発生することがあります。",
@@ -704,9 +694,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Visa",
     url: "https://www.visa.co.jp",
     category: "payments_finance",
-    officialStatusUrl:
-      "https://www.visa.co.jp/run-your-business/small-business-tools/operational-resilience.html",
-    supportUrl: "https://www.visa.co.jp/contact-us.html",
+    supportUrl: "https://www.visa.co.jp/support.html",
     serviceNote:
       "加盟店決済は可能でも、認証や一部カード取引のみ失敗することがあります。",
   },
@@ -726,7 +714,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "JCB",
     url: "https://www.jcb.co.jp",
     category: "payments_finance",
-    officialStatusUrl: "https://www.jcb.co.jp/information/",
+    officialStatusUrl: "https://www.jcb.co.jp/release/index.html",
     supportUrl: "https://www.jcb.co.jp/support/",
     serviceNote:
       "オンライン決済や本人認証（3Dセキュア）のみ失敗することがあります。",
@@ -736,8 +724,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "American Express",
     url: "https://www.americanexpress.com/jp",
     category: "payments_finance",
-    officialStatusUrl:
-      "https://www.americanexpress.com/jp/content/service-updates.html",
     supportUrl: "https://www.americanexpress.com/jp/customer-service/",
     serviceNote:
       "カード決済は可能でも、明細反映やアプリ表示が遅延するケースがあります。",
@@ -864,7 +850,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "ANA（全日本空輸）",
     url: "https://www.ana.co.jp",
     category: "transport_travel",
-    officialStatusUrl: "https://www.ana.co.jp/notice/",
+    officialStatusUrl: "https://www.ana.co.jp/ja/jp/notice/",
     supportUrl: "https://www.ana.co.jp/ja/jp/support/",
     serviceNote:
       "予約・チェックイン・マイル関連機能のみ利用できない障害が発生することがあります。",
@@ -926,7 +912,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "MakeShop",
     url: "https://www.makeshop.jp",
     category: "ecommerce_marketplace",
-    officialStatusUrl: "https://www.makeshop.jp/main/news/",
+    officialStatusUrl: "https://www.makeshop.jp/main/support/maintenance/",
     supportUrl: "https://www.makeshop.jp/main/support/",
     serviceNote:
       "管理画面へのログインや注文処理に影響が出ることがあります。",
@@ -947,10 +933,9 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Amazon Prime Video",
     url: "https://www.amazon.co.jp/Prime-Video",
     category: "streaming_media",
-    officialStatusUrl: "https://health.aws.amazon.com/health/status",
     supportUrl: "https://www.amazon.co.jp/gp/help/customer/display.html",
     serviceNote:
-      "視聴は可能でも、検索や再生開始が遅延するケースがあります。",
+      "作品一覧は開くが再生だけ失敗する、テレビアプリだけ見れない、ログイン後の視聴開始で止まるなど、再生機能だけ影響を受けることがあります。",
   },
   {
     id: "abema",
@@ -988,7 +973,6 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "大学入学共通テスト",
     url: "https://www.dnc.ac.jp",
     category: "education_exam",
-    officialStatusUrl: "https://www.dnc.ac.jp/news/",
     supportUrl: "https://www.dnc.ac.jp/contact/",
     serviceNote:
       "成績照会や関連ページが試験期間中に不安定になることがあります。",
@@ -998,7 +982,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "TOEIC",
     url: "https://www.iibc-global.org",
     category: "education_exam",
-    officialStatusUrl: "https://www.iibc-global.org/iibc/information/",
+    officialStatusUrl: "https://www.iibc-global.org/toeic/info.html?hsLang=ja",
     supportUrl: "https://www.iibc-global.org/iibc/contact/",
     serviceNote:
       "申込やログイン処理が締切前に集中して失敗することがあります。",
@@ -1418,7 +1402,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "canva",
     name: "Canva",
-    url: "https://www.canva.com",
+    url: "https://www.canva.com/robots.txt",
     category: "productivity_saas",
     officialStatusUrl: "https://www.canvastatus.com/",
     supportUrl: "https://www.canva.com/help/",
@@ -1833,7 +1817,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://support.yahoo-net.jp/",
     serviceNote:
-      "Headlines may load while article pages or comments fail to display during partial outages.",
+      "見出しは表示できても、記事ページやコメントだけ表示できない場合があります。",
     aliases: ["Yahoo News"],
   },
   {
@@ -1844,7 +1828,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/news/",
     serviceNote:
-      "The front page may render while individual sources or topic pages fail to load.",
+      "トップページは表示できても、個別の配信元やトピックページだけ開けない場合があります。",
   },
 
   {
@@ -1855,7 +1839,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.redditstatus.com/",
     supportUrl: "https://support.reddithelp.com/",
     serviceNote:
-      "Browsing may work while posting, voting, or comments intermittently fail.",
+      "閲覧はできても、投稿、投票、コメントだけ断続的に失敗する場合があります。",
   },
   {
     id: "mastodon",
@@ -1864,7 +1848,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "social_messaging",
     supportUrl: "https://joinmastodon.org/support",
     serviceNote:
-      "Service availability can vary by instance; one server may be unreachable while others remain accessible.",
+      "インスタンスごとに状況が異なり、一部サーバーだけ到達できない場合があります。",
   },
 
   {
@@ -1874,7 +1858,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://support.yahoo-net.jp/",
     serviceNote:
-      "Forecast pages may load while radar maps or alerts fail to update.",
+      "予報ページは表示できても、雨雲レーダーや警報の更新だけ失敗する場合があります。",
   },
   {
     id: "tenki-jp",
@@ -1883,7 +1867,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://tenki.jp/help/",
     serviceNote:
-      "Weather data may display while location search or warnings are unavailable.",
+      "天気情報は表示できても、地域検索や警報表示だけ使えない場合があります。",
   },
 
   {
@@ -1893,7 +1877,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://support.yahoo-net.jp/PccTransit/s/",
     serviceNote:
-      "Route search may fail while timetables remain accessible.",
+      "時刻表は表示できても、経路検索だけ失敗する場合があります。",
   },
   {
     id: "navitime",
@@ -1902,7 +1886,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.navitime.co.jp/support/",
     serviceNote:
-      "Map display may work while route calculation or traffic data is unavailable.",
+      "地図は表示できても、ルート計算や交通情報だけ使えない場合があります。",
   },
 
   {
@@ -1912,7 +1896,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://faq.kuronekoyamato.co.jp/",
     serviceNote:
-      "Tracking pages may be reachable while shipment status updates fail to refresh.",
+      "追跡ページは開けても、配送状況の更新だけ反映されない場合があります。",
   },
   {
     id: "sagawa",
@@ -1921,7 +1905,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.sagawa-exp.co.jp/support/",
     serviceNote:
-      "Tracking numbers may not resolve even though the main site remains accessible.",
+      "メインサイトは開けても、追跡番号だけ照会できない場合があります。",
   },
 
   {
@@ -1931,7 +1915,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/question/",
     serviceNote:
-      "Postal tracking or rate calculation may fail while informational pages load normally.",
+      "案内ページは表示できても、郵便追跡や料金計算だけ失敗する場合があります。",
   },
   {
     id: "ems",
@@ -1940,7 +1924,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/int/question/",
     serviceNote:
-      "International tracking may be delayed or unavailable during system issues.",
+      "システム不調時は、国際配送の追跡が遅れたり使えなかったりする場合があります。",
   },
 
   {
@@ -1950,7 +1934,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "payments_finance",
     supportUrl: "https://www.rakuten-bank.co.jp/support/",
     serviceNote:
-      "Login or transfer functions may fail while balance information remains visible.",
+      "残高情報は表示できても、ログインや振込だけ失敗する場合があります。",
   },
   {
     id: "sony-bank",
@@ -1959,7 +1943,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "payments_finance",
     supportUrl: "https://moneykit.net/visitor/support/",
     serviceNote:
-      "Online banking features may be intermittently unavailable during maintenance windows.",
+      "メンテナンス中は、オンラインバンキング機能が断続的に使えない場合があります。",
   },
 
   {
@@ -1970,7 +1954,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/drive/",
     serviceNote:
-      "File viewing may work while uploads, downloads, or sync operations fail.",
+      "ファイル表示はできても、アップロード、ダウンロード、同期だけ失敗する場合があります。",
   },
   {
     id: "google-calendar",
@@ -1980,7 +1964,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/calendar/",
     serviceNote:
-      "Calendar pages may load while event creation or updates fail to save.",
+      "カレンダーは表示できても、予定作成や更新の保存だけ失敗する場合があります。",
   },
 
   {
@@ -1991,7 +1975,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://bitbucket.status.atlassian.com/",
     supportUrl: "https://support.atlassian.com/bitbucket-cloud/",
     serviceNote:
-      "Repository browsing may work while pushes or pipelines fail.",
+      "リポジトリ閲覧はできても、pushやパイプラインだけ失敗する場合があります。",
   },
   {
     id: "gitlab",
@@ -2001,7 +1985,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.gitlab.com/",
     supportUrl: "https://support.gitlab.com/",
     serviceNote:
-      "Web access may be available while CI/CD or authentication services are degraded.",
+      "Web画面は開けても、CI/CDや認証サービスだけ不安定になる場合があります。",
   },
 
   {
@@ -2009,10 +1993,10 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "WordPress.com",
     url: "https://wordpress.com",
     category: "productivity_saas",
-    officialStatusUrl: "https://wordpress.com/status/",
+    officialStatusUrl: "https://wordpress.com/ja/support/status/",
     supportUrl: "https://wordpress.com/support/",
     serviceNote:
-      "Published sites may remain visible while admin dashboards or editing tools fail.",
+      "公開サイトは表示できても、管理画面や編集ツールだけ失敗する場合があります。",
   },
   {
     id: "medium",
@@ -2021,7 +2005,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://help.medium.com/",
     serviceNote:
-      "Article reading may work while login or publishing features are unavailable.",
+      "記事閲覧はできても、ログインや公開機能だけ使えない場合があります。",
   },
   {
     id: "google-search-console",
@@ -2031,7 +2015,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/webmasters/",
     serviceNote:
-      "Reports may load while indexing data or performance charts fail to update.",
+      "レポートは表示できても、インデックス情報や検索パフォーマンスの更新だけ失敗する場合があります。",
   },
   {
     id: "google-analytics",
@@ -2041,7 +2025,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/analytics/",
     serviceNote:
-      "Dashboards may render while real-time or historical data queries fail.",
+      "ダッシュボードは表示できても、リアルタイムや過去データの取得だけ失敗する場合があります。",
   },
 
   {
@@ -2052,7 +2036,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.linkedin-status.com/",
     supportUrl: "https://www.linkedin.com/help/linkedin",
     serviceNote:
-      "Feed browsing may work while messaging or posting features are unavailable.",
+      "フィード閲覧はできても、メッセージや投稿機能だけ使えない場合があります。",
   },
   {
     id: "signal",
@@ -2061,7 +2045,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "social_messaging",
     supportUrl: "https://support.signal.org/",
     serviceNote:
-      "Message delivery may be delayed while app access remains available.",
+      "アプリは開けても、メッセージ配信だけ遅れる場合があります。",
   },
 
   {
@@ -2072,7 +2056,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/youtubemusic/",
     serviceNote:
-      "Playback may fail while browsing and search remain functional.",
+      "閲覧や検索はできても、再生だけ失敗する場合があります。",
   },
   {
     id: "soundcloud",
@@ -2082,7 +2066,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.soundcloud.com/",
     supportUrl: "https://help.soundcloud.com/",
     serviceNote:
-      "Streaming may be interrupted while profile pages continue to load.",
+      "プロフィールページは表示できても、ストリーミングだけ途切れる場合があります。",
   },
 
   {
@@ -2092,7 +2076,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.expedia.com/service/",
     serviceNote:
-      "Search results may appear while booking or payment confirmation fails.",
+      "検索結果は表示できても、予約や支払い確認だけ失敗する場合があります。",
   },
   {
     id: "tripadvisor",
@@ -2101,7 +2085,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.tripadvisor.com/help",
     serviceNote:
-      "Reviews may load while posting or account features are unavailable.",
+      "レビュー閲覧はできても、投稿やアカウント機能だけ使えない場合があります。",
   },
 
   {
@@ -2111,7 +2095,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.fedex.com/en-us/customer-support.html",
     serviceNote:
-      "Tracking information may be delayed while the main site remains accessible.",
+      "メインサイトは開けても、追跡情報の反映だけ遅れる場合があります。",
   },
   {
     id: "dhl",
@@ -2120,7 +2104,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.dhl.com/global-en/home/customer-service.html",
     serviceNote:
-      "Shipment tracking may fail while informational pages continue to load.",
+      "案内ページは表示できても、荷物追跡だけ失敗する場合があります。",
   },
 
   {
@@ -2131,7 +2115,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.wise.com/",
     supportUrl: "https://wise.com/help",
     serviceNote:
-      "Transfers may be delayed while balances and rates remain visible.",
+      "残高やレートは表示できても、送金だけ遅れる場合があります。",
   },
   {
     id: "revolut",
@@ -2141,7 +2125,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.revolut.com/system-status/",
     supportUrl: "https://www.revolut.com/help/",
     serviceNote:
-      "Card payments may fail while app access remains available.",
+      "アプリは開けても、カード決済だけ失敗する場合があります。",
   },
 
   {
@@ -2152,7 +2136,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.adobe.com/",
     supportUrl: "https://helpx.adobe.com/support.html",
     serviceNote:
-      "App downloads or license checks may fail while account pages load.",
+      "アカウントページは表示できても、アプリのダウンロードやライセンス確認だけ失敗する場合があります。",
   },
   {
     id: "dropbox-paper",
@@ -2162,7 +2146,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.dropbox.com/",
     supportUrl: "https://help.dropbox.com/",
     serviceNote:
-      "Viewing may work while editing or syncing fails.",
+      "閲覧はできても、編集や同期だけ失敗する場合があります。",
   },
 
   {
@@ -2173,7 +2157,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://health.aws.amazon.com/health/status",
     supportUrl: "https://aws.amazon.com/support/",
     serviceNote:
-      "Metrics may be delayed while dashboards remain accessible.",
+      "ダッシュボードは開けても、メトリクス反映だけ遅れる場合があります。",
   },
   {
     id: "lambda",
@@ -2183,7 +2167,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://health.aws.amazon.com/health/status",
     supportUrl: "https://aws.amazon.com/support/",
     serviceNote:
-      "Function execution may fail in specific regions while others operate normally.",
+      "一部リージョンだけ関数実行が失敗し、他のリージョンは正常な場合があります。",
   },
 
   {
@@ -2193,7 +2177,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "education_exam",
     supportUrl: "https://support.khanacademy.org/",
     serviceNote:
-      "Video playback may fail while lesson pages continue to load.",
+      "レッスンページは表示できても、動画再生だけ失敗する場合があります。",
   },
   {
     id: "duolingo",
@@ -2202,7 +2186,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "education_exam",
     supportUrl: "https://support.duolingo.com/",
     serviceNote:
-      "Lessons may not start while account access remains available.",
+      "アカウントには入れても、レッスン開始だけ失敗する場合があります。",
   },
   {
     id: "uber-eats-jp",
@@ -2211,7 +2195,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "ecommerce_marketplace",
     supportUrl: "https://help.uber.com/ubereats/",
     serviceNote:
-      "Browsing may work while order placement, payment, or courier tracking fails.",
+      "閲覧はできても、注文、支払い、配達追跡だけ失敗する場合があります。",
   },
   {
     id: "demae-can",
@@ -2220,7 +2204,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "ecommerce_marketplace",
     supportUrl: "https://demae-can.com/support/",
     serviceNote:
-      "Restaurant listings may load while checkout or delivery status updates fail.",
+      "店舗一覧は表示できても、決済や配達状況の更新だけ失敗する場合があります。",
   },
 
   {
@@ -2230,7 +2214,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://www.gnavi.co.jp/support/",
     serviceNote:
-      "Search results may appear while reservation links or details fail to load.",
+      "検索結果は表示できても、予約リンクや詳細ページだけ開けない場合があります。",
   },
   {
     id: "tabelog",
@@ -2239,7 +2223,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://tabelog.com/help/",
     serviceNote:
-      "Listings may load while reviews or reservation features are unavailable.",
+      "店舗情報は表示できても、レビューや予約機能だけ使えない場合があります。",
   },
 
   {
@@ -2249,7 +2233,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://wiki.openstreetmap.org/wiki/Contact",
     serviceNote:
-      "Map tiles may render while search or editing tools are degraded.",
+      "地図タイルは表示できても、検索や編集ツールだけ不安定になる場合があります。",
   },
   {
     id: "waze",
@@ -2258,7 +2242,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://support.google.com/waze/",
     serviceNote:
-      "Map display may work while routing or traffic updates are unavailable.",
+      "地図は表示できても、ルート案内や交通情報だけ使えない場合があります。",
   },
 
   {
@@ -2268,7 +2252,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://help.uber.com/",
     serviceNote:
-      "App access may work while ride requests or fare estimates fail.",
+      "アプリは開けても、配車依頼や料金見積もりだけ失敗する場合があります。",
   },
   {
     id: "go-taxi",
@@ -2277,7 +2261,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://go.mo-t.com/support/",
     serviceNote:
-      "Booking may fail while maps or fare estimates remain accessible.",
+      "地図や料金見積もりは表示できても、予約だけ失敗する場合があります。",
   },
 
   {
@@ -2287,7 +2271,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "ecommerce_marketplace",
     supportUrl: "https://books.rakuten.co.jp/e-book/help/",
     serviceNote:
-      "Store pages may load while downloads or library sync fail.",
+      "ストアページは表示できても、ダウンロードやライブラリ同期だけ失敗する場合があります。",
   },
   {
     id: "kindle-store",
@@ -2296,7 +2280,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "ecommerce_marketplace",
     supportUrl: "https://www.amazon.co.jp/hz/contact-us",
     serviceNote:
-      "Browsing may work while purchases or downloads fail to start.",
+      "閲覧はできても、購入やダウンロード開始だけ失敗する場合があります。",
   },
 
   {
@@ -2306,7 +2290,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "search_portal",
     supportUrl: "https://www.au.com/support/",
     serviceNote:
-      "Portal pages may load while linked services fail to open.",
+      "ポータルは表示できても、連携サービスだけ開けない場合があります。",
   },
   {
     id: "docomo-online",
@@ -2314,7 +2298,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.docomo.ne.jp/mydocomo/",
     category: "telecom_isp",
     supportUrl: "https://www.docomo.ne.jp/support/",
-    serviceNote: "Login may fail while public pages remain accessible.",
+    serviceNote: "公開ページは表示できても、ログインだけ失敗する場合があります。",
   },
 
   {
@@ -2324,7 +2308,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "productivity_saas",
     officialStatusUrl: "https://www.google.com/appsstatus/dashboard/",
     supportUrl: "https://support.google.com/googleplay/",
-    serviceNote: "Store browsing may work while downloads or payments fail.",
+    serviceNote: "ストア閲覧はできても、ダウンロードや支払いだけ失敗する場合があります。",
   },
   {
     id: "apple-tv",
@@ -2333,7 +2317,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "streaming_media",
     officialStatusUrl: "https://www.apple.com/support/systemstatus/",
     supportUrl: "https://support.apple.com/ja-jp/tv",
-    serviceNote: "Playback may fail while catalog pages load normally.",
+    serviceNote: "作品一覧は表示できても、再生だけ失敗する場合があります。",
   },
 
   {
@@ -2344,7 +2328,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.zoom.us/",
     supportUrl: "https://support.zoom.com/",
     serviceNote:
-      "Admin access may work while call connectivity is degraded.",
+      "管理画面は開けても、通話接続だけ不安定になる場合があります。",
   },
   {
     id: "ringcentral",
@@ -2354,7 +2338,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.ringcentral.com/",
     supportUrl: "https://support.ringcentral.com/",
     serviceNote:
-      "Web access may work while calling or messaging services are unavailable.",
+      "Web画面は開けても、通話やメッセージ機能だけ使えない場合があります。",
   },
 
   {
@@ -2365,7 +2349,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.firebase.google.com/",
     supportUrl: "https://firebase.google.com/support",
     serviceNote:
-      "Console access may work while hosting, auth, or database services are degraded.",
+      "コンソールは開けても、ホスティング、認証、データベース機能だけ不安定になる場合があります。",
   },
   {
     id: "supabase",
@@ -2375,7 +2359,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.supabase.com/",
     supportUrl: "https://supabase.com/support",
     serviceNote:
-      "Dashboards may load while database or auth services are unavailable.",
+      "ダッシュボードは表示できても、データベースや認証機能だけ使えない場合があります。",
   },
 
   {
@@ -2385,7 +2369,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "education_exam",
     supportUrl: "https://support.udemy.com/",
     serviceNote:
-      "Course browsing may work while enrollment or playback fails.",
+      "サイトは開くがSSOやログインだけ失敗する、コース一覧だけ表示されない、動画だけ再生できないなど、会社側の認証やネットワーク環境が関係する不具合もあります。",
   },
   {
     id: "skillshare",
@@ -2394,7 +2378,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "education_exam",
     supportUrl: "https://help.skillshare.com/",
     serviceNote:
-      "Video pages may load while playback or login is unavailable.",
+      "動画ページは表示できても、再生やログインだけ失敗する場合があります。",
   },
   {
     id: "electric-power-tepco",
@@ -2403,7 +2387,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.tepco.co.jp/pg/consignment/information/",
     serviceNote:
-      "Outage information pages may be accessible while regional status updates are delayed.",
+      "障害情報ページは開けても、地域別の状況更新が遅れる場合があります。",
   },
   {
     id: "kansai-electric",
@@ -2412,7 +2396,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.kepco.co.jp/energy_supply/energy_supply_info/",
     serviceNote:
-      "Planned outage or restoration pages may not update in real time during incidents.",
+      "停電予定や復旧情報ページが、障害発生中にリアルタイム更新されない場合があります。",
   },
 
   {
@@ -2422,7 +2406,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.waterworks.metro.tokyo.lg.jp/kurashi/",
     serviceNote:
-      "Maintenance notices may load while emergency water outage information is delayed.",
+      "メンテナンス情報は表示できても、緊急の断水情報が遅れる場合があります。",
   },
   {
     id: "j-alert",
@@ -2431,7 +2415,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.fdma.go.jp/contact.html",
     serviceNote:
-      "Alert history pages may be accessible while real-time notifications fail to display.",
+      "履歴ページは開けても、リアルタイム通知が表示されない場合があります。",
   },
 
   {
@@ -2441,7 +2425,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.jma.go.jp/jma/kishou/faq/index.html",
     serviceNote:
-      "Forecast pages may load while warnings or radar data fail to refresh.",
+      "予報ページは表示できても、警報や雨雲レーダーの更新だけ失敗する場合があります。",
   },
 
   {
@@ -2452,7 +2436,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.fastlystatus.com/",
     supportUrl: "https://www.fastly.com/support",
     serviceNote:
-      "Customer sites may be affected even if the Fastly dashboard remains reachable.",
+      "Fastlyのダッシュボードは開けても、配信先サイトに影響が出る場合があります。",
   },
   {
     id: "akamai",
@@ -2461,7 +2445,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "cloud_devops",
     supportUrl: "https://www.akamai.com/support",
     serviceNote:
-      "Edge delivery issues may occur without a full public service outage notice.",
+      "公式の大規模障害告知がなくても、エッジ配信だけ不安定になる場合があります。",
   },
 
   {
@@ -2472,7 +2456,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://health.aws.amazon.com/health/status",
     supportUrl: "https://aws.amazon.com/support/",
     serviceNote:
-      "Content delivery may degrade regionally while the AWS console remains accessible.",
+      "AWSコンソールは開けても、地域によってコンテンツ配信だけ不安定になる場合があります。",
   },
 
   {
@@ -2480,18 +2464,18 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "LINE WORKS",
     url: "https://line.worksmobile.com",
     category: "productivity_saas",
-    officialStatusUrl: "https://status.worksmobile.com/",
     supportUrl: "https://help.worksmobile.com/",
     serviceNote:
-      "Messaging may work while admin or file-sharing features are unavailable.",
+      "メッセージは使えても、管理画面やファイル共有だけ使えない場合があります。",
   },
   {
     id: "chatwork",
     name: "Chatwork",
-    url: "https://www.chatwork.com",
+    url: "https://go.chatwork.com/ja/",
     category: "productivity_saas",
     supportUrl: "https://help.chatwork.com/",
-    serviceNote: "Message history may load while sending or notifications fail.",
+    serviceNote:
+      "履歴は表示できても、メッセージ送信や通知だけ失敗する場合があります。",
   },
 
   {
@@ -2502,7 +2486,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.cybozu.com/",
     supportUrl: "https://support.cybozu.com/",
     serviceNote:
-      "Specific services may be affected independently within the Cybozu platform.",
+      "サイボウズ内の一部サービスだけ個別に影響を受ける場合があります。",
   },
   {
     id: "kintone",
@@ -2512,7 +2496,7 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://status.cybozu.com/",
     supportUrl: "https://help.cybozu.com/",
     serviceNote:
-      "App access may work while record updates or API operations fail.",
+      "アプリは開けても、レコード更新やAPI操作だけ失敗する場合があります。",
   },
 
   {
@@ -2521,7 +2505,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.jrepoint.jp",
     category: "payments_finance",
     supportUrl: "https://www.jrepoint.jp/inquiry/",
-    serviceNote: "Point balance display may fail while login remains possible.",
+    serviceNote: "ログインはできても、ポイント残高表示だけ失敗する場合があります。",
   },
   {
     id: "t-point",
@@ -2529,7 +2513,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.tsite.jp",
     category: "payments_finance",
     supportUrl: "https://tsite.jp/inquiry/",
-    serviceNote: "Point usage may be unavailable even if account pages load.",
+    serviceNote: "アカウントページは表示できても、ポイント利用だけできない場合があります。",
   },
 
   {
@@ -2539,7 +2523,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "payments_finance",
     supportUrl: "https://www.aeon.co.jp/inquiry/",
     serviceNote:
-      "Statement or authentication services may be intermittently unavailable.",
+      "明細表示や認証サービスが一時的に使えない場合があります。",
   },
 
   {
@@ -2549,7 +2533,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "telecom_isp",
     supportUrl: "https://www.au.com/support/",
     serviceNote:
-      "Membership verification may fail while promotional pages remain accessible.",
+      "キャンペーンページは表示できても、会員確認だけ失敗する場合があります。",
   },
 
   {
@@ -2558,7 +2542,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://plus.nhk.jp",
     category: "streaming_media",
     supportUrl: "https://www.nhk.or.jp/plus/help/",
-    serviceNote: "Live streaming may fail while on-demand pages load normally.",
+    serviceNote: "オンデマンドページは表示できても、ライブ配信だけ失敗する場合があります。",
   },
   {
     id: "radiko",
@@ -2567,7 +2551,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "streaming_media",
     supportUrl: "https://radiko.jp/help/",
     serviceNote:
-      "Playback may be unavailable in specific regions despite site accessibility.",
+      "サイトは開けても、地域によって再生だけ利用できない場合があります。",
   },
 
   {
@@ -2577,7 +2561,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://faq.kuronekoyamato.co.jp/",
     serviceNote:
-      "Tracking pages may be unreachable or fail to update while the main site remains accessible.",
+      "メインサイトは開けても、荷物追跡ページだけ開けない、または更新されない場合があります。",
   },
   {
     id: "sagawa-track",
@@ -2586,7 +2570,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.sagawa-exp.co.jp/support/",
     serviceNote:
-      "Tracking numbers may not resolve even though public pages load normally.",
+      "公開ページは表示できても、追跡番号だけ照会できない場合があります。",
   },
   {
     id: "japan-post-track",
@@ -2594,7 +2578,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://trackings.post.japanpost.jp/services/srv/search/",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote: "Status updates may be delayed or unavailable during peak periods.",
+    serviceNote: "混雑時はステータス更新が遅れたり、表示できなかったりする場合があります。",
   },
 
   {
@@ -2603,7 +2587,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://trackings.post.japanpost.jp/services/srv/search/?requestNoLang=EN",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/int/question/",
-    serviceNote: "International tracking may lag behind actual shipment movement.",
+    serviceNote: "国際配送の追跡情報が、実際の配送状況より遅れる場合があります。",
   },
   {
     id: "dhl-track",
@@ -2612,7 +2596,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.dhl.com/global-en/home/customer-service.html",
     serviceNote:
-      "Tracking results may intermittently fail while the main site is reachable.",
+      "メインサイトは開けても、追跡結果の表示だけ断続的に失敗する場合があります。",
   },
   {
     id: "fedex-track",
@@ -2621,7 +2605,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.fedex.com/en-us/customer-support.html",
     serviceNote:
-      "Shipment details may not load during system maintenance windows.",
+      "システムメンテナンス中は、配送詳細が表示されない場合があります。",
   },
   {
     id: "ups-track",
@@ -2630,7 +2614,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.ups.com/support",
     serviceNote:
-      "Tracking pages may be slow or unavailable while other site sections load.",
+      "他のページは表示できても、追跡ページだけ遅い、または使えない場合があります。",
   },
 
   {
@@ -2640,7 +2624,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "transport_travel",
     supportUrl: "https://www.amazon.co.jp/hz/contact-us",
     serviceNote:
-      "Delivery status updates may fail to refresh even when the storefront is accessible.",
+      "ストアは開けても、配送状況の更新だけ反映されない場合があります。",
   },
   {
     id: "rakuten-logistics",
@@ -2648,7 +2632,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://logistics.rakuten.co.jp",
     category: "transport_travel",
     supportUrl: "https://logistics.rakuten.co.jp/support/",
-    serviceNote: "Shipment dashboards may load while tracking updates are delayed.",
+    serviceNote: "配送ダッシュボードは表示できても、追跡情報の更新が遅れる場合があります。",
   },
 
   {
@@ -2658,7 +2642,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "productivity_saas",
     supportUrl: "https://faq.kuronekoyamato.co.jp/",
     serviceNote:
-      "Business dashboards may be accessible while label printing or pickups fail.",
+      "業務用ダッシュボードは開けても、送り状発行や集荷依頼だけ失敗する場合があります。",
   },
   {
     id: "sagawa-business",
@@ -2667,7 +2651,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "productivity_saas",
     supportUrl: "https://www.sagawa-exp.co.jp/support/",
     serviceNote:
-      "Account access may work while shipment registration is unavailable.",
+      "アカウントには入れても、発送登録だけ使えない場合があります。",
   },
 
   {
@@ -2676,7 +2660,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://member.kms.kuronekoyamato.co.jp",
     category: "productivity_saas",
     supportUrl: "https://faq.kuronekoyamato.co.jp/",
-    serviceNote: "Login may fail while public tracking pages remain accessible.",
+    serviceNote: "公開の追跡ページは開けても、ログインだけ失敗する場合があります。",
   },
   {
     id: "yu-pack",
@@ -2684,7 +2668,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.post.japanpost.jp/service/you_pack/",
     category: "transport_travel",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote: "Service information may load while tracking updates are delayed.",
+    serviceNote: "サービス案内は表示できても、追跡情報の更新が遅れる場合があります。",
   },
 
   {
@@ -2694,7 +2678,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "ecommerce_marketplace",
     supportUrl: "https://www.sej.co.jp/services/",
     serviceNote:
-      "Pickup status updates may fail while store pages remain available.",
+      "店舗ページは表示できても、受け取り状況の更新だけ失敗する場合があります。",
   },
   {
     id: "lawson-pickup",
@@ -2702,7 +2686,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.lawson.co.jp/service/",
     category: "ecommerce_marketplace",
     supportUrl: "https://www.lawson.co.jp/contact/",
-    serviceNote: "Order linkage may be unavailable even if store information loads.",
+    serviceNote: "店舗情報は表示できても、注文連携だけ使えない場合があります。",
   },
   {
     id: "familymart-pickup",
@@ -2710,7 +2694,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.family.co.jp/services/",
     category: "ecommerce_marketplace",
     supportUrl: "https://www.family.co.jp/company/customer.html",
-    serviceNote: "Pickup confirmation may be delayed during system congestion.",
+    serviceNote: "システム混雑時は、受け取り確認が遅れる場合があります。",
   },
 
   {
@@ -2719,7 +2703,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.post.japanpost.jp/office_search/",
     category: "government_public",
     supportUrl: "https://www.post.japanpost.jp/question/",
-    serviceNote: "Search results may fail to load while the main site remains accessible.",
+    serviceNote: "メインサイトは開けても、検索結果だけ表示できない場合があります。",
   },
   {
     id: "customs-japan",
@@ -2728,7 +2712,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.customs.go.jp/contact/",
     serviceNote:
-      "Clearance information pages may be slow or unavailable during peak periods.",
+      "混雑時は通関情報ページが遅い、または表示できない場合があります。",
   },
   {
     id: "naccs",
@@ -2737,7 +2721,7 @@ export const STATUS_SITES: SiteConfig[] = [
     category: "government_public",
     supportUrl: "https://www.naccs.jp/contact/",
     serviceNote:
-      "Trade processing systems may be unavailable even if informational pages load.",
+      "案内ページは表示できても、貿易手続きシステムだけ使えない場合があります。",
   },
 
   {
@@ -2745,161 +2729,161 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "jGrants",
     url: "https://www.jgrants-portal.go.jp",
     category: "government_public",
-    serviceNote: "Grant applications may fail near submission deadlines.",
+    serviceNote: "申請期限前は、補助金申請が失敗しやすくなる場合があります。",
   },
   {
     id: "passport-online",
     name: "Online Passport Application",
     url: "https://www.mofa.go.jp/j_info/passport/",
     category: "government_public",
-    serviceNote: "Online submission or status lookup may be unavailable.",
+    serviceNote: "オンライン申請や状況照会が使えない場合があります。",
   },
   {
     id: "immigration-online",
     name: "Immigration Online Procedures",
     url: "https://www.moj.go.jp/isa/applications/",
     category: "government_public",
-    serviceNote: "Application tracking may fail during peak periods.",
+    serviceNote: "混雑時は申請状況の確認が失敗する場合があります。",
   },
   {
     id: "childcare-benefits",
     name: "Childcare Benefit Application",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000135097.html",
     category: "government_public",
-    serviceNote: "Benefit applications may be unavailable near deadlines.",
+    serviceNote: "期限前は給付金申請ページが使えない場合があります。",
   },
   {
     id: "disaster-prevention-portal",
     name: "Cabinet Secretariat Disaster Portal",
     url: "https://www.bousai.go.jp",
     category: "government_public",
-    serviceNote: "Real-time updates may lag during emergencies.",
+    serviceNote: "緊急時はリアルタイム更新が遅れる場合があります。",
   },
   {
     id: "housing-benefit",
     name: "Housing Support Benefit",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000212318.html",
     category: "government_public",
-    serviceNote: "Application pages may be inaccessible during high traffic.",
+    serviceNote: "アクセス集中時は申請ページが開けない場合があります。",
   },
   {
     id: "local-tax-portal",
     name: "Local Tax Portal",
     url: "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/",
     category: "government_public",
-    serviceNote: "Local tax filing systems may be unavailable near deadlines.",
+    serviceNote: "期限前は地方税の申告システムが使えない場合があります。",
   },
   {
     id: "chugoku-electric",
     name: "Chugoku Electric Power",
     url: "https://www.energia.co.jp",
     category: "government_public",
-    serviceNote: "Outage information may fail to update in real time.",
+    serviceNote: "停電情報がリアルタイムに更新されない場合があります。",
   },
   {
     id: "hokuriku-electric",
     name: "Hokuriku Electric Power",
     url: "https://www.rikuden.co.jp",
     category: "government_public",
-    serviceNote: "Regional outage updates may be delayed.",
+    serviceNote: "地域別の停電情報更新が遅れる場合があります。",
   },
   {
     id: "shikoku-electric",
     name: "Shikoku Electric Power",
     url: "https://www.yonden.co.jp",
     category: "government_public",
-    serviceNote: "Restoration status pages may not load during incidents.",
+    serviceNote: "障害発生中は復旧状況ページが開けない場合があります。",
   },
   {
     id: "tokyo-gas-outage",
     name: "Tokyo Gas Outage Information",
     url: "https://home.tokyo-gas.co.jp/safety/",
     category: "government_public",
-    serviceNote: "Service interruption notices may be delayed.",
+    serviceNote: "供給停止や障害のお知らせが遅れる場合があります。",
   },
   {
     id: "osaka-water",
     name: "Osaka City Waterworks",
     url: "https://www.city.osaka.lg.jp/suido/",
     category: "government_public",
-    serviceNote: "Outage or maintenance information may be unavailable.",
+    serviceNote: "障害情報やメンテナンス情報が表示できない場合があります。",
   },
   {
     id: "center-exam-results",
     name: "University Entrance Exam Results",
     url: "https://www.dnc.ac.jp",
     category: "education_exam",
-    serviceNote: "Result lookup pages may be inaccessible during peak traffic.",
+    serviceNote: "アクセス集中時は結果照会ページが開けない場合があります。",
   },
   {
     id: "nursing-exam",
     name: "National Nursing Exam Portal",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
     category: "education_exam",
-    serviceNote: "Exam result announcements may load slowly.",
+    serviceNote: "試験結果の発表ページが遅くなる場合があります。",
   },
   {
     id: "care-worker-exam",
     name: "Certified Care Worker Exam",
     url: "https://www.sssc.or.jp",
     category: "education_exam",
-    serviceNote: "Application and result pages may be unavailable.",
+    serviceNote: "申請ページや結果ページが使えない場合があります。",
   },
   {
     id: "teacher-certification",
     name: "Teacher Certification Portal",
     url: "https://www.mext.go.jp",
     category: "education_exam",
-    serviceNote: "Certification procedures may fail during peak seasons.",
+    serviceNote: "繁忙期は認定手続きが失敗する場合があります。",
   },
   {
     id: "jibun-bank",
     name: "au Jibun Bank",
     url: "https://www.jibunbank.co.jp",
     category: "payments_finance",
-    serviceNote: "Login or transfers may fail during maintenance.",
+    serviceNote: "メンテナンス中はログインや振込が失敗する場合があります。",
   },
   {
     id: "sbj-bank",
     name: "SBJ Bank",
     url: "https://www.sbjbank.co.jp",
     category: "payments_finance",
-    serviceNote: "Internet banking features may be unavailable.",
+    serviceNote: "インターネットバンキング機能が使えない場合があります。",
   },
   {
     id: "shinsei-bank",
     name: "Shinsei Bank",
     url: "https://www.sbishinseibank.co.jp",
     category: "payments_finance",
-    serviceNote: "Transfers or authentication may fail temporarily.",
+    serviceNote: "振込や認証が一時的に失敗する場合があります。",
   },
   {
     id: "jaccs",
     name: "JACCS",
     url: "https://www.jaccs.co.jp",
     category: "payments_finance",
-    serviceNote: "Card authentication or statement access may be unavailable.",
+    serviceNote: "カード認証や明細照会が使えない場合があります。",
   },
   {
     id: "orico",
     name: "Orico Card",
     url: "https://www.orico.co.jp",
     category: "payments_finance",
-    serviceNote: "Member login or payment confirmation may fail.",
+    serviceNote: "会員ログインや支払い確認が失敗する場合があります。",
   },
   {
     id: "passport-status",
     name: "Passport Application Status",
     url: "https://www.mofa.go.jp/mofaj/toko/passport/",
     category: "government_public",
-    serviceNote: "Application status lookup may be unavailable during peak periods.",
+    serviceNote: "混雑時は申請状況の照会が使えない場合があります。",
   },
   {
     id: "immigration-residence-online",
     name: "Residence Status Online Application",
     url: "https://www.moj.go.jp/isa/online/",
     category: "government_public",
-    serviceNote: "Online application and tracking may fail during maintenance.",
+    serviceNote: "メンテナンス中はオンライン申請や状況確認が失敗する場合があります。",
   },
 
   {
@@ -2907,7 +2891,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Pension Benefit Procedures",
     url: "https://www.nenkin.go.jp/service/",
     category: "government_public",
-    serviceNote: "Benefit claim pages may be inaccessible near payment deadlines.",
+    serviceNote: "支給期限前は給付手続きページが開けない場合があります。",
   },
 
   {
@@ -2915,7 +2899,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Childcare Facility Application Portal",
     url: "https://www.cfa.go.jp/policies/childcare/",
     category: "government_public",
-    serviceNote: "Applications may fail near municipal deadlines.",
+    serviceNote: "自治体の締切前は申請が失敗する場合があります。",
   },
 
   {
@@ -2923,14 +2907,14 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "High School Entrance Exam Results",
     url: "https://www.mext.go.jp",
     category: "education_exam",
-    serviceNote: "Result announcement pages may be inaccessible during release windows.",
+    serviceNote: "発表直後は結果ページが開けない場合があります。",
   },
   {
     id: "national-medical-exam",
     name: "National Medical Examination Portal",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
     category: "education_exam",
-    serviceNote: "Exam result pages may load slowly or fail during peak access.",
+    serviceNote: "アクセス集中時は試験結果ページが遅い、または表示できない場合があります。",
   },
 
   {
@@ -2938,7 +2922,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "City Bank ATM Network",
     url: "https://www.zenginkyo.or.jp/abstract/efforts/system/",
     category: "payments_finance",
-    serviceNote: "ATM availability information may lag during system disruptions.",
+    serviceNote: "システム障害時はATM稼働情報の反映が遅れる場合があります。",
   },
   {
     id: "bank-authentication",
@@ -2946,7 +2930,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.zenginkyo.or.jp",
     category: "payments_finance",
     serviceNote:
-      "Authentication failures may occur even if bank sites are reachable.",
+      "銀行サイトは開けても、認証だけ失敗する場合があります。",
   },
 
   {
@@ -2954,14 +2938,14 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Chugoku Gas",
     url: "https://www.chugokugas.co.jp",
     category: "government_public",
-    serviceNote: "Service interruption notices may be delayed during incidents.",
+    serviceNote: "障害発生中は供給停止のお知らせが遅れる場合があります。",
   },
   {
     id: "toho-gas",
     name: "Toho Gas",
     url: "https://www.tohogas.co.jp",
     category: "government_public",
-    serviceNote: "Maintenance and outage pages may be temporarily unavailable.",
+    serviceNote: "メンテナンス情報や障害情報ページが一時的に使えない場合があります。",
   },
 
   {
@@ -2969,7 +2953,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Prefectural Disaster Information",
     url: "https://www.bousai.go.jp",
     category: "government_public",
-    serviceNote: "Local disaster updates may lag during emergencies.",
+    serviceNote: "緊急時は地域の災害情報更新が遅れる場合があります。",
   },
 
   {
@@ -2977,7 +2961,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "School Lunch Payment System",
     url: "https://www.mext.go.jp",
     category: "education_exam",
-    serviceNote: "Payment or confirmation pages may be unavailable.",
+    serviceNote: "支払いページや確認ページが使えない場合があります。",
   },
 
   {
@@ -2985,7 +2969,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Municipal Online Services",
     url: "https://www.digital.go.jp",
     category: "government_public",
-    serviceNote: "Online applications may fail during high-traffic periods.",
+    serviceNote: "アクセス集中時はオンライン申請が失敗する場合があります。",
   },
 
   {
@@ -2993,7 +2977,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Regional Tax Payment Portal",
     url: "https://www.soumu.go.jp",
     category: "government_public",
-    serviceNote: "Payment confirmation pages may not load near deadlines.",
+    serviceNote: "期限前は支払い確認ページが表示できない場合があります。",
   },
 
   {
@@ -3001,7 +2985,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Housing Registration System",
     url: "https://www.mlit.go.jp",
     category: "government_public",
-    serviceNote: "Registration or lookup pages may be temporarily unavailable.",
+    serviceNote: "登録ページや照会ページが一時的に使えない場合があります。",
   },
 
   {
@@ -3009,7 +2993,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Health Insurance Qualification Check",
     url: "https://www.mhlw.go.jp",
     category: "government_public",
-    serviceNote: "Eligibility confirmation may fail during system updates.",
+    serviceNote: "システム更新中は資格確認が失敗する場合があります。",
   },
 
   {
@@ -3017,7 +3001,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Evacuation Information System",
     url: "https://www.bousai.go.jp/taisaku/",
     category: "government_public",
-    serviceNote: "Evacuation guidance pages may not update in real time.",
+    serviceNote: "避難情報ページがリアルタイムに更新されない場合があります。",
   },
 
   {
@@ -3025,7 +3009,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Regional Water Utility Services",
     url: "https://www.mlit.go.jp/mizukokudo/",
     category: "government_public",
-    serviceNote: "Outage and maintenance information may be delayed.",
+    serviceNote: "障害情報やメンテナンス情報の更新が遅れる場合があります。",
   },
 
   {
@@ -3033,7 +3017,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "National Exam Application Portal",
     url: "https://www.mext.go.jp",
     category: "education_exam",
-    serviceNote: "Application submissions may fail near deadlines.",
+    serviceNote: "締切前は申請送信が失敗する場合があります。",
   },
 ];
 

@@ -3,25 +3,25 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "ログインできないときの切り分けハブ",
+  title: "ログインできないときの確認ハブ",
   description:
-    "Can't log in ときの切り分けハブです。401、403、429、確認ループ、ブラウザ差、回線差、特定サービスだけのログイン不調など、次に見るべき既存ページへ案内します。",
+    "Can't log in ときの確認ハブです。401、403、429、確認ループ、ブラウザ差、回線差、特定サービスだけのログイン不調など、次に見るべき既存ページへ案内します。",
   alternates: { canonical: "/troubleshooting/cant-log-in" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="ログインできないときの切り分けハブ"
+      h1="ログインできないときの確認ハブ"
       updatedAt="2026-04-12"
       lead={[
         "『ログインできない』『サインインできない』『認証だけ通らない』という症状は、単純なパスワード違いだけではありません。未認証、セッション切れ、アクセス制限、回数制限、確認ループ、ブラウザ保存データ、特定サービス側の部分障害などで似た見え方になります。",
-        "このページは、そうした broad なログイン失敗の症状を最短で切り分けるためのミニハブです。エラーコードがあるか、確認ループか、ブラウザ差や回線差があるか、特定サービスだけかを分けて、必要な既存ページへ進んでください。",
+        "このページは、ログイン失敗の症状を最短で確認するためのミニハブです。エラーコードがあるか、確認ループか、ブラウザ差や回線差があるか、特定サービスだけかを分けて、必要な既存ページへ進んでください。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "401 が見えているなら、まず未認証やセッション切れを優先して疑う",
             "403 が見えているなら、認証失敗よりアクセス条件や制限に近い",
@@ -86,7 +86,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -104,7 +104,7 @@ export default function Page() {
                   href="/troubleshooting/app-not-working"
                   className="underline hover:no-underline"
                 >
-                  アプリが使えないときの切り分けハブ
+                  アプリが使えないときの確認ハブ
                 </Link>
               </p>
             </div>,
@@ -195,7 +195,7 @@ export default function Page() {
                 href="/troubleshooting/access-denied"
                 className="underline hover:no-underline"
               >
-                access denied の切り分け
+                アクセス拒否の確認
               </Link>{" "}
               が近い確認先です。
             </>,
