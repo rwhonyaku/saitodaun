@@ -19,6 +19,25 @@ export const REPORTING_SERVICE_IDS = [
 
 export type ReportingServiceId = (typeof REPORTING_SERVICE_IDS)[number];
 
+const REPORTING_SERVICE_LABELS: Record<ReportingServiceId, string> = {
+  teams: "Microsoft Teams",
+  twitter: "X（旧Twitter）",
+  notion: "Notion",
+  steam: "Steam",
+  line: "LINE",
+  youtube: "YouTube",
+  instagram: "Instagram",
+  openai: "ChatGPT",
+  discord: "Discord",
+  slack: "Slack",
+  zoom: "Zoom",
+  google: "Google",
+  paypay: "PayPay",
+  "amazon-jp": "Amazon.co.jp",
+  "yahoo-japan": "Yahoo! JAPAN",
+  "microsoft-365": "Microsoft 365",
+};
+
 export const PROBLEM_TYPES = [
   "connection",
   "login",
@@ -182,6 +201,10 @@ export function isProblemType(value: string): value is ProblemType {
 
 export function getProblemOptions(serviceId: ReportingServiceId) {
   return SERVICE_PROBLEMS[serviceId];
+}
+
+export function getReportingServiceLabel(serviceId: ReportingServiceId) {
+  return REPORTING_SERVICE_LABELS[serviceId];
 }
 
 export function isProblemTypeForService(

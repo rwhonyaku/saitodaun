@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import HomeClient from "@/components/HomeClient";
+import HotOutages from "@/components/HotOutages";
 
 export const metadata: Metadata = {
   title: "サイトダウン確認ツール｜障害・接続エラーをチェック",
@@ -73,6 +74,8 @@ export default function Page() {
         </div>
 
         <HomeClient />
+
+        <HotOutages />
 
         <div className="mx-auto max-w-xl w-full px-4 py-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">

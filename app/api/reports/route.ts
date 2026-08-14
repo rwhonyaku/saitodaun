@@ -2,11 +2,13 @@ import { createHmac } from "node:crypto";
 import { NextResponse } from "next/server";
 import {
   getProblemLabel,
+  getReportingServiceLabel,
   isProblemType,
   isProblemTypeForService,
   isReportingServiceId,
   type ProblemType,
   type ReportingServiceId,
+  REPORTING_SERVICE_IDS,
 } from "@/lib/outageReports";
 
 export const runtime = "nodejs";
@@ -21,6 +23,10 @@ type ReportRow = {
   problem_type: ProblemType;
   created_at: string;
   client_hash: string;
+};
+
+type ServiceReportRow = ReportRow & {
+  service_id: ReportingServiceId;
 };
 
 type SignalLevel = "normal" | "elevated" | "spike";
@@ -193,8 +199,123 @@ async function getRecentReports(serviceId: ReportingServiceId) {
   };
 }
 
+async function getHotReports() {
+  const { url, secretKey } = getConfig();
+  const now = Date.now();
+  const currentWindowStart = now - REPORT_WINDOW_MS;
+  const since = new Date(currentWindowStart - BASELINE_WINDOW_MS).toISOString();
+  const query = new URLSearchParams({
+    select: "service_id,problem_type,created_at,client_hash",
+    service_id: `in.(${REPORTING_SERVICE_IDS.join(",")})`,
+    country_code: "eq.JP",
+    moderation_status: "eq.visible",
+    created_at: `gte.${since}`,
+    order: "created_at.desc",
+    limit: "5000",
+  });
+  const response = await fetch(`${url}/rest/v1/outage_reports?${query}`, {
+    headers: databaseHeaders(secretKey),
+    cache: "no-store",
+  });
+  if (!response.ok) throw new Error(`Hot report query failed: ${response.status}`);
+
+  const allRows = (await response.json()) as ServiceReportRow[];
+  const services = REPORTING_SERVICE_IDS.map((serviceId) => {
+    const serviceRows = allRows.filter((row) => row.service_id === serviceId);
+    const currentRows = serviceRows.filter(
+      (row) => Date.parse(row.created_at) >= currentWindowStart
+    );
+    const baselineRows = serviceRows.filter(
+      (row) => Date.parse(row.created_at) < currentWindowStart
+    );
+    const currentReporters = new Set(currentRows.map((row) => row.client_hash)).size;
+    const baselineBuckets = Array.from({ length: 48 }, () => new Set<string>());
+
+    for (const row of baselineRows) {
+      const age = currentWindowStart - Date.parse(row.created_at);
+      const bucketIndex = Math.floor(age / REPORT_WINDOW_MS);
+      if (bucketIndex >= 0 && bucketIndex < baselineBuckets.length) {
+        baselineBuckets[bucketIndex].add(row.client_hash);
+      }
+    }
+
+    const bucketCounts = baselineBuckets.map((bucket) => bucket.size);
+    const baselineAverage = bucketCounts.reduce((sum, value) => sum + value, 0) / 48;
+    const variance = bucketCounts.reduce(
+      (sum, value) => sum + Math.pow(value - baselineAverage, 2),
+      0
+    ) / 48;
+    const standardDeviation = Math.sqrt(variance);
+    const elevatedThreshold = Math.max(
+      3,
+      Math.ceil(baselineAverage * 2),
+      Math.ceil(baselineAverage + 2)
+    );
+    const spikeThreshold = Math.max(
+      6,
+      Math.ceil(baselineAverage * 3),
+      Math.ceil(baselineAverage + standardDeviation * 3)
+    );
+    const level: SignalLevel =
+      currentReporters >= spikeThreshold
+        ? "spike"
+        : currentReporters >= elevatedThreshold
+          ? "elevated"
+          : "normal";
+    const breakdown = currentRows.reduce<Partial<Record<ProblemType, number>>>((totals, row) => {
+      totals[row.problem_type] = (totals[row.problem_type] ?? 0) + 1;
+      return totals;
+    }, {});
+    const topType = Object.entries(breakdown).sort((a, b) => b[1] - a[1])[0]?.[0] as
+      | ProblemType
+      | undefined;
+
+    return {
+      serviceId,
+      label: getReportingServiceLabel(serviceId),
+      level,
+      reports: currentRows.length,
+      reporters: currentReporters,
+      topProblem: topType
+        ? {
+            label: getProblemLabel(serviceId, topType),
+            count: breakdown[topType] ?? 0,
+          }
+        : null,
+      lastReportedAt: currentRows[0]?.created_at ?? null,
+    };
+  });
+  const hot = services
+    .filter((service) => service.level !== "normal")
+    .sort((a, b) => {
+      if (a.level !== b.level) return a.level === "spike" ? -1 : 1;
+      return b.reporters - a.reporters;
+    });
+
+  return {
+    hot,
+    monitoredServices: REPORTING_SERVICE_IDS.length,
+    allNormal: hot.length === 0,
+    updatedAt: new Date(now).toISOString(),
+  };
+}
+
 export async function GET(request: Request) {
-  const serviceId = new URL(request.url).searchParams.get("serviceId") ?? "";
+  const searchParams = new URL(request.url).searchParams;
+  if (searchParams.get("view") === "hot") {
+    try {
+      return NextResponse.json(await getHotReports(), {
+        headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60" },
+      });
+    } catch {
+      return NextResponse.json(
+        { error: "注目の障害情報を取得できませんでした。" },
+        { status: 503 }
+      );
+    }
+  }
+
+  const serviceId = searchParams.get("serviceId") ?? "";
   if (!isReportingServiceId(serviceId)) {
     return NextResponse.json({ error: "対象サービスが正しくありません。" }, { status: 400 });
   }
