@@ -12,13 +12,17 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const REPORT_WINDOW_MS = 30 * 60 * 1000;
+const BASELINE_WINDOW_MS = 24 * 60 * 60 * 1000;
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 const MAX_BODY_BYTES = 2_048;
 
 type ReportRow = {
   problem_type: ProblemType;
   created_at: string;
+  client_hash: string;
 };
+
+type SignalLevel = "normal" | "elevated" | "spike";
 
 function getConfig() {
   const url = process.env.SUPABASE_URL?.replace(/\/$/, "");
@@ -66,9 +70,11 @@ function getJapanCountry(request: Request) {
 
 async function getRecentReports(serviceId: ReportingServiceId) {
   const { url, secretKey } = getConfig();
-  const since = new Date(Date.now() - REPORT_WINDOW_MS).toISOString();
+  const now = Date.now();
+  const currentWindowStart = now - REPORT_WINDOW_MS;
+  const since = new Date(currentWindowStart - BASELINE_WINDOW_MS).toISOString();
   const query = new URLSearchParams({
-    select: "problem_type,created_at",
+    select: "problem_type,created_at,client_hash",
     service_id: `eq.${serviceId}`,
     country_code: "eq.JP",
     moderation_status: "eq.visible",
@@ -83,10 +89,11 @@ async function getRecentReports(serviceId: ReportingServiceId) {
 
   if (!response.ok) throw new Error(`Report query failed: ${response.status}`);
 
-  const rows = (await response.json()) as ReportRow[];
+  const allRows = (await response.json()) as ReportRow[];
+  const rows = allRows.filter((row) => Date.parse(row.created_at) >= currentWindowStart);
   const contentRange = response.headers.get("content-range");
-  const exactCount = contentRange ? Number(contentRange.split("/")[1]) : rows.length;
-  const count = Number.isFinite(exactCount) ? exactCount : rows.length;
+  const queriedCount = contentRange ? Number(contentRange.split("/")[1]) : allRows.length;
+  const count = rows.length;
 
   const breakdown = rows.reduce<Partial<Record<ProblemType, number>>>((totals, row) => {
     totals[row.problem_type] = (totals[row.problem_type] ?? 0) + 1;
@@ -97,6 +104,39 @@ async function getRecentReports(serviceId: ReportingServiceId) {
     | ProblemType
     | undefined;
 
+  const currentReporters = new Set(rows.map((row) => row.client_hash)).size;
+  const baselineRows = allRows.filter((row) => Date.parse(row.created_at) < currentWindowStart);
+  const baselineBucketCount = BASELINE_WINDOW_MS / REPORT_WINDOW_MS;
+  const baselineBuckets = Array.from({ length: baselineBucketCount }, () => new Set<string>());
+
+  for (const row of baselineRows) {
+    const ageFromCurrentWindow = currentWindowStart - Date.parse(row.created_at);
+    const bucketIndex = Math.floor(ageFromCurrentWindow / REPORT_WINDOW_MS);
+    if (bucketIndex >= 0 && bucketIndex < baselineBuckets.length) {
+      baselineBuckets[bucketIndex].add(row.client_hash);
+    }
+  }
+
+  const bucketCounts = baselineBuckets.map((bucket) => bucket.size);
+  const baselineAverage = bucketCounts.reduce((sum, value) => sum + value, 0) / baselineBucketCount;
+  const variance = bucketCounts.reduce(
+    (sum, value) => sum + Math.pow(value - baselineAverage, 2),
+    0
+  ) / baselineBucketCount;
+  const standardDeviation = Math.sqrt(variance);
+  const elevatedThreshold = Math.max(3, Math.ceil(baselineAverage * 2), Math.ceil(baselineAverage + 2));
+  const spikeThreshold = Math.max(
+    6,
+    Math.ceil(baselineAverage * 3),
+    Math.ceil(baselineAverage + standardDeviation * 3)
+  );
+  const level: SignalLevel =
+    currentReporters >= spikeThreshold
+      ? "spike"
+      : currentReporters >= elevatedThreshold
+        ? "elevated"
+        : "normal";
+
   return {
     count,
     windowMinutes: 30,
@@ -105,7 +145,17 @@ async function getRecentReports(serviceId: ReportingServiceId) {
       ? { type: topType, label: getProblemLabel(serviceId, topType), count: breakdown[topType] ?? 0 }
       : null,
     breakdown,
+    signal: {
+      level,
+      currentReporters,
+      baselinePer30Minutes: Number(baselineAverage.toFixed(2)),
+      elevatedThreshold,
+      spikeThreshold,
+    },
     updatedAt: new Date().toISOString(),
+    ...(Number.isFinite(queriedCount) && queriedCount > allRows.length
+      ? { historyTruncated: true }
+      : {}),
   };
 }
 

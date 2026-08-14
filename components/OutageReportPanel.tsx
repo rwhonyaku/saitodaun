@@ -12,6 +12,13 @@ type ReportSummary = {
   windowMinutes: number;
   lastReportedAt: string | null;
   topProblem: { type: ProblemType; label: string; count: number } | null;
+  signal: {
+    level: "normal" | "elevated" | "spike";
+    currentReporters: number;
+    baselinePer30Minutes: number;
+    elevatedThreshold: number;
+    spikeThreshold: number;
+  };
   updatedAt: string;
 };
 
@@ -118,6 +125,32 @@ export default function OutageReportPanel({ serviceId }: { serviceId: string }) 
           問題が起きています
         </button>
       </div>
+
+      {!loading && summary ? (
+        <div
+          className={`mt-4 rounded-lg border px-3 py-2 text-xs leading-relaxed ${
+            summary.signal.level === "spike"
+              ? "border-rose-300 bg-rose-50 text-rose-900"
+              : summary.signal.level === "elevated"
+                ? "border-amber-300 bg-amber-50 text-amber-900"
+                : "border-emerald-200 bg-emerald-50 text-emerald-900"
+          }`}
+          role="status"
+        >
+          <p className="font-bold">
+            {summary.signal.level === "spike"
+              ? "障害報告が急増しています"
+              : summary.signal.level === "elevated"
+                ? "通常より報告が増えています"
+                : "現在、報告の急増は検出されていません"}
+          </p>
+          {summary.signal.level !== "normal" ? (
+            <p className="mt-1">
+              直近30分の異なる報告者は{summary.signal.currentReporters}人です。接続チェックと公式情報もあわせて確認してください。
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       {showOptions ? (
         <div className="mt-4 border-t border-slate-200 pt-4">
