@@ -229,34 +229,6 @@ export default function StatusClient({ id: propId }: { id: string }) {
           </div>
         </div>
 
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4 mb-3">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {isLineStatus
-                ? "LINE 障害？今つながらない？"
-                : isNotionStatus
-                ? "Notion 障害？今開かない？"
-                : `${serviceLabel} は今落ちてる？（障害・稼働状況チェック）`}
-            </h1>
-            <p className="mt-2 text-sm text-slate-600">
-              {isLineStatus
-                ? "このページは、LINE が今広く落ちているかの目安を見るためのものです。広く落ちていないなら、次は自分側か一部機能だけの不具合かを分けます。"
-                : isNotionStatus
-                ? "このページは、Notion が今広く落ちているかの目安を見るためのものです。広く落ちていないなら、次は自分側か一部機能だけの不具合かを分けます。"
-                : `「${serviceLabel} が見れない」「障害が出てる？」という時に、いま接続できるかを簡易チェックします。`}
-            </p>
-          </div>
-
-          <Link
-            href="/status"
-            prefetch={false}
-            className="shrink-0 text-xs text-sky-600 underline hover:text-sky-700"
-          >
-            一覧に戻る →
-          </Link>
-        </div>
-
         <p className="mb-4 text-xs text-slate-500 break-all">チェック対象URL：{site.url}</p>
 
         {/* Result box */}
@@ -479,29 +451,6 @@ export default function StatusClient({ id: propId }: { id: string }) {
             {!isLeanRouter ? (
               <>
                 <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-                  <h2 className="text-sm font-semibold text-slate-900">このページが役立つ場面／役立たない場面</h2>
-
-                  <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <p className="text-xs font-semibold text-slate-900">役立つ場面</p>
-                      <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                        {editorial.usefulWhen.map((t, i) => (
-                          <li key={i}>{t}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-slate-900">役立たない場面</p>
-                      <ul className="mt-2 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                        {editorial.notUsefulWhen.map((t, i) => (
-                          <li key={i}>{t}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
                   <h2 className="text-sm font-semibold text-slate-900">このサービスで起きやすいパターン（サービス別）</h2>
 
                   <div className="mt-3 space-y-4">
@@ -651,23 +600,11 @@ export default function StatusClient({ id: propId }: { id: string }) {
         {!isLeanRouter ? (
           <>
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">このサービスでよくある影響</h2>
-
-              <p className="mt-3 text-xs text-slate-600 leading-relaxed">{site.serviceNote}</p>
-
-              <p className="mt-3 text-[11px] text-slate-500">
-                目立つ障害がなくても、ログインのみ／読み込みのみ等の「部分的な不具合」として現れることがあります。
-              </p>
-            </section>
-
-            <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">まず確認すること（確認）</h2>
+              <h2 className="text-sm font-semibold text-slate-900">今やること</h2>
               <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
-                <li>数十秒おいて再チェック（瞬間的な混雑・一時エラーのことがあります）</li>
-                <li>別回線（Wi-Fi / 4G / 5G）でも確認</li>
-                <li>別の端末・別ブラウザ（拡張機能の影響を確認）</li>
-                <li>公式発表（公式情報の確認先）を確認</li>
-                <li>DNS / CDN / アクセス制限の影響で、地域や回線によって結果が異なる場合があります</li>
+                <li>数十秒後に再チェックし、一時的な失敗か確認する</li>
+                <li>Wi-Fiとモバイル回線を切り替え、回線差があるか確認する</li>
+                <li>複数環境でも同じなら、このページの公式情報を確認する</li>
               </ul>
 
               <div className="mt-4 flex flex-wrap gap-3">
@@ -680,33 +617,6 @@ export default function StatusClient({ id: propId }: { id: string }) {
               </div>
             </section>
 
-            <section className="mt-8 border-t border-slate-200 pt-6">
-              <h2 className="text-sm font-semibold text-slate-900 mb-3">よくある質問</h2>
-              <div className="space-y-4 text-xs sm:text-sm">
-                <div>
-                  <p className="font-semibold">
-                    Q. 「{site.name} 障害」「{site.name} 落ちてる」で検索したら、このページで分かりますか？
-                  </p>
-                  <p className="mt-1 text-slate-600">
-                    本ページは「このサーバーから接続できるか」を簡易チェックします。公式が障害を発表していなくても、地域差や一時的な障害で接続できないケースがあります。
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">Q. 公式ステータスと違う結果になることがありますか？</p>
-                  <p className="mt-1 text-slate-600">
-                    あります。公式は全体状況、本ページは接続可否の確認です。時間をおいて再チェックしてください。
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">Q. 結果はどれくらい正確ですか？</p>
-                  <p className="mt-1 text-slate-600">
-                    目安です。回線状況やアクセス制限（WAF/レート制限）等で失敗する場合があります。
-                  </p>
-                </div>
-              </div>
-            </section>
           </>
         ) : null}
 

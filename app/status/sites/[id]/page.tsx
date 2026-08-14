@@ -43,17 +43,6 @@ const STATUS_AD_ENABLED_IDS = new Set([
   "jira",
 ]);
 
-function renderList(items?: string[]) {
-  if (!items || items.length === 0) return null;
-  return (
-    <ul className="list-disc pl-5 space-y-1 text-slate-700">
-      {items.map((t, i) => (
-        <li key={i}>{t}</li>
-      ))}
-    </ul>
-  );
-}
-
 const statusOverrides: Record<string, { title: string; description: string }> = {
   google: {
     title: "Google障害・不具合｜検索できない・各サービスの現在状況",
@@ -1508,24 +1497,12 @@ export default async function Page(props: PageProps) {
   }
 
   const categoryLabel = SITE_CATEGORIES[site.category];
-  const ed = site.editorial;
   const isTwitterStatus = site.id === "twitter";
   const isLineStatus = site.id === "line";
   const isNotionStatus = site.id === "notion";
   const activeHero = statusHero[site.id];
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const showStatusAd = STATUS_AD_ENABLED_IDS.has(site.id);
-
-  const officialLinks =
-    ed?.officialConfirmation?.length
-      ? ed.officialConfirmation
-      : [
-          ...(site.officialStatusUrl
-            ? [{ label: "公式障害・メンテ情報", url: site.officialStatusUrl }]
-            : []),
-          ...(site.supportUrl ? [{ label: "公式サポート", url: site.supportUrl }] : []),
-          ...(site.xUrl ? [{ label: "公式X（旧Twitter）", url: site.xUrl }] : []),
-        ];
 
   return (
     <main className="bg-slate-50 text-slate-900">
@@ -1595,105 +1572,7 @@ export default async function Page(props: PageProps) {
         <StatusClient id={site.id} />
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">このページで分かること</h2>
-        {ed ? (
-          renderList(ed.whatThisCheckMeans)
-        ) : (
-          <p className="text-slate-700">
-            このページは「外部から到達できるか」を確認します。ログイン後の画面やアプリ内機能は判定できません。
-          </p>
-        )}
-      </section>
-
-      {activeHero && (activeHero.notWorkingHref || activeHero.relatedStatusLinks?.length) ? (
-        <section className="mb-8 rounded-lg border border-slate-200 bg-white p-4">
-          <h2 className="text-lg font-semibold mb-3">次に確認するページ</h2>
-          <div className="flex flex-wrap gap-3">
-            {activeHero.notWorkingHref ? (
-              <Link
-                prefetch={false}
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-sky-700 underline"
-                href={activeHero.notWorkingHref}
-              >
-                {activeHero.notWorkingLabel}
-              </Link>
-            ) : null}
-            {activeHero.relatedStatusLinks?.map((link) => (
-              <Link
-                key={link.href}
-                prefetch={false}
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-sky-700 underline"
-                href={link.href}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
       {showStatusAd ? <IMobileAd slot="status_mid" /> : null}
-
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{site.name} で起きやすい不調パターン</h2>
-        {ed ? renderList(ed.commonOutagePatterns) : <p className="text-slate-700">{site.serviceNote}</p>}
-      </section>
-
-      {ed?.affectedAreasFirst?.length ? (
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">影響が出やすい機能・導線</h2>
-          {renderList(ed.affectedAreasFirst)}
-        </section>
-      ) : null}
-
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">このページが役立つ／役立たないケース</h2>
-        <div className="grid gap-4">
-          <div className="rounded-lg border border-slate-200 bg-white p-4 text-slate-700">
-            <div className="font-semibold mb-2">役立つとき</div>
-            {ed ? (
-              renderList(ed.usefulWhen)
-            ) : (
-              <p className="text-slate-700">複数環境で開けないなど、到達性の確認に使えます。</p>
-            )}
-          </div>
-          <div className="rounded-lg border border-slate-200 bg-white p-4 text-slate-700">
-            <div className="font-semibold mb-2">このページだけでは不十分なとき</div>
-            {ed ? (
-              renderList(ed.notSufficientWhen)
-            ) : (
-              <p className="text-slate-700">ログインや特定機能の不具合は、このチェックだけでは判定できません。</p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold mb-2">公式確認先（障害・メンテ情報）</h2>
-        <ul className="list-disc pl-5 space-y-1">
-          {officialLinks.map((l) => (
-            <li key={l.url}>
-              <a className="text-sky-600 underline" href={l.url} target="_blank" rel="noreferrer">
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p className="text-sm text-slate-600 mt-3">
-          公式情報は「影響範囲」「復旧見込み」「メンテ予定」など、このページの到達性チェックでは分からない情報を補完します。
-        </p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">同カテゴリも確認する</h2>
-        <p className="text-slate-700 mb-2">
-          同じカテゴリ（{categoryLabel}）で同時に不調が多発している場合、サービス個別ではなく回線・DNS・経路側の影響の可能性もあります。
-        </p>
-        <Link prefetch={false} className="text-sky-600 underline" href={`/status/category/${site.category}`}>
-          「{categoryLabel}」カテゴリ一覧へ →
-        </Link>
-      </section>
       </div>
     </main>
   );
