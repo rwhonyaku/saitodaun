@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   getProblemLabel,
   isProblemType,
+  isProblemTypeForService,
   isReportingServiceId,
   type ProblemType,
   type ReportingServiceId,
@@ -235,6 +236,7 @@ export async function POST(request: Request) {
     if (
       !isReportingServiceId(serviceId) ||
       !isProblemType(problemType) ||
+      !isProblemTypeForService(serviceId, problemType) ||
       !isValidClientId(body.clientId)
     ) {
       return NextResponse.json({ error: "報告内容が正しくありません。" }, { status: 400 });
