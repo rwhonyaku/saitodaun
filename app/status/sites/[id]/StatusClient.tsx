@@ -5,7 +5,9 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getSiteById } from "@/lib/statusSites";
 import { getEditorialById } from "@/lib/statusEditorial";
-import OutageReportPanel from "@/components/OutageReportPanel";
+import OutageReportPanel, { type ReportSummary } from "@/components/OutageReportPanel";
+import { getStatusVerdict } from "@/lib/statusVerdict";
+import { isReportingServiceId } from "@/lib/outageReports";
 
 type CheckResult = {
   online: boolean;
@@ -57,76 +59,6 @@ function getGuideHrefFromResult(result: CheckResult | null): string | null {
   return "/status-codes";
 }
 
-type StatusAssessment = {
-  badge: string;
-  main: string;
-  detail: string;
-  icon: string;
-  cardClassName: string;
-  badgeClassName: string;
-  iconClassName: string;
-};
-
-function getStatusAssessment(result: CheckResult | null, loading: boolean): StatusAssessment {
-  if (loading || !result) {
-    return {
-      badge: "確認中",
-      main: "現在の状況を確認中です",
-      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
-      icon: "...",
-      cardClassName: "border-slate-200 bg-slate-50",
-      badgeClassName: "bg-slate-100 text-slate-700 ring-slate-200",
-      iconClassName: "bg-slate-500 text-white",
-    };
-  }
-
-  if (result.probeBlocked || result.error || result.status == null) {
-    return {
-      badge: "確認不可",
-      main: "現在の状況を確認できませんでした",
-      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
-      icon: "?",
-      cardClassName: "border-slate-300 bg-slate-50",
-      badgeClassName: "bg-slate-100 text-slate-700 ring-slate-300",
-      iconClassName: "bg-slate-600 text-white",
-    };
-  }
-
-  if (result.online) {
-    return {
-      badge: "正常寄り",
-      main: "このチェックでは、現在大きな障害は確認されていません",
-      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
-      icon: "OK",
-      cardClassName: "border-emerald-200 bg-emerald-50",
-      badgeClassName: "bg-emerald-100 text-emerald-800 ring-emerald-200",
-      iconClassName: "bg-emerald-600 text-white",
-    };
-  }
-
-  if (result.status >= 500) {
-    return {
-      badge: "障害疑い",
-      main: "このチェックでは、現在障害が起きている可能性があります",
-      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
-      icon: "!",
-      cardClassName: "border-rose-200 bg-rose-50",
-      badgeClassName: "bg-rose-100 text-rose-800 ring-rose-200",
-      iconClassName: "bg-rose-600 text-white",
-    };
-  }
-
-  return {
-    badge: "一部問題",
-    main: "一部の環境で問題が起きている可能性があります",
-    detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
-    icon: "!",
-    cardClassName: "border-amber-200 bg-amber-50",
-    badgeClassName: "bg-amber-100 text-amber-900 ring-amber-200",
-    iconClassName: "bg-amber-500 text-white",
-  };
-}
-
 export default function StatusClient({ id: propId }: { id: string }) {
   const params = useParams();
 
@@ -144,6 +76,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
 
   const [result, setResult] = useState<CheckResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [communitySummary, setCommunitySummary] = useState<ReportSummary | null>(null);
 
   const runCheck = useCallback(async () => {
     if (!site) return;
@@ -224,7 +157,16 @@ export default function StatusClient({ id: propId }: { id: string }) {
   const isNotionStatus = site.id === "notion";
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
-  const assessment = getStatusAssessment(result, loading);
+  const assessment = getStatusVerdict(result, loading, communitySummary);
+  const officialVerdictUrl = site.officialStatusUrl || site.supportUrl || site.xUrl;
+  const reportingEnabled = isReportingServiceId(site.id);
+  const verdictUpdatedAt = communitySummary?.updatedAt
+    ? new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(new Date(communitySummary.updatedAt))
+    : result?.timestamp;
 
   return (
     <main className="flex-1 bg-slate-50">
@@ -253,6 +195,36 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 {assessment.main}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-slate-600">{assessment.detail}</p>
+              <div className="mt-3 grid gap-1 text-[11px] text-slate-600 sm:grid-cols-2">
+                <p>
+                  接続チェック：{loading || !result ? "確認中" : resultUnconfirmed ? "確認不可" : result.online ? "応答あり" : "応答なし"}
+                </p>
+                <p>
+                  利用者報告：{communitySummary
+                    ? communitySummary.signal.level === "spike"
+                      ? "急増"
+                      : communitySummary.signal.level === "elevated"
+                        ? "増加"
+                        : "通常範囲"
+                    : reportingEnabled ? "取得中" : "対象外"}
+                </p>
+              </div>
+              {verdictUpdatedAt ? (
+                <p className="mt-2 text-[10px] text-slate-500">判定更新：{verdictUpdatedAt} JST</p>
+              ) : null}
+              {officialVerdictUrl && (assessment.level === "likely" || assessment.level === "partial") ? (
+                <a
+                  href={officialVerdictUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex rounded-md bg-white/80 px-3 py-2 text-xs font-bold text-sky-700 ring-1 ring-sky-200 hover:bg-white"
+                >
+                  公式情報を確認する →
+                </a>
+              ) : null}
+              <p className="mt-3 text-[10px] leading-relaxed text-slate-500">
+                この判定は公式発表ではありません。接続結果と利用者報告を組み合わせた参考情報です。
+              </p>
             </div>
           </div>
         </div>
@@ -360,7 +332,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
           )}
         </div>
 
-        <OutageReportPanel serviceId={site.id} />
+        <OutageReportPanel serviceId={site.id} onSummaryChange={setCommunitySummary} />
 
         {isTwitterStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">

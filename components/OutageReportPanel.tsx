@@ -7,7 +7,7 @@ import {
   type ProblemType,
 } from "@/lib/outageReports";
 
-type ReportSummary = {
+export type ReportSummary = {
   count: number;
   windowMinutes: number;
   lastReportedAt: string | null;
@@ -111,7 +111,13 @@ function ReportTimeline({ summary }: { summary: ReportSummary }) {
   );
 }
 
-export default function OutageReportPanel({ serviceId }: { serviceId: string }) {
+export default function OutageReportPanel({
+  serviceId,
+  onSummaryChange,
+}: {
+  serviceId: string;
+  onSummaryChange?: (summary: ReportSummary) => void;
+}) {
   const enabled = isReportingServiceId(serviceId);
   const options = useMemo(() => (enabled ? getProblemOptions(serviceId) : []), [enabled, serviceId]);
   const [summary, setSummary] = useState<ReportSummary | null>(null);
@@ -127,13 +133,15 @@ export default function OutageReportPanel({ serviceId }: { serviceId: string }) 
         cache: "no-store",
       });
       if (!response.ok) throw new Error("Unable to load reports");
-      setSummary((await response.json()) as ReportSummary);
+      const nextSummary = (await response.json()) as ReportSummary;
+      setSummary(nextSummary);
+      onSummaryChange?.(nextSummary);
     } catch {
       setMessage("利用者報告を読み込めませんでした。接続チェックと公式情報は引き続き利用できます。");
     } finally {
       setLoading(false);
     }
-  }, [enabled, serviceId]);
+  }, [enabled, onSummaryChange, serviceId]);
 
   useEffect(() => {
     loadSummary();
@@ -154,7 +162,10 @@ export default function OutageReportPanel({ serviceId }: { serviceId: string }) 
       });
       const data = (await response.json()) as { error?: string; reports?: ReportSummary };
       if (!response.ok) throw new Error(data.error || "報告を送信できませんでした。");
-      if (data.reports) setSummary(data.reports);
+      if (data.reports) {
+        setSummary(data.reports);
+        onSummaryChange?.(data.reports);
+      }
       setShowOptions(false);
       setMessage("報告ありがとうございました。日本の利用者向け状況に反映しました。");
     } catch (error) {
