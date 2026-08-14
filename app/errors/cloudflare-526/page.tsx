@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "Cloudflare 526エラーとは？原因と直し方 | サイトダウン",
   description:
-    "Cloudflare 526（Invalid SSL certificate）の意味、Cloudflare とオリジンサーバー間の証明書不整合、525 や一般的な証明書警告との違い、切り分け方を解説します。",
+    "Cloudflare 526（Invalid SSL certificate）の意味、Cloudflare とオリジンサーバー間の証明書不整合、525 や一般的な証明書警告との違い、見分け方を解説します。",
 };
 
 export default function Cloudflare526Page() {
@@ -170,7 +170,7 @@ export default function Cloudflare526Page() {
           items: [
             "Q. 526 は Cloudflare 障害ですか？ → 多くは違います。Cloudflare 自体より、オリジンサーバー証明書の不整合が中心です。",
             "Q. 525 と同じですか？ → 違います。525 は握手失敗寄り、526 は返ってきた証明書を Cloudflare が有効と認められない側です。",
-            "Q. 自分だけ起きることはありますか？ → 可能性は低めで、まずは別端末や別回線で比較すると切り分けやすいです。",
+            "Q. 自分だけ起きることはありますか？ → 可能性は低めで、まずは別端末や別回線で比較すると見分けやすいです。",
             "Q. すぐ直りますか？ → 一時的な切り替え直後なら戻ることもありますが、多くは運営側の証明書修正が必要です。",
           ],
         },

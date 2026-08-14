@@ -7,21 +7,21 @@ const service = SERVICES.microsoft365;
 export const metadata: Metadata = {
   title: "Microsoft 365のトラブル解決 | サイトダウン",
   description:
-    "Microsoft 365が使えない・ログインできない・OutlookやTeamsが不安定な時に、障害か自分側かを切り分けて最短で対処します。",
+    "Microsoft 365が使えない・ログインできない・OutlookやTeamsが不安定な時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function Microsoft365HubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">
           {service.name}のトラブル解決
         </h1>
         <p className="text-base text-neutral-600">
           Microsoft 365が使えない、ログインできない、OutlookやTeamsが不安定な時は、
-          まず「障害か自分側か」を切り分けるのが最短です。
+          まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

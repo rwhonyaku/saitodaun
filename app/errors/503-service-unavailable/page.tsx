@@ -6,7 +6,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "503 Service Unavailableとは？原因と直し方 | サイトダウン",
   description:
-    "503 Service Unavailable の意味、アクセス集中・メンテナンス・リソース不足などの原因、待つべきか切り分ける方法、運営者側の対処を解説します。",
+    "503 Service Unavailable の意味、アクセス集中・メンテナンス・リソース不足などの原因、待つべきか確認する方法、運営者側の対処を解説します。",
 };
 
 export default function Error503ServiceUnavailablePage() {
@@ -21,7 +21,7 @@ export default function Error503ServiceUnavailablePage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "イベント直後や混雑時間帯だけ出るなら、まずアクセス集中による一時的な503を疑う",
             "数分待つと戻るなら、負荷や短時間メンテナンスの可能性が高い",
@@ -91,7 +91,7 @@ export default function Error503ServiceUnavailablePage() {
           title: "ユーザー側でできる対処（優先順）",
           items: [
             "1) まず待つ：数分〜数十分あけて再試行（最も多い解決パターン）",
-            "2) 別回線で試す：Wi-Fi→モバイル回線（地域/ISP差の切り分け）",
+            "2) 別回線で試す：Wi-Fi→モバイル回線（地域/ISP差の確認）",
             "3) シークレットモードで開く（キャッシュ・拡張機能影響を減らす）",
             "4) 公式X（旧Twitter）や公式ステータスを確認（障害告知が出ていることが多い）",
           ],
@@ -123,7 +123,7 @@ export default function Error503ServiceUnavailablePage() {
           type: "div",
           title: "このエラーが「サイト全体」か「自分だけ」か確認する",
           body: [
-            "503は基本的にサイト側要因が多いですが、回線差で発生することもあります。外部地点からの疎通確認で、まず切り分けしましょう。",
+            "503は基本的にサイト側要因が多いですが、回線差で発生することもあります。外部地点からの疎通確認で、まず確認しましょう。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
@@ -171,7 +171,7 @@ export default function Error503ServiceUnavailablePage() {
             "Q. 503と502の違いは？ → 503は「サーバーが一時的に受け付けられない（過負荷・メンテ等）」、502は「中継役が上流から正しい応答を受け取れない」が主な違いです。",
             "Q. どれくらい待てば直りますか？ → アクセス集中や短いメンテなら数分〜数十分で戻ることが多いです。数時間以上続く場合は運営側の根本障害の可能性が高いです。",
             "Q. 自分だけ503の可能性はありますか？ → あります。回線/ISP差、社内ネットワーク、セキュリティ製品の制限で局所的に発生することがあります。",
-            "Q. リロード連打は有効ですか？ → 混雑時は逆効果になりやすいです。時間を置いて再試行し、可能なら別回線で切り分けるのが安全です。",
+            "Q. リロード連打は有効ですか？ → 混雑時は逆効果になりやすいです。時間を置いて再試行し、可能なら別回線で確認するのが安全です。",
           ],
         },
 

@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "401 Unauthorizedとは？原因と対処 | サイトダウン",
   description:
-    "401 Unauthorized の意味、未ログインや認証失敗で起きる原因、403との違い、セッション切れや認証情報不整合、ユーザー側と運営側の切り分け方を実用的に解説します。",
+    "401 Unauthorized の意味、未ログインや認証失敗で起きる原因、403との違い、セッション切れや認証情報不整合、ユーザー側と運営側の見分け方を実用的に解説します。",
 };
 
 export default function Error401UnauthorizedPage() {
@@ -20,7 +20,7 @@ export default function Error401UnauthorizedPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "未ログイン状態なら、まず認証が必要なページかを確認する",
             "昨日まで入れていて急に 401 なら、セッション切れやログイン状態の不整合を疑う",
@@ -88,9 +88,9 @@ export default function Error401UnauthorizedPage() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
-              とあわせて見ると切り分けやすいです。
+              とあわせて見ると見分けやすいです。
             </>,
           ],
         },

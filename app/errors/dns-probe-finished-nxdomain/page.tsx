@@ -15,12 +15,12 @@ export default function DnsProbeFinishedPage() {
       updatedAt="2026-03-03"
       lead={[
         "DNS_PROBE_FINISHED_NXDOMAIN は「そのドメイン名が存在しない、またはDNSで見つからない」ことを意味するエラーです。",
-        "簡単に言うと、ブラウザが『そのサイトの住所（IP）をDNSで見つけられなかった』状態です。まずは“入力ミス”“ドメイン自体の問題”“自分のDNS環境の不調”を切り分けるのが最短です。",
+        "簡単に言うと、ブラウザが『そのサイトの住所（IP）をDNSで見つけられなかった』状態です。まずは“入力ミス”“ドメイン自体の問題”“自分のDNS環境の不調”を確認するのが最短です。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "URLの綴り、www有無、余計な記号がないかを最初に確認する",
             "別端末や別回線でも同じなら、サイト側のドメイン失効やDNS設定不備を疑う",
@@ -57,7 +57,7 @@ export default function DnsProbeFinishedPage() {
           title: "ユーザー側でできる対処（優先順）",
           items: [
             "1) URLスペルを確認（コピペ推奨。www有無、余計な記号、全角混在に注意）",
-            "2) 別回線で試す（Wi-Fi→モバイル回線。ISP側DNS不調の切り分け）",
+            "2) 別回線で試す（Wi-Fi→モバイル回線。ISP側DNS不調の確認）",
             "3) ルーター再起動（DNSキャッシュ/回線状態のリセット）",
             "4) DNSをパブリックDNSに変更（Google/Cloudflare等）",
             "5) OSのDNSキャッシュ削除（Windows/macOS）",
@@ -87,7 +87,7 @@ export default function DnsProbeFinishedPage() {
               >
                 ERR_NAME_NOT_RESOLVED
               </Link>{" "}
-              のような文言で出ることもあります。どちらも名前解決の失敗を示しますが、見えている文言よりも「URLミス・サイト側DNS・自分のDNS環境のどこで止まっているか」を切り分ける方が重要です。
+              のような文言で出ることもあります。どちらも名前解決の失敗を示しますが、見えている文言よりも「URLミス・サイト側DNS・自分のDNS環境のどこで止まっているか」を確認する方が重要です。
             </>,
           ],
         },
@@ -141,7 +141,7 @@ export default function DnsProbeFinishedPage() {
           type: "div",
           title: "このエラーが「サイト全体」か「自分だけ」か確認する",
           body: [
-            "NXDOMAINは多くの場合DNSの問題ですが、外部地点からも同じ状態かを確認しておくと、自分だけの問題かサイト全体の問題かを早く切り分けられます。",
+            "NXDOMAINは多くの場合DNSの問題ですが、外部地点からも同じ状態かを確認しておくと、自分だけの問題かサイト全体の問題かを早く確認られます。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
@@ -165,7 +165,7 @@ export default function DnsProbeFinishedPage() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定のサイトだけ開かないときの切り分け
+                特定のサイトだけ開かないときの確認
               </Link>{" "}
               も近い入口です。
             </>,
@@ -186,7 +186,7 @@ export default function DnsProbeFinishedPage() {
           title: "よくある質問",
           items: [
             "Q. これはサーバーダウンですか？ → 多くの場合は違います。HTTPの前段（DNS）で止まっています。",
-            "Q. さっきまで見れていたのに突然NXDOMAINになりました。 → DNS障害、キャッシュ不整合、ドメイン失効/設定変更などが考えられます。別回線とパブリックDNSで切り分けが有効です。",
+            "Q. さっきまで見れていたのに突然NXDOMAINになりました。 → DNS障害、キャッシュ不整合、ドメイン失効/設定変更などが考えられます。別回線とパブリックDNSで確認が有効です。",
             "Q. DNSを変えるのは安全ですか？ → 一般的に問題ありません。信頼できるパブリックDNS（Google/Cloudflareなど）を使い、戻し方も把握しておくと安心です。",
             "Q. どれくらいで直りますか？ → URLミスなら即時。DNS障害/設定変更なら数分〜数時間かかることもあります。ドメイン失効なら運営者対応が必要です。",
           ],

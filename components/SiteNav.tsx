@@ -6,6 +6,7 @@ export default function SiteNav() {
       <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
         <Link
           href="/"
+          prefetch={false}
           className="font-bold text-slate-900 transition-opacity hover:opacity-80"
         >
           サイトダウン
@@ -14,24 +15,28 @@ export default function SiteNav() {
         <nav className="flex items-center gap-3 text-[10px] sm:gap-4 sm:text-xs">
           <Link
             href="/status"
+            prefetch={false}
             className="font-medium text-slate-600 hover:text-slate-900"
           >
             ステータス
           </Link>
           <Link
             href="/faq"
+            prefetch={false}
             className="font-medium text-slate-600 hover:text-slate-900"
           >
             FAQ
           </Link>
           <Link
             href="/about"
+            prefetch={false}
             className="font-medium text-slate-600 hover:text-slate-900"
           >
             サイトについて
           </Link>
           <Link
             href="/contact"
+            prefetch={false}
             className="hidden border-l pl-4 font-medium text-slate-600 hover:text-slate-900 sm:block"
           >
             お問い合わせ

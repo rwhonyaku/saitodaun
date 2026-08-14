@@ -3,24 +3,24 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "端末・ネットワーク差の切り分けハブ",
+  title: "端末・ネットワーク差の確認ハブ",
   description:
-    "特定の端末だけつながらない、スマホでは開くのにPCで開かない、Wi-Fiではだめだがモバイル回線では開く、といった端末・ネットワーク差を切り分けるためのハブページです。",
+    "特定の端末だけつながらない、スマホでは開くのにPCで開かない、Wi-Fiではだめだがモバイル回線では開く、といった端末・ネットワーク差を確認するためのハブページです。",
   alternates: { canonical: "/troubleshooting/device-cannot-connect" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="端末・ネットワーク差の切り分けハブ"
+      h1="端末・ネットワーク差の確認ハブ"
       lead={[
         "同じサイトや同じ回線でも、ある端末では開くのに別の端末では開かないことがあります。この場合はサイト全体より、端末差・回線差・ブラウザ差を見分けることが重要です。",
-        "このページは端末差・回線差を素早く切り分けるためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
+        "このページは端末差・回線差を素早く確認するためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "スマホでは開くのにPCで開かないなら、PC側ブラウザ、社内ネットワーク、証明書、DNS差を疑う",
             "モバイル回線では開くのにWi-Fiだと開かないなら、Wi-Fi、ルーター、回線、制限の可能性が高い",
@@ -76,7 +76,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -94,7 +94,7 @@ export default function Page() {
                   href="/troubleshooting-dns"
                   className="underline hover:no-underline"
                 >
-                  DNS・接続エラーの切り分けハブ
+                  DNS・接続エラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -120,7 +120,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               が近いページです。
             </>,
@@ -161,7 +161,7 @@ export default function Page() {
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"
               >
-                DNS・接続エラーの切り分けハブ
+                DNS・接続エラーの確認ハブ
               </Link>{" "}
               や{" "}
               <Link
@@ -227,7 +227,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>

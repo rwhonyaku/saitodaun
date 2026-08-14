@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトが読み込み中のまま終わらない原因と対処法",
   description:
-    "サイトがずっと読み込み中のまま終わらないときの原因と対処法を解説します。回線不安定、CDNやサーバー遅延、ブラウザ拡張、DNS、部分障害の切り分け方をまとめています。",
+    "サイトがずっと読み込み中のまま終わらないときの原因と対処法を解説します。回線不安定、CDNやサーバー遅延、ブラウザ拡張、DNS、部分障害の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-loads-forever" },
 };
 
@@ -16,12 +16,12 @@ export default function Page() {
       updatedAt="2026-04-11"
       lead={[
         "サイトが完全にエラーになるわけではないのに、読み込み中のまま止まって進まないことがあります。スピナーが回り続ける、白いまま長く待たされる、途中まで見えるのに終わらない、といった症状です。",
-        "この状態は『完全に落ちている』ケースだけでなく、回線不安定、サーバー遅延、CDN 経路の詰まり、ブラウザ拡張、重い JavaScript、部分障害などでも起こります。重要なのは、どこで止まっているかを切り分けることです。",
+        "この状態は『完全に落ちている』ケースだけでなく、回線不安定、サーバー遅延、CDN 経路の詰まり、ブラウザ拡張、重い JavaScript、部分障害などでも起こります。重要なのは、どこで止まっているかを確認することです。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別端末・別回線でも同じなら、サイト側の遅延や部分障害を疑う",
             "モバイル回線では開くなら、自宅Wi-FiやDNS、経路側を疑う",
@@ -188,7 +188,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>{" "}
               へ進むのが基本です。
             </>,

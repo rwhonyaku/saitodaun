@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトは開くのに画像が表示されない原因と対処法",
   description:
-    "サイト本文は開くのに画像だけ表示されないときの原因と対処法を解説します。CDNや画像配信失敗、拡張機能、Wi-Fi差、部分障害、ブラウザ側不整合の切り分け方をまとめています。",
+    "サイト本文は開くのに画像だけ表示されないときの原因と対処法を解説します。CDNや画像配信失敗、拡張機能、Wi-Fi差、部分障害、ブラウザ側不整合の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-loads-without-images" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別ブラウザで画像が出るなら、元のブラウザ拡張や保存データを疑う",
             "モバイル回線では出るのに Wi-Fi だと出ないなら、回線差や画像配信先の制限を疑う",
@@ -81,7 +81,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               の方向が近いです。
             </>,
@@ -182,7 +182,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "サイトは開くのに画像が表示されないときは、サイト全体停止より、画像 CDN やアセット配信、ブラウザ拡張、回線差、ページ限定の部分障害を優先して切り分けるほうが実用的です。",
+            "サイトは開くのに画像が表示されないときは、サイト全体停止より、画像 CDN やアセット配信、ブラウザ拡張、回線差、ページ限定の部分障害を優先して確認するほうが実用的です。",
             <>
               まずブラウザ差と回線差を確認し、必要に応じて{" "}
               <Link
@@ -203,7 +203,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>{" "}
               へ進むのが早いです。
             </>,

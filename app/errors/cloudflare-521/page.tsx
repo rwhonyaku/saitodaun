@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "Cloudflare 521エラーとは？原因と直し方 | サイトダウン",
   description:
-    "Cloudflare 521（Web server is down）の意味、オリジンサーバーが接続を拒否する主な原因、ユーザー側でできる確認、運営者側の確認ポイントを実用的に解説します。",
+    "Cloudflare 521（Web server is down）の意味、オリジンサーバーが接続を拒否する主な原因、ユーザー側でできる確認し、運営者側の確認ポイントを実用的に解説します。",
 };
 
 export default function Cloudflare521Page() {
@@ -65,7 +65,7 @@ export default function Cloudflare521Page() {
             "複数端末・複数回線で同時に出るなら、サイト側のオリジン拒否を疑いやすい",
             "Cloudflare のエラー画面までは出るなら、完全なDNS不達よりオリジン接続拒否の可能性が高い",
             "522 や 524 と違い、521 は『遅い』より『受け付けていない』症状に近い",
-            "自分だけに見えても、まずは別回線比較で局所問題か全体問題かを切り分ける",
+            "自分だけに見えても、まずは別回線比較で局所問題か全体問題かを確認する",
           ],
         },
         {
@@ -83,7 +83,7 @@ export default function Cloudflare521Page() {
           type: "div",
           title: "このエラーが『サイト全体』か『自分だけ』か確認する",
           body: [
-            "521 はサイト側要因がかなり強いエラーですが、回線差や一時的な経路不調を完全には否定できません。まず外部からの到達可否を見て、局所問題か全体問題かを切り分けるのが早いです。",
+            "521 はサイト側要因がかなり強いエラーですが、回線差や一時的な経路不調を完全には否定できません。まず外部からの到達可否を見て、局所問題か全体問題かを確認するのが早いです。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"

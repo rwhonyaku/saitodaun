@@ -3,16 +3,16 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "ブラウザエラーの切り分けハブ",
+  title: "ブラウザエラーの確認ハブ",
   description:
-    "ブラウザでサイトが開かないときの切り分けハブです。ブラウザ固有の問題、証明書警告、DNS、Wi-Fi差、特定サイトだけの症状ごとに次に見るべきページへ案内します。",
+    "ブラウザでサイトが開かないときの確認ハブです。ブラウザ固有の問題、証明書警告、DNS、Wi-Fi差、特定サイトだけの症状ごとに次に見るべきページへ案内します。",
   alternates: { canonical: "/troubleshooting/browser-not-loading-sites" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="ブラウザエラーの切り分けハブ"
+      h1="ブラウザエラーの確認ハブ"
       lead={[
         "ブラウザでサイトが開かないときでも、原因はブラウザ固有の問題とは限りません。DNS、証明書、Wi-Fi差、特定サイト側の障害でも似た見え方になります。",
         "このページはブラウザ系トラブルを素早く振り分けるためのハブです。症状に近い項目から、必要な深掘りページへ進んでください。",
@@ -20,7 +20,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別ブラウザで開けるなら、回線全体より元のブラウザ環境を優先して疑う",
             "スマホでは開くのにPCブラウザでだめなら、ブラウザ設定、証明書、社内ネットワーク差を疑う",
@@ -40,7 +40,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -58,7 +58,7 @@ export default function Page() {
                   href="/troubleshooting/device-cannot-connect"
                   className="underline hover:no-underline"
                 >
-                  端末・ネットワーク差の切り分けハブ
+                  端末・ネットワーク差の確認ハブ
                 </Link>
               </p>
               <p>
@@ -117,7 +117,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               も見てください。
             </>,
@@ -134,7 +134,7 @@ export default function Page() {
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"
               >
-                DNS・接続エラーの切り分けハブ
+                DNS・接続エラーの確認ハブ
               </Link>{" "}
               へ進むのが近道です。
             </>,
@@ -151,7 +151,7 @@ export default function Page() {
                 href="/troubleshooting/device-cannot-connect"
                 className="underline hover:no-underline"
               >
-                端末・ネットワーク差の切り分けハブ
+                端末・ネットワーク差の確認ハブ
               </Link>{" "}
               へ進むのが近道です。
             </>,

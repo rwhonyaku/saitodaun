@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_TOO_MANY_REDIRECTSとは？原因と対処 | サイトダウン",
   description:
-    "ERR_TOO_MANY_REDIRECTS の意味、リダイレクトループが起きる原因、Cookieやログイン状態の不整合、HTTPSやWWWの転送設定ミス、ユーザー側での切り分け方を実用的に解説します。",
+    "ERR_TOO_MANY_REDIRECTS の意味、リダイレクトループが起きる原因、Cookieやログイン状態の不整合、HTTPSやWWWの転送設定ミス、ユーザー側での見分け方を実用的に解説します。",
 };
 
 export default function ErrTooManyRedirectsPage() {
@@ -20,7 +20,7 @@ export default function ErrTooManyRedirectsPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "シークレットモードで開けるなら、Cookie や保存済みログイン状態の不整合を疑う",
             "別端末や別ブラウザでも同じなら、サイト側のリダイレクト設定ミスの可能性が高い",
@@ -131,7 +131,7 @@ export default function ErrTooManyRedirectsPage() {
               >
                 ファイアウォールや制限でサイトが開かないとき
               </Link>{" "}
-              も確認すると切り分けやすいです。
+              も確認すると見分けやすいです。
             </>,
           ],
         },
@@ -153,7 +153,7 @@ export default function ErrTooManyRedirectsPage() {
           items: [
             "Q. これはサイトダウンですか？ → 必ずしもそうではありません。ループ設定や Cookie 不整合でも起きます。",
             "Q. 自分だけ起きることはありますか？ → あります。ブラウザ保存データ、VPN、社内ネットワーク条件で局所的に起きます。",
-            "Q. すぐ直りますか？ → Cookie 不整合なら比較的すぐ切り分けできますが、サイト側設定ループなら運営側修正が必要です。",
+            "Q. すぐ直りますか？ → Cookie 不整合なら比較的すぐ原因を確認できますが、サイト側設定ループなら運営側修正が必要です。",
             "Q. 403 や 404 と何が違いますか？ → 403 や 404 は応答内容が決まっていますが、こちらは転送が終わらず止められている点が違います。",
           ],
         },

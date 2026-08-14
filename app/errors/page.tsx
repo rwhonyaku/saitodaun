@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function ErrorsHubPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">
           HTTP・接続エラー解説

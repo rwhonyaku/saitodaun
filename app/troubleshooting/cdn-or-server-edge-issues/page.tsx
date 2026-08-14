@@ -103,7 +103,7 @@ export default function Page() {
           body: [
             "まずは別回線、別端末、別ブラウザで試して、症状が特定環境に偏っているか確認してください。自宅Wi-Fiではだめでもスマホ回線では見えるなら、全体停止ではない可能性が高くなります。",
             <>
-              特定サイトの切り分けには{" "}
+              特定サイトの確認には{" "}
               <Link
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"

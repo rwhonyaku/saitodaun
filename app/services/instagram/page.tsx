@@ -9,18 +9,18 @@ const service = SERVICES.instagram;
 export const metadata: Metadata = {
   title: "Instagramのトラブル解決 | サイトダウン",
   description:
-    "Instagramが読み込めない・表示されない・ログインできない時に、障害か自分側かを切り分けて最短で対処します。",
+    "Instagramが読み込めない・表示されない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function InstagramHubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">{service.name}のトラブル解決</h1>
         <p className="text-base text-neutral-600">
-          Instagramが読み込めない、フィードが表示されない、ログインできない時は、まず「障害か自分側か」を切り分けるのが最短です。
+          Instagramが読み込めない、フィードが表示されない、ログインできない時は、まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

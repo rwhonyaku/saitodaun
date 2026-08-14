@@ -52,7 +52,7 @@ export default function Page() {
             "ドメイン管理画面で、変更したレコードやネームサーバーが正しく保存されているかを確認してください。意外と多いのは、入力後に確定されていない、または別ゾーンを編集していたというケースです。",
             "また、ブラウザキャッシュやOS側のDNSキャッシュで古い結果が残ることもあります。",
             <>
-              DNSの基本的な仕組みやトラブル切り分けは{" "}
+              DNSの基本的な仕組みやトラブル確認は{" "}
               <Link
                 href="/troubleshooting-dns"
                 className="underline hover:no-underline"

@@ -1,6 +1,5 @@
-"use client";
-
 import Link from "next/link";
+import type { Metadata } from "next";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 import { AFFILIATE_LINKS } from "@/lib/affiliateLinks";
 import { SITE } from "@/lib/siteMeta";
@@ -18,13 +17,31 @@ const LINKS = {
     "https://af.moshimo.com/af/c/click?a_id=5399070&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25B5%25E3%2583%25BC%25E3%2583%2590%25E3%2583%25BC%25E3%2580%2580%25E6%25A7%258B%25E7%25AF%2589%25E3%2580%2580%25E6%259C%25AC%2F",
 };
 
+export const metadata: Metadata = {
+  title: "推奨ツール・サービス",
+  description:
+    `${SITE.name}で案内している推奨ツール・サービスの整理ページです。表示速度、運用基盤、ネットワーク確認に役立つ候補を用途別に確認できます。`,
+  alternates: { canonical: "/recommendations" },
+  openGraph: {
+    title: "推奨ツール・サービス",
+    description:
+      `${SITE.name}で案内している推奨ツール・サービスの整理ページです。表示速度、運用基盤、ネットワーク確認に役立つ候補を用途別に確認できます。`,
+    url: `${SITE.origin}/recommendations`,
+  },
+  twitter: {
+    title: "推奨ツール・サービス",
+    description:
+      `${SITE.name}で案内している推奨ツール・サービスの整理ページです。表示速度、運用基盤、ネットワーク確認に役立つ候補を用途別に確認できます。`,
+  },
+};
+
 export default function RecommendationsPage() {
   return (
     <EvergreenPageShell
       h1="推奨ツール・サービス"
       updatedAt="2026-04-13"
       lead={[
-        `${SITE.name}では、サイトの稼働状況を確認するだけでなく、表示速度、運用基盤、ネットワーク切り分けに役立つ候補を必要最小限で案内しています。`,
+        `${SITE.name}では、サイトの稼働状況を確認するだけでなく、表示速度、運用基盤、ネットワーク確認に役立つ候補を必要最小限で案内しています。`,
         "ここで紹介するのは、実際に診断や運用の次の一手として意味があるものだけです。万能な解決策としてではなく、状況に応じた選択肢として見てください。",
       ]}
       sections={[
@@ -148,7 +165,7 @@ export default function RecommendationsPage() {
               <Link href="/vpn" className="underline hover:no-underline">
                 VPNガイド
               </Link>{" "}
-              でも短く整理しています。VPN はサービス全体の障害を直すものではなく、回線や地域差の切り分けに使う選択肢です。
+              でも短く整理しています。VPN はサービス全体の障害を直すものではなく、回線や地域差の確認に使う選択肢です。
             </>,
             <div key="misc-table" className="overflow-x-auto my-4 border border-slate-200 rounded-lg bg-white">
               <table className="w-full text-left border-collapse">
@@ -178,7 +195,7 @@ export default function RecommendationsPage() {
                       <span className="block text-[8px] text-rose-500 font-bold mt-1 uppercase">PR</span>
                     </td>
                     <td className="p-3 text-slate-600">
-                      複数端末で使いやすく、公共 Wi-Fi や日常利用も含めて比較しやすい候補です。地域制限や回線制限の切り分けが必要な場合のみ検討しやすい選択肢です。
+                      複数端末で使いやすく、公共 Wi-Fi や日常利用も含めて比較しやすい候補です。地域制限や回線制限の確認が必要な場合のみ検討しやすい選択肢です。
                     </td>
                     <td className="p-3 text-right">
                       <a
@@ -197,7 +214,7 @@ export default function RecommendationsPage() {
                       <span className="block text-[8px] text-rose-500 font-bold mt-1 uppercase">PR</span>
                     </td>
                     <td className="p-3 text-slate-600">
-                      公共 Wi-Fi や地域制限の切り分けで、設定をできるだけ簡単に進めたいときの比較候補です。回線依存かどうかを見たい場面での選択肢に入れやすいタイプです。
+                      公共 Wi-Fi や地域制限の確認で、設定をできるだけ簡単に進めたいときの比較候補です。回線依存かどうかを見たい場面での選択肢に入れやすいタイプです。
                     </td>
                     <td className="p-3 text-right">
                       <a
@@ -270,7 +287,7 @@ export default function RecommendationsPage() {
           type: "note",
           title: "広告表記（PR）および免責事項",
           body: [
-            "本ページにはアフィリエイトリンクが含まれており、リンク経由の申込や購入により紹介料を受けることがあります。ユーザー側の料金が上がることはありません。紹介の有無にかかわらず、当サイトでは切り分けや運用の文脈で意味があるものだけを掲載しています。",
+            "本ページにはアフィリエイトリンクが含まれており、リンク経由の申込や購入により紹介料を受けることがあります。ユーザー側の料金が上がることはありません。紹介の有無にかかわらず、当サイトでは確認や運用の文脈で意味があるものだけを掲載しています。",
           ],
         },
       ]}

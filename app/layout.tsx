@@ -22,21 +22,13 @@ export const metadata: Metadata = {
     template: `%s｜${SITE.name}`,
   },
   description: SITE.description,
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
-    title: `${SITE.name}｜接続・障害チェック`,
-    description: SITE.description,
-    url: SITE.origin,
     siteName: SITE.name,
     locale: "ja_JP",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: `${SITE.name}｜接続・障害チェック`,
-    description: SITE.description,
   },
 };
 

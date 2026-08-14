@@ -10,7 +10,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "ChatGPTが使えない？（障害か自分側か） | サイトダウン",
   description:
-    "ChatGPTが開かない・使えない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、VPN）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "ChatGPTが開かない・使えない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、VPN）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +29,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function ChatGPTNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,11 +48,11 @@ export default function ChatGPTNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           ChatGPTの不具合は、OpenAI側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、VPN、混雑（429）などでも起きます。
-          最初に原因の方向を切り分けておくと、無駄な設定変更を避けて早く復旧できます。
+          最初に原因の方向を確認しておくと、無駄な設定変更を避けて早く復旧できます。
         </p>
 
         <p className="text-sm text-neutral-600">
-          使えない・ログインできない・エラーが出る・読み込めないなど、症状によって原因の切り分けが変わります。
+          使えない・ログインできない・エラーが出る・読み込めないなど、症状によって原因の確認が変わります。
         </p>
         <div className="rounded-2xl border border-neutral-200 p-5">
           <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
@@ -110,7 +110,7 @@ export default function ChatGPTNotWorkingPage() {
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
 
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つ</h3>
@@ -144,6 +144,13 @@ export default function ChatGPTNotWorkingPage() {
               端末だけつながらない場合
             </Link>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-neutral-200 p-6">
+          <h3 className="text-base font-semibold">サイトは開くのに一部だけ不安定なケース</h3>
+          <p className="mt-2 text-sm text-neutral-700">
+            ChatGPTの画面は表示されるのにログイン、応答生成、API利用だけ失敗する場合は、サービス全体停止ではなく、OpenAI側の一部機能劣化、ブラウザのセッション不整合、または会社VPN・プロキシによる制限を確認すると判断しやすくなります。
+          </p>
         </div>
       </section>
 

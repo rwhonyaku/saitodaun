@@ -10,7 +10,7 @@ const issue = service.issues["not-working"];
 export const metadata: Metadata = {
   title: "Yahoo! JAPANが開かない・検索できない？（障害か自分側か） | サイトダウン",
   description:
-    "Yahoo! JAPANが開かない・検索できない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Yahoo! JAPANが開かない・検索できない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +29,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function YahooNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -48,10 +48,10 @@ export default function YahooNotWorkingPage() {
 
         <p className="text-base text-neutral-600">
           Yahoo! JAPANの不具合は、Yahoo! JAPAN側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、ブラウザ、ログイン状態でも起きます。
-          最初に問題の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          最初に問題の方向を確認しておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          検索できない・ログインできない・表示されないなど、症状によって原因の切り分けが変わります。
+          検索できない・ログインできない・表示されないなど、症状によって原因の確認が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -114,12 +114,12 @@ export default function YahooNotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -174,7 +174,7 @@ export default function YahooNotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -205,7 +205,7 @@ export default function YahooNotWorkingPage() {
             <h3 className="text-base font-semibold">一部機能だけ不安定な状態</h3>
             <p className="mt-2 text-sm text-neutral-700">
               Yahoo! JAPANは検索、ログイン、ニュース、メールなど機能が分かれているため、全体が落ちていなくても一部だけ不安定になることがあります。
-              症状がどの機能に出ているかを先に整理すると、切り分けが早くなります。
+              症状がどの機能に出ているかを先に整理すると、確認が早くなります。
             </p>
           </div>
         </div>
@@ -227,7 +227,7 @@ export default function YahooNotWorkingPage() {
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">「ログインできない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>別ブラウザやシークレットモードで試して、ブラウザ起因かどうかを切り分けます。</li>
+            <li>別ブラウザやシークレットモードで試して、ブラウザ起因かどうかを確認します。</li>
             <li>別回線で試して、回線やDNSの問題を除外します。</li>
             <li>障害の可能性が高いときは、無理に何度も試さず少し待ちます。</li>
           </ul>
@@ -237,7 +237,7 @@ export default function YahooNotWorkingPage() {
           <h3 className="text-base font-semibold">「検索できない・ページが出ない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
             <li>他のサイトも不安定なら、まず回線側を疑います。</li>
-            <li>Yahoo! JAPANだけ不安定なら、ブラウザやDNSの問題を優先して切り分けます。</li>
+            <li>Yahoo! JAPANだけ不安定なら、ブラウザやDNSの問題を優先して確認します。</li>
             <li>Wi-Fiとモバイル通信の両方で試して、回線差が出るか確認します。</li>
           </ul>
         </div>
@@ -323,7 +323,7 @@ export default function YahooNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">Wi-Fiだとだめで、モバイル通信だと使えるのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の切り分けを進めてください。
+              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
             </p>
           </div>
 

@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_SSL_PROTOCOL_ERRORとは？原因と対処 | サイトダウン",
   description:
-    "ERR_SSL_PROTOCOL_ERROR の意味、TLS設定不整合や証明書問題、ブラウザ・ネットワーク側の影響、ユーザー側での切り分け方を実用的に解説します。",
+    "ERR_SSL_PROTOCOL_ERROR の意味、TLS設定不整合や証明書問題、ブラウザ・ネットワーク側の影響、ユーザー側での見分け方を実用的に解説します。",
 };
 
 export default function ErrSslProtocolErrorPage() {
@@ -29,7 +29,7 @@ export default function ErrSslProtocolErrorPage() {
         },
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別端末や別回線でも同じなら、サイト側の SSL/TLS 設定を疑う",
             "自分の会社・学校・VPN環境だけで出るなら、ネットワーク干渉やプロキシを疑う",
@@ -82,7 +82,7 @@ export default function ErrSslProtocolErrorPage() {
               >
                 スマホでは開くのにWi-Fiだと開かない原因
               </Link>{" "}
-              もあわせて確認すると切り分けやすくなります。
+              もあわせて確認すると見分けやすくなります。
             </>,
           ],
         },
@@ -172,7 +172,7 @@ export default function ErrSslProtocolErrorPage() {
           items: [
             "Q. これはサーバーダウンですか？ → 多くは違います。HTTPS の確立に失敗しているので、サイト自体は動いていても起こります。",
             "Q. 自分だけ出ることはありますか？ → あります。社内プロキシ、VPN、古いブラウザ、端末の証明書環境で局所的に起きます。",
-            "Q. すぐ直りますか？ → ブラウザや回線側なら比較的すぐ切り分けできます。サイト側設定不備なら運営者側修正が必要です。",
+            "Q. すぐ直りますか？ → ブラウザや回線側なら比較的すぐ原因を確認できます。サイト側設定不備なら運営者側修正が必要です。",
             "Q. 警告を無視して進んでもいいですか？ → 安全性を確認できない限り推奨できません。ログインや決済では特に避けるべきです。",
           ],
         },

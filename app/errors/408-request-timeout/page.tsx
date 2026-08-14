@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "408 Request Timeoutとは？原因と対処法 | サイトダウン",
   description:
-    "408 Request Timeout の意味、504 や ERR_CONNECTION_TIMED_OUT との違い、回線不安定・途中中断・サーバー側待機切れなどの原因、切り分け方を解説します。",
+    "408 Request Timeout の意味、504 や ERR_CONNECTION_TIMED_OUT との違い、回線不安定・途中中断・サーバー側待機切れなどの原因、見分け方を解説します。",
 };
 
 export default function Error408RequestTimeoutPage() {
@@ -89,7 +89,7 @@ export default function Error408RequestTimeoutPage() {
               >
                 ネット障害情報
               </Link>{" "}
-              も確認すると切り分けやすくなります。
+              も確認すると見分けやすくなります。
             </>,
           ],
         },

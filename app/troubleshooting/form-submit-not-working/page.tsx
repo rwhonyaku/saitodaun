@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "フォーム送信ができない原因と対処法",
   description:
-    "問い合わせフォーム、ログイン送信、購入確定、投稿送信が進まないときの原因と対処法を解説します。無反応、送信後に止まる、429制限、ブラウザ不整合、部分障害の切り分け方をまとめています。",
+    "問い合わせフォーム、ログイン送信、購入確定、投稿送信が進まないときの原因と対処法を解説します。無反応、送信後に止まる、429制限、ブラウザ不整合、部分障害の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/form-submit-not-working" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "押しても完全に無反応なら、JavaScript や画面上の干渉を優先して疑う",
             "送信後に読み込み中のまま止まるなら、API や部分障害に近い",
@@ -83,7 +83,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
             </div>,
@@ -119,7 +119,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分け
+                ブラウザエラーの確認
               </Link>
               が近いです。
             </>,
@@ -129,7 +129,7 @@ export default function Page() {
           type: "p",
           title: "送信後に止まるなら API や部分障害を疑う",
           body: [
-            "押した直後にローディングや送信中表示が出るのに完了しないなら、クリック自体は通っています。この場合は、問い合わせ送信 API、決済処理、投稿保存、在庫確認、認証後処理など、送信先の処理が詰まっている可能性が高くなります。",
+            "押した直後にローディングや送信中表示が出るのに完了しないなら、クリック自体は通っています。この場合は、問い合わせ送信 API、決済処理、投稿保存、在庫確認し、認証後処理など、送信先の処理が詰まっている可能性が高くなります。",
             <>
               特定サービスだけで起きているなら{" "}
               <Link href="/services" className="underline hover:no-underline">
@@ -140,7 +140,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>
               が近い案内です。
             </>,
@@ -176,7 +176,7 @@ export default function Page() {
               >
                 ログインできないケース
               </Link>
-              へ進んだほうが切り分けしやすくなります。
+              へ進んだほうが確認しやすくなります。
             </>,
           ],
         },

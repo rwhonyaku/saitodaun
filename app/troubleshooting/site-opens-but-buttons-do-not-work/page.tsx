@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトは開くのにボタンが反応しない原因と対処法",
   description:
-    "サイトは表示されるのにボタンやメニュー、フォーム送信だけ反応しないときの原因と対処法を解説します。JavaScript失敗、拡張機能、重なり要素、部分障害、CDN配信不良の切り分け方をまとめています。",
+    "サイトは表示されるのにボタンやメニュー、フォーム送信だけ反応しないときの原因と対処法を解説します。JavaScript失敗、拡張機能、重なり要素、部分障害、CDN配信不良の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-opens-but-buttons-do-not-work" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別ブラウザで同じ操作が通るなら、元のブラウザの拡張機能や保存データを優先して疑う",
             "ボタンを押した瞬間に何も起きないなら、JavaScript 側か重なり要素の干渉に近い",
@@ -72,12 +72,12 @@ export default function Page() {
                 </Link>
               </p>
               <p>
-                まずブラウザ側の切り分けをしたい →{" "}
+                まずブラウザ側の確認をしたい →{" "}
                 <Link
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -124,7 +124,7 @@ export default function Page() {
                 href="/troubleshooting/site-opens-but-is-blank"
                 className="underline hover:no-underline"
               >
-                真っ白ページ系の切り分け
+                真っ白ページ系の確認
               </Link>{" "}
               と近い原因を持つこともあります。
             </>,
@@ -141,7 +141,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               から見たほうが早いです。
             </>,
@@ -193,7 +193,7 @@ export default function Page() {
           title: "別端末では押せるならブラウザ保存データや拡張機能を優先する",
           body: [
             "同じアカウント、同じサイトでも、スマホでは押せるのに PC では押せないなら、資格情報そのものよりブラウザ状態の問題に近づきます。拡張機能、古いキャッシュ、保存済み Cookie、翻訳や広告ブロック系の干渉で操作だけ壊れることは珍しくありません。",
-            "特に『PC のいつものブラウザだけだめ』『シークレットでは通る』なら、サイト全体よりローカル環境を優先して切り分けるのが実用的です。",
+            "特に『PC のいつものブラウザだけだめ』『シークレットでは通る』なら、サイト全体よりローカル環境を優先して確認するのが実用的です。",
           ],
         },
         {

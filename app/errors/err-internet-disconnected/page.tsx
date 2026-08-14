@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_INTERNET_DISCONNECTEDとは？原因と対処 | サイトダウン",
   description:
-    "ERR_INTERNET_DISCONNECTED の意味、Wi-Fi切断やルーター不調、回線障害、端末側の接続切れで起きる原因と、ユーザー側での切り分け方を実用的に解説します。",
+    "ERR_INTERNET_DISCONNECTED の意味、Wi-Fi切断やルーター不調、回線障害、端末側の接続切れで起きる原因と、ユーザー側での見分け方を実用的に解説します。",
 };
 
 export default function ErrInternetDisconnectedPage() {
@@ -20,7 +20,7 @@ export default function ErrInternetDisconnectedPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "まず他のサイトも開けないかを確認し、サイト単位の問題ではないかを見る",
             "Wi-Fiアイコンやネットワーク状態を確認し、端末が本当に接続中かを見る",

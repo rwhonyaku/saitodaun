@@ -82,7 +82,7 @@ export default function ContactPage() {
         <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm hover:border-sky-200 transition-colors">
           <p className="font-bold text-slate-900 mb-2">💼 プレス・広告掲載</p>
           <p className="text-xs text-slate-600 leading-relaxed">
-            メディア掲載の事実確認、純広告・タイアップ広告枠に関するご相談。
+            メディア掲載の事実確認し、純広告・タイアップ広告枠に関するご相談。
           </p>
         </div>
         <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm hover:border-sky-200 transition-colors">

@@ -12,6 +12,7 @@ import { getGuideHrefFromResult } from "@/lib/errorGuideMap";
 
 type CheckResult = {
   online: boolean;
+  probeBlocked?: boolean;
   status: number | null;
   responseTime: number | null;
   timestamp: string;
@@ -21,11 +22,110 @@ type CheckResult = {
 
 const FAVORITES_KEY = "saitodaun_status_favorites";
 
+const SEARCH_ALIASES: Record<string, string[]> = {
+  "amazon-jp": [
+    "Amazon",
+    "amazon",
+    "amazon jp",
+    "Amazon JP",
+    "amazon.co.jp",
+    "amazon japan",
+    "アマゾン",
+  ],
+  ana: ["ANA", "ana", "全日空"],
+  docomo: ["Docomo", "docomo", "ドコモ", "ntt docomo"],
+  discord: ["Discord", "discord", "ディスコード"],
+  ekinet: ["えきねっと", "ekinet", "駅ネット", "えきネット"],
+  github: ["GitHub", "github", "git hub"],
+  gmail: ["Gmail", "gmail", "google mail"],
+  google: ["Google", "google search", "google検索"],
+  "google-analytics": [
+    "Google Analytics",
+    "ga4",
+    "analytics",
+    "google analytics",
+  ],
+  "google-drive": ["Google Drive", "drive", "google drive"],
+  "google-maps": ["Google Maps", "maps", "google maps", "グーグルマップ"],
+  "google-search-console": [
+    "Google Search Console",
+    "search console",
+    "gsc",
+    "google search console",
+  ],
+  jal: ["JAL", "jal", "日本航空"],
+  line: ["LINE", "line", "ライン"],
+  "line-works": ["LINE WORKS", "lineworks", "line works"],
+  mercari: ["Mercari", "mercari", "メルカリ"],
+  "microsoft-365": [
+    "Microsoft 365",
+    "office365",
+    "office 365",
+    "microsoft365",
+    "m365",
+  ],
+  "playstation-network": ["PlayStation Network", "psn", "playstation network"],
+  "pokemon-home": ["Pokémon HOME", "pokemon home", "ポケモンhome", "ポケモンホーム"],
+  "prime-video": [
+    "Prime Video",
+    "prime video",
+    "primevideo",
+    "プライムビデオ",
+    "アマプラ",
+    "amazon prime video",
+    "Amazon Prime Video",
+    "Amazonプライムビデオ",
+    "amazonプライムビデオ",
+  ],
+  rakuten: ["Rakuten", "rakuten", "楽天"],
+  "rakuten-mobile": ["Rakuten Mobile", "楽天モバイル", "rakuten mobile"],
+  shopify: ["Shopify", "shopify", "ショッピファイ"],
+  teams: ["Microsoft Teams", "teams", "microsoft teams", "ms teams"],
+  twitter: [
+    "Twitter",
+    "x",
+    "twitter",
+    "ツイッター",
+    "X（旧Twitter）",
+  ],
+  "xbox-live": ["Xbox Live", "xbox", "xbox live"],
+  "yahoo-auctions": [
+    "Yahoo Auctions",
+    "ヤフオク",
+    "yahoo auctions",
+    "yahooオークション",
+  ],
+  "yahoo-japan": [
+    "Yahoo Japan",
+    "yahoo",
+    "ヤフー",
+    "yahoo japan",
+    "yahoo! japan",
+  ],
+  "yahoo-shopping": ["Yahoo Shopping", "yahoo shopping", "ヤフーショッピング"],
+};
+
+function normalizeSearchText(value: string) {
+  return value.toLocaleLowerCase("ja-JP").replace(/\s+/g, "");
+}
+
+function getSearchText(site: SiteConfig) {
+  return normalizeSearchText(
+    [
+      site.id,
+      site.name,
+      new URL(site.url).hostname,
+      ...(site.aliases ?? []),
+      ...(SEARCH_ALIASES[site.id] ?? []),
+    ].join(" ")
+  );
+}
+
 export default function StatusListClient() {
   const [results, setResults] = useState<Record<string, CheckResult | null>>({});
   const [loading, setLoading] = useState<Record<string, boolean>>({});
-  const [checkingAll, setCheckingAll] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categoryCounts = getCategoryCounts();
 
@@ -67,6 +167,12 @@ export default function StatusListClient() {
       return a.name.localeCompare(b.name, "ja");
     });
   }, [favorites]);
+
+  const filteredSites = useMemo(() => {
+    const query = normalizeSearchText(searchQuery);
+    if (!query) return sortedSites;
+    return sortedSites.filter((site) => getSearchText(site).includes(query));
+  }, [searchQuery, sortedSites]);
 
   const quickLinks = useMemo(() => {
     const ids = [
@@ -125,17 +231,6 @@ export default function StatusListClient() {
     }
   };
 
-  const checkAll = async () => {
-    setCheckingAll(true);
-    try {
-      for (const site of STATUS_SITES) {
-        await checkOne(site);
-      }
-    } finally {
-      setCheckingAll(false);
-    }
-  };
-
   return (
     <main className="flex-1 bg-slate-50 flex flex-col">
       <div className="mx-auto max-w-4xl w-full px-4 py-10">
@@ -149,12 +244,14 @@ export default function StatusListClient() {
           <div className="mt-4 flex flex-wrap gap-3 text-xs">
             <Link
               href="/"
+              prefetch={false}
               className="text-sky-600 font-bold underline hover:text-sky-700"
             >
               URL入力で接続チェック →
             </Link>
             <Link
               href="/about"
+              prefetch={false}
               className="text-sky-600 font-bold underline hover:text-sky-700"
             >
               このサイトについて →
@@ -171,6 +268,7 @@ export default function StatusListClient() {
               <Link
                 key={s.id}
                 href={`/status/sites/${s.id}`}
+                prefetch={false}
                 className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-sm hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 transition-all"
               >
                 {s.name}
@@ -180,17 +278,35 @@ export default function StatusListClient() {
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-6">
-          <button
-            onClick={checkAll}
-            disabled={checkingAll}
-            className="w-full sm:w-auto rounded-xl bg-slate-900 px-8 py-3 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-60 transition-all shadow-md active:scale-95"
-          >
-            {checkingAll ? "一括チェック中..." : "全て一括でチェックする"}
-          </button>
+          <p className="text-xs text-slate-500">
+            接続確認は必要なサービスだけ実行できます。
+          </p>
           <p className="text-[11px] text-slate-400 font-medium">
             ★ を押すと、お気に入りのサービスを上部に固定できます。
           </p>
         </div>
+
+        <section className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <label
+            htmlFor="status-service-search"
+            className="block text-xs font-bold text-slate-700"
+          >
+            サービス名で検索
+          </label>
+          <input
+            id="status-service-search"
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="例：Discord、アマプラ、Teams"
+            className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+          />
+          <p className="mt-2 text-[11px] font-medium text-slate-500">
+            {searchQuery
+              ? `${filteredSites.length}件のサービスが一致しています。`
+              : "サービス名・別名・URLの一部で絞り込めます。"}
+          </p>
+        </section>
 
         <div className="mb-8 overflow-hidden rounded-2xl bg-white shadow-sm border border-slate-200">
           <div className="overflow-x-auto">
@@ -206,16 +322,20 @@ export default function StatusListClient() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {sortedSites.map((site) => {
+                {filteredSites.map((site) => {
                   const result = results[site.id] || null;
                   const isLoading = loading[site.id] || false;
                   const statusLabel = result
-                    ? result.online
+                    ? result.probeBlocked
+                      ? "判定保留"
+                      : result.online
                       ? "オンライン"
                       : "オフライン"
                     : "未チェック";
                   const statusColor = !result
                     ? "bg-slate-100 text-slate-400"
+                    : result.probeBlocked
+                    ? "bg-amber-100 text-amber-700"
                     : result.online
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700";
@@ -249,6 +369,7 @@ export default function StatusListClient() {
                       <td className="px-4 py-4">
                         <Link
                           href={`/status/sites/${site.id}`}
+                          prefetch={false}
                           className="font-bold text-slate-900 hover:text-sky-600 underline decoration-slate-200 underline-offset-4"
                         >
                           {site.name}
@@ -278,6 +399,7 @@ export default function StatusListClient() {
                         <div className="mt-1">
                           <Link
                             href={guideHref}
+                            prefetch={false}
                             className="text-[10px] font-bold text-sky-600 underline underline-offset-2 hover:text-sky-700"
                           >
                             解説 →
@@ -294,7 +416,7 @@ export default function StatusListClient() {
                       <td className="px-4 py-4 text-right">
                         <button
                           onClick={() => checkOne(site)}
-                          disabled={isLoading || checkingAll}
+                          disabled={isLoading}
                           className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[10px] font-bold text-slate-600 hover:border-slate-400 shadow-sm transition-all disabled:opacity-50"
                         >
                           {isLoading ? "..." : "再チェック"}
@@ -303,6 +425,16 @@ export default function StatusListClient() {
                     </tr>
                   );
                 })}
+                {filteredSites.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="px-4 py-10 text-center text-sm font-bold text-slate-500"
+                    >
+                      一致するサービスがありません。
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -319,6 +451,7 @@ export default function StatusListClient() {
                 <Link
                   key={String(cat)}
                   href={`/status/category/${cat}`}
+                  prefetch={false}
                   className="rounded-xl border border-slate-100 bg-slate-50 px-5 py-3 text-xs font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all flex items-center gap-3"
                 >
                   {(SITE_CATEGORIES as any)[cat]}

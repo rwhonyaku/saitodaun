@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "ログイン後だけサイトが使えない原因と対処法",
   description:
-    "ログインはできるのに会員ページ、設定画面、購入画面だけ動かないときの原因と対処法を解説します。部分障害、セッション不整合、ボタン無反応、真っ白画面の切り分け方をまとめています。",
+    "ログインはできるのに会員ページ、設定画面、購入画面だけ動かないときの原因と対処法を解説します。部分障害、セッション不整合、ボタン無反応、真っ白画面の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/signed-in-but-site-not-working" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "ログイン前は正常でログイン後だけ壊れるなら、全体障害より会員機能の部分障害を優先して疑う",
             "ログイン後にボタンが効かないなら、会員画面用の JavaScript や画面干渉に近い",
@@ -83,7 +83,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
             </div>,
@@ -105,7 +105,7 @@ export default function Page() {
           type: "p",
           title: "ログイン成功とログイン後の動作は別の問題",
           body: [
-            "サインインが通ったことと、その後の会員ページや設定画面が正常に動くことは別です。認証だけ成功しても、その先で使う会員API、保存処理、在庫確認、支払い導線、プロフィール取得が壊れていれば『ログインはできるのに使えない』見え方になります。",
+            "サインインが通ったことと、その後の会員ページや設定画面が正常に動くことは別です。認証だけ成功しても、その先で使う会員API、保存処理、在庫確認し、支払い導線、プロフィール取得が壊れていれば『ログインはできるのに使えない』見え方になります。",
             <>
               サインイン自体で止まるなら{" "}
               <Link
@@ -114,7 +114,7 @@ export default function Page() {
               >
                 ログイン失敗ページ
               </Link>
-              のほうが近く、ログイン後だけ壊れるならこのページの切り分けが合っています。
+              のほうが近く、ログイン後だけ壊れるならこのページの確認が合っています。
             </>,
           ],
         },
@@ -133,7 +133,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>
               が近い案内です。
             </>,
@@ -174,7 +174,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>
               から進むのが実用的です。
             </>,

@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_ADDRESS_UNREACHABLEとは？原因と対処 | サイトダウン",
   description:
-    "ERR_ADDRESS_UNREACHABLE の意味、接続先IPに到達できない原因、ルーター・回線・ローカルネットワークの切り分け方を実用的に解説します。",
+    "ERR_ADDRESS_UNREACHABLE の意味、接続先IPに到達できない原因、ルーター・回線・ローカルネットワークの見分け方を実用的に解説します。",
 };
 
 export default function ErrAddressUnreachablePage() {
@@ -15,12 +15,12 @@ export default function ErrAddressUnreachablePage() {
       updatedAt="2026-04-11"
       lead={[
         "ERR_ADDRESS_UNREACHABLE は、ブラウザが接続先アドレスまでは把握しているのに、その先へ実際に到達できないときに出るエラーです。",
-        "DNSで名前を引けていない状態ではなく、『行き先は分かったが届かない』タイプのエラーなので、ルーター、ローカルネットワーク、回線経路、接続先の到達性を切り分けることが重要です。",
+        "DNSで名前を引けていない状態ではなく、『行き先は分かったが届かない』タイプのエラーなので、ルーター、ローカルネットワーク、回線経路、接続先の到達性を確認することが重要です。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "同じサイトが別回線で開くなら、自分のWi-Fiや回線経路側を優先して疑う",
             "複数サイトで同じように出るなら、サイト個別よりネットワーク全体の問題に近い",
@@ -113,7 +113,7 @@ export default function ErrAddressUnreachablePage() {
               >
                 Wi-Fiがつながらない原因
               </Link>{" "}
-              を先に確認すると切り分けが早いです。
+              を先に確認すると確認が早いです。
             </>,
           ],
         },

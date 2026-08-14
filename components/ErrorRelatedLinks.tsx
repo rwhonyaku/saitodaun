@@ -107,6 +107,7 @@ export function ErrorRelatedLinks({
           <li key={it.href}>
             <Link
               href={it.href}
+              prefetch={false}
               className="block rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-100 transition-colors font-medium"
             >
               {it.label}

@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_CERT_DATE_INVALIDとは？原因と対処 | サイトダウン",
   description:
-    "ERR_CERT_DATE_INVALID の意味、証明書の期限切れや端末時刻ずれで起きる原因、ユーザー側での切り分け方、運営者側の確認ポイントを実用的に解説します。",
+    "ERR_CERT_DATE_INVALID の意味、証明書の期限切れや端末時刻ずれで起きる原因、ユーザー側での見分け方、運営者側の確認ポイントを実用的に解説します。",
 };
 
 export default function ErrCertDateInvalidPage() {
@@ -20,7 +20,7 @@ export default function ErrCertDateInvalidPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "端末の日時設定がずれていないかを最初に確認する",
             "別端末や別回線でも同じなら、サイト側の証明書期限切れを疑う",
@@ -137,7 +137,7 @@ export default function ErrCertDateInvalidPage() {
           body: [
             "このパターンはサイト側より、PCの時計ずれ、古いブラウザ、社内端末設定の影響であることが多めです。",
             <>
-              端末差の切り分けでは{" "}
+              端末差の確認では{" "}
               <Link
                 href="/troubleshooting/site-works-on-phone-not-computer"
                 className="underline hover:no-underline"

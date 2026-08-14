@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトが勝手に再読み込みされ続ける原因と対処法",
   description:
-    "サイトが何度も再読み込みされる、同じ画面に戻る、ログイン後にループするときの原因と対処法を解説します。リダイレクトループ、ログイン状態不整合、ブラウザ保存データ、部分障害の切り分け方をまとめています。",
+    "サイトが何度も再読み込みされる、同じ画面に戻る、ログイン後にループするときの原因と対処法を解説します。リダイレクトループ、ログイン状態不整合、ブラウザ保存データ、部分障害の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/website-keeps-reloading" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "画面が切り替わり続けるなら、単純な重さよりリダイレクトループを優先して疑う",
             "ログイン後だけ再読み込みされるなら、認証状態や戻り先処理の不整合に近い",
@@ -72,12 +72,12 @@ export default function Page() {
                 </Link>
               </p>
               <p>
-                まずブラウザ側の問題か切り分けたい →{" "}
+                まずブラウザ側の問題か確認たい →{" "}
                 <Link
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -153,7 +153,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>
               から進むのが実用的です。
             </>,
@@ -170,7 +170,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>
               や{" "}
               <Link href="/services" className="underline hover:no-underline">
@@ -224,7 +224,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザ起点の切り分け
+                ブラウザ起点の確認
               </Link>
               、{" "}
               <Link href="/services" className="underline hover:no-underline">

@@ -4,9 +4,9 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "SSL Handshake Failedとは？原因・直し方・切り分け方法 | サイトダウン",
+  title: "SSL Handshake Failedとは？原因・直し方・確認方法 | サイトダウン",
   description:
-    "SSL Handshake Failed の意味、最短の切り分け手順、サーバー側・ネットワーク側・端末側の原因の見分け方、関連するSSLエラーへの進み方を簡潔に整理します。",
+    "SSL Handshake Failed の意味、最短の確認手順、サーバー側・ネットワーク側・端末側の原因の見分け方、関連するSSLエラーへの進み方を簡潔に整理します。",
 };
 
 export default function SSLHandshakePage() {
@@ -17,12 +17,12 @@ export default function SSLHandshakePage() {
       lead={[
         "「SSL Handshake Failed」は、ブラウザとサーバー間で安全な通信（SSL/TLS）の確立に失敗したときに表示されます。",
         "原因は大きく分けて、サーバー側の設定や証明書の問題、ネットワークやISPによる干渉・ブロック、ブラウザや端末側の問題の3つです。",
-        "まずは他の回線・端末でも同じかを確認すると、原因の切り分けができます。",
+        "まずは他の回線・端末でも同じかを確認すると、原因を確認できます。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短の切り分け（1〜2分）",
+          title: "最短の確認（1〜2分）",
           items: [
             "別のサイトでも同じSSLエラーが出るか確認する",
             "スマホ回線（4G/5G）や別のWi-Fiで同じURLを開いてみる",
@@ -103,7 +103,7 @@ export default function SSLHandshakePage() {
           title: "ネットワークやISPが原因の場合",
           body: [
             "会社や学校のネットワーク、または一部のISPでは、SSL通信が制限・干渉される場合があります。",
-            "この場合、別回線で試すか、ネットワーク経由の影響かを確認する手段としてVPNを使うと切り分けが可能です。",
+            "この場合、別回線で試すか、ネットワーク経由の影響かを確認する手段としてVPNを使うと原因を確認できます。",
             <a
               key="nordvpn"
               href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=145604&url_id=880"
@@ -140,7 +140,7 @@ export default function SSLHandshakePage() {
           type: "div",
           title: "この問題がサイト全体か、自分だけかを確認する",
           body: [
-            "SSL/TLSエラーでも、実際には自分の回線や端末だけで失敗していることがあります。外部から見てもサイトが応答しているか確認しておくと、無駄な切り分けを減らせます。",
+            "SSL/TLSエラーでも、実際には自分の回線や端末だけで失敗していることがあります。外部から見てもサイトが応答しているか確認しておくと、無駄な確認を減らせます。",
             <div
               key="cta"
               className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"

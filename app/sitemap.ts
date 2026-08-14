@@ -67,6 +67,7 @@ const ERROR_ROUTES = [
   "dns-probe-finished-nxdomain",
   "err-address-unreachable",
   "err-cert-date-invalid",
+  "err-connection-reset",
   "err-connection-refused",
   "err-connection-timed-out",
   "err-empty-response",
@@ -108,6 +109,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/status-codes`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/network-types`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/site-performance`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/vpn`, changeFrequency: "monthly", priority: 0.72 },
     { url: `${base}/what-is-website-downtime`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/how-it-works`, changeFrequency: "monthly", priority: 0.6 },
 
@@ -149,6 +151,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [hub, ...issues];
   });
 
+  const serviceRouteExtras: MetadataRoute.Sitemap = [
+    { url: `${base}/services/prime-video/not-working`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${base}/services/steam/not-working`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${base}/services/teams/not-working`, changeFrequency: "daily", priority: 0.9 },
+  ];
+
   const troubleshootingRoutes: MetadataRoute.Sitemap = TROUBLESHOOTING_ROUTES.map((slug) => ({
     url: `${base}/troubleshooting/${slug}`,
     changeFrequency: "monthly",
@@ -168,5 +176,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...categoryRoutes,
     ...statusDetailRoutes,
     ...serviceRoutes,
+    ...serviceRouteExtras,
   ];
 }

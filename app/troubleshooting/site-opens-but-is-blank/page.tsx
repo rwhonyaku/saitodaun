@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトは開くのに真っ白になる原因と対処法",
   description:
-    "サイトは開くのに真っ白なまま表示されるときの原因と対処法を解説します。ブラウザ拡張、JavaScript失敗、CDN資産不達、部分障害、端末側設定の切り分け方をまとめています。",
+    "サイトは開くのに真っ白なまま表示されるときの原因と対処法を解説します。ブラウザ拡張、JavaScript失敗、CDN資産不達、部分障害、端末側設定の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-opens-but-is-blank" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別ブラウザで表示されるなら、元ブラウザの拡張機能や保存データを疑う",
             "スマホでは表示されるのに PC だけ真っ白なら、PC ブラウザ環境を優先して疑う",
@@ -174,7 +174,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>{" "}
               へ進むのが実用的です。
             </>,

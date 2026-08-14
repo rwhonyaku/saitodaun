@@ -9,18 +9,18 @@ const service = SERVICES.x;
 export const metadata: Metadata = {
   title: "Xのトラブル解決 | サイトダウン",
   description:
-    "X（旧Twitter）が開かない・読み込めない・ログインできない時に、障害か自分側かを切り分けて最短で対処します。",
+    "X（旧Twitter）が開かない・読み込めない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function XHubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">{service.name}のトラブル解決</h1>
         <p className="text-base text-neutral-600">
-          X（旧Twitter）が開かない、タイムラインが読み込めない、ログインできない時は、まず「障害か自分側か」を切り分けるのが最短です。
+          X（旧Twitter）が開かない、タイムラインが読み込めない、ログインできない時は、まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

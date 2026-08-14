@@ -6,9 +6,9 @@ const service = SERVICES.notion;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Notionが使えないときの切り分け | サイトダウン",
+  title: "Notionが開かない・重い・同期できない時の確認 | サイトダウン",
   description:
-    "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の原因を切り分けるためのページです。",
+    "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の原因を確認します。",
 };
 
 const ERROR_LABELS: Record<string, string> = {
@@ -36,7 +36,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function NotionNotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -50,18 +50,18 @@ export default function NotionNotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Notionが開かない・重い・ログインできない？（自分側かを最短判定）
+          Notionが開かない・重い・ログインできない？（自分側かを確認）
         </h1>
 
         <p className="text-base text-neutral-600">
-          Notion が広く落ちていないのに使えない場合、ページ読み込み・ログイン・同期・表示・アプリ・ネットワークのどこで問題が起きているかを分けると原因にたどり着きやすくなります。
+          Notion が広く落ちていないのに使えない場合、ページ読み込み・ログイン・同期・表示・アプリ・ネットワークのどこで問題が起きているかを確認します。
         </p>
         <p className="text-sm text-neutral-600">
-          開かない・重い・ログインできない・同期できないなど、症状によって原因の切り分けが変わります。
+          開かない・重い・ログインできない・同期できないなど、症状によって見るべき原因が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 bg-slate-50 p-5">
-          <h2 className="text-lg font-semibold">最初に分けること</h2>
+          <h2 className="text-lg font-semibold">最初に確認すること</h2>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
             <li>
               まず広く落ちていないか確認：{" "}
@@ -76,13 +76,13 @@ export default function NotionNotWorkingPage() {
               </Link>{" "}
               を優先
             </li>
-            <li>Notionだけ重い・開かないなら、このページで自分側の不具合を切り分ける</li>
+            <li>Notionだけ重い・開かないなら、このページで自分側の原因を確認する</li>
           </ol>
         </div>
       </header>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">1) 最短の切り分け</h2>
+        <h2 className="text-xl font-semibold">1) 最短で確認すること</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
             <li>Web版とアプリ版の両方で同じ症状か確認する</li>
@@ -102,6 +102,13 @@ export default function NotionNotWorkingPage() {
               DNS が怪しい場合
             </Link>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-neutral-200 p-6">
+          <h3 className="text-base font-semibold">ワークスペースは開くのに一部だけ不安定なケース</h3>
+          <p className="mt-2 text-sm text-neutral-700">
+            Notion全体が落ちているというより、ログイン、同期、特定ページやデータベースだけ不安定な場合は、ワークスペース権限、SSO、社内VPN・ファイアウォール、ブラウザセッションの不整合を先に確認すると原因を見分けやすくなります。
+          </p>
         </div>
       </section>
 
@@ -139,7 +146,7 @@ export default function NotionNotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-6">
             <h3 className="text-base font-semibold">データが表示されない / 消えたように見える</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              ページは開くのに一部ブロックやデータベースだけ見えない場合は、同期遅延、読み込み失敗、権限やフィルター条件も切り分け候補になります。
+              ページは開くのに一部ブロックやデータベースだけ見えない場合は、同期遅延、読み込み失敗、権限やフィルター条件も確認候補になります。
             </p>
           </div>
 

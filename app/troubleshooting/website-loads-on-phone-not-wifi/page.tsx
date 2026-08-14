@@ -6,7 +6,7 @@ import SurfsharkAffiliateBlock from "@/components/SurfsharkAffiliateBlock";
 export const metadata: Metadata = {
   title: "サイトはスマホ回線で開くのにWi-Fiだと開かない原因と対処法",
   description:
-    "サイトがスマホのモバイル回線では開くのに Wi-Fi だと開かないときの原因と対処法を解説します。DNS、Wi-Fi制限、ルーター不調、VPN、公共Wi-Fi認証の切り分け方をまとめています。",
+    "サイトがスマホのモバイル回線では開くのに Wi-Fi だと開かないときの原因と対処法を解説します。DNS、Wi-Fi制限、ルーター不調、VPN、公共Wi-Fi認証の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/website-loads-on-phone-not-wifi" },
 };
 
@@ -17,12 +17,12 @@ export default function Page() {
       updatedAt="2026-04-11"
       lead={[
         "同じサイトなのに、スマホのモバイル回線では開くのに Wi-Fi へ切り替えると開かないことがあります。",
-        "この場合、サイト自体が完全に落ちている可能性は低く、Wi-Fi 側の DNS、アクセス制限、ルーター不調、VPN、公共Wi-Fi認証などを優先して疑うほうが自然です。『回線差』がはっきり出ているので、切り分けしやすい症状でもあります。",
+        "この場合、サイト自体が完全に落ちている可能性は低く、Wi-Fi 側の DNS、アクセス制限、ルーター不調、VPN、公共Wi-Fi認証などを優先して疑うほうが自然です。『回線差』がはっきり出ているので、確認しやすい症状でもあります。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "モバイル回線では開くなら、まずサイト全体障害より Wi-Fi 側を疑う",
             "Wi-Fi でどのサイトもだめなのか、そのサイトだけだめなのかを分ける",

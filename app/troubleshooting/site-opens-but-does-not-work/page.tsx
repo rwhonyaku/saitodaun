@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトは開くのに動かない原因と対処法",
   description:
-    "サイトは表示されるのに操作できない、途中から壊れる、ログイン後だけ使えないときの原因と対処法を解説します。部分障害、ブラウザ不整合、CDN配信不良、機能別の切り分け方をまとめています。",
+    "サイトは表示されるのに操作できない、途中から壊れる、ログイン後だけ使えないときの原因と対処法を解説します。部分障害、ブラウザ不整合、CDN配信不良、機能別の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-opens-but-does-not-work" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "見た目は出るのに操作できないなら、サイト全体停止より部分障害やブラウザ側不整合を優先して疑う",
             "ログイン、購入、設定変更など特定の操作だけ止まるなら、機能単位の障害に近い",
@@ -95,7 +95,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -189,7 +189,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>
               から進むのが実用的です。
             </>,
@@ -213,7 +213,7 @@ export default function Page() {
                 href="/troubleshooting/specific-site-not-working"
                 className="underline hover:no-underline"
               >
-                特定サイトの切り分け
+                特定サイトの確認
               </Link>
               が近いです。
             </>,

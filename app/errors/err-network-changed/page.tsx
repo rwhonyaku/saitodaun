@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_NETWORK_CHANGEDとは？原因と対処 | サイトダウン",
   description:
-    "ERR_NETWORK_CHANGED の意味、Wi-Fi切り替えやVPN、公共Wi-Fi、DNS変更で起きる原因、ユーザー側での切り分け方を実用的に解説します。",
+    "ERR_NETWORK_CHANGED の意味、Wi-Fi切り替えやVPN、公共Wi-Fi、DNS変更で起きる原因、ユーザー側での見分け方を実用的に解説します。",
 };
 
 export default function ErrNetworkChangedPage() {
@@ -24,12 +24,12 @@ export default function ErrNetworkChangedPage() {
           items: [
             "読み込み中にネットワーク経路や接続先条件が変わっている",
             "サイト側障害より、端末・Wi-Fi・VPN・公共Wi-Fi認証の変化が原因になりやすい",
-            "まず『接続が安定しているか』を確認すると切り分けが早い",
+            "まず『接続が安定しているか』を確認すると確認が早い",
           ],
         },
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "Wi-Fi が不安定なら、いったんモバイル回線で同じページを試す",
             "VPN やプロキシを使っているなら、一時的にオフにして比較する",
@@ -61,7 +61,7 @@ export default function ErrNetworkChangedPage() {
         },
         {
           type: "p",
-          title: "サイト全体の障害とどう切り分けるか",
+          title: "サイト全体の障害とどう確認するか",
           body: [
             "ERR_NETWORK_CHANGED は、複数サイトで起きたり、回線を変えると消えたりするなら、サイト側の障害より接続条件の変化を優先して疑うべきです。",
             <>
@@ -128,7 +128,7 @@ export default function ErrNetworkChangedPage() {
               >
                 ルーターがつながらない原因
               </Link>{" "}
-              もあわせて見ると切り分けやすくなります。
+              もあわせて見ると見分けやすくなります。
             </>,
           ],
         },

@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_EMPTY_RESPONSEとは？原因と対処 | サイトダウン",
   description:
-    "ERR_EMPTY_RESPONSE の意味、サーバーが応答を返さない原因、ブラウザ・回線・サーバー側の切り分け方を実用的に解説します。",
+    "ERR_EMPTY_RESPONSE の意味、サーバーが応答を返さない原因、ブラウザ・回線・サーバー側の見分け方を実用的に解説します。",
 };
 
 export default function ErrEmptyResponsePage() {
@@ -20,7 +20,7 @@ export default function ErrEmptyResponsePage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別ブラウザや別回線でも同じなら、サイト側や経路側の問題を疑う",
             "特定サイトだけなら、そのサイトの部分障害やサーバー応答不良の可能性が高い",
@@ -148,7 +148,7 @@ export default function ErrEmptyResponsePage() {
             "Q. これはサーバーダウンですか？ → その可能性はありますが、ブラウザや回線干渉でも起きます。",
             "Q. 自分だけ出ることはありますか？ → あります。拡張機能、VPN、社内回線、ローカルセキュリティ製品でも起きます。",
             "Q. HTTPエラーとは何が違いますか？ → HTTPコードが返る前に空のまま失敗している点が違います。",
-            "Q. すぐ直りますか？ → 一時的なサーバー不安定や回線不調なら戻ることがありますが、繰り返すなら切り分けが必要です。",
+            "Q. すぐ直りますか？ → 一時的なサーバー不安定や回線不調なら戻ることがありますが、繰り返すなら確認が必要です。",
           ],
         },
         {

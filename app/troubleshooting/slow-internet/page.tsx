@@ -3,16 +3,16 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "インターネットが遅いときの切り分けハブ",
+  title: "インターネットが遅いときの確認ハブ",
   description:
-    "インターネットやサイトが遅いときの切り分けハブです。Wi-Fi、ルーター、ISP 障害、サイト側負荷、CDN 経路、読み込み停止など、症状ごとに次に見るべきページへ案内します。",
+    "インターネットやサイトが遅いときの確認ハブです。Wi-Fi、ルーター、ISP 障害、サイト側負荷、CDN 経路、読み込み停止など、症状ごとに次に見るべきページへ案内します。",
   alternates: { canonical: "/troubleshooting/slow-internet" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="インターネットが遅いときの切り分けハブ"
+      h1="インターネットが遅いときの確認ハブ"
       updatedAt="2026-04-12"
       lead={[
         "『ネットが遅い』と感じるときでも、原因は一つではありません。家の Wi-Fi やルーターが遅いのか、回線や ISP 側が混雑しているのか、特定サイトだけが重いのか、ページは開くが読み込みが終わらないのかで見るべき場所が変わります。",
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "どのサイトも全体的に遅いなら、Wi-Fi、ルーター、ISP 側を優先して疑う",
             "特定サイトだけ遅いなら、サイト側負荷や CDN 経路の問題に近い",
@@ -125,14 +125,14 @@ export default function Page() {
           type: "p",
           title: "『全部遅い』か『一部だけ遅い』かを先に分ける",
           body: [
-            "速度低下の切り分けで一番重要なのは、ネット全体が重いのか、特定のサイトや特定の操作だけが重いのかを見ることです。前者ならルーターや回線、後者ならサイト側や配信経路の可能性が高くなります。",
+            "速度低下の確認で一番重要なのは、ネット全体が重いのか、特定のサイトや特定の操作だけが重いのかを見ることです。前者ならルーターや回線、後者ならサイト側や配信経路の可能性が高くなります。",
             <>
               家の中の複数端末で広く遅いなら{" "}
               <Link
                 href="/troubleshooting/router-vs-isp-problem"
                 className="underline hover:no-underline"
               >
-                ルーターか回線かの切り分け
+                ルーターか回線かの確認
               </Link>{" "}
               が近道です。
             </>,
@@ -232,7 +232,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "インターネットが遅いときは、回線、Wi-Fi、ルーター、ISP、サイト側高負荷、CDN 経路、部分障害が候補になります。まず遅さの範囲を分けることが、最短の切り分けです。",
+            "インターネットが遅いときは、回線、Wi-Fi、ルーター、ISP、サイト側高負荷、CDN 経路、部分障害が候補になります。まず遅さの範囲を分けることが、最短の確認です。",
             <>
               回線全体なら{" "}
               <Link

@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトは開くのにログインできない原因と対処法",
   description:
-    "ログイン画面は開くのにサインインできないときの原因と対処法を解説します。認証障害、セッション不整合、403や429の制限、VPNや社内ネットワーク、部分障害の切り分け方をまとめています。",
+    "ログイン画面は開くのにサインインできないときの原因と対処法を解説します。認証障害、セッション不整合、403や429の制限、VPNや社内ネットワーク、部分障害の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/site-opens-but-login-fails" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別端末や別回線でログインできるなら、サイト全体より自分のブラウザ、端末、回線条件を疑う",
             "ログイン画面は出るが送信後だけ失敗するなら、認証系の部分障害やセッション不整合を疑う",
@@ -59,7 +59,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -141,7 +141,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               でブラウザ差を確認するのが近道です。
             </>,
@@ -235,7 +235,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "サイトは開くのにログインできないときは、サイト全体停止より、認証系の部分障害、ブラウザ保存データ、アクセス制限、VPN や社内ネットワーク条件を優先して切り分けるほうが早いです。",
+            "サイトは開くのにログインできないときは、サイト全体停止より、認証系の部分障害、ブラウザ保存データ、アクセス制限、VPN や社内ネットワーク条件を優先して確認するほうが早いです。",
             <>
               まず症状を 403・429・ブラウザ差・回線差・ログイン後だけの不具合に分けて、必要に応じて{" "}
               <Link
@@ -256,7 +256,7 @@ export default function Page() {
                 href="/troubleshooting/site-blocked-by-firewall"
                 className="underline hover:no-underline"
               >
-                制限系の切り分け
+                制限系の確認
               </Link>{" "}
               へ進むのが実用的です。
             </>,

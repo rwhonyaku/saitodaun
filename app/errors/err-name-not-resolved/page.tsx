@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_NAME_NOT_RESOLVEDとは？原因と対処 | サイトダウン",
   description:
-    "ERR_NAME_NOT_RESOLVED の意味、DNS設定やドメインの問題、ユーザー側での切り分け方法、NXDOMAINとの違いを実用的に解説します。",
+    "ERR_NAME_NOT_RESOLVED の意味、DNS設定やドメインの問題、ユーザー側での確認方法、NXDOMAINとの違いを実用的に解説します。",
 };
 
 export default function ErrNameNotResolvedPage() {
@@ -20,7 +20,7 @@ export default function ErrNameNotResolvedPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "URLの綴りやドメイン名が正しいかを最初に確認する",
             "別端末や別回線でも同じなら、サイト側DNSやドメイン状態を疑う",
@@ -73,7 +73,7 @@ export default function ErrNameNotResolvedPage() {
           type: "p",
           title: "ERR_NETWORK_CHANGED やブラウザ不調とどう違うか",
           body: [
-            "ERR_NAME_NOT_RESOLVED は『最初から接続先の名前が引けない』状態です。読み込み途中で経路が変わるエラーや、ブラウザ拡張が邪魔して開かない症状とは切り分け方が少し違います。",
+            "ERR_NAME_NOT_RESOLVED は『最初から接続先の名前が引けない』状態です。読み込み途中で経路が変わるエラーや、ブラウザ拡張が邪魔して開かない症状とは見分け方が少し違います。",
             <>
               途中で回線条件が変わるなら{" "}
               <Link
@@ -98,7 +98,7 @@ export default function ErrNameNotResolvedPage() {
           title: "DNS_PROBE_FINISHED_NXDOMAINとの違い",
           body: [
             "ERR_NAME_NOT_RESOLVED と DNS_PROBE_FINISHED_NXDOMAIN は、どちらも名前解決エラーとして近い意味で使われることがあります。",
-            "実際の切り分け方もかなり似ていますが、どちらも『HTTPエラーではなく、ドメインを見つけられない段階で止まっている』と考えると理解しやすくなります。",
+            "実際の見分け方もかなり似ていますが、どちらも『HTTPエラーではなく、ドメインを見つけられない段階で止まっている』と考えると理解しやすくなります。",
             <>
               近いエラーとしては{" "}
               <Link

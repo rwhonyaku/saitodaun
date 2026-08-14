@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getSiteById } from "@/lib/statusSites";
 import { getEditorialById } from "@/lib/statusEditorial";
+import OutageReportPanel from "@/components/OutageReportPanel";
 
 type CheckResult = {
   online: boolean;
@@ -54,6 +55,76 @@ function getGuideHrefFromResult(result: CheckResult | null): string | null {
   // If totally unknown but error exists, send to the general troubleshooting guide if you have it,
   // otherwise fall back to status code hub.
   return "/status-codes";
+}
+
+type StatusAssessment = {
+  badge: string;
+  main: string;
+  detail: string;
+  icon: string;
+  cardClassName: string;
+  badgeClassName: string;
+  iconClassName: string;
+};
+
+function getStatusAssessment(result: CheckResult | null, loading: boolean): StatusAssessment {
+  if (loading || !result) {
+    return {
+      badge: "確認中",
+      main: "現在の状況を確認中です",
+      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
+      icon: "...",
+      cardClassName: "border-slate-200 bg-slate-50",
+      badgeClassName: "bg-slate-100 text-slate-700 ring-slate-200",
+      iconClassName: "bg-slate-500 text-white",
+    };
+  }
+
+  if (result.probeBlocked || result.error || result.status == null) {
+    return {
+      badge: "確認不可",
+      main: "現在の状況を確認できませんでした",
+      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
+      icon: "?",
+      cardClassName: "border-slate-300 bg-slate-50",
+      badgeClassName: "bg-slate-100 text-slate-700 ring-slate-300",
+      iconClassName: "bg-slate-600 text-white",
+    };
+  }
+
+  if (result.online) {
+    return {
+      badge: "正常寄り",
+      main: "このチェックでは、現在大きな障害は確認されていません",
+      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
+      icon: "OK",
+      cardClassName: "border-emerald-200 bg-emerald-50",
+      badgeClassName: "bg-emerald-100 text-emerald-800 ring-emerald-200",
+      iconClassName: "bg-emerald-600 text-white",
+    };
+  }
+
+  if (result.status >= 500) {
+    return {
+      badge: "障害疑い",
+      main: "このチェックでは、現在障害が起きている可能性があります",
+      detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
+      icon: "!",
+      cardClassName: "border-rose-200 bg-rose-50",
+      badgeClassName: "bg-rose-100 text-rose-800 ring-rose-200",
+      iconClassName: "bg-rose-600 text-white",
+    };
+  }
+
+  return {
+    badge: "一部問題",
+    main: "一部の環境で問題が起きている可能性があります",
+    detail: "この判定は公式発表ではなく、接続チェックや公開情報をもとにした参考情報です。",
+    icon: "!",
+    cardClassName: "border-amber-200 bg-amber-50",
+    badgeClassName: "bg-amber-100 text-amber-900 ring-amber-200",
+    iconClassName: "bg-amber-500 text-white",
+  };
 }
 
 export default function StatusClient({ id: propId }: { id: string }) {
@@ -115,10 +186,10 @@ export default function StatusClient({ id: propId }: { id: string }) {
         <div className="mx-auto max-w-xl px-4 py-10 text-sm text-slate-700">
           <p className="mb-4">指定されたサービスは見つかりませんでした。</p>
           <div className="flex gap-3">
-            <Link href="/status" className="text-sky-600 underline text-xs">
+            <Link href="/status" prefetch={false} className="text-sky-600 underline text-xs">
               ステータス一覧に戻る →
             </Link>
-            <Link href="/" className="text-sky-600 underline text-xs">
+            <Link href="/" prefetch={false} className="text-sky-600 underline text-xs">
               サイト接続チェック（URL入力）へ →
             </Link>
           </div>
@@ -127,16 +198,20 @@ export default function StatusClient({ id: propId }: { id: string }) {
     );
   }
 
+  const resultUnconfirmed = Boolean(
+    result && (result.probeBlocked || result.error || result.status == null)
+  );
+
   const statusLabel = !result
     ? "未判定"
-    : result.probeBlocked
-    ? "判定保留"
+    : resultUnconfirmed
+    ? "確認不可"
     : result.online
     ? "オンライン"
     : "オフライン";
   const statusColor = !result
     ? "text-slate-400"
-    : result.probeBlocked
+    : resultUnconfirmed
     ? "text-amber-600"
     : result.online
     ? "text-green-600"
@@ -149,10 +224,39 @@ export default function StatusClient({ id: propId }: { id: string }) {
   const isNotionStatus = site.id === "notion";
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
+  const assessment = getStatusAssessment(result, loading);
 
   return (
     <main className="flex-1 bg-slate-50">
-      <div className="mx-auto max-w-xl px-4 py-10 text-sm text-slate-700">
+      <div className="mx-auto max-w-xl px-0 py-0 text-sm text-slate-700">
+        <div
+          role="status"
+          aria-live="polite"
+          className={`mb-5 rounded-lg border p-4 ${assessment.cardClassName}`}
+        >
+          <div className="flex items-start gap-3">
+            <span
+              aria-hidden="true"
+              className={`mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold ${assessment.iconClassName}`}
+            >
+              {assessment.icon}
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ${assessment.badgeClassName}`}
+                >
+                  {assessment.badge}
+                </span>
+              </div>
+              <p className="mt-2 text-xl font-bold leading-snug tracking-normal text-slate-950 sm:text-2xl">
+                {assessment.main}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-600">{assessment.detail}</p>
+            </div>
+          </div>
+        </div>
+
         {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
@@ -174,6 +278,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
 
           <Link
             href="/status"
+            prefetch={false}
             className="shrink-0 text-xs text-sky-600 underline hover:text-sky-700"
           >
             一覧に戻る →
@@ -184,7 +289,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
 
         {/* Result box */}
         <div className="rounded-xl bg-white p-4 shadow-sm min-h-[120px]">
-          <div className="flex items-center justify-between gap-3">
+          <div className="mt-3 flex items-center justify-between gap-3">
             <p className="text-base font-semibold text-slate-900">
               結果：<span className={statusColor}> {statusLabel}</span>
             </p>
@@ -201,7 +306,9 @@ export default function StatusClient({ id: propId }: { id: string }) {
           {loading && <p className="mt-2 text-xs text-slate-500">チェック中です...</p>}
 
           {!loading && !result && (
-            <p className="mt-2 text-xs text-slate-500">まだ結果がありません。しばらくお待ちください。</p>
+            <p className="mt-2 text-xs text-slate-500">
+              必要なときだけ接続確認を実行します。「再チェック」を押すと現在の応答を確認できます。
+            </p>
           )}
 
           {result && (
@@ -225,6 +332,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 {guideHref && (
                   <Link
                     href={guideHref}
+                    prefetch={false}
                     className="text-xs text-sky-600 underline hover:text-sky-700 whitespace-nowrap"
                   >
                     解説 →
@@ -252,10 +360,12 @@ export default function StatusClient({ id: propId }: { id: string }) {
           )}
         </div>
 
+        <OutageReportPanel serviceId={site.id} />
+
         {isTwitterStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">
-              まず切り分ける
+              まず確認する
             </h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-slate-200 p-3">
@@ -271,13 +381,14 @@ export default function StatusClient({ id: propId }: { id: string }) {
                   自分だけの不具合かもしれない
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  広く落ちていないのに使えないなら、端末・回線・ログイン状態の切り分けに進みます。
+                  広く落ちていないのに使えないなら、端末・回線・ログイン状態の確認に進みます。
                 </p>
                 <Link
                   href="/services/x/not-working"
+                  prefetch={false}
                   className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
                 >
-                  X（旧Twitter）が使えないときの切り分け →
+                  X（旧Twitter）が使えないときの確認 →
                 </Link>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
@@ -295,7 +406,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
         {isLineStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">
-              まず切り分ける
+              まず確認する
             </h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-slate-200 p-3">
@@ -311,13 +422,14 @@ export default function StatusClient({ id: propId }: { id: string }) {
                   自分だけの不具合
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  広く落ちていないのに使えないなら、端末・回線・アプリ側の切り分けに進みます。
+                  広く落ちていないのに使えないなら、端末・回線・アプリ側の確認に進みます。
                 </p>
                 <Link
                   href="/services/line/not-working"
+                  prefetch={false}
                   className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
                 >
-                  LINE が使えないときの切り分け →
+                  LINE が使えないときの確認 →
                 </Link>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
@@ -325,7 +437,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                   一部機能の問題
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  メッセージ、通話、通知のどれだけが不安定なのかで切り分けが変わります。
+                  メッセージ、通話、通知のどれだけが不安定なのかで確認が変わります。
                 </p>
               </div>
             </div>
@@ -335,7 +447,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
         {isNotionStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">
-              まず切り分ける
+              まず確認する
             </h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-slate-200 p-3">
@@ -351,13 +463,14 @@ export default function StatusClient({ id: propId }: { id: string }) {
                   自分だけの不具合
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  広く落ちていないのに開かない、重い、ログインできないなら、自分側の切り分けに進みます。
+                  広く落ちていないのに開かない、重い、ログインできないなら、自分側の確認に進みます。
                 </p>
                 <Link
                   href="/services/notion/not-working"
+                  prefetch={false}
                   className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
                 >
-                  Notion が使えないときの切り分け →
+                  Notion が使えないときの確認 →
                 </Link>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
@@ -456,7 +569,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 </section>
 
                 <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-                  <h2 className="text-sm font-semibold text-slate-900">次に確認できること（情報整理・切り分け）</h2>
+                  <h2 className="text-sm font-semibold text-slate-900">次に確認できること（情報整理・確認）</h2>
                   <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
                     {editorial.whatToCheckNext.map((t, i) => (
                       <li key={i}>{t}</li>
@@ -467,7 +580,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                     <div className="mt-4 space-y-3">
                       {editorial.internalLinks.map((l, i) => (
                         <div key={i} className="text-xs">
-                          <Link href={l.href} className="text-sky-600 underline hover:text-sky-700">
+                          <Link href={l.href} prefetch={false} className="text-sky-600 underline hover:text-sky-700">
                             {l.label} →
                           </Link>
                           <p className="mt-1 text-[11px] text-slate-500">{l.reason}</p>
@@ -479,11 +592,11 @@ export default function StatusClient({ id: propId }: { id: string }) {
 
                 {editorial.relatedServices && editorial.relatedServices.length > 0 && (
                   <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-                    <h2 className="text-sm font-semibold text-slate-900">関連サービス（切り分けに使える）</h2>
+                    <h2 className="text-sm font-semibold text-slate-900">関連サービス（確認に使える）</h2>
                     <div className="mt-3 space-y-3">
                       {editorial.relatedServices.map((s, i) => (
                         <div key={i}>
-                          <Link href={s.href} className="text-xs text-sky-600 underline hover:text-sky-700">
+                          <Link href={s.href} prefetch={false} className="text-xs text-sky-600 underline hover:text-sky-700">
                             {s.label} →
                           </Link>
                           <p className="mt-1 text-[11px] text-slate-500">{s.note}</p>
@@ -531,7 +644,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                     rel="noopener noreferrer"
                     className="text-sky-600 underline hover:text-sky-700"
                   >
-                    公式ステータスページ
+                    公式障害・メンテ情報
                   </a>
                 </li>
               )}
@@ -576,20 +689,20 @@ export default function StatusClient({ id: propId }: { id: string }) {
             </section>
 
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-              <h2 className="text-sm font-semibold text-slate-900">まず確認すること（切り分け）</h2>
+              <h2 className="text-sm font-semibold text-slate-900">まず確認すること（確認）</h2>
               <ul className="mt-3 space-y-2 text-xs text-slate-600 list-disc pl-5">
                 <li>数十秒おいて再チェック（瞬間的な混雑・一時エラーのことがあります）</li>
                 <li>別回線（Wi-Fi / 4G / 5G）でも確認</li>
-                <li>別の端末・別ブラウザ（拡張機能の影響を切り分け）</li>
+                <li>別の端末・別ブラウザ（拡張機能の影響を確認）</li>
                 <li>公式発表（公式情報の確認先）を確認</li>
                 <li>DNS / CDN / アクセス制限の影響で、地域や回線によって結果が異なる場合があります</li>
               </ul>
 
               <div className="mt-4 flex flex-wrap gap-3">
-                <Link href="/" className="text-xs text-sky-600 underline hover:text-sky-700">
+                <Link href="/" prefetch={false} className="text-xs text-sky-600 underline hover:text-sky-700">
                   URL入力でサイト接続チェック →
                 </Link>
-                <Link href="/status" className="text-xs text-sky-600 underline hover:text-sky-700">
+                <Link href="/status" prefetch={false} className="text-xs text-sky-600 underline hover:text-sky-700">
                   他サービスの一覧へ →
                 </Link>
               </div>

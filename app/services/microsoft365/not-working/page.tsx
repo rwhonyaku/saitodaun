@@ -8,9 +8,9 @@ const service = SERVICES.microsoft365;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Microsoft 365が使えない？（障害か自分側か） | サイトダウン",
+  title: "Microsoft 365が使えない｜Outlook・Teams・ログイン不具合の確認 | サイトダウン",
   description:
-    "Microsoft 365が使えない・ログインできない・OutlookやTeamsが不安定な時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で切り分け、すぐ試せる対処をまとめます。",
+    "Microsoft 365でログインだけ失敗する、Outlookだけ送受信できない、Teamsだけ不安定な時に、障害か自分側の環境かを確認します。",
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {
@@ -29,7 +29,7 @@ function ErrorLinks({ slugs }: { slugs: string[] }) {
 
 export default function Microsoft365NotWorkingPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <p className="text-sm text-neutral-500">
           <Link className="underline" href="/services">
@@ -43,15 +43,15 @@ export default function Microsoft365NotWorkingPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Microsoft 365が使えない・ログインできない？（障害か自分側かを最短判定）
+          Microsoft 365が使えない・ログインできない時の確認
         </h1>
 
         <p className="text-base text-neutral-600">
-          Microsoft 365の不具合は、Microsoft側の障害だけでなく、回線、Wi-Fi、DNS、ブラウザ状態、アプリ、端末、認証設定でも起きます。
-          最初に問題の方向を切り分けておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          Microsoft 365は、全体障害だけでなく「ログインだけ失敗する」「Outlookだけ送受信できない」「Teamsだけ不安定」のような部分的な不具合として出ることがあります。
+          先に影響範囲を確認すると、不要な再インストールや設定変更を避けやすくなります。
         </p>
         <p className="text-sm text-neutral-600">
-          ログインできない・Outlookが使えない・Teamsが使えないなど、症状によって原因の切り分けが変わります。
+          会社アカウント、SSO、多要素認証、社内VPN、DNS、アプリ版だけの不調は見分け方が変わります。
         </p>
 
         <div className="rounded-2xl border border-neutral-200 p-5">
@@ -85,7 +85,18 @@ export default function Microsoft365NotWorkingPage() {
               を優先して確認します。
             </li>
             <li>
-              Microsoft 365だけだめなら、ブラウザ、アプリ、ログイン状態、組織アカウント設定の問題が多いです。
+              Microsoft 365だけだめなら、ログイン状態、組織アカウント、SSO、アプリ版の不調を確認します。
+            </li>
+            <li>
+              Outlookだけなら{" "}
+              <Link className="underline" href="/services/outlook/not-working">
+                Outlookの確認手順
+              </Link>
+              、Teamsだけなら{" "}
+              <Link className="underline" href="/services/teams/not-working">
+                Teamsの確認手順
+              </Link>
+              に進む方が早いです。
             </li>
           </ol>
         </div>
@@ -114,12 +125,12 @@ export default function Microsoft365NotWorkingPage() {
         </div>
 
         <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の切り分けに進む方が、全体として早く原因にたどり着けます。
+          先に障害を除外してから自分側の原因を確認する方が、全体として早く原因にたどり着けます。
         </p>
       </section>
 
       <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の切り分け（2分）</h2>
+        <h2 className="text-xl font-semibold">2) 最短確認（2分）</h2>
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
@@ -149,6 +160,13 @@ export default function Microsoft365NotWorkingPage() {
             </Link>
           </div>
         </div>
+
+        <div className="rounded-2xl border border-neutral-200 p-6">
+          <h3 className="text-base font-semibold">部分的な不具合を見分ける</h3>
+          <p className="mt-2 text-sm text-neutral-700">
+            Microsoft 365のトップ画面は開くのにログインだけ失敗する、Outlookだけ送受信できない、Teamsのチャットや会議だけ不安定な場合は、全体障害よりもSSO、条件付きアクセス、多要素認証、社内VPNやプロキシの影響を先に確認します。
+          </p>
+        </div>
       </section>
 
       <section className="mt-10 space-y-3">
@@ -174,7 +192,7 @@ export default function Microsoft365NotWorkingPage() {
                 DNSトラブル対処へ
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の切り分け
+                インターネット全体の確認
               </Link>
               <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
                 Wi-Fiがつながらない原因
@@ -226,7 +244,7 @@ export default function Microsoft365NotWorkingPage() {
         <div className="rounded-2xl border border-neutral-200 p-6">
           <h3 className="text-base font-semibold">「ログインできない」場合（追加チェック）</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>ブラウザ版とアプリ版の両方で試して、どちら側の問題かを切り分ける。</li>
+            <li>ブラウザ版とアプリ版の両方で試して、どちら側の問題か確認する。</li>
             <li>別回線で試して、回線やDNSの問題を除外する。</li>
             <li>会社や学校アカウントなら、認証や管理者制限の可能性も考えます。</li>
           </ul>
@@ -322,7 +340,7 @@ export default function Microsoft365NotWorkingPage() {
           <div className="rounded-2xl border border-neutral-200 p-5">
             <h3 className="text-base font-semibold">Web版は使えるのに、アプリだけ不安定なのはなぜ？</h3>
             <p className="mt-2 text-sm text-neutral-700">
-              アプリの一時不具合、端末側の制限、古いアプリ、ログイン状態の不整合などが原因のことがあります。まずはWeb版とアプリ版を比較して切り分けてください。
+              アプリの一時不具合、端末側の制限、古いアプリ、ログイン状態の不整合などが原因のことがあります。まずはWeb版とアプリ版を比較して原因を確認してください。
             </p>
           </div>
 

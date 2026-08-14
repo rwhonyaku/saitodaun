@@ -13,7 +13,7 @@ export default function SurfsharkAffiliateBlock() {
         VPNを検討する場合の一例
       </p>
       <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-        地域制限やネットワーク制限、公共Wi-Fiでの切り分けが必要な場面では、VPNが役立つことがあります。
+        地域制限やネットワーク制限、公共Wi-Fiでの確認が必要な場面では、VPNが役立つことがあります。
         Surfshark は当サイトで紹介している選択肢の一例で、複数端末で使いやすく、公共Wi-Fiや日常利用も含めて見やすい候補です。
         ただし、サービス自体の障害は VPN では解決しません。必要な場合のみ検討してください。
       </p>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getSiteById, SITE_CATEGORIES } from "@/lib/statusSites";
+import { getSiteById, SITE_CATEGORIES, STATUS_SITES } from "@/lib/statusSites";
 import StatusClient from "./StatusClient";
 import { SITE } from "@/lib/siteMeta";
 import IMobileAd from "@/components/ads/IMobileAd";
@@ -9,6 +9,12 @@ import IMobileAd from "@/components/ads/IMobileAd";
 type PageProps = {
   params: Promise<{ id: string }>;
 };
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return STATUS_SITES.map(({ id }) => ({ id }));
+}
 
 const STATUS_AD_ENABLED_IDS = new Set([
   "twitter",
@@ -1557,6 +1563,7 @@ export default async function Page(props: PageProps) {
                 {activeHero.relatedStatusLinks.map((link) => (
                   <Link
                     key={link.href}
+                    prefetch={false}
                     className="rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-medium text-sky-700 hover:border-sky-300 hover:bg-sky-100"
                     href={link.href}
                   >
@@ -1567,7 +1574,7 @@ export default async function Page(props: PageProps) {
             ) : null}
             {activeHero.notWorkingHref ? (
               <p className="mt-2">
-                <Link className="text-sky-600 underline" href={activeHero.notWorkingHref}>
+                <Link prefetch={false} className="text-sky-600 underline" href={activeHero.notWorkingHref}>
                   {activeHero.notWorkingLabel}
                 </Link>
               </p>
@@ -1605,6 +1612,7 @@ export default async function Page(props: PageProps) {
           <div className="flex flex-wrap gap-3">
             {activeHero.notWorkingHref ? (
               <Link
+                prefetch={false}
                 className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-sky-700 underline"
                 href={activeHero.notWorkingHref}
               >
@@ -1614,6 +1622,7 @@ export default async function Page(props: PageProps) {
             {activeHero.relatedStatusLinks?.map((link) => (
               <Link
                 key={link.href}
+                prefetch={false}
                 className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-sky-700 underline"
                 href={link.href}
               >
@@ -1681,7 +1690,7 @@ export default async function Page(props: PageProps) {
         <p className="text-slate-700 mb-2">
           同じカテゴリ（{categoryLabel}）で同時に不調が多発している場合、サービス個別ではなく回線・DNS・経路側の影響の可能性もあります。
         </p>
-        <Link className="text-sky-600 underline" href={`/status/category/${site.category}`}>
+        <Link prefetch={false} className="text-sky-600 underline" href={`/status/category/${site.category}`}>
           「{categoryLabel}」カテゴリ一覧へ →
         </Link>
       </section>

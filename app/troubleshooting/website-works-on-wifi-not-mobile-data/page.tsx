@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "サイトはWi-Fiで開くのにモバイルデータだと開かない原因と対処法",
   description:
-    "サイトが Wi-Fi では開くのにモバイルデータでは開かないときの原因と対処法を解説します。通信キャリア側の制限、モバイル DNS、VPN、データ節約機能、特定サイトだけの遮断の切り分け方をまとめています。",
+    "サイトが Wi-Fi では開くのにモバイルデータでは開かないときの原因と対処法を解説します。通信キャリア側の制限、モバイル DNS、VPN、データ節約機能、特定サイトだけの遮断の見分け方をまとめています。",
   alternates: {
     canonical: "/troubleshooting/website-works-on-wifi-not-mobile-data",
   },
@@ -23,7 +23,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "Wi-Fi で開くなら、まずサイト全体障害よりモバイル回線側を疑う",
             "モバイルデータで全部のサイトやアプリが不安定なら、サイト別より回線や端末設定に近い",
@@ -61,7 +61,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -166,7 +166,7 @@ export default function Page() {
                 href="/troubleshooting/site-blocked-by-firewall"
                 className="underline hover:no-underline"
               >
-                制限系の切り分け
+                制限系の確認
               </Link>{" "}
               が近いページです。
             </>,
@@ -183,7 +183,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               から見ると整理しやすいです。
             </>,
@@ -212,7 +212,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "サイトが Wi-Fi では開くのにモバイルデータだと開かないときは、サイト全体障害より、キャリア側の経路や制限、モバイル設定、VPN や保護機能の影響を優先して切り分けるほうが早いです。",
+            "サイトが Wi-Fi では開くのにモバイルデータだと開かないときは、サイト全体障害より、キャリア側の経路や制限、モバイル設定、VPN や保護機能の影響を優先して確認するほうが早いです。",
             <>
               まずは特定サイトだけの症状かどうかを確認して、必要に応じて{" "}
               <Link

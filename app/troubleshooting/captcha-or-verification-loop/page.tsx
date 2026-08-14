@@ -5,7 +5,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "CAPTCHAや本人確認がループするときの原因と対処法",
   description:
-    "CAPTCHA や本人確認が何度やっても終わらないときの原因と対処法を解説します。Cookie、JavaScript、VPN、共有 IP、403 や 429、制限環境の切り分け方をまとめています。",
+    "CAPTCHA や本人確認が何度やっても終わらないときの原因と対処法を解説します。Cookie、JavaScript、VPN、共有 IP、403 や 429、制限環境の見分け方をまとめています。",
   alternates: { canonical: "/troubleshooting/captcha-or-verification-loop" },
 };
 
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "シークレットモードで通るなら、Cookie や保存データ、拡張機能の干渉を優先して疑う",
             "VPN や共有回線を切ると通るなら、IP 評価やアクセス制限の可能性が高い",
@@ -68,7 +68,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -124,7 +124,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分けハブ
+                ブラウザエラーの確認ハブ
               </Link>{" "}
               が近い入口です。
             </>,
@@ -141,7 +141,7 @@ export default function Page() {
                 href="/troubleshooting/site-blocked-by-firewall"
                 className="underline hover:no-underline"
               >
-                制限系の切り分け
+                制限系の確認
               </Link>{" "}
               や{" "}
               <Link
@@ -215,7 +215,7 @@ export default function Page() {
           type: "p",
           title: "まとめ",
           body: [
-            "CAPTCHA や本人確認が何度やっても終わらないときは、サイト全体停止より、Cookie、JavaScript、VPN や共有 IP、制限環境、回数制限を優先して切り分けるほうが早いです。",
+            "CAPTCHA や本人確認が何度やっても終わらないときは、サイト全体停止より、Cookie、JavaScript、VPN や共有 IP、制限環境、回数制限を優先して確認するほうが早いです。",
             <>
               まずは症状を 403・429・ブラウザ差・回線差・サービス固有の問題に分けて、必要に応じて{" "}
               <Link

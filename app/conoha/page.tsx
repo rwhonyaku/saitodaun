@@ -1,10 +1,28 @@
-"use client";
-
+import type { Metadata } from "next";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
+import { SITE } from "@/lib/siteMeta";
 
 const LINKS = {
   conoha: "https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340",
   pencil: "https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=89336",
+};
+
+export const metadata: Metadata = {
+  title: "ConoHa WING（コノハウィング）の特徴と使いどころを整理",
+  description:
+    "表示速度や運用しやすさの観点から、ConoHa WING を比較候補として整理するページです。比較ポイントと使いどころを短く確認できます。",
+  alternates: { canonical: "/conoha" },
+  openGraph: {
+    title: "ConoHa WING（コノハウィング）の特徴と使いどころを整理",
+    description:
+      "表示速度や運用しやすさの観点から、ConoHa WING を比較候補として整理するページです。比較ポイントと使いどころを短く確認できます。",
+    url: `${SITE.origin}/conoha`,
+  },
+  twitter: {
+    title: "ConoHa WING（コノハウィング）の特徴と使いどころを整理",
+    description:
+      "表示速度や運用しやすさの観点から、ConoHa WING を比較候補として整理するページです。比較ポイントと使いどころを短く確認できます。",
+  },
 };
 
 export default function ConoHaDeepDive() {

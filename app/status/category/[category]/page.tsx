@@ -8,6 +8,12 @@ import {
   type SiteCategory,
 } from "@/lib/statusSites";
 
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return Object.keys(SITE_CATEGORIES).map((category) => ({ category }));
+}
+
 // New Next.js 14 pattern
 type PageProps = {
   params: Promise<{ category: string }>;
@@ -105,10 +111,10 @@ export default async function CategoryPage(props: PageProps) {
             </div>
 
             <div className="mt-6 flex gap-4 text-xs">
-              <Link href="/status" className="text-sky-600 underline">
+              <Link href="/status" prefetch={false} className="text-sky-600 underline">
                 ← ステータス一覧へ
               </Link>
-              <Link href="/status/index" className="text-sky-600 underline">
+              <Link href="/status/index" prefetch={false} className="text-sky-600 underline">
                 ← カテゴリ一覧へ
               </Link>
             </div>
@@ -129,6 +135,7 @@ export default async function CategoryPage(props: PageProps) {
       <div className="mx-auto max-w-3xl px-4 py-10">
         <Link
           href="/status"
+          prefetch={false}
           className="text-xs text-sky-600 underline hover:text-sky-700"
         >
           ← ステータス一覧に戻る
@@ -148,6 +155,7 @@ export default async function CategoryPage(props: PageProps) {
               <li key={s.id} className="p-4">
                 <Link
                   href={`/status/sites/${s.id}`}
+                  prefetch={false}
                   className="text-sky-600 underline hover:text-sky-700"
                 >
                   {s.name}
@@ -161,6 +169,7 @@ export default async function CategoryPage(props: PageProps) {
         <div className="mt-6">
           <Link
             href="/status/index"
+            prefetch={false}
             className="text-xs text-sky-600 underline hover:text-sky-700"
           >
             カテゴリ一覧へ →

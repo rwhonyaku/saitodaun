@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "ERR_TUNNEL_CONNECTION_FAILEDとは？原因と対処 | サイトダウン",
   description:
-    "ERR_TUNNEL_CONNECTION_FAILED の意味、プロキシやVPN、社内ネットワーク、ブラウザ設定の不整合で起きる原因と切り分け方を実用的に解説します。",
+    "ERR_TUNNEL_CONNECTION_FAILED の意味、プロキシやVPN、社内ネットワーク、ブラウザ設定の不整合で起きる原因と見分け方を実用的に解説します。",
 };
 
 export default function ErrTunnelConnectionFailedPage() {
@@ -20,7 +20,7 @@ export default function ErrTunnelConnectionFailedPage() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "VPNやプロキシを使っているなら、まず一時的にオフにして比較する",
             "会社・学校・公共Wi-Fiだけで出るなら、ネットワーク側の制限や認証不良を疑う",
@@ -73,7 +73,7 @@ export default function ErrTunnelConnectionFailedPage() {
           type: "p",
           title: "ERR_NETWORK_CHANGED や ERR_INTERNET_DISCONNECTED との違い",
           body: [
-            "ERR_TUNNEL_CONNECTION_FAILED は、単純な回線切断ではなく『中継経路がうまく作れない』タイプのエラーです。ネットワークが切れたのか、プロキシ経路だけが失敗しているのかで切り分け方が変わります。",
+            "ERR_TUNNEL_CONNECTION_FAILED は、単純な回線切断ではなく『中継経路がうまく作れない』タイプのエラーです。ネットワークが切れたのか、プロキシ経路だけが失敗しているのかで見分け方が変わります。",
             <>
               回線条件が途中で変わるなら{" "}
               <Link
@@ -133,7 +133,7 @@ export default function ErrTunnelConnectionFailedPage() {
           body: [
             "このパターンは、サイト側の障害より PC 側の VPN、社内設定、プロキシ、証明書監視の影響であることが多めです。",
             <>
-              端末差の切り分けでは{" "}
+              端末差の確認では{" "}
               <Link
                 href="/troubleshooting/site-works-on-phone-not-computer"
                 className="underline hover:no-underline"

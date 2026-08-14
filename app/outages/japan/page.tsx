@@ -7,7 +7,7 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 export const metadata: Metadata = {
   title: "日本でネット障害？（広域障害か自分側か） | サイトダウン",
   description:
-    "「どのサイトも見れない」「ネットが繋がらない」時に、広域障害の可能性と自分側（回線/DNS/端末）の切り分けを2分で完了できるガイドです。主要サービスの障害確認リンクもまとめています。",
+    "「どのサイトも見れない」「ネットが繋がらない」時に、広域障害の可能性と自分側（回線/DNS/端末）の確認を2分で完了できるガイドです。主要サービスの障害確認リンクもまとめています。",
   alternates: { canonical: "/outages/japan" },
 };
 
@@ -55,9 +55,9 @@ const OFFICIAL_SOURCES = [
 export default function OutagesJapanPage() {
   return (
     <EvergreenPageShell
-      h1="日本でネット障害？（広域障害か自分側かを2分で切り分け）"
+      h1="日本でネット障害？（広域障害か自分側かを2分で確認）"
       lead={[
-        "「どのサイトも見れない」「ネットが繋がらない」と感じた時に、広域障害の可能性と自分側（回線/DNS/端末）の問題を最短で切り分けるためのページです。",
+        "「どのサイトも見れない」「ネットが繋がらない」と感じた時に、広域障害の可能性と自分側（回線/DNS/端末）の問題を最短で確認するためのページです。",
         "このページは日本全体の障害を断定しません。あなたの状況を整理して、次に見るべきページへ迷わず誘導するための“入口”です。",
       ]}
       updatedAt="2026-03-05"
@@ -65,12 +65,12 @@ export default function OutagesJapanPage() {
       sections={[
         {
           type: "div",
-          title: "まず最初に：2分で原因を切り分ける",
+          title: "まず最初に：2分で原因を確認する",
           body: [
             <div key="intro" className="space-y-3">
               <p>
-                ここでやることは「直す」ではなく、<b>どこに原因があるか</b>を切り分けることです。
-                切り分けができれば、次に行くページが一気に絞れます。
+                ここでやることは「直す」ではなく、<b>どこに原因があるか</b>を確認することです。
+                確認ができれば、次に行くページが一気に絞れます。
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -105,7 +105,7 @@ export default function OutagesJapanPage() {
 
         {
           type: "list",
-          title: "切り分け手順（上から順番に）",
+          title: "確認手順（上から順番に）",
           items: [
             <>
               <b>Step 1：Wi-Fi ↔ モバイル通信に切り替える</b>

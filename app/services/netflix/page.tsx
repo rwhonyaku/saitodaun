@@ -9,18 +9,18 @@ const service = SERVICES.netflix;
 export const metadata: Metadata = {
   title: "Netflixのトラブル解決 | サイトダウン",
   description:
-    "Netflixが再生できない・読み込めない時に、障害か自分側かを切り分けて最短で対処します。",
+    "Netflixが再生できない・読み込めない時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function NetflixHubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">{service.name}のトラブル解決</h1>
         <p className="text-base text-neutral-600">
-          Netflixが再生できない、読み込めない、途中で止まる時は、まず「障害か自分側か」を切り分けるのが最短です。
+          Netflixが再生できない、読み込めない、途中で止まる時は、まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

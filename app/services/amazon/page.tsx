@@ -9,18 +9,18 @@ const service = SERVICES.amazon;
 export const metadata: Metadata = {
   title: "Amazonのトラブル解決 | サイトダウン",
   description:
-    "Amazonが開かない・ログインできない・購入できない時に、障害か自分側かを切り分けて最短で対処します。",
+    "Amazonが開かない・ログインできない・購入できない時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function AmazonHubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">{service.name}のトラブル解決</h1>
         <p className="text-base text-neutral-600">
-          Amazonが開かない、ログインできない、カート/決済が進まない時は、まず「障害か自分側か」を切り分けるのが最短です。
+          Amazonが開かない、ログインできない、カート/決済が進まない時は、まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

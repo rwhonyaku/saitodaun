@@ -5,7 +5,7 @@ import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 export const metadata = {
   title: "NET::ERR_CERT_COMMON_NAME_INVALIDとは？原因と対処 | サイトダウン",
   description:
-    "NET::ERR_CERT_COMMON_NAME_INVALID の意味、証明書のドメイン不一致が起きる原因、ユーザー側でできる確認、運営者側の確認ポイントを実用的に解説します。",
+    "NET::ERR_CERT_COMMON_NAME_INVALID の意味、証明書のドメイン不一致が起きる原因、ユーザー側でできる確認し、運営者側の確認ポイントを実用的に解説します。",
 };
 
 export default function NetErrCertCommonNameInvalidPage() {
@@ -29,7 +29,7 @@ export default function NetErrCertCommonNameInvalidPage() {
         },
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "別端末や別回線でも同じなら、サイト側の証明書設定不整合を疑う",
             "自分の会社・学校Wi-Fiだけで出るなら、プロキシやHTTPS干渉を疑う",
@@ -131,7 +131,7 @@ export default function NetErrCertCommonNameInvalidPage() {
               <Link href="/" className="underline hover:no-underline">
                 接続チェックツール
               </Link>{" "}
-              で外部からの到達状況を見つつ、SSL全体の切り分けは{" "}
+              で外部からの到達状況を見つつ、SSL全体の確認は{" "}
               <Link
                 href="/errors/ssl-handshake-failed"
                 className="underline hover:no-underline"

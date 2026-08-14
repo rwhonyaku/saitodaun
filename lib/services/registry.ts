@@ -1,6 +1,7 @@
 // lib/services/registry.ts
 
 export type ServiceId =
+  | "slack"
   | "youtube"
   | "line"
   | "x"
@@ -19,7 +20,9 @@ export type ServiceId =
   | "zoom"
   | "mercari"
   | "outlook"
-  | "microsoft365";
+  | "microsoft365"
+  | "aws"
+  | "jira";
 
 export type ServiceIssueId = "not-working";
 
@@ -68,17 +71,56 @@ export type ServiceConfig = {
 };
 
 export const SERVICES: Record<ServiceId, ServiceConfig> = {
+  slack: {
+    id: "slack",
+    name: "Slack",
+    shortBlurb: "メッセージ送信・通知・ログインが不安定な時の確認と対処。",
+    hubHref: "/services/slack",
+    issues: {
+      "not-working": {
+        id: "not-working",
+        title: "Slackが使えない？（障害か自分側か）",
+        description:
+          "Slackが開かない・送れない・通知が来ない時に、障害か自分の環境（回線/DNS/ブラウザ/アプリ/VPN）かを確認し、最短で対処します。",
+        intentPhrases: [
+          "slack 使えない",
+          "slack 送れない",
+          "slack 通知 来ない",
+          "slack ログインできない",
+        ],
+        relatedErrorSlugs: [
+          "err-connection-timed-out",
+          "err-connection-reset",
+          "dns-probe-finished-nxdomain",
+          "ssl-handshake-failed",
+          "503-service-unavailable",
+          "504-gateway-timeout",
+        ],
+        troubleshootingLinks: [
+          { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
+          { label: "ステータスコード一覧", href: "/status-codes" },
+        ],
+        officialSources: [
+          { label: "Slack Status", href: "https://status.slack.com/" },
+          { label: "Slack ヘルプ", href: "https://slack.com/help" },
+        ],
+        statusPageHref: "/status/sites/slack",
+        mainToolHref: "/",
+      },
+    },
+  },
+
   youtube: {
     id: "youtube",
     name: "YouTube",
-    shortBlurb: "見れない・読み込めない・再生できない時の切り分けと最短対処。",
+    shortBlurb: "見れない・読み込めない・再生できない時の確認と最短対処。",
     hubHref: "/services/youtube",
     issues: {
       "not-working": {
         id: "not-working",
         title: "YouTubeが見れない・開かない？（障害か自分側か）",
         description:
-          "YouTube側の障害か、自分の環境（回線/端末/ブラウザ/DNS）かを最短で切り分け、すぐ試せる対処に誘導します。",
+          "YouTube側の障害か、自分の環境（回線/端末/ブラウザ/DNS）かを最短で確認し、すぐ試せる対処に誘導します。",
         intentPhrases: ["youtube 見れない", "youtube 開かない", "youtube 読み込めない", "youtube 再生できない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -96,12 +138,12 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         officialSources: [
           {
-            label: "Google Workspace ステータスダッシュボード",
-            href: "https://www.google.com/appsstatus/dashboard/",
-          },
-          {
             label: "YouTube 公式アカウント（X）",
             href: "https://x.com/youtube",
+          },
+          {
+            label: "YouTube ヘルプ",
+            href: "https://support.google.com/youtube/",
           },
         ],
         statusPageHref: "/status/sites/youtube",
@@ -113,14 +155,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   line: {
     id: "line",
     name: "LINE",
-    shortBlurb: "開かない・送れない・通話できない時の最短切り分け。",
+    shortBlurb: "開かない・送れない・通話できない時の最短確認。",
     hubHref: "/services/line",
     issues: {
       "not-working": {
         id: "not-working",
         title: "LINEが使えない？（障害か自分側か）",
         description:
-          "LINE側の障害か、自分の回線/端末/アプリ起因かを短時間で切り分け、最短で復旧する手順をまとめます。",
+          "LINE側の障害か、自分の回線/端末/アプリ起因かを短時間で確認し、最短で復旧する手順をまとめます。",
         intentPhrases: ["line 開かない", "line 送れない", "line 通話 できない", "line 繋がらない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -132,7 +174,10 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "LINE公式（X）", href: "https://x.com/LINEjp_official" }],
+        officialSources: [
+          { label: "LINE Platform Status", href: "https://api.line-status.info/" },
+          { label: "LINE公式（X）", href: "https://x.com/LINEjp_official" },
+        ],
         statusPageHref: "/status/sites/line",
         mainToolHref: "/",
       },
@@ -142,14 +187,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   x: {
     id: "x",
     name: "X",
-    shortBlurb: "開かない・読み込めない・ログインできない時の切り分け。",
+    shortBlurb: "開かない・読み込めない・ログインできない時の確認。",
     hubHref: "/services/x",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Xが開かない？（障害か自分側か）",
         description:
-          "X側の障害か、自分の環境（回線/DNS/ブラウザ/アプリ）かを切り分け、最短の対処に誘導します。",
+          "X側の障害か、自分の環境（回線/DNS/ブラウザ/アプリ）かを確認し、最短の対処に誘導します。",
         intentPhrases: ["twitter 開かない", "x 開かない", "x 読み込めない", "x ログインできない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -172,14 +217,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   notion: {
     id: "notion",
     name: "Notion",
-    shortBlurb: "開かない・重い・ログインできない・同期しない時の切り分け。",
+    shortBlurb: "開かない・重い・ログインできない・同期しない時の確認。",
     hubHref: "/services/notion",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Notionが開かない・重い・ログインできない？（障害か自分側か）",
         description:
-          "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の切り分けを行います。",
+          "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の確認を行います。",
         intentPhrases: [
           "notion 障害",
           "notion 開かない",
@@ -218,7 +263,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         id: "not-working",
         title: "Instagramが読み込めない？（障害か自分側か）",
         description:
-          "Instagram側の障害か、自分の環境（回線/DNS/アプリ）かを短時間で切り分けます。",
+          "Instagram側の障害か、自分の環境（回線/DNS/アプリ）かを短時間で確認します。",
         intentPhrases: ["instagram 読み込めない", "インスタ 開かない", "インスタ 表示されない", "インスタ ログインできない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -240,14 +285,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   amazon: {
     id: "amazon",
     name: "Amazon",
-    shortBlurb: "ログインできない・購入できない・開かない時の切り分け。",
+    shortBlurb: "ログインできない・購入できない・開かない時の確認。",
     hubHref: "/services/amazon",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Amazonがログインできない？（障害か自分側か）",
         description:
-          "Amazon側の障害か、端末/回線/アカウント起因かを切り分け、無駄なく対処します。",
+          "Amazon側の障害か、端末/回線/アカウント起因かを確認し、無駄なく対処します。",
         intentPhrases: ["amazon ログインできない", "amazon 開かない", "amazon 購入できない", "amazon エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -262,7 +307,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "Amazon ヘルプ", href: "https://www.amazon.com/gp/help/customer/display.html" }],
+        officialSources: [{ label: "Amazon.co.jp ヘルプ", href: "https://www.amazon.co.jp/hz/contact-us" }],
         statusPageHref: "/status/sites/amazon-jp",
         mainToolHref: "/",
       },
@@ -272,14 +317,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   chatgpt: {
     id: "chatgpt",
     name: "ChatGPT",
-    shortBlurb: "使えない・ログインできない時の切り分けと対処。",
+    shortBlurb: "使えない・ログインできない時の確認と対処。",
     hubHref: "/services/chatgpt",
     issues: {
       "not-working": {
         id: "not-working",
         title: "ChatGPTが使えない？（障害か自分側か）",
         description:
-          "障害か、自分の環境（回線/DNS/ブラウザ）かを切り分け、最短で復旧する手順をまとめます。",
+          "障害か、自分の環境（回線/DNS/ブラウザ）かを確認し、最短で復旧する手順をまとめます。",
         intentPhrases: ["chatgpt 使えない", "chatgpt ログインできない", "chatgpt 開かない", "chatgpt エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -304,14 +349,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   gmail: {
     id: "gmail",
     name: "Gmail",
-    shortBlurb: "送受信できない・開かない時の切り分けと対処。",
+    shortBlurb: "送受信できない・開かない時の確認と対処。",
     hubHref: "/services/gmail",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Gmailが送受信できない？（障害か自分側か）",
         description:
-          "Google側の障害か、回線/DNS/ブラウザ起因かを切り分け、すぐ試せる対処に誘導します。",
+          "Google側の障害か、回線/DNS/ブラウザ起因かを確認し、すぐ試せる対処に誘導します。",
         intentPhrases: ["gmail 送れない", "gmail 受信できない", "gmail 開かない", "gmail エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -340,14 +385,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   google: {
     id: "google",
     name: "Google",
-    shortBlurb: "検索できない・開けない時の切り分けと対処。",
+    shortBlurb: "検索できない・開けない時の確認と対処。",
     hubHref: "/services/google",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Googleが開けない？（障害か自分側か）",
         description:
-          "Google側の障害か、自分の環境（回線/DNS/ブラウザ）かを切り分け、最短で対処します。",
+          "Google側の障害か、自分の環境（回線/DNS/ブラウザ）かを確認し、最短で対処します。",
         intentPhrases: ["google 開けない", "google 検索できない", "google つながらない", "google エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -375,14 +420,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   netflix: {
     id: "netflix",
     name: "Netflix",
-    shortBlurb: "再生できない・読み込めない時の切り分けと対処。",
+    shortBlurb: "再生できない・読み込めない時の確認と対処。",
     hubHref: "/services/netflix",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Netflixが再生できない？（障害か自分側か）",
         description:
-          "Netflix側の障害か、端末/アプリ/回線起因かを切り分け、再生トラブルを最短で解決します。",
+          "Netflix側の障害か、端末/アプリ/回線起因かを確認し、再生トラブルを最短で解決します。",
         intentPhrases: ["netflix 再生できない", "netflix 読み込めない", "netflix エラー", "ネトフリ 見れない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -405,14 +450,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   discord: {
     id: "discord",
     name: "Discord",
-    shortBlurb: "つながらない・読み込めない時の切り分けと対処。",
+    shortBlurb: "つながらない・読み込めない時の確認と対処。",
     hubHref: "/services/discord",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Discordがつながらない？（障害か自分側か）",
         description:
-          "Discord側の障害か、自分の環境（回線/DNS/アプリ）かを切り分け、最短で復旧する手順をまとめます。",
+          "Discord側の障害か、自分の環境（回線/DNS/アプリ）かを確認し、最短で復旧する手順をまとめます。",
         intentPhrases: ["discord つながらない", "discord 読み込めない", "discord 接続できない", "discord エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -436,14 +481,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   paypay: {
     id: "paypay",
     name: "PayPay",
-    shortBlurb: "使えない・支払いできない・開かない時の切り分け。",
+    shortBlurb: "使えない・支払いできない・開かない時の確認。",
     hubHref: "/services/paypay",
     issues: {
       "not-working": {
         id: "not-working",
         title: "PayPayが使えない？（障害か自分側か）",
         description:
-          "PayPayが開かない・使えない・支払いできない時に、障害か自分の環境（回線/端末/アプリ/DNS/アカウント）かを最短で切り分けます。",
+          "PayPayが開かない・使えない・支払いできない時に、障害か自分の環境（回線/端末/アプリ/DNS/アカウント）かを最短で確認します。",
         intentPhrases: ["paypay 使えない", "paypay エラー", "paypay 開かない", "paypay 支払いできない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -457,10 +502,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [
-          { label: "PayPay公式", href: "https://paypay.ne.jp/" },
-          { label: "PayPayヘルプ", href: "https://paypay.ne.jp/help/" },
-        ],
+        officialSources: [{ label: "PayPayヘルプ", href: "https://paypay.ne.jp/help/" }],
         statusPageHref: "/status/sites/paypay",
         mainToolHref: "/",
       },
@@ -470,14 +512,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   rakuten: {
     id: "rakuten",
     name: "楽天",
-    shortBlurb: "開かない・ログインできない・購入できない時の切り分け。",
+    shortBlurb: "開かない・ログインできない・購入できない時の確認。",
     hubHref: "/services/rakuten",
     issues: {
       "not-working": {
         id: "not-working",
         title: "楽天が開かない・ログインできない？（障害か自分側か）",
         description:
-          "楽天市場や楽天サービスが開かない・ログインできない場合に、楽天側の障害か、自分の環境（回線/DNS/ブラウザ/端末）かを切り分けて最短で対処します。",
+          "楽天市場や楽天サービスが開かない・ログインできない場合に、楽天側の障害か、自分の環境（回線/DNS/ブラウザ/端末）かを確認し、最短で対処します。",
         intentPhrases: ["楽天 開かない", "楽天 ログインできない", "楽天市場 エラー", "楽天 つながらない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -492,16 +534,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [
-          {
-            label: "楽天グループ公式サイト",
-            href: "https://corp.rakuten.co.jp/",
-          },
-          {
-            label: "楽天市場ヘルプ",
-            href: "https://ichiba.faq.rakuten.net/",
-          },
-        ],
+        officialSources: [{ label: "楽天市場ヘルプ", href: "https://ichiba.faq.rakuten.net/" }],
         statusPageHref: "/status/sites/rakuten",
         mainToolHref: "/",
       },
@@ -511,14 +544,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   yahoo: {
     id: "yahoo",
     name: "Yahoo! JAPAN",
-    shortBlurb: "開かない・検索できない・ログインできない時の切り分け。",
+    shortBlurb: "開かない・検索できない・ログインできない時の確認。",
     hubHref: "/services/yahoo",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Yahoo! JAPANが開かない？（障害か自分側か）",
         description:
-          "Yahoo! JAPANが開かない・検索できない・ログインできない場合に、障害か自分の環境かを切り分けます。",
+          "Yahoo! JAPANが開かない・検索できない・ログインできない場合に、障害か自分の環境かを確認します。",
         intentPhrases: ["yahoo 開かない", "yahoo japan 開かない", "yahoo 検索できない", "yahoo エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -532,7 +565,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "Yahoo! JAPAN", href: "https://www.yahoo.co.jp/" }],
+        officialSources: [{ label: "Yahoo! JAPAN サポート", href: "https://support.yahoo-net.jp/" }],
         statusPageHref: "/status/sites/yahoo-japan",
         mainToolHref: "/",
       },
@@ -542,14 +575,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   tiktok: {
     id: "tiktok",
     name: "TikTok",
-    shortBlurb: "開かない・読み込めない・再生できない時の切り分け。",
+    shortBlurb: "開かない・読み込めない・再生できない時の確認。",
     hubHref: "/services/tiktok",
     issues: {
       "not-working": {
         id: "not-working",
         title: "TikTokが使えない？（障害か自分側か）",
         description:
-          "TikTokが開かない・読み込めない・再生できない場合に、障害か自分の環境かを切り分けます。",
+          "TikTokが開かない・読み込めない・再生できない場合に、障害か自分の環境かを確認します。",
         intentPhrases: ["tiktok 開かない", "tiktok 読み込めない", "tiktok 見れない", "tiktok エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -562,7 +595,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "TikTok", href: "https://www.tiktok.com/" }],
+        officialSources: [{ label: "TikTok サポート", href: "https://support.tiktok.com/" }],
         statusPageHref: "/status/sites/tiktok",
         mainToolHref: "/",
       },
@@ -572,14 +605,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   zoom: {
     id: "zoom",
     name: "Zoom",
-    shortBlurb: "入れない・接続できない・起動しない時の切り分け。",
+    shortBlurb: "入れない・接続できない・起動しない時の確認。",
     hubHref: "/services/zoom",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Zoomが接続できない？（障害か自分側か）",
         description:
-          "Zoom会議に入れない・接続できない場合に、障害か自分の環境（回線/DNS/アプリ/端末）かを切り分けます。",
+          "Zoom会議に入れない・接続できない場合に、障害か自分の環境（回線/DNS/アプリ/端末）かを確認します。",
         intentPhrases: ["zoom 入れない", "zoom 接続できない", "zoom 開かない", "zoom エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -602,14 +635,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   mercari: {
     id: "mercari",
     name: "メルカリ",
-    shortBlurb: "開かない・ログインできない・購入できない時の切り分け。",
+    shortBlurb: "開かない・ログインできない・購入できない時の確認。",
     hubHref: "/services/mercari",
     issues: {
       "not-working": {
         id: "not-working",
         title: "メルカリが開かない？（障害か自分側か）",
         description:
-          "メルカリが開かない・ログインできない・購入できない場合に、障害か自分の環境（回線/DNS/アプリ/端末）かを切り分けます。",
+          "メルカリが開かない・ログインできない・購入できない場合に、障害か自分の環境（回線/DNS/アプリ/端末）かを確認します。",
         intentPhrases: ["メルカリ 開かない", "メルカリ ログインできない", "メルカリ エラー", "メルカリ 使えない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -623,7 +656,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "メルカリ公式", href: "https://www.mercari.com/jp/" }],
+        officialSources: [{ label: "メルカリ ヘルプ", href: "https://help.jp.mercari.com/guide/articles/865/" }],
         statusPageHref: "/status/sites/mercari",
         mainToolHref: "/",
       },
@@ -633,14 +666,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   outlook: {
     id: "outlook",
     name: "Outlook",
-    shortBlurb: "メールが送受信できない・ログインできない時の切り分け。",
+    shortBlurb: "メールが送受信できない・ログインできない時の確認。",
     hubHref: "/services/outlook",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Outlookが使えない？（障害か自分側か）",
         description:
-          "Outlookメールが開かない・送受信できない場合に、Microsoft側の障害か自分の環境（回線/DNS/ブラウザ/端末）かを切り分けます。",
+          "Outlookメールが開かない・送受信できない場合に、Microsoft側の障害か自分の環境（回線/DNS/ブラウザ/端末）かを確認します。",
         intentPhrases: ["outlook 開かない", "outlook メール 送れない", "outlook ログインできない", "outlook エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -654,7 +687,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "Microsoft Service Status", href: "https://portal.office.com/servicestatus" }],
+        officialSources: [{ label: "Microsoft 365 Status（X）", href: "https://x.com/MSFT365Status" }],
         statusPageHref: "/status/sites/microsoft-365",
         mainToolHref: "/",
       },
@@ -664,14 +697,14 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
   microsoft365: {
     id: "microsoft365",
     name: "Microsoft 365",
-    shortBlurb: "Teams・Outlook・Officeが使えない時の切り分け。",
+    shortBlurb: "Teams・Outlook・Officeが使えない時の確認。",
     hubHref: "/services/microsoft365",
     issues: {
       "not-working": {
         id: "not-working",
         title: "Microsoft 365が使えない？（障害か自分側か）",
         description:
-          "Microsoft 365（Outlook・Teams・Officeなど）が使えない場合に、Microsoft側の障害か自分の環境を切り分けます。",
+          "Microsoft 365（Outlook・Teams・Officeなど）が使えない場合に、Microsoft側の障害か自分の環境を確認します。",
         intentPhrases: ["microsoft365 使えない", "office365 エラー", "microsoft365 ログインできない", "office365 開かない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
@@ -684,8 +717,87 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
           { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
           { label: "ステータスコード一覧", href: "/status-codes" },
         ],
-        officialSources: [{ label: "Microsoft Service Status", href: "https://portal.office.com/servicestatus" }],
+        officialSources: [{ label: "Microsoft 365 Status（X）", href: "https://x.com/MSFT365Status" }],
         statusPageHref: "/status/sites/microsoft-365",
+        mainToolHref: "/",
+      },
+    },
+  },
+
+  aws: {
+    id: "aws",
+    name: "AWS",
+    shortBlurb: "コンソール・API・ログインが不安定な時の確認と対処。",
+    hubHref: "/services/aws",
+    issues: {
+      "not-working": {
+        id: "not-working",
+        title: "AWSが使えない？（障害か自分側か）",
+        description:
+          "AWSコンソールが開かない・ログインできない・APIや一部リージョンだけ不安定な時に、障害か自分の環境（回線/DNS/ブラウザ/VPN）かを確認し、最短で対処します。",
+        intentPhrases: [
+          "aws 障害",
+          "aws ログインできない",
+          "aws console 開かない",
+          "aws api 失敗",
+        ],
+        relatedErrorSlugs: [
+          "err-connection-timed-out",
+          "err-connection-reset",
+          "dns-probe-finished-nxdomain",
+          "ssl-handshake-failed",
+          "502-bad-gateway",
+          "503-service-unavailable",
+          "504-gateway-timeout",
+        ],
+        troubleshootingLinks: [
+          { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
+          { label: "ステータスコード一覧", href: "/status-codes" },
+        ],
+        officialSources: [
+          { label: "AWS Health Dashboard", href: "https://health.aws.amazon.com/health/status" },
+          { label: "AWS Support", href: "https://aws.amazon.com/support/" },
+        ],
+        statusPageHref: "/status/sites/aws",
+        mainToolHref: "/",
+      },
+    },
+  },
+
+  jira: {
+    id: "jira",
+    name: "Jira",
+    shortBlurb: "閲覧はできるのに更新や通知が失敗する時の確認と対処。",
+    hubHref: "/services/jira",
+    issues: {
+      "not-working": {
+        id: "not-working",
+        title: "Jiraが使えない？（障害か自分側か）",
+        description:
+          "Jiraが開かない・ログインできない・更新できない時に、障害か自分の環境（回線/DNS/ブラウザ/SSO/VPN）かを確認し、最短で対処します。",
+        intentPhrases: [
+          "jira 障害",
+          "jira ログインできない",
+          "jira 開かない",
+          "jira 更新できない",
+        ],
+        relatedErrorSlugs: [
+          "err-connection-timed-out",
+          "err-connection-reset",
+          "dns-probe-finished-nxdomain",
+          "ssl-handshake-failed",
+          "503-service-unavailable",
+          "504-gateway-timeout",
+        ],
+        troubleshootingLinks: [
+          { label: "DNSトラブル対処", href: "/troubleshooting-dns" },
+          { label: "ステータスコード一覧", href: "/status-codes" },
+        ],
+        officialSources: [
+          { label: "Atlassian Status", href: "https://status.atlassian.com/" },
+          { label: "Atlassian Support", href: "https://support.atlassian.com/" },
+        ],
+        statusPageHref: "/status/sites/jira",
         mainToolHref: "/",
       },
     },

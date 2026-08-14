@@ -24,61 +24,63 @@ export default function SiteFooter() {
 
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/services" className="font-bold text-slate-700 hover:text-sky-600">
+                <Link href="/services" prefetch={false} className="font-bold text-slate-700 hover:text-sky-600">
                   サービス別トラブル確認
                 </Link>
               </li>
               <li>
-                <Link href="/outages/japan" className="font-bold text-slate-700 hover:text-sky-600">
+                <Link href="/outages/japan" prefetch={false} className="font-bold text-slate-700 hover:text-sky-600">
                   ネット障害情報
                 </Link>
               </li>
               <li>
                 <Link
                   href="/troubleshooting/specific-site-not-working"
+                  prefetch={false}
                   className="font-bold text-slate-700 hover:text-sky-600"
                 >
                   特定サイトが開かないとき
                 </Link>
               </li>
               <li>
-                <Link href="/troubleshooting-guide" className="text-slate-600 hover:text-sky-600">
+                <Link href="/troubleshooting-guide" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   サイトが見れない時の解消ガイド
                 </Link>
               </li>
               <li>
-                <Link href="/troubleshooting-dns" className="text-slate-600 hover:text-sky-600">
+                <Link href="/troubleshooting-dns" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   DNSエラーの直し方
                 </Link>
               </li>
               <li>
-                <Link href="/status-codes" className="text-slate-600 hover:text-sky-600">
+                <Link href="/status-codes" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   HTTPエラーコード解説
                 </Link>
               </li>
               <li>
-                <Link href="/site-performance" className="text-slate-600 hover:text-sky-600">
+                <Link href="/site-performance" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   サイトが重い時の対策
                 </Link>
               </li>
               <li>
-                <Link href="/what-is-website-downtime" className="text-slate-600 hover:text-sky-600">
+                <Link href="/what-is-website-downtime" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   サイトが落ちているとは？
                 </Link>
               </li>
               <li>
-                <Link href="/glossary" className="text-slate-600 hover:text-sky-600">
+                <Link href="/glossary" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   ウェブ用語集
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-slate-600 hover:text-sky-600">
+                <Link href="/faq" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   よくある質問（FAQ）
                 </Link>
               </li>
               <li className="pt-2">
                 <Link
                   href="/recommendations"
+                  prefetch={false}
                   className="font-bold text-sky-600 hover:text-sky-700"
                 >
                   推奨ツール・サービス
@@ -87,6 +89,7 @@ export default function SiteFooter() {
               <li>
                 <Link
                   href="/conoha"
+                  prefetch={false}
                   className="flex items-center gap-1 font-bold text-indigo-600 hover:text-indigo-700"
                 >
                   <span className="rounded bg-indigo-100 px-1.5 py-0.5 text-[10px] text-indigo-700">
@@ -105,27 +108,27 @@ export default function SiteFooter() {
 
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="text-slate-600 hover:text-sky-600">
+                <Link href="/about" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   このサイトについて
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="text-slate-600 hover:text-sky-600">
+                <Link href="/how-it-works" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   チェックの仕組み
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-slate-600 hover:text-sky-600">
+                <Link href="/privacy" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   プライバシーポリシー
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-slate-600 hover:text-sky-600">
+                <Link href="/terms" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   利用規約
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-600 hover:text-sky-600">
+                <Link href="/contact" prefetch={false} className="text-slate-600 hover:text-sky-600">
                   お問い合わせ
                 </Link>
               </li>

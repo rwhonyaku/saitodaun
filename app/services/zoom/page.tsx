@@ -7,21 +7,21 @@ const service = SERVICES.zoom;
 export const metadata: Metadata = {
   title: "Zoomのトラブル解決 | サイトダウン",
   description:
-    "Zoomが開かない・入れない・接続できない時に、障害か自分側かを切り分けて最短で対処します。",
+    "Zoomが開かない・入れない・接続できない時に、障害か自分側かを確認し、最短で対処します。",
 };
 
 export default function ZoomHubPage() {
   const issue = service.issues["not-working"];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">
           {service.name}のトラブル解決
         </h1>
         <p className="text-base text-neutral-600">
           Zoomが開かない、会議に入れない、接続できない時は、
-          まず「障害か自分側か」を切り分けるのが最短です。
+          まず「障害か自分側か」を確認するのが最短です。
           下のガイドから始めてください。
         </p>
       </header>

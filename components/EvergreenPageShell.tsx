@@ -122,6 +122,7 @@ export default function EvergreenPageShell({
                   <div className="flex flex-wrap gap-2 text-[11px] font-bold">
                     <Link
                       href="/"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       URL入力で接続チェック →
@@ -129,6 +130,7 @@ export default function EvergreenPageShell({
 
                     <Link
                       href="/status-codes"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       HTTPコードの読み方（概要） →
@@ -136,6 +138,7 @@ export default function EvergreenPageShell({
 
                     <Link
                       href="/troubleshooting-guide"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       見れない時の解消手順 →
@@ -143,6 +146,7 @@ export default function EvergreenPageShell({
 
                     <Link
                       href="/troubleshooting-dns"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       DNSエラーの直し方 →
@@ -150,6 +154,7 @@ export default function EvergreenPageShell({
 
                     <Link
                       href="/status"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       主要サービス稼働状況 →
@@ -157,6 +162,7 @@ export default function EvergreenPageShell({
 
                     <Link
                       href="/faq"
+                      prefetch={false}
                       className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:bg-sky-100 hover:border-sky-200 transition-colors text-sky-700"
                     >
                       FAQ →
@@ -220,6 +226,7 @@ export default function EvergreenPageShell({
                   </a>
                   <Link
                     href="/conoha"
+                    prefetch={false}
                     className="block w-full text-center py-2 text-white/90 underline underline-offset-2 text-[10px] font-bold hover:text-white transition-colors"
                   >
                     14,000円還元の受け取り方を確認 →
@@ -245,6 +252,7 @@ export default function EvergreenPageShell({
                 </p>
                 <Link
                   href="/"
+                  prefetch={false}
                   className="inline-block w-full text-center py-2 bg-white text-slate-900 rounded-xl text-xs font-bold hover:bg-sky-100 transition-colors"
                 >
                   今すぐチェックする

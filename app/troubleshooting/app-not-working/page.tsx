@@ -3,16 +3,16 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "アプリが使えないときの切り分けハブ",
+  title: "アプリが使えないときの確認ハブ",
   description:
-    "アプリや一部サービスだけ使えないときの切り分けハブです。ログイン失敗、ボタンが効かない、確認ループ、ブラウザとの差、特定サービス障害など、症状ごとに次に見るべきページへ案内します。",
+    "アプリや一部サービスだけ使えないときの確認ハブです。ログイン失敗、ボタンが効かない、確認ループ、ブラウザとの差、特定サービス障害など、症状ごとに次に見るべきページへ案内します。",
   alternates: { canonical: "/troubleshooting/app-not-working" },
 };
 
 export default function Page() {
   return (
     <EvergreenPageShell
-      h1="アプリが使えないときの切り分けハブ"
+      h1="アプリが使えないときの確認ハブ"
       updatedAt="2026-04-12"
       lead={[
         "『ネットは使えるのにアプリだけだめ』『サイトは開くのに一部操作だけできない』『ログインや認証だけ進まない』といった症状は、回線全体の障害というより、アプリ固有の不具合、サービス側の部分障害、認証まわり、ブラウザ差、制限環境で起きやすいです。",
@@ -21,7 +21,7 @@ export default function Page() {
       sections={[
         {
           type: "list",
-          title: "最短で切り分けるなら",
+          title: "最短で確認するなら",
           items: [
             "ブラウザ版では使えるなら、アプリ固有の不具合や保存データを優先して疑う",
             "サイトでもアプリでも同じサービスがだめなら、サービス側の障害や部分障害に近い",
@@ -77,7 +77,7 @@ export default function Page() {
                   href="/troubleshooting/browser-not-loading-sites"
                   className="underline hover:no-underline"
                 >
-                  ブラウザエラーの切り分けハブ
+                  ブラウザエラーの確認ハブ
                 </Link>
               </p>
               <p>
@@ -148,7 +148,7 @@ export default function Page() {
                 href="/troubleshooting/browser-not-loading-sites"
                 className="underline hover:no-underline"
               >
-                ブラウザエラーの切り分け
+                ブラウザエラーの確認
               </Link>{" "}
               が近いページです。
             </>,
