@@ -19,6 +19,13 @@ type ReportSummary = {
     elevatedThreshold: number;
     spikeThreshold: number;
   };
+  timeline: Array<{
+    startAt: string;
+    endAt: string;
+    reports: number;
+    reporters: number;
+    level: "normal" | "elevated" | "spike";
+  }>;
   updatedAt: string;
 };
 
@@ -38,6 +45,70 @@ function formatJstTime(value: string) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function ReportTimeline({ summary }: { summary: ReportSummary }) {
+  const maximum = Math.max(
+    1,
+    summary.signal.spikeThreshold,
+    ...summary.timeline.map((bucket) => bucket.reporters)
+  );
+  const hasReports = summary.timeline.some((bucket) => bucket.reports > 0);
+  const firstTime = summary.timeline[0]?.startAt;
+  const middleTime = summary.timeline[Math.floor(summary.timeline.length / 2)]?.startAt;
+  const lastTime = summary.timeline.at(-1)?.endAt;
+
+  return (
+    <div className="mt-5 border-t border-slate-200 pt-4">
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <h3 className="text-xs font-bold text-slate-900">過去24時間の報告推移</h3>
+          <p className="mt-1 text-[11px] text-slate-500">30分ごとの異なる報告者数（日本）</p>
+        </div>
+        <div className="flex gap-3 text-[10px] text-slate-500" aria-hidden="true">
+          <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-sky-400" />通常</span>
+          <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-amber-400" />増加</span>
+          <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-rose-500" />急増</span>
+        </div>
+      </div>
+
+      <div className="mt-3 overflow-x-auto pb-1">
+        <div className="relative h-36 min-w-[640px] rounded-lg border border-slate-200 bg-slate-50 px-3 pb-6 pt-3">
+          {!hasReports ? (
+            <p className="absolute inset-x-3 top-1/2 -translate-y-1/2 text-center text-xs text-slate-500">
+              まだ報告履歴はありません。データを蓄積しています。
+            </p>
+          ) : null}
+          <div className="flex h-full items-end gap-1" role="img" aria-label="過去24時間の利用者報告数の棒グラフ">
+            {summary.timeline.map((bucket) => {
+              const height = bucket.reporters === 0 ? 2 : Math.max(6, (bucket.reporters / maximum) * 100);
+              const label = `${formatJstTime(bucket.startAt)}から${formatJstTime(bucket.endAt)}、異なる報告者${bucket.reporters}人、報告${bucket.reports}件`;
+              return (
+                <div
+                  key={bucket.startAt}
+                  className={`min-w-0 flex-1 rounded-t-sm ${
+                    bucket.level === "spike"
+                      ? "bg-rose-500"
+                      : bucket.level === "elevated"
+                        ? "bg-amber-400"
+                        : "bg-sky-400"
+                  } ${bucket.reporters === 0 ? "opacity-20" : ""}`}
+                  style={{ height: `${height}%` }}
+                  aria-label={label}
+                  title={label}
+                />
+              );
+            })}
+          </div>
+          <div className="absolute inset-x-3 bottom-1 flex justify-between text-[10px] text-slate-400">
+            <span>{firstTime ? formatJstTime(firstTime) : ""}</span>
+            <span>{middleTime ? formatJstTime(middleTime) : ""}</span>
+            <span>{lastTime ? formatJstTime(lastTime) : ""}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function OutageReportPanel({ serviceId }: { serviceId: string }) {
@@ -151,6 +222,8 @@ export default function OutageReportPanel({ serviceId }: { serviceId: string }) 
           ) : null}
         </div>
       ) : null}
+
+      {!loading && summary ? <ReportTimeline summary={summary} /> : null}
 
       {showOptions ? (
         <div className="mt-4 border-t border-slate-200 pt-4">

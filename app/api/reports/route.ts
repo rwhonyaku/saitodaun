@@ -108,12 +108,14 @@ async function getRecentReports(serviceId: ReportingServiceId) {
   const baselineRows = allRows.filter((row) => Date.parse(row.created_at) < currentWindowStart);
   const baselineBucketCount = BASELINE_WINDOW_MS / REPORT_WINDOW_MS;
   const baselineBuckets = Array.from({ length: baselineBucketCount }, () => new Set<string>());
+  const baselineReportCounts = Array.from({ length: baselineBucketCount }, () => 0);
 
   for (const row of baselineRows) {
     const ageFromCurrentWindow = currentWindowStart - Date.parse(row.created_at);
     const bucketIndex = Math.floor(ageFromCurrentWindow / REPORT_WINDOW_MS);
     if (bucketIndex >= 0 && bucketIndex < baselineBuckets.length) {
       baselineBuckets[bucketIndex].add(row.client_hash);
+      baselineReportCounts[bucketIndex] += 1;
     }
   }
 
@@ -136,6 +138,36 @@ async function getRecentReports(serviceId: ReportingServiceId) {
       : currentReporters >= elevatedThreshold
         ? "elevated"
         : "normal";
+  const getBucketLevel = (reporters: number): SignalLevel =>
+    reporters >= spikeThreshold
+      ? "spike"
+      : reporters >= elevatedThreshold
+        ? "elevated"
+        : "normal";
+  const historicalTimeline = Array.from({ length: 47 }, (_, position) => {
+    const bucketIndex = 46 - position;
+    const startAt = currentWindowStart - (bucketIndex + 1) * REPORT_WINDOW_MS;
+    const endAt = currentWindowStart - bucketIndex * REPORT_WINDOW_MS;
+    const reporters = baselineBuckets[bucketIndex].size;
+
+    return {
+      startAt: new Date(startAt).toISOString(),
+      endAt: new Date(endAt).toISOString(),
+      reports: baselineReportCounts[bucketIndex],
+      reporters,
+      level: getBucketLevel(reporters),
+    };
+  });
+  const timeline = [
+    ...historicalTimeline,
+    {
+      startAt: new Date(currentWindowStart).toISOString(),
+      endAt: new Date(now).toISOString(),
+      reports: rows.length,
+      reporters: currentReporters,
+      level,
+    },
+  ];
 
   return {
     count,
@@ -152,6 +184,7 @@ async function getRecentReports(serviceId: ReportingServiceId) {
       elevatedThreshold,
       spikeThreshold,
     },
+    timeline,
     updatedAt: new Date().toISOString(),
     ...(Number.isFinite(queriedCount) && queriedCount > allRows.length
       ? { historyTruncated: true }
