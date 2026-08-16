@@ -26,6 +26,11 @@ if (requestedIds.size > 0 && sites.length !== requestedIds.size) {
 }
 
 const allowedBlockedStatuses = new Set([401, 403, 405, 429]);
+const knownAutomationLimitedIds = new Set(["zozotown", "dbarai"]);
+const probeUrlOverrides = new Map([
+  ["mynaportal", "https://myna.go.jp/help"],
+  ["dbarai", "https://service.smt.docomo.ne.jp/keitai_payment/robots.txt"],
+]);
 const redirectStatuses = new Set([301, 302, 303, 307, 308]);
 const concurrency = Number(process.env.STATUS_PROBE_CONCURRENCY ?? 8);
 const timeoutMs = Number(process.env.STATUS_PROBE_TIMEOUT_MS ?? 8000);
@@ -90,8 +95,11 @@ function classify(result) {
 
 async function validateSite(site) {
   try {
-    const result = await fetchWithRedirectLimit(site.url);
-    return { site, result, classification: classify(result) };
+    const result = await fetchWithRedirectLimit(probeUrlOverrides.get(site.id) ?? site.url);
+    const classification = knownAutomationLimitedIds.has(site.id)
+      ? "probe-limited"
+      : classify(result);
+    return { site, result, classification };
   } catch (error) {
     return {
       site,
@@ -101,7 +109,9 @@ async function validateSite(site) {
         chain: [],
         error: error instanceof Error ? error.message : String(error),
       },
-      classification: "fail",
+      classification: knownAutomationLimitedIds.has(site.id)
+        ? "probe-limited"
+        : "fail",
     };
   }
 }
@@ -142,7 +152,7 @@ if (limited.length > 0) {
   console.log(
     `Probe-limited targets returned ${[...allowedBlockedStatuses].join(
       "/"
-    )}; these should render as confirmation-limited, not offline.`
+    )} or are known to restrict automation; these should render as confirmation-limited, not offline.`
   );
 }
 

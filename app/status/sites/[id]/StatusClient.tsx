@@ -170,11 +170,11 @@ export default function StatusClient({ id: propId }: { id: string }) {
 
   return (
     <main className="flex-1 bg-slate-50">
-      <div className="mx-auto max-w-xl px-0 py-0 text-sm text-slate-700">
+      <div className="px-0 py-0 text-sm text-slate-700">
         <div
           role="status"
           aria-live="polite"
-          className={`mb-5 rounded-lg border p-4 ${assessment.cardClassName}`}
+          className={`mb-4 rounded-2xl border p-5 shadow-sm sm:p-6 ${assessment.cardClassName}`}
         >
           <div className="flex items-start gap-3">
             <span
@@ -184,43 +184,40 @@ export default function StatusClient({ id: propId }: { id: string }) {
               {assessment.icon}
             </span>
             <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span
                   className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ${assessment.badgeClassName}`}
                 >
                   {assessment.badge}
                 </span>
+                {officialVerdictUrl ? (
+                  <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    公式情報 ↗
+                  </a>
+                ) : null}
               </div>
               <p className="mt-2 text-xl font-bold leading-snug tracking-normal text-slate-950 sm:text-2xl">
                 {assessment.main}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-slate-600">{assessment.detail}</p>
-              <div className="mt-3 grid gap-1 text-[11px] text-slate-600 sm:grid-cols-2">
-                <p>
-                  接続チェック：{loading || !result ? "確認中" : resultUnconfirmed ? "確認不可" : result.online ? "応答あり" : "応答なし"}
-                </p>
-                <p>
-                  利用者報告：{communitySummary
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:max-w-xl">
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">外部接続チェック</p>
+                  <p className="mt-1 text-xs font-bold text-slate-800">{loading || !result ? "確認中" : resultUnconfirmed ? "確認不可" : result.online ? "応答あり" : "応答なし"}</p>
+                </div>
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">日本の利用者報告</p>
+                  <p className="mt-1 text-xs font-bold text-slate-800">{communitySummary
                     ? communitySummary.signal.level === "spike"
                       ? "急増"
                       : communitySummary.signal.level === "elevated"
                         ? "増加"
                         : "通常範囲"
-                    : reportingEnabled ? "取得中" : "対象外"}
-                </p>
+                    : reportingEnabled ? "取得中" : "対象外"}</p>
+                </div>
               </div>
               {verdictUpdatedAt ? (
                 <p className="mt-2 text-[10px] text-slate-500">判定更新：{verdictUpdatedAt} JST</p>
-              ) : null}
-              {officialVerdictUrl && (assessment.level === "likely" || assessment.level === "partial") ? (
-                <a
-                  href={officialVerdictUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex rounded-md bg-white/80 px-3 py-2 text-xs font-bold text-sky-700 ring-1 ring-sky-200 hover:bg-white"
-                >
-                  公式情報を確認する →
-                </a>
               ) : null}
               <p className="mt-3 text-[10px] leading-relaxed text-slate-500">
                 この判定は公式発表ではありません。接続結果と利用者報告を組み合わせた参考情報です。
@@ -229,10 +226,13 @@ export default function StatusClient({ id: propId }: { id: string }) {
           </div>
         </div>
 
-        <p className="mb-4 text-xs text-slate-500 break-all">チェック対象URL：{site.url}</p>
+        <p className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-slate-500 break-all">
+          <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1">外部サーバーから確認</span>
+          <span>チェック対象：{site.url}</span>
+        </p>
 
         {/* Result box */}
-        <div className="rounded-xl bg-white p-4 shadow-sm min-h-[120px]">
+        <div className="min-h-[120px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="mt-3 flex items-center justify-between gap-3">
             <p className="text-base font-semibold text-slate-900">
               結果：<span className={statusColor}> {statusLabel}</span>
@@ -269,10 +269,22 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 </p>
               )}
 
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-xs">
-                  {isNotionStatus ? "現在の接続状態" : "HTTPステータス"}：{result.status ?? "―"}
-                </p>
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="rounded-xl bg-slate-50 px-3 py-3">
+                  <p className="text-[10px] font-semibold text-slate-500">{isNotionStatus ? "現在の接続状態" : "HTTPステータス"}</p>
+                  <p className="mt-1 font-mono text-base font-bold text-slate-900">{result.status ?? "―"}</p>
+                </div>
+                <div className="rounded-xl bg-slate-50 px-3 py-3">
+                  <p className="text-[10px] font-semibold text-slate-500">応答時間</p>
+                  <p className="mt-1 font-mono text-base font-bold text-slate-900">{result.responseTime != null ? `${result.responseTime} ms` : "―"}</p>
+                </div>
+                <div className="col-span-2 rounded-xl bg-slate-50 px-3 py-3 sm:col-span-1">
+                  <p className="text-[10px] font-semibold text-slate-500">確認地点</p>
+                  <p className="mt-1 text-xs font-bold text-slate-900">外部サーバー</p>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <p className="text-[11px] text-slate-500">最終チェック：{result.timestamp}</p>
                 {guideHref && (
                   <Link
                     href={guideHref}
@@ -283,12 +295,6 @@ export default function StatusClient({ id: propId }: { id: string }) {
                   </Link>
                 )}
               </div>
-
-              <p className="text-xs">
-                応答時間：
-                {result.responseTime != null ? ` ${result.responseTime} ms` : " ―"}
-              </p>
-              <p className="text-[11px] text-slate-500">最終チェック：{result.timestamp}</p>
 
               {!result.online && !result.probeBlocked && !result.error && (
                 <p className="mt-2 text-[11px] text-slate-500">

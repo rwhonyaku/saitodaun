@@ -18,6 +18,9 @@ const PROBE_URL_OVERRIDES: Record<string, string> = {
   "www.canva.com": "https://www.canva.com/robots.txt",
   "chatwork.com": "https://go.chatwork.com/ja/",
   "www.chatwork.com": "https://go.chatwork.com/ja/",
+  "myna.go.jp": "https://myna.go.jp/help",
+  "service.smt.docomo.ne.jp":
+    "https://service.smt.docomo.ne.jp/keitai_payment/robots.txt",
 };
 
 function normalizeInputUrl(input: string) {

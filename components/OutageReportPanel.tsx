@@ -176,12 +176,17 @@ export default function OutageReportPanel({
   };
 
   return (
-    <section className="mt-6 rounded-xl border border-sky-200 bg-white p-4 shadow-sm" aria-labelledby="community-reports-title">
+    <section className="mt-5 rounded-2xl border border-sky-200 bg-white p-5 shadow-sm sm:p-6" aria-labelledby="community-reports-title">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 id="community-reports-title" className="text-sm font-semibold text-slate-900">
-            日本の利用者からの障害報告
-          </h2>
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-50" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-500" />
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-700">Community reports</span>
+          </div>
+          <h2 id="community-reports-title" className="mt-2 text-base font-bold text-slate-950">日本の利用者からの障害報告</h2>
           {loading ? (
             <p className="mt-2 text-xs text-slate-500">直近30分の報告を確認しています...</p>
           ) : summary?.count ? (
@@ -202,7 +207,7 @@ export default function OutageReportPanel({
         <button
           type="button"
           onClick={() => setShowOptions((value) => !value)}
-          className="rounded-lg bg-sky-600 px-4 py-2 text-xs font-bold text-white hover:bg-sky-700"
+          className="rounded-xl bg-sky-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-sky-700"
         >
           問題が起きています
         </button>

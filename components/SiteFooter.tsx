@@ -1,145 +1,79 @@
-"use client";
-
 import Link from "next/link";
 import { SITE } from "@/lib/siteMeta";
 
+const diagnoseLinks = [
+  { href: "/status", label: "障害・稼働状況一覧" },
+  { href: "/services", label: "サービス別トラブル確認" },
+  { href: "/outages/japan", label: "日本のネット障害情報" },
+  { href: "/errors", label: "HTTP・接続エラー" },
+  { href: "/troubleshooting-dns", label: "DNSエラーの確認" },
+  { href: "/troubleshooting/specific-site-not-working", label: "特定サイトだけ開かない" },
+];
+
+const guideLinks = [
+  { href: "/troubleshooting-guide", label: "接続トラブルの確認手順" },
+  { href: "/site-performance", label: "サイトが重い時の対策" },
+  { href: "/what-is-website-downtime", label: "サイトが落ちているとは？" },
+  { href: "/glossary", label: "ウェブ用語集" },
+  { href: "/faq", label: "よくある質問" },
+  { href: "/recommendations", label: "推奨ツール・サービス" },
+  { href: "/conoha", label: "ConoHa WING 徹底解説" },
+];
+
+const trustLinks = [
+  { href: "/about", label: "このサイトについて" },
+  { href: "/how-it-works", label: "判定の仕組み" },
+  { href: "/privacy", label: "プライバシーポリシー" },
+  { href: "/terms", label: "利用規約" },
+  { href: "/contact", label: "お問い合わせ" },
+];
+
+function FooterLinks({ title, links }: { title: string; links: Array<{ href: string; label: string }> }) {
+  return (
+    <div>
+      <h2 className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">{title}</h2>
+      <ul className="mt-4 space-y-2.5 text-sm">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} prefetch={false} className="text-slate-300 transition hover:text-sky-300">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function SiteFooter() {
   return (
-    <footer className="border-t bg-slate-50">
-      <div className="mx-auto max-w-5xl px-4 py-12">
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-3">
+    <footer className="border-t border-slate-800 bg-slate-950 text-white">
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="mb-2 text-sm font-bold text-slate-900">{SITE.name}</div>
-            <p className="text-xs leading-relaxed text-slate-600">
-              {SITE.tagline}
-              <br />
-              外部サーバーからの視点でウェブサイトの稼働状況をリアルタイムに確認します。
+            <div className="flex items-center gap-2.5 font-bold">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]" aria-hidden="true">
+                <span className="h-2.5 w-2.5 rounded-full bg-sky-400" />
+              </span>
+              {SITE.name}
+            </div>
+            <p className="mt-4 text-xs leading-6 text-slate-400">
+              外部接続チェックと日本の利用者報告を分けて確認し、次に取るべき行動を案内します。
             </p>
-          </div>
-
-          <div>
-            <div className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">
-              対処法・関連ガイド
+            <div className="mt-5 flex flex-wrap gap-2 text-[10px] font-semibold text-slate-300">
+              <span className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1">外部サーバーから確認</span>
+              <span className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1">日本の利用者報告</span>
             </div>
-
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/services" prefetch={false} className="font-bold text-slate-700 hover:text-sky-600">
-                  サービス別トラブル確認
-                </Link>
-              </li>
-              <li>
-                <Link href="/outages/japan" prefetch={false} className="font-bold text-slate-700 hover:text-sky-600">
-                  ネット障害情報
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/troubleshooting/specific-site-not-working"
-                  prefetch={false}
-                  className="font-bold text-slate-700 hover:text-sky-600"
-                >
-                  特定サイトが開かないとき
-                </Link>
-              </li>
-              <li>
-                <Link href="/troubleshooting-guide" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  サイトが見れない時の解消ガイド
-                </Link>
-              </li>
-              <li>
-                <Link href="/troubleshooting-dns" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  DNSエラーの直し方
-                </Link>
-              </li>
-              <li>
-                <Link href="/status-codes" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  HTTPエラーコード解説
-                </Link>
-              </li>
-              <li>
-                <Link href="/site-performance" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  サイトが重い時の対策
-                </Link>
-              </li>
-              <li>
-                <Link href="/what-is-website-downtime" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  サイトが落ちているとは？
-                </Link>
-              </li>
-              <li>
-                <Link href="/glossary" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  ウェブ用語集
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  よくある質問（FAQ）
-                </Link>
-              </li>
-              <li className="pt-2">
-                <Link
-                  href="/recommendations"
-                  prefetch={false}
-                  className="font-bold text-sky-600 hover:text-sky-700"
-                >
-                  推奨ツール・サービス
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/conoha"
-                  prefetch={false}
-                  className="flex items-center gap-1 font-bold text-indigo-600 hover:text-indigo-700"
-                >
-                  <span className="rounded bg-indigo-100 px-1.5 py-0.5 text-[10px] text-indigo-700">
-                    特集
-                  </span>
-                  ConoHa WING 徹底解説
-                </Link>
-              </li>
-            </ul>
           </div>
 
-          <div>
-            <div className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">
-              運営情報
-            </div>
-
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/about" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  このサイトについて
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-it-works" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  チェックの仕組み
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  プライバシーポリシー
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  利用規約
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" prefetch={false} className="text-slate-600 hover:text-sky-600">
-                  お問い合わせ
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <FooterLinks title="障害を調べる" links={diagnoseLinks} />
+          <FooterLinks title="対処法・ガイド" links={guideLinks} />
+          <FooterLinks title="透明性・運営情報" links={trustLinks} />
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row">
-          <div className="text-xs text-slate-500">
-            © {new Date().getFullYear()} {SITE.name}
-          </div>
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-[11px] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {SITE.name}</p>
+          <p>判定は公式発表ではなく、接続結果と利用者報告に基づく参考情報です。</p>
         </div>
       </div>
     </footer>

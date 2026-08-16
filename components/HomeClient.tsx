@@ -90,16 +90,31 @@ export default function HomeClient() {
     : "/status-codes";
 
   return (
-    <section className="bg-slate-50">
-      <div className="mx-auto max-w-xl w-full px-4 pt-2 pb-4">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center tracking-tight">
-          URLを入力して接続状況を確認
-        </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-600 text-center">
-          相手側の障害か、自分の回線・DNS・ブラウザ側の問題かを確認します。
-        </p>
+    <section className="bg-slate-50 px-4 pt-8 pb-4">
+      <div className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 px-5 py-8 shadow-xl shadow-slate-900/10 sm:px-10 sm:py-12">
+        <div aria-hidden="true" className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_85%_10%,rgba(14,165,233,0.28),transparent_32%),radial-gradient(circle_at_12%_90%,rgba(37,99,235,0.18),transparent_30%)]" />
+        <svg aria-hidden="true" viewBox="0 0 1000 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-28 w-full opacity-25">
+          <path d="M0 94 L85 83 L145 90 L230 55 L300 72 L390 43 L480 74 L565 63 L650 86 L735 50 L815 59 L890 31 L1000 43" fill="none" stroke="#38bdf8" strokeWidth="3" />
+        </svg>
 
-        <section aria-labelledby="site-check-section" className="mt-8">
+        <div className="relative mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs font-semibold text-sky-200">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-300 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-400" />
+            </span>
+            日本向け障害・接続確認
+          </div>
+          <h1 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            サイトやサービスの障害を確認
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+            利用者報告と外部サーバーからの接続確認を組み合わせ、広い障害か自分の回線・DNS・ブラウザ側の問題かを切り分けます。
+          </p>
+        </div>
+
+        <section aria-labelledby="site-check-section" className="relative mx-auto mt-8 max-w-3xl">
+          <h2 id="site-check-section" className="sr-only">URLを入力して接続状況を確認</h2>
           <div className="flex gap-2">
             <input
               type="text"
@@ -107,38 +122,37 @@ export default function HomeClient() {
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
+              aria-label="接続状況を確認するURL"
               placeholder="例：google.com / https://example.com"
-              className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+              className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white px-4 py-3.5 text-sm text-slate-900 shadow-lg outline-none transition-all focus:ring-2 focus:ring-sky-400"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={onKeyDown}
             />
             <button
               onClick={handleCheck}
-              className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-60 shadow-md transition-all active:scale-95"
+              className="rounded-xl bg-sky-500 px-5 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:bg-sky-400 disabled:opacity-60 active:scale-95 sm:px-7"
               disabled={loading}
             >
               {loading ? "確認中..." : "チェック"}
             </button>
           </div>
 
-          <p className="mt-3 text-[11px] text-slate-400 text-center">
+          <p className="mt-3 text-center text-[11px] text-slate-400">
             入力例:{" "}
-            <span className="font-medium text-slate-500">example.com</span> /{" "}
-            <span className="font-medium text-slate-500">
+            <span className="font-medium text-slate-300">example.com</span> /{" "}
+            <span className="font-medium text-slate-300">
               https://sub.example.com
             </span>
           </p>
 
           {/* Result Area */}
-          <div className="mt-8 min-h-[140px]">
+          <div className="mt-6 min-h-[116px]">
             {!result && !loading && (
-              <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center bg-white/50">
-                <p className="text-sm text-slate-500">
-                  URLを入力して「チェック」を押すと、
-                  <br />
-                  外部サーバーからの接続可否とHTTP応答を確認します。
-                </p>
+              <div className="grid grid-cols-3 divide-x divide-white/10 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-4 text-center backdrop-blur-sm">
+                <div><p className="text-xs font-semibold text-white">外部接続</p><p className="mt-1 text-[10px] text-slate-400">サーバーから確認</p></div>
+                <div><p className="text-xs font-semibold text-white">HTTP応答</p><p className="mt-1 text-[10px] text-slate-400">状態コードを確認</p></div>
+                <div><p className="text-xs font-semibold text-white">応答速度</p><p className="mt-1 text-[10px] text-slate-400">接続時間を計測</p></div>
               </div>
             )}
 
@@ -254,13 +268,13 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section className="mt-12 text-sm text-slate-700 bg-slate-100/50 rounded-2xl p-6">
-          <h2 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-900 rounded-full"></span>
+        <section className="relative mt-8 rounded-2xl border border-white/10 bg-white/[0.06] p-5 text-sm text-slate-200 backdrop-blur-sm">
+          <h2 className="mb-4 flex items-center gap-2 text-base font-bold text-white">
+            <span className="h-6 w-1.5 rounded-full bg-sky-400"></span>
             このツールで分かること
           </h2>
 
-          <div className="space-y-4 text-xs sm:text-sm leading-relaxed">
+          <div className="space-y-4 text-xs leading-relaxed sm:text-sm">
             <p>
               サイトダウンは、主要サービスの障害状況とURLの接続チェックをまとめて確認する入口です。
               サービス側の広い障害か、自分の回線・DNS・ブラウザ側の問題かを確認する第一歩として活用してください。
@@ -270,7 +284,7 @@ export default function HomeClient() {
               <li>
                 <Link
                   href="/how-it-works"
-                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
+                  className="block rounded-xl border border-white/10 bg-white/[0.06] p-3 font-medium text-sky-200 transition-all hover:border-sky-300/50 hover:bg-white/10"
                 >
                   仕組み・見方
                 </Link>
@@ -278,7 +292,7 @@ export default function HomeClient() {
               <li>
                 <Link
                   href="/what-is-website-downtime"
-                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
+                  className="block rounded-xl border border-white/10 bg-white/[0.06] p-3 font-medium text-sky-200 transition-all hover:border-sky-300/50 hover:bg-white/10"
                 >
                   落ちるとは？
                 </Link>
@@ -286,7 +300,7 @@ export default function HomeClient() {
               <li>
                 <Link
                   href="/faq"
-                  className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-sky-300 transition-all text-sky-600 font-medium"
+                  className="block rounded-xl border border-white/10 bg-white/[0.06] p-3 font-medium text-sky-200 transition-all hover:border-sky-300/50 hover:bg-white/10"
                 >
                   よくある質問
                 </Link>

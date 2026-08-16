@@ -12,6 +12,25 @@ type PageProps = {
 
 export const dynamicParams = false;
 
+const STATUS_SERVICE_MARKS: Record<string, string> = {
+  teams: "MT",
+  twitter: "X",
+  notion: "N",
+  steam: "S",
+  line: "L",
+  youtube: "▶",
+  instagram: "IG",
+  openai: "AI",
+  discord: "D",
+  slack: "S",
+  zoom: "Z",
+  google: "G",
+  paypay: "P",
+  "amazon-jp": "A",
+  "yahoo-japan": "Y!",
+  "microsoft-365": "M",
+};
+
 export function generateStaticParams() {
   return STATUS_SITES.map(({ id }) => ({ id }));
 }
@@ -1502,14 +1521,27 @@ export default async function Page(props: PageProps) {
   const isNotionStatus = site.id === "notion";
   const activeHero = statusHero[site.id];
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
+  const serviceMark = STATUS_SERVICE_MARKS[site.id] ?? serviceLabel.slice(0, 2);
   const showStatusAd = STATUS_AD_ENABLED_IDS.has(site.id);
 
   return (
     <main className="bg-slate-50 text-slate-900">
-      <div className="max-w-3xl mx-auto p-6">
-      <div className="mb-6">
-        <div className="text-sm text-slate-600 mb-2">カテゴリ：{categoryLabel}</div>
-        <h1 className="text-3xl font-bold mb-2">
+      <div className="mx-auto max-w-5xl p-4 sm:p-6">
+      <div className="relative mb-5 overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 p-5 shadow-lg sm:p-7">
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(14,165,233,0.24),transparent_35%)]" />
+        <div className="relative flex items-start gap-4 sm:gap-5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-lg font-black text-white shadow-inner sm:h-14 sm:w-14">
+            {serviceMark}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/25 bg-sky-400/10 px-2.5 py-1 text-sky-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                LIVE STATUS
+              </span>
+              <span>{categoryLabel}</span>
+            </div>
+        <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-4xl">
           {activeHero
             ? activeHero.heading
             : isNotionStatus
@@ -1518,17 +1550,14 @@ export default async function Page(props: PageProps) {
         </h1>
         {activeHero ? (
           <>
-            <p className="text-slate-700">{activeHero.lead}</p>
-            <p className="mt-2 text-sm text-slate-600">{activeHero.reinforcement}</p>
-            {activeHero.secondaryReinforcement ? (
-              <p className="mt-2 text-sm text-slate-600">{activeHero.secondaryReinforcement}</p>
-            ) : null}
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">{activeHero.lead}</p>
+            <p className="mt-2 max-w-3xl text-xs leading-5 text-slate-400 sm:text-sm">{activeHero.reinforcement}</p>
             {activeHero.symptomChips?.length ? (
               <ul className="mt-3 flex flex-wrap gap-2" aria-label="よくある症状">
-                {activeHero.symptomChips.map((chip) => (
+                {activeHero.symptomChips.slice(0, 5).map((chip) => (
                   <li
                     key={chip}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700"
+                    className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-slate-200"
                   >
                     {chip}
                   </li>
@@ -1541,7 +1570,7 @@ export default async function Page(props: PageProps) {
                   <Link
                     key={link.href}
                     prefetch={false}
-                    className="rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-medium text-sky-700 hover:border-sky-300 hover:bg-sky-100"
+                    className="rounded-full border border-sky-400/20 bg-sky-400/10 px-2.5 py-1 text-xs font-medium text-sky-200 hover:border-sky-300/50 hover:bg-sky-400/15"
                     href={link.href}
                   >
                     {link.label}
@@ -1551,14 +1580,14 @@ export default async function Page(props: PageProps) {
             ) : null}
             {activeHero.notWorkingHref ? (
               <p className="mt-2">
-                <Link prefetch={false} className="text-sky-600 underline" href={activeHero.notWorkingHref}>
+                <Link prefetch={false} className="text-sm font-medium text-sky-300 underline underline-offset-2" href={activeHero.notWorkingHref}>
                   {activeHero.notWorkingLabel}
                 </Link>
               </p>
             ) : null}
           </>
         ) : (
-          <p className="text-slate-700">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
             {isLineStatus
               ? "このページは、LINEで今日つながらない時に今の状況や通信障害の有無を確認するためのページです。全体障害か、自分だけの不具合かを最初に分けます。"
               : isNotionStatus
@@ -1566,6 +1595,8 @@ export default async function Page(props: PageProps) {
               : "外部からの到達性を確認しつつ、障害時に「何が分かるか／分からないか」を整理します。"}
           </p>
         )}
+          </div>
+        </div>
       </div>
 
       <section className="mb-8">

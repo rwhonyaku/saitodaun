@@ -539,7 +539,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "pokemon-home",
     name: "Pokémon HOME",
-    url: "https://home.pokemon.com/ja-jp/",
+    url: "https://home.pokemon.com/",
     category: "gaming",
     officialStatusUrl: "https://www.pokemon.co.jp/info/",
     supportUrl: "https://www.pokemon-support.com/",
@@ -680,16 +680,6 @@ export const STATUS_SITES: SiteConfig[] = [
   },
 
   {
-    id: "line-pay",
-    name: "LINE Pay",
-    url: "https://linepay.line.me",
-    category: "payments_finance",
-    supportUrl: "https://help.line.me/linepay/",
-    serviceNote:
-      "決済エラーや残高反映遅延など、支払い関連の障害が発生することがあります。",
-  },
-
-  {
     id: "visa",
     name: "Visa",
     url: "https://www.visa.co.jp",
@@ -775,15 +765,6 @@ export const STATUS_SITES: SiteConfig[] = [
     officialStatusUrl: "https://www.digital.go.jp/news",
     supportUrl: "https://www.kojinbango-card.go.jp/contact/",
     serviceNote: "認証や連携サービスで障害が発生するケースがあります。",
-  },
-  {
-    id: "covid-vaccine",
-    name: "新型コロナワクチン接種システム",
-    url: "https://www.cov19-vaccine.mhlw.go.jp",
-    category: "government_public",
-    officialStatusUrl: "https://www.mhlw.go.jp/stf/index.html",
-    supportUrl: "https://www.mhlw.go.jp/contact/",
-    serviceNote: "予約システムが利用集中で停止することがあります。",
   },
   {
     id: "nta",
@@ -931,7 +912,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "prime-video",
     name: "Amazon Prime Video",
-    url: "https://www.amazon.co.jp/Prime-Video",
+    url: "https://www.amazon.co.jp/gp/video/storefront",
     category: "streaming_media",
     supportUrl: "https://www.amazon.co.jp/gp/help/customer/display.html",
     serviceNote:
@@ -1620,9 +1601,9 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "epark-medical",
     name: "EPARK（病院・クリニック予約）",
-    url: "https://medical.epark.jp",
+    url: "https://epark.jp/medical",
     category: "education_exam",
-    supportUrl: "https://medical.epark.jp/help/",
+    supportUrl: "https://faq.epark.jp/epark/",
     serviceNote:
       "検索は可能でも予約確定やログインのみ不安定になるなど、予約機能に限定した障害が発生することがあります。",
     aliases: ["EPARK病院"],
@@ -1630,9 +1611,9 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "epark-pharmacy",
     name: "EPARKお薬手帳",
-    url: "https://okusuri.epark.jp",
+    url: "https://okusuritecho.epark.jp/",
     category: "education_exam",
-    supportUrl: "https://okusuri.epark.jp/help/",
+    supportUrl: "https://faq.epark.jp/epark/",
     serviceNote:
       "処方箋送信や履歴表示のみ失敗するなど、機能限定の障害が発生することがあります。",
   },
@@ -1678,7 +1659,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "medley",
     name: "Medley",
-    url: "https://www.medley.life",
+    url: "https://medley.life/",
     category: "education_exam",
     supportUrl: "https://www.medley.life/support",
     serviceNote:
@@ -1735,18 +1716,9 @@ export const STATUS_SITES: SiteConfig[] = [
   },
 
   {
-    id: "himawari-net",
-    name: "ひまわり（医療機関検索）",
-    url: "https://www.himawari.metro.tokyo.jp",
-    category: "government_public",
-    supportUrl: "https://www.fukushishinko.metro.tokyo.lg.jp/",
-    serviceNote:
-      "夜間・休日医療検索が利用集中で不安定になることがあります。",
-  },
-  {
     id: "iryou-kikan-net",
-    name: "医療機関ネット（全国）",
-    url: "https://iryou-kikan.net",
+    name: "医療情報ネット（ナビイ）",
+    url: "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S2300/initialize",
     category: "government_public",
     supportUrl: "https://www.mhlw.go.jp/",
     serviceNote:
@@ -1774,15 +1746,6 @@ export const STATUS_SITES: SiteConfig[] = [
   },
 
   {
-    id: "okusuri-110",
-    name: "おくすり110番",
-    url: "https://www.jah.ne.jp/~kako/",
-    category: "education_exam",
-    supportUrl: "https://www.jah.ne.jp/",
-    serviceNote:
-      "薬剤情報ページのみ表示が不安定になるケースがあります。",
-  },
-  {
     id: "qlife",
     name: "QLife",
     url: "https://www.qlife.jp",
@@ -1792,15 +1755,6 @@ export const STATUS_SITES: SiteConfig[] = [
       "検索や医療ニュース表示のみ遅延することがあります。",
   },
 
-  {
-    id: "my-hospital",
-    name: "マイホスピタル（電子カルテ連携）",
-    url: "https://www.myhospital.jp",
-    category: "education_exam",
-    supportUrl: "https://www.myhospital.jp/support",
-    serviceNote:
-      "ログインやデータ同期のみ影響を受けるケースがあります。",
-  },
   {
     id: "medpeer",
     name: "MedPeer",
@@ -1939,9 +1893,9 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "sony-bank",
     name: "Sony Bank",
-    url: "https://moneykit.net",
+    url: "https://sonybank.jp/",
     category: "payments_finance",
-    supportUrl: "https://moneykit.net/visitor/support/",
+    supportUrl: "https://sonybank.jp/inquiry/cs/",
     serviceNote:
       "メンテナンス中は、オンラインバンキング機能が断続的に使えない場合があります。",
   },
@@ -2248,7 +2202,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "uber",
     name: "Uber",
-    url: "https://www.uber.com/jp",
+    url: "https://www.uber.com/jp/ja/",
     category: "transport_travel",
     supportUrl: "https://help.uber.com/",
     serviceNote:
@@ -2285,10 +2239,10 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "auone",
-    name: "au one",
-    url: "https://www.auone.jp",
+    name: "au Webポータル",
+    url: "https://portal.auone.jp/",
     category: "search_portal",
-    supportUrl: "https://www.au.com/support/",
+    supportUrl: "https://portal.auone.jp/help",
     serviceNote:
       "ポータルは表示できても、連携サービスだけ開けない場合があります。",
   },
@@ -2509,11 +2463,12 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "t-point",
-    name: "T-Point",
-    url: "https://www.tsite.jp",
+    name: "Vポイント（旧Tポイント）",
+    url: "https://web.tsite.jp/vpoint/",
     category: "payments_finance",
-    supportUrl: "https://tsite.jp/inquiry/",
+    supportUrl: "https://web.tsite.jp/vpoint/",
     serviceNote: "アカウントページは表示できても、ポイント利用だけできない場合があります。",
+    aliases: ["Tポイント", "T-Point"],
   },
 
   {
@@ -2528,12 +2483,13 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "au-smartpass",
-    name: "au Smart Pass",
-    url: "https://www.au.com/service/smartpass/",
+    name: "Pontaパス（旧auスマートパス）",
+    url: "https://pass.auone.jp/",
     category: "telecom_isp",
     supportUrl: "https://www.au.com/support/",
     serviceNote:
       "キャンペーンページは表示できても、会員確認だけ失敗する場合があります。",
+    aliases: ["auスマートパス", "au Smart Pass"],
   },
 
   {
@@ -2734,7 +2690,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "passport-online",
     name: "Online Passport Application",
-    url: "https://www.mofa.go.jp/j_info/passport/",
+    url: "https://www.mofa.go.jp/mofaj/toko/passport/page22_004036.html",
     category: "government_public",
     serviceNote: "オンライン申請や状況照会が使えない場合があります。",
   },
@@ -2746,25 +2702,11 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote: "混雑時は申請状況の確認が失敗する場合があります。",
   },
   {
-    id: "childcare-benefits",
-    name: "Childcare Benefit Application",
-    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000135097.html",
-    category: "government_public",
-    serviceNote: "期限前は給付金申請ページが使えない場合があります。",
-  },
-  {
     id: "disaster-prevention-portal",
     name: "Cabinet Secretariat Disaster Portal",
     url: "https://www.bousai.go.jp",
     category: "government_public",
     serviceNote: "緊急時はリアルタイム更新が遅れる場合があります。",
-  },
-  {
-    id: "housing-benefit",
-    name: "Housing Support Benefit",
-    url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000212318.html",
-    category: "government_public",
-    serviceNote: "アクセス集中時は申請ページが開けない場合があります。",
   },
   {
     id: "local-tax-portal",
@@ -2797,7 +2739,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "tokyo-gas-outage",
     name: "Tokyo Gas Outage Information",
-    url: "https://home.tokyo-gas.co.jp/safety/",
+    url: "https://home.tokyo-gas.co.jp/",
     category: "government_public",
     serviceNote: "供給停止や障害のお知らせが遅れる場合があります。",
   },
@@ -2881,7 +2823,7 @@ export const STATUS_SITES: SiteConfig[] = [
   {
     id: "immigration-residence-online",
     name: "Residence Status Online Application",
-    url: "https://www.moj.go.jp/isa/online/",
+    url: "https://www.moj.go.jp/isa/applications/online/onlineshinsei.html",
     category: "government_public",
     serviceNote: "メンテナンス中はオンライン申請や状況確認が失敗する場合があります。",
   },
@@ -2894,13 +2836,6 @@ export const STATUS_SITES: SiteConfig[] = [
     serviceNote: "支給期限前は給付手続きページが開けない場合があります。",
   },
 
-  {
-    id: "childcare-application",
-    name: "Childcare Facility Application Portal",
-    url: "https://www.cfa.go.jp/policies/childcare/",
-    category: "government_public",
-    serviceNote: "自治体の締切前は申請が失敗する場合があります。",
-  },
 
   {
     id: "high-school-exam-results",
@@ -2933,13 +2868,6 @@ export const STATUS_SITES: SiteConfig[] = [
       "銀行サイトは開けても、認証だけ失敗する場合があります。",
   },
 
-  {
-    id: "chugoku-gas",
-    name: "Chugoku Gas",
-    url: "https://www.chugokugas.co.jp",
-    category: "government_public",
-    serviceNote: "障害発生中は供給停止のお知らせが遅れる場合があります。",
-  },
   {
     id: "toho-gas",
     name: "Toho Gas",

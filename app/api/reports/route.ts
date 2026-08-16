@@ -276,6 +276,13 @@ async function getHotReports() {
       level,
       reports: currentRows.length,
       reporters: currentReporters,
+      trend: [
+        ...baselineBuckets
+          .slice(0, 23)
+          .reverse()
+          .map((bucket) => bucket.size),
+        currentReporters,
+      ],
       topProblem: topType
         ? {
             label: getProblemLabel(serviceId, topType),
@@ -294,6 +301,7 @@ async function getHotReports() {
 
   return {
     hot,
+    services,
     monitoredServices: REPORTING_SERVICE_IDS.length,
     allNormal: hot.length === 0,
     updatedAt: new Date(now).toISOString(),
