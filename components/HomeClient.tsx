@@ -15,12 +15,39 @@ type CheckResult = {
   checkedUrl?: string;
 };
 
+function getUrlInputError(raw: string) {
+  if (!raw) return "チェックしたいサイトのURLを入力してください。";
+
+  try {
+    const explicitScheme = raw.match(/^([a-z][a-z\d+.-]*):\/\//i)?.[1];
+    if (explicitScheme && !/^https?$/i.test(explicitScheme)) {
+      throw new Error("unsupported protocol");
+    }
+
+    const candidate = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+    const parsed = new URL(candidate);
+
+    if (
+      !parsed.hostname ||
+      /\s/.test(raw) ||
+      (!parsed.hostname.includes(".") && !parsed.hostname.includes(":"))
+    ) {
+      throw new Error("invalid URL");
+    }
+  } catch {
+    return "有効なURLまたはドメインを入力してください。例：example.com";
+  }
+
+  return null;
+}
+
 export default function HomeClient() {
   const searchParams = useSearchParams();
 
   const [url, setUrl] = useState("");
   const [result, setResult] = useState<CheckResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [inputError, setInputError] = useState<string | null>(null);
 
   // Allow error articles to deep-link back into the checker:
   // /?url=example.com (or full https://...)
@@ -34,11 +61,14 @@ export default function HomeClient() {
 
   const handleCheck = async () => {
     const raw = url.trim();
-    if (!raw) {
-      alert("チェックしたいサイトのURLを入力してください。");
+    const validationError = getUrlInputError(raw);
+    if (validationError) {
+      setInputError(validationError);
+      setResult(null);
       return;
     }
 
+    setInputError(null);
     setLoading(true);
     setResult(null);
 
@@ -123,10 +153,19 @@ export default function HomeClient() {
               autoCorrect="off"
               spellCheck={false}
               aria-label="接続状況を確認するURL"
-              placeholder="例：google.com / https://example.com"
-              className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white px-4 py-3.5 text-sm text-slate-900 shadow-lg outline-none transition-all focus:ring-2 focus:ring-sky-400"
+              aria-invalid={Boolean(inputError)}
+              aria-describedby={inputError ? "site-check-input-error" : undefined}
+              placeholder="例：google.com"
+              className={`min-w-0 flex-1 rounded-xl border bg-white px-4 py-3.5 text-sm text-slate-900 shadow-lg outline-none transition-all focus:ring-2 ${
+                inputError
+                  ? "border-red-400 focus:ring-red-300"
+                  : "border-white/20 focus:ring-sky-400"
+              }`}
               value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={(e) => {
+                setUrl(e.target.value);
+                if (inputError) setInputError(null);
+              }}
               onKeyDown={onKeyDown}
             />
             <button
@@ -137,6 +176,16 @@ export default function HomeClient() {
               {loading ? "確認中..." : "チェック"}
             </button>
           </div>
+
+          {inputError && (
+            <p
+              id="site-check-input-error"
+              role="alert"
+              className="mt-2 text-sm font-medium text-red-200"
+            >
+              {inputError}
+            </p>
+          )}
 
           <p className="mt-3 text-center text-[11px] text-slate-400">
             入力例:{" "}
@@ -196,7 +245,7 @@ export default function HomeClient() {
                       </h3>
                     </div>
                     {result.checkedUrl && (
-                      <p className="text-xs text-slate-500 truncate max-w-[280px] sm:max-w-md font-mono">
+                      <p className="max-w-[280px] text-xs text-slate-500 [overflow-wrap:anywhere] sm:max-w-md font-mono">
                         {result.checkedUrl}
                       </p>
                     )}

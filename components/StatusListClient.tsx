@@ -22,6 +22,7 @@ type CheckResult = {
 };
 
 const FAVORITES_KEY = "saitodaun_status_favorites";
+const INITIAL_VISIBLE_SERVICES = 40;
 
 const QUICK_SERVICE_MARKS: Record<string, string> = {
   google: "G",
@@ -152,6 +153,7 @@ export default function StatusListClient() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [reportSignals, setReportSignals] = useState<Record<string, ReportSignal>>({});
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_SERVICES);
 
   const categoryCounts = getCategoryCounts();
 
@@ -219,6 +221,13 @@ export default function StatusListClient() {
     if (!query) return sortedSites;
     return sortedSites.filter((site) => getSearchText(site).includes(query));
   }, [searchQuery, sortedSites]);
+
+  const visibleSites = filteredSites.slice(0, visibleCount);
+  const remainingSiteCount = filteredSites.length - visibleSites.length;
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE_SERVICES);
+  }, [searchQuery]);
 
   const quickLinks = useMemo(() => {
     const ids = [
@@ -332,7 +341,11 @@ export default function StatusListClient() {
                         <span className={`h-2 w-2 rounded-full ${signal === "spike" ? "bg-rose-500" : signal === "elevated" ? "bg-amber-500" : "bg-emerald-500"}`} />
                         {signal === "spike" ? "報告急増" : signal === "elevated" ? "報告増加" : "通常範囲"}
                       </span>
-                    ) : null}
+                    ) : (
+                      <span className="text-[10px] font-bold text-slate-400">
+                        報告対象外
+                      </span>
+                    )}
                   </div>
                   <p className="mt-3 line-clamp-2 text-xs font-bold leading-5 text-slate-900 group-hover:text-sky-700">{s.name}</p>
                   <p className="mt-1 text-[10px] text-slate-400">{SITE_CATEGORIES[s.category]}</p>
@@ -387,12 +400,17 @@ export default function StatusListClient() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {filteredSites.map((site) => {
+                {visibleSites.map((site) => {
                   const result = results[site.id] || null;
                   const isLoading = loading[site.id] || false;
+                  const resultUnknown = Boolean(
+                    result && (result.error || result.status == null)
+                  );
                   const statusLabel = result
                     ? result.probeBlocked
                       ? "判定保留"
+                      : resultUnknown
+                      ? "確認不可"
                       : result.online
                       ? "オンライン"
                       : "オフライン"
@@ -401,6 +419,8 @@ export default function StatusListClient() {
                     ? "bg-slate-100 text-slate-400"
                     : result.probeBlocked
                     ? "bg-amber-100 text-amber-700"
+                    : resultUnknown
+                    ? "bg-slate-100 text-slate-600"
                     : result.online
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700";
@@ -422,7 +442,7 @@ export default function StatusListClient() {
                           type="button"
                           onClick={() => toggleFavorite(site.id)}
                           aria-label={`${site.name}をお気に入り${isFavorite(site.id) ? "から削除" : "に追加"}`}
-                          className={`text-xl transition-transform active:scale-150 ${
+                          className={`inline-flex min-h-11 min-w-11 items-center justify-center text-xl transition-transform active:scale-150 ${
                             isFavorite(site.id)
                               ? "text-amber-400"
                               : "text-slate-200 group-hover:text-slate-300"
@@ -491,7 +511,7 @@ export default function StatusListClient() {
                         <button
                           onClick={() => checkOne(site)}
                           disabled={isLoading}
-                          className="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-[10px] font-bold text-slate-600 shadow-sm transition-all hover:border-slate-400 disabled:opacity-50 sm:px-3"
+                          className="min-h-11 min-w-[80px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-bold text-slate-600 shadow-sm transition-all hover:border-slate-400 disabled:opacity-50"
                         >
                           {isLoading ? "..." : "再チェック"}
                         </button>
@@ -512,6 +532,19 @@ export default function StatusListClient() {
               </tbody>
             </table>
           </div>
+          {remainingSiteCount > 0 && (
+            <div className="border-t border-slate-200 bg-slate-50 p-4 text-center">
+              <button
+                type="button"
+                onClick={() =>
+                  setVisibleCount((count) => count + INITIAL_VISIBLE_SERVICES)
+                }
+                className="min-h-11 rounded-xl border border-slate-300 bg-white px-6 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:border-sky-400 hover:text-sky-700"
+              >
+                さらに表示（残り{remainingSiteCount}件）
+              </button>
+            </div>
+          )}
         </div>
 
         <section className="mb-12 bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">

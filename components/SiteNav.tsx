@@ -15,32 +15,32 @@ export default function SiteNav() {
           サイトダウン
         </Link>
 
-        <nav aria-label="主要ナビゲーション" className="flex items-center gap-3 text-[10px] sm:gap-4 sm:text-xs">
+        <nav aria-label="主要ナビゲーション" className="flex items-center gap-1 text-[11px] sm:gap-4 sm:text-xs">
           <Link
             href="/status"
             prefetch={false}
-            className="font-medium text-slate-600 hover:text-slate-900"
+            className="inline-flex min-h-11 items-center px-1 font-medium text-slate-600 hover:text-slate-900"
           >
             障害一覧
           </Link>
           <Link
             href="/faq"
             prefetch={false}
-            className="font-medium text-slate-600 hover:text-slate-900"
+            className="inline-flex min-h-11 items-center px-1 font-medium text-slate-600 hover:text-slate-900"
           >
             FAQ
           </Link>
           <Link
             href="/about"
             prefetch={false}
-            className="font-medium text-slate-600 hover:text-slate-900"
+            className="inline-flex min-h-11 items-center px-1 font-medium text-slate-600 hover:text-slate-900"
           >
             サイトについて
           </Link>
           <Link
             href="/contact"
             prefetch={false}
-            className="hidden border-l pl-4 font-medium text-slate-600 hover:text-slate-900 sm:block"
+            className="hidden min-h-11 items-center border-l pl-4 font-medium text-slate-600 hover:text-slate-900 sm:inline-flex"
           >
             お問い合わせ
           </Link>

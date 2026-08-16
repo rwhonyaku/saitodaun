@@ -8,6 +8,8 @@ function formatLabel(segment: string) {
   const map: Record<string, string> = {
     services: "サービス別トラブル",
     errors: "エラー解説",
+    outages: "障害情報",
+    troubleshooting: "トラブル対処",
     "not-working": "不具合",
     youtube: "YouTube",
     amazon: "Amazon",
@@ -35,7 +37,14 @@ export default function Breadcrumbs() {
   if (paths.length === 0) return null;
 
   const breadcrumbs = paths.map((segment, index) => {
-    const href = "/" + paths.slice(0, index + 1).join("/");
+    const verifiedParentRoutes: Record<string, string> = {
+      outages: "/status",
+      troubleshooting: "/troubleshooting-guide",
+    };
+    const href =
+      index === 0 && verifiedParentRoutes[segment]
+        ? verifiedParentRoutes[segment]
+        : "/" + paths.slice(0, index + 1).join("/");
 
     return {
       label: formatLabel(segment),

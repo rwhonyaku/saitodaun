@@ -226,9 +226,9 @@ export default function StatusClient({ id: propId }: { id: string }) {
           </div>
         </div>
 
-        <p className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-slate-500 break-all">
+        <p className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
           <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1">外部サーバーから確認</span>
-          <span>チェック対象：{site.url}</span>
+          <span className="min-w-0 [overflow-wrap:anywhere]">チェック対象：{site.url}</span>
         </p>
 
         {/* Result box */}
@@ -241,7 +241,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
             <button
               onClick={runCheck}
               disabled={loading}
-              className="rounded-md border border-slate-300 px-3 py-1 text-xs hover:bg-slate-50 disabled:opacity-60"
+              className="min-h-11 min-w-[88px] rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold hover:bg-slate-50 disabled:opacity-60"
             >
               {loading ? "チェック中..." : "再チェック"}
             </button>
@@ -264,7 +264,7 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 </p>
               )}
               {result.checkedUrl && (
-                <p className="text-[11px] text-slate-500 break-all">
+                <p className="text-[11px] text-slate-500 [overflow-wrap:anywhere]">
                   実際にチェックしたURL：{result.checkedUrl}
                 </p>
               )}

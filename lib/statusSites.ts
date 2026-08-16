@@ -2336,7 +2336,7 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "electric-power-tepco",
-    name: "TEPCO Power Grid",
+    name: "東京電力パワーグリッド",
     url: "https://www.tepco.co.jp",
     category: "government_public",
     supportUrl: "https://www.tepco.co.jp/pg/consignment/information/",
@@ -2345,7 +2345,7 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "kansai-electric",
-    name: "Kansai Electric Power",
+    name: "関西電力",
     url: "https://www.kepco.co.jp",
     category: "government_public",
     supportUrl: "https://www.kepco.co.jp/energy_supply/energy_supply_info/",
@@ -2355,7 +2355,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "waterworks-tokyo",
-    name: "Tokyo Waterworks Bureau",
+    name: "東京都水道局",
     url: "https://www.waterworks.metro.tokyo.lg.jp",
     category: "government_public",
     supportUrl: "https://www.waterworks.metro.tokyo.lg.jp/kurashi/",
@@ -2364,7 +2364,7 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "j-alert",
-    name: "J-Alert",
+    name: "Jアラート",
     url: "https://www.fdma.go.jp",
     category: "government_public",
     supportUrl: "https://www.fdma.go.jp/contact.html",
@@ -2374,7 +2374,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "weather-jma",
-    name: "Japan Meteorological Agency",
+    name: "気象庁",
     url: "https://www.jma.go.jp",
     category: "government_public",
     supportUrl: "https://www.jma.go.jp/jma/kishou/faq/index.html",
@@ -2655,7 +2655,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "post-office-search",
-    name: "Post Office Locator",
+    name: "郵便局検索",
     url: "https://www.post.japanpost.jp/office_search/",
     category: "government_public",
     supportUrl: "https://www.post.japanpost.jp/question/",
@@ -2663,7 +2663,7 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "customs-japan",
-    name: "Japan Customs",
+    name: "税関",
     url: "https://www.customs.go.jp",
     category: "government_public",
     supportUrl: "https://www.customs.go.jp/contact/",
@@ -2689,91 +2689,91 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "passport-online",
-    name: "Online Passport Application",
+    name: "パスポートオンライン申請",
     url: "https://www.mofa.go.jp/mofaj/toko/passport/page22_004036.html",
     category: "government_public",
     serviceNote: "オンライン申請や状況照会が使えない場合があります。",
   },
   {
     id: "immigration-online",
-    name: "Immigration Online Procedures",
+    name: "出入国在留管理庁 オンライン手続",
     url: "https://www.moj.go.jp/isa/applications/",
     category: "government_public",
     serviceNote: "混雑時は申請状況の確認が失敗する場合があります。",
   },
   {
     id: "disaster-prevention-portal",
-    name: "Cabinet Secretariat Disaster Portal",
+    name: "内閣府 防災情報",
     url: "https://www.bousai.go.jp",
     category: "government_public",
     serviceNote: "緊急時はリアルタイム更新が遅れる場合があります。",
   },
   {
     id: "local-tax-portal",
-    name: "Local Tax Portal",
+    name: "地方税ポータル",
     url: "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/",
     category: "government_public",
     serviceNote: "期限前は地方税の申告システムが使えない場合があります。",
   },
   {
     id: "chugoku-electric",
-    name: "Chugoku Electric Power",
+    name: "中国電力",
     url: "https://www.energia.co.jp",
     category: "government_public",
     serviceNote: "停電情報がリアルタイムに更新されない場合があります。",
   },
   {
     id: "hokuriku-electric",
-    name: "Hokuriku Electric Power",
+    name: "北陸電力",
     url: "https://www.rikuden.co.jp",
     category: "government_public",
     serviceNote: "地域別の停電情報更新が遅れる場合があります。",
   },
   {
     id: "shikoku-electric",
-    name: "Shikoku Electric Power",
+    name: "四国電力",
     url: "https://www.yonden.co.jp",
     category: "government_public",
     serviceNote: "障害発生中は復旧状況ページが開けない場合があります。",
   },
   {
     id: "tokyo-gas-outage",
-    name: "Tokyo Gas Outage Information",
+    name: "東京ガス 障害・供給情報",
     url: "https://home.tokyo-gas.co.jp/",
     category: "government_public",
     serviceNote: "供給停止や障害のお知らせが遅れる場合があります。",
   },
   {
     id: "osaka-water",
-    name: "Osaka City Waterworks",
+    name: "大阪市水道局",
     url: "https://www.city.osaka.lg.jp/suido/",
     category: "government_public",
     serviceNote: "障害情報やメンテナンス情報が表示できない場合があります。",
   },
   {
     id: "center-exam-results",
-    name: "University Entrance Exam Results",
+    name: "大学入試結果情報",
     url: "https://www.dnc.ac.jp",
     category: "education_exam",
     serviceNote: "アクセス集中時は結果照会ページが開けない場合があります。",
   },
   {
     id: "nursing-exam",
-    name: "National Nursing Exam Portal",
+    name: "看護師国家試験情報",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
     category: "education_exam",
     serviceNote: "試験結果の発表ページが遅くなる場合があります。",
   },
   {
     id: "care-worker-exam",
-    name: "Certified Care Worker Exam",
+    name: "介護福祉士国家試験",
     url: "https://www.sssc.or.jp",
     category: "education_exam",
     serviceNote: "申請ページや結果ページが使えない場合があります。",
   },
   {
     id: "teacher-certification",
-    name: "Teacher Certification Portal",
+    name: "教員免許・資格情報",
     url: "https://www.mext.go.jp",
     category: "education_exam",
     serviceNote: "繁忙期は認定手続きが失敗する場合があります。",
@@ -2815,14 +2815,14 @@ export const STATUS_SITES: SiteConfig[] = [
   },
   {
     id: "passport-status",
-    name: "Passport Application Status",
+    name: "パスポート申請状況",
     url: "https://www.mofa.go.jp/mofaj/toko/passport/",
     category: "government_public",
     serviceNote: "混雑時は申請状況の照会が使えない場合があります。",
   },
   {
     id: "immigration-residence-online",
-    name: "Residence Status Online Application",
+    name: "在留申請オンラインシステム",
     url: "https://www.moj.go.jp/isa/applications/online/onlineshinsei.html",
     category: "government_public",
     serviceNote: "メンテナンス中はオンライン申請や状況確認が失敗する場合があります。",
@@ -2830,7 +2830,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "japan-pension-benefit",
-    name: "Pension Benefit Procedures",
+    name: "年金給付手続き",
     url: "https://www.nenkin.go.jp/service/",
     category: "government_public",
     serviceNote: "支給期限前は給付手続きページが開けない場合があります。",
@@ -2839,14 +2839,14 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "high-school-exam-results",
-    name: "High School Entrance Exam Results",
+    name: "高校入試結果情報",
     url: "https://www.mext.go.jp",
     category: "education_exam",
     serviceNote: "発表直後は結果ページが開けない場合があります。",
   },
   {
     id: "national-medical-exam",
-    name: "National Medical Examination Portal",
+    name: "医師国家試験情報",
     url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000188411.html",
     category: "education_exam",
     serviceNote: "アクセス集中時は試験結果ページが遅い、または表示できない場合があります。",
@@ -2870,7 +2870,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "toho-gas",
-    name: "Toho Gas",
+    name: "東邦ガス",
     url: "https://www.tohogas.co.jp",
     category: "government_public",
     serviceNote: "メンテナンス情報や障害情報ページが一時的に使えない場合があります。",
@@ -2878,7 +2878,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "prefecture-disaster-info",
-    name: "Prefectural Disaster Information",
+    name: "都道府県防災情報",
     url: "https://www.bousai.go.jp",
     category: "government_public",
     serviceNote: "緊急時は地域の災害情報更新が遅れる場合があります。",
@@ -2886,7 +2886,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "school-lunch-system",
-    name: "School Lunch Payment System",
+    name: "学校給食費支払いシステム",
     url: "https://www.mext.go.jp",
     category: "education_exam",
     serviceNote: "支払いページや確認ページが使えない場合があります。",
@@ -2894,7 +2894,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "municipal-online-services",
-    name: "Municipal Online Services",
+    name: "自治体オンライン手続き",
     url: "https://www.digital.go.jp",
     category: "government_public",
     serviceNote: "アクセス集中時はオンライン申請が失敗する場合があります。",
@@ -2902,7 +2902,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "regional-tax-payment",
-    name: "Regional Tax Payment Portal",
+    name: "地方税支払いポータル",
     url: "https://www.soumu.go.jp",
     category: "government_public",
     serviceNote: "期限前は支払い確認ページが表示できない場合があります。",
@@ -2910,7 +2910,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "housing-registration",
-    name: "Housing Registration System",
+    name: "住宅登録システム",
     url: "https://www.mlit.go.jp",
     category: "government_public",
     serviceNote: "登録ページや照会ページが一時的に使えない場合があります。",
@@ -2918,7 +2918,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "medical-insurance-qualification",
-    name: "Health Insurance Qualification Check",
+    name: "健康保険資格確認",
     url: "https://www.mhlw.go.jp",
     category: "government_public",
     serviceNote: "システム更新中は資格確認が失敗する場合があります。",
@@ -2926,7 +2926,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "disaster-evacuation-info",
-    name: "Evacuation Information System",
+    name: "避難情報システム",
     url: "https://www.bousai.go.jp/taisaku/",
     category: "government_public",
     serviceNote: "避難情報ページがリアルタイムに更新されない場合があります。",
@@ -2934,7 +2934,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "regional-water-service",
-    name: "Regional Water Utility Services",
+    name: "地域水道サービス",
     url: "https://www.mlit.go.jp/mizukokudo/",
     category: "government_public",
     serviceNote: "障害情報やメンテナンス情報の更新が遅れる場合があります。",
@@ -2942,7 +2942,7 @@ export const STATUS_SITES: SiteConfig[] = [
 
   {
     id: "exam-application-portal",
-    name: "National Exam Application Portal",
+    name: "国家試験申請ポータル",
     url: "https://www.mext.go.jp",
     category: "education_exam",
     serviceNote: "締切前は申請送信が失敗する場合があります。",
