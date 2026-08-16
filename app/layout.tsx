@@ -4,14 +4,6 @@ import Script from "next/script";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE } from "@/lib/siteMeta";
-import { Inter, Noto_Sans_JP } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const noto = Noto_Sans_JP({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-  variable: "--font-noto",
-});
 
 const GA_ID = "G-4QCK1BW1VL";
 
@@ -38,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={`${inter.variable} ${noto.variable}`}>
+    <html lang="ja">
       <head>
         <script
           type="application/ld+json"
