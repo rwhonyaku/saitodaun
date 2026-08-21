@@ -179,7 +179,7 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Outlookで障害や不具合が起きているか確認できます。メール送受信だけ失敗する、ログインできない、予定表だけ不安定な時に影響範囲を確認します。",
   },
   discord: {
-    title: "Discord障害・不具合｜接続できない・通話できない時の現在状況",
+    title: "Discordは今落ちてる？（障害・接続状況チェック）",
     description:
       "Discordで障害や不具合が起きているか確認できます。接続できない、サーバーに入れない、ログインできない、メッセージやボイスチャットだけ使えない時に影響範囲を確認します。",
   },
@@ -289,7 +289,7 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Trelloで現在広い障害や不具合が起きているか確認できます。ボードは開くがカード編集や同期だけ失敗する場合は、一部機能の問題かも確認できます。",
   },
   "prime-video": {
-    title: "Prime Video障害・不具合｜今日見れない・再生できない時の現在状況",
+    title: "Amazon Prime Videoは今見れない？（障害・再生状況チェック）",
     description:
       "Prime Videoが今日見れない、再生できない、読み込めない、テレビアプリだけ止まる時に、Amazon側の障害か端末・回線側の問題かを確認できます。",
   },
