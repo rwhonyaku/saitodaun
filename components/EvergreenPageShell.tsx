@@ -202,48 +202,6 @@ export default function EvergreenPageShell({
                 </ul>
               </div>
 
-              {false ? (
-                <>
-              {/* FEATURED AD CARD */}
-              <div className="bg-gradient-to-br from-sky-500 to-sky-600 rounded-3xl p-6 text-white shadow-md">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="bg-white/20 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                    Editor&apos;s Choice
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold mb-2 leading-tight">ConoHa WING</h3>
-                <p className="text-[11px] opacity-90 mb-4 leading-relaxed font-medium">
-                  国内最速No.1サーバー。今なら最大53%OFFキャンペーン実施中。
-                </p>
-                <div className="space-y-2">
-                  <a
-                    href="https://af.moshimo.com/af/c/click?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="block w-full text-center py-2.5 bg-white text-sky-600 rounded-xl text-xs font-bold hover:bg-sky-50 transition-colors shadow-sm"
-                  >
-                    公式サイトを見る
-                  </a>
-                  <Link
-                    href="/conoha"
-                    prefetch={false}
-                    className="block w-full text-center py-2 text-white/90 underline underline-offset-2 text-[10px] font-bold hover:text-white transition-colors"
-                  >
-                    14,000円還元の受け取り方を確認 →
-                  </Link>
-                </div>
-                <img
-                  src="https://i.moshimo.com/af/i/impression?a_id=5400008&p_id=2312&pc_id=4967&pl_id=92340"
-                  width="1"
-                  height="1"
-                  style={{ border: "none" }}
-                  className="hidden"
-                  alt=""
-                />
-              </div>
-                </>
-              ) : null}
-
               {/* クイックチェック */}
               <div className="rounded-3xl bg-slate-900 p-6 text-white">
                 <p className="text-xs font-bold opacity-60 mb-2">クイックチェック</p>

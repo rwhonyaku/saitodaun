@@ -1,4 +1,3 @@
-import ConoHaPromoCard from "@/components/ConoHaPromoCard";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
@@ -133,7 +132,6 @@ export default function DnsGuidePage() {
               </Link>{" "}
               を確認してください。
             </>,
-            <ConoHaPromoCard key="conoha-dns" variant="dns" />,
           ],
         },
         {

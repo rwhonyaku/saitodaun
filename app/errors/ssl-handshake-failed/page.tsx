@@ -1,4 +1,3 @@
-import ConoHaPromoCard from "@/components/ConoHaPromoCard";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
@@ -104,15 +103,13 @@ export default function SSLHandshakePage() {
           body: [
             "会社や学校のネットワーク、または一部のISPでは、SSL通信が制限・干渉される場合があります。",
             "この場合、別回線で試すか、ネットワーク経由の影響かを確認する手段としてVPNを使うと原因を確認できます。",
-            <a
-              key="nordvpn"
-              href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=145604&url_id=880"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
+            <Link
+              key="vpn-guide"
+              href="/vpn"
               className="font-bold underline text-sky-600"
             >
-              → NordVPNで別経路から接続して確認する
-            </a>,
+              → VPNが役立つ条件と注意点を確認する
+            </Link>,
           ],
         },
         {
@@ -155,7 +152,6 @@ export default function SSLHandshakePage() {
                 サイトダウンで接続チェックする
               </Link>
             </div>,
-            <ConoHaPromoCard key="conoha-ssl" variant="dns" />,
           ],
         },
         {

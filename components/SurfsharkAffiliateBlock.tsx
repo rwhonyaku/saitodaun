@@ -1,4 +1,5 @@
 import { AFFILIATE_LINKS } from "@/lib/affiliateLinks";
+import AffiliateLink from "@/components/AffiliateLink";
 
 export default function SurfsharkAffiliateBlock() {
   const href = AFFILIATE_LINKS.surfshark?.url?.trim();
@@ -21,14 +22,14 @@ export default function SurfsharkAffiliateBlock() {
         <p className="text-[11px] text-slate-500">
           当サイトはアフィリエイト広告を利用しています。
         </p>
-        <a
+        <AffiliateLink
           href={href}
-          target="_blank"
-          rel="noopener noreferrer nofollow sponsored"
+          product="surfshark"
+          placement="vpn_context_block"
           className="inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-bold text-white hover:bg-sky-700 transition-colors"
         >
-          Surfsharkを確認する
-        </a>
+          料金・対応端末・利用条件を確認する
+        </AffiliateLink>
       </div>
     </div>
   );

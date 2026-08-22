@@ -151,7 +151,10 @@ export default function Error503ServiceUnavailablePage() {
               </Link>{" "}
               の整理も近い症状です。
             </>,
-            <ConoHaPromoCard key="conoha-503" />,
+            <ConoHaPromoCard
+              key="conoha-503"
+              context="site-owner-overload"
+            />,
           ],
         },
 

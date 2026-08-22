@@ -100,15 +100,13 @@ export default function Cloudflare522Page() {
           body: [
             "一部のネットワーク環境では、接続経路の問題によりタイムアウトが発生する場合があります。",
             "別回線や別経路での接続を確認する方法の一つとして、VPNを使って接続経路を切り替えて試すこともできます。",
-            <a
-              key="nordvpn"
-              href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=145604&url_id=880"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
+            <Link
+              key="vpn-guide"
+              href="/vpn"
               className="font-bold underline text-sky-600"
             >
-              → NordVPNで別経路から確認する
-            </a>,
+              → VPNが役立つ条件と注意点を確認する
+            </Link>,
           ],
         },
         {
