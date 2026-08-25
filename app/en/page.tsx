@@ -46,7 +46,7 @@ export default function EnglishPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <header className="border-b border-slate-800 bg-slate-950 text-white">
         <div className="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-4">
-          <Link href="/en" className="flex items-center gap-2.5 font-bold">
+          <Link href="/" aria-label="SiteDown homepage" className="flex items-center gap-2.5 font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]" aria-hidden="true"><span className="h-2.5 w-2.5 rounded-full bg-sky-400" /></span>
             SiteDown
           </Link>
@@ -100,7 +100,7 @@ export default function EnglishPage() {
       </section>
       <footer className="border-t border-slate-800 bg-slate-950 text-white">
         <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-xs leading-5 text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} SiteDown</p>
+          <p>© {new Date().getFullYear()} <Link href="/" className="underline underline-offset-2 hover:text-white">SiteDown</Link></p>
           <p>Independent reference data—not an official service announcement.</p>
         </div>
       </footer>
