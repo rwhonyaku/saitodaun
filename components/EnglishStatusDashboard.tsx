@@ -85,7 +85,7 @@ function validUrl(raw: string) {
 export default function EnglishStatusDashboard() {
   const [summary, setSummary] = useState<HotSummary | null>(null);
   const [feedError, setFeedError] = useState(false);
-  const [checkMode, setCheckMode] = useState<"service" | "website">("service");
+  const [checkMode, setCheckMode] = useState<"service" | "website">("website");
   const [serviceQuery, setServiceQuery] = useState("");
   const [url, setUrl] = useState("");
   const [checking, setChecking] = useState(false);
@@ -147,8 +147,8 @@ export default function EnglishStatusDashboard() {
         <h2 id="check-heading" className="mt-2 text-2xl font-bold tracking-tight text-slate-950">What do you want to check?</h2>
         <div className="mt-5 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
           <div className="grid grid-cols-2 gap-2" role="tablist" aria-label="Check type">
-            <button type="button" role="tab" aria-selected={checkMode === "service"} aria-controls="service-check-panel" onClick={() => setCheckMode("service")} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "service" ? "bg-slate-950 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Service status</button>
             <button type="button" role="tab" aria-selected={checkMode === "website"} aria-controls="website-check-panel" onClick={() => setCheckMode("website")} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "website" ? "bg-sky-600 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Website URL</button>
+            <button type="button" role="tab" aria-selected={checkMode === "service"} aria-controls="service-check-panel" onClick={() => setCheckMode("service")} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "service" ? "bg-slate-950 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Service reports</button>
           </div>
 
           {checkMode === "service" ? <div id="service-check-panel" role="tabpanel" className="p-3 sm:p-4">
