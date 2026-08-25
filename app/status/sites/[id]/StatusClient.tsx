@@ -315,39 +315,39 @@ export default function StatusClient({ id: propId }: { id: string }) {
         {isTwitterStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">
-              まず確認する
+              Xが落ちた・鯖落ちか判断する目安
             </h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-semibold text-slate-900">
-                  全体障害かもしれない
+                  広い障害の可能性
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  複数端末や別回線でも同じなら、まずこのページの結果と公式案内を優先します。
+                  複数端末と別回線の両方でタイムラインを更新できず、このページでも利用者報告が急増している場合は、X側の障害が疑われます。
                 </p>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-semibold text-slate-900">
-                  自分だけの不具合かもしれない
+                  一部機能だけの不具合
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  広く落ちていないのに使えないなら、端末・回線・ログイン状態の確認に進みます。
+                  タイムラインは見えるのに投稿、検索、通知、DM、画像の一部だけ失敗する場合は、全体の鯖落ちではなく部分障害の可能性があります。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">
+                  自分側の可能性
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  別端末や別回線では使える、または一つのアカウントだけ失敗する場合は、アプリ・回線・ログイン状態を先に確認します。
                 </p>
                 <Link
                   href="/services/x/not-working"
                   prefetch={false}
                   className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
                 >
-                  X（旧Twitter）が使えないときの確認 →
+                  自分だけ使えない時の確認 →
                 </Link>
-              </div>
-              <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">
-                  一部機能だけおかしい可能性
-                </p>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  タイムラインは見えるのに投稿、通知、DMだけ不安定なら、部分不具合の可能性があります。
-                </p>
               </div>
             </div>
           </section>

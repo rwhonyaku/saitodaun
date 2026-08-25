@@ -334,9 +334,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Amazon.co.jpで現在広い障害や不具合が起きているか確認できます。商品表示、ログイン、注文、決済、購入履歴だけ不安定な場合も確認できます。",
   },
   twitter: {
-    title: "X（旧Twitter）障害｜Twitter障害・通信障害・鯖落ちの現在状況",
+    title: "X（旧Twitter）は今落ちてる？Twitter障害・鯖落ちの現在状況",
     description:
-      "X（旧Twitter / Twitter）が今日繋がらない、落ちた、鯖落ち、通信障害かもしれない時に、広い障害か一部機能だけの不具合かを確認できます。",
+      "X（旧Twitter / Twitter）が今落ちてる、落ちた、繋がらない時に、接続結果と日本の利用者報告から、鯖落ち・通信障害か自分側の不具合かを確認できます。",
   },
   jalan: {
     title: "じゃらん障害・不具合｜予約できない・検索できない時の現在状況",
@@ -1423,8 +1423,8 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "Amazon.co.jpが使えない時の確認",
   },
   twitter: {
-    heading: "X（旧Twitter）は今落ちてる？障害・通信障害",
-    lead: "X（旧Twitter / Twitter）が今広く落ちているか、通信障害や鯖落ちに近い状態かを確認します。",
+    heading: "X（旧Twitter）は今落ちてる？Twitter障害・鯖落ち",
+    lead: "X（旧Twitter / Twitter）が今落ちた・繋がらない時に、接続結果と日本の利用者報告から広い障害かを確認します。",
     reinforcement:
       "タイムラインは開くが投稿だけ失敗する、通知だけ遅い、DMや画像だけ読み込めない場合は、一部機能だけの不具合の可能性があります。",
     secondaryReinforcement:
