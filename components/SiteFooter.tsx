@@ -21,6 +21,7 @@ const guideLinks = [
 ];
 
 const trustLinks = [
+  { href: "/en", label: "English status checker" },
   { href: "/about", label: "このサイトについて" },
   { href: "/how-it-works", label: "判定の仕組み" },
   { href: "/privacy", label: "プライバシーポリシー" },

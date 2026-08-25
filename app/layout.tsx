@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import DocumentLanguage from "@/components/DocumentLanguage";
 import { SITE } from "@/lib/siteMeta";
 
 const GA_ID = "G-4QCK1BW1VL";
@@ -53,6 +54,7 @@ export default function RootLayout({
       </head>
 
       <body className="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900 antialiased">
+        <DocumentLanguage />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
