@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CONNECTION_RESETとは？接続がリセットされた原因と確認方法 | サイトダウン",
+  title: "ERR_CONNECTION_RESETとは？接続がリセットされた原因と確認方法",
   description:
     "ERR_CONNECTION_RESET（接続がリセットされました）の意味、回線/VPN/プロキシ/ファイアウォール/サーバー側切断の切り分け、最短確認を解説します。",
+  alternates: { canonical: "/errors/connection-reset" },
 };
 
 export default function ConnectionResetPage() {

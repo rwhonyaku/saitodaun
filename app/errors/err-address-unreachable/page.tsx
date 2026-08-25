@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_ADDRESS_UNREACHABLEとは？原因と対処 | サイトダウン",
+  title: "ERR_ADDRESS_UNREACHABLEとは？原因と対処",
   description:
     "ERR_ADDRESS_UNREACHABLE の意味、接続先IPに到達できない原因、ルーター・回線・ローカルネットワークの見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-address-unreachable" }
 };
 
 export default function ErrAddressUnreachablePage() {

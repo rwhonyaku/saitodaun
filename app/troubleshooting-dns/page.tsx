@@ -2,9 +2,10 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
 export const metadata = {
-  title: "DNS・接続エラーの確認ハブ | サイトダウン",
+  title: "DNS・接続エラーの確認ハブ",
   description:
     "DNSや接続エラーを素早く切り分けるハブです。名前解決エラー、Wi-Fi差、回線差、ブラウザ差、特定サイトだけ開かない時の確認先へ案内します。",
+  alternates: { canonical: "/troubleshooting-dns" }
 };
 
 export default function DnsGuidePage() {

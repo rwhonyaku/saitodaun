@@ -3,16 +3,17 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CONNECTION_TIMED_OUTとは？原因と直し方 | サイトダウン",
+  title: "ERR_CONNECTION_TIMED_OUTとは？原因と直し方",
   description:
-    "ERR_CONNECTION_TIMED_OUT の意味、タイムアウトの典型原因（サイト側過負荷/回線/遮断/DNS）、ユーザー側でできる確認し、運営者側の改善ポイントを解説します。",
+    "ERR_CONNECTION_TIMED_OUTの意味と原因を解説。サイト側の過負荷か、回線・VPN・DNS・アクセス制限かを別回線で切り分け、対処する順番が分かります。",
+  alternates: { canonical: "/errors/err-connection-timed-out" },
 };
 
 export default function TimeoutPage() {
   return (
     <EvergreenPageShell
       h1="ERR_CONNECTION_TIMED_OUTとは？原因と直し方"
-      updatedAt="2026-03-03"
+      updatedAt="2026-08-25"
       lead={[
         "ERR_CONNECTION_TIMED_OUT は、サーバーに接続しようとしたが、一定時間内に応答（接続確立/通信）が返ってこなかったときに表示されるエラーです。",
         "サイト側の遅延・停止だけでなく、回線や途中の遮断でも起こります。まずは“自分だけ”か“サイト全体”かを確認するのが最短です。",

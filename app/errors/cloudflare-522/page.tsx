@@ -3,29 +3,36 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 522 Connection timed outとは？原因と確認方法 | サイトダウン",
+  title: "522エラーとは？Connection timed outの原因・対処",
   description:
-    "Cloudflare 522 Connection timed out の意味、サイト側か自分側かの最短確認、待つべきケース、520/524など関連エラーとの違いを整理します。",
+    "Cloudflare 522 Connection timed out／522 No Reason Phraseの意味を解説。サイト側か自分側かの確認と、閲覧者・管理者が次にすべきことを整理します。",
+  alternates: { canonical: "/errors/cloudflare-522" },
 };
 
 export default function Cloudflare522Page() {
   return (
     <EvergreenPageShell
-      h1="Cloudflare 522 Connection timed outとは？原因と確認方法"
-      updatedAt="2026-04-16"
+      h1="522エラー（Connection timed out）とは？原因と対処"
+      updatedAt="2026-08-25"
       lead={[
-        "Cloudflareエラー522（Connection timed out）は、Cloudflareがオリジンサーバーに接続できず、タイムアウトしたときに発生します。",
-        "多くの場合、これはサーバー側の問題であり、ユーザー側では解決できないケースがほとんどです。",
-        "まずは他の回線や端末でも同じかを確認し、状況を確認しましょう。",
+        "Cloudflare 522（Connection timed out）は、Cloudflareから接続先のWebサーバーへの接続が時間内に成立しなかったことを示します。",
+        "ほかのサイトが開き、別回線でも同じ522が出るなら、サイト側の問題である可能性が高く、閲覧者は復旧を待つのが基本です。",
       ]}
       sections={[
         {
           type: "list",
-          title: "最短の確認",
+          title: "522エラーの最短判断",
           items: [
             "他のサイトは正常に開けるか確認する",
             "スマホ回線（4G/5G）でも同じ522が出るか試す",
-            "しばらく時間をおいてから再試行する",
+            "両方で同じなら、リロードを繰り返さず時間をおいて再試行する",
+          ],
+        },
+        {
+          type: "p",
+          title: "「522 No Reason Phrase」と表示される場合",
+          body: [
+            "ツールやブラウザによっては「522 No Reason Phrase」と表示されます。これは別の障害ではなく、Cloudflare独自の522コードに対する説明文をそのツールが持っていないという表示です。確認手順は通常の522と同じです。",
           ],
         },
         {
@@ -115,6 +122,7 @@ export default function Cloudflare522Page() {
           items: [
             "Cloudflare 520：オリジンから想定外の応答が返っているときに出やすい",
             "Cloudflare 524：接続自体はできているが、応答待ちが長すぎるときに出やすい",
+            <span key="browser-timeout">ブラウザに「ERR_CONNECTION_TIMED_OUT」と出る場合は <Link href="/errors/err-connection-timed-out" className="underline">接続タイムアウトの切り分け</Link>を確認する</span>,
             "SSL Handshake Failed：タイムアウトではなく、TLSの確立段階で失敗している",
           ],
         },

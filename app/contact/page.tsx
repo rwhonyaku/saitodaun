@@ -1,7 +1,7 @@
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata = {
-  title: "お問い合わせ | サイトダウン",
+  title: "お問い合わせ",
   description: `${SITE.name}へのお問い合わせ方法、不具合報告、および運営への連絡先をまとめています。`,
   alternates: { canonical: "/contact" },
 };

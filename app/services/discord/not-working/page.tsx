@@ -9,9 +9,10 @@ const service = SERVICES.discord;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Discordがつながらない？（障害か自分側か） | サイトダウン",
+  title: "Discordがつながらない？（障害か自分側か）",
   description:
     "Discordがつながらない・読み込めない・通話が不安定な時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、VPN）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/discord/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

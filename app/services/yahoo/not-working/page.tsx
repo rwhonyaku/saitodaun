@@ -8,9 +8,10 @@ const service = SERVICES.yahoo;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Yahoo! JAPANが開かない・検索できない？（障害か自分側か） | サイトダウン",
+  title: "Yahoo! JAPANが開かない・検索できない？（障害か自分側か）",
   description:
     "Yahoo! JAPANが開かない・検索できない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/yahoo/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

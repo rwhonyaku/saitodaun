@@ -2,9 +2,10 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata = {
-  title: "HTTPステータスコード解説一覧 | サイトダウン",
+  title: "HTTPステータスコード解説一覧",
   description:
     "Webサイトの接続チェック時に表示されるHTTPステータスコード（200, 403, 404, 500, 503等）の意味を詳しく解説します。",
+  alternates: { canonical: "/glossary" }
 };
 
 export default function GlossaryPage() {

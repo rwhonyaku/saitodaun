@@ -67,7 +67,6 @@ const ERROR_ROUTES = [
   "dns-probe-finished-nxdomain",
   "err-address-unreachable",
   "err-cert-date-invalid",
-  "err-connection-reset",
   "err-connection-refused",
   "err-connection-timed-out",
   "err-empty-response",

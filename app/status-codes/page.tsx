@@ -2,9 +2,10 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
 export const metadata = {
-  title: "HTTPエラーコード詳細ガイド | サイトダウン",
+  title: "HTTPエラーコード詳細ガイド",
   description:
     "403, 404, 429, 500, 502, 503, 504やCloudflareエラーなど、ブラウザに表示されるエラーの意味と解決策を詳しく解説します。",
+  alternates: { canonical: "/status-codes" }
 };
 
 export default function StatusCodesPage() {

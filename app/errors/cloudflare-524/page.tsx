@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 524エラーとは？原因と直し方 | サイトダウン",
+  title: "Cloudflare 524エラーとは？原因と直し方",
   description:
     "Cloudflare 524（A timeout occurred）の意味、オリジン処理が遅い原因、ユーザー側の対処、運営者側の改善ポイントを解説します。",
+  alternates: { canonical: "/errors/cloudflare-524" }
 };
 
 export default function Cloudflare524Page() {

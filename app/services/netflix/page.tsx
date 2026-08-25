@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.netflix;
 
 export const metadata: Metadata = {
-  title: "Netflixのトラブル解決 | サイトダウン",
+  title: "Netflixのトラブル解決",
   description:
     "Netflixが再生できない・読み込めない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/netflix" }
 };
 
 export default function NetflixHubPage() {

@@ -8,9 +8,10 @@ const service = SERVICES.microsoft365;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Microsoft 365が使えない｜Outlook・Teams・ログイン不具合の確認 | サイトダウン",
+  title: "Microsoft 365が使えない｜Outlook・Teams・ログイン不具合の確認",
   description:
     "Microsoft 365でログインだけ失敗する、Outlookだけ送受信できない、Teamsだけ不安定な時に、障害か自分側の環境かを確認します。",
+  alternates: { canonical: "/services/microsoft365/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

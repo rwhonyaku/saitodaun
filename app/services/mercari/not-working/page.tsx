@@ -9,9 +9,10 @@ const service = SERVICES.mercari;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "メルカリが購入できない・出品できない？（障害か自分側か） | サイトダウン",
+  title: "メルカリが購入できない・出品できない？（障害か自分側か）",
   description:
     "メルカリが開かない・ログインできない・出品や購入ができない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/mercari/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

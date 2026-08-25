@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "401 Unauthorizedとは？原因と対処 | サイトダウン",
+  title: "401 Unauthorizedとは？原因と対処",
   description:
     "401 Unauthorized の意味、未ログインや認証失敗で起きる原因、403との違い、セッション切れや認証情報不整合、ユーザー側と運営側の見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/401-unauthorized" }
 };
 
 export default function Error401UnauthorizedPage() {

@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "429 Too Many Requestsとは？原因と直し方 | サイトダウン",
+  title: "429 Too Many Requestsとは？原因と直し方",
   description:
     "429 Too Many Requests の意味、アクセス制限（Rate Limit）の仕組み、Bot対策やWAFの影響、ユーザー側/運営者側の対処を解説します。",
+  alternates: { canonical: "/errors/429-too-many-requests" }
 };
 
 export default function Error429TooManyRequestsPage() {

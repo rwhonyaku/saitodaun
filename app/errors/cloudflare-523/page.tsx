@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 523エラーとは？原因と直し方 | サイトダウン",
+  title: "Cloudflare 523エラーとは？原因と直し方",
   description:
     "Cloudflare 523（Origin is unreachable）の意味、オリジンサーバーへ到達できない主な原因、DNSや経路設定ミスとの関係、ユーザー側と運営側の見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/cloudflare-523" }
 };
 
 export default function Cloudflare523Page() {

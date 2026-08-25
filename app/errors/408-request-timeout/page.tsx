@@ -3,9 +3,10 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "408 Request Timeoutとは？原因と対処法 | サイトダウン",
+  title: "408 Request Timeoutとは？原因と対処法",
   description:
     "408 Request Timeout の意味、504 や ERR_CONNECTION_TIMED_OUT との違い、回線不安定・途中中断・サーバー側待機切れなどの原因、見分け方を解説します。",
+  alternates: { canonical: "/errors/408-request-timeout" }
 };
 
 export default function Error408RequestTimeoutPage() {

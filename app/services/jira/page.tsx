@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.jira;
 
 export const metadata: Metadata = {
-  title: "Jiraのトラブル解決 | サイトダウン",
+  title: "Jiraのトラブル解決",
   description:
     "Jiraが開かない、ログインできない、更新できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/jira" }
 };
 
 export default function JiraHubPage() {

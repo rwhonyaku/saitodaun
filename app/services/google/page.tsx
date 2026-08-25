@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.google;
 
 export const metadata: Metadata = {
-  title: "Googleのトラブル解決 | サイトダウン",
+  title: "Googleのトラブル解決",
   description:
     "Google検索やGoogle関連サービスが開けない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/google" }
 };
 
 export default function GoogleHubPage() {

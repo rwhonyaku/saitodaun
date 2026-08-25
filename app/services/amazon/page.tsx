@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.amazon;
 
 export const metadata: Metadata = {
-  title: "Amazonのトラブル解決 | サイトダウン",
+  title: "Amazonのトラブル解決",
   description:
     "Amazonが開かない・ログインできない・購入できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/amazon" }
 };
 
 export default function AmazonHubPage() {

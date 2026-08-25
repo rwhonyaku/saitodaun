@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.instagram;
 
 export const metadata: Metadata = {
-  title: "Instagramのトラブル解決 | サイトダウン",
+  title: "Instagramのトラブル解決",
   description:
     "Instagramが読み込めない・表示されない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/instagram" }
 };
 
 export default function InstagramHubPage() {

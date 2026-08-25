@@ -9,9 +9,10 @@ const service = SERVICES.rakuten;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "楽天がログインできない・注文できない？（障害か自分側か） | サイトダウン",
+  title: "楽天がログインできない・注文できない？（障害か自分側か）",
   description:
     "楽天市場が開かない・ログインできない・注文できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/rakuten/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

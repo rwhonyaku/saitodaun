@@ -3,28 +3,29 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 520 Web server is returning an unknown errorとは？原因と確認方法 | サイトダウン",
+  title: "Web server is returning an unknown error（520）とは？原因・対処",
   description:
-    "Cloudflare 520（Web server is returning an unknown error）の意味、サイト側か自分側かの確認、520/522/524との違い、運営者側の確認ポイントを解説します。",
+    "Web server is returning an unknown error（Cloudflare 520）の意味と原因を解説。閲覧者が待つべきケースと、サイト管理者が確認する項目を切り分けます。",
+  alternates: { canonical: "/errors/cloudflare-520" },
 };
 
 export default function Cloudflare520Page() {
   return (
     <EvergreenPageShell
-      h1="Cloudflare 520 Web server is returning an unknown errorとは？原因と確認方法"
-      updatedAt="2026-03-03"
+      h1="Web server is returning an unknown error（Cloudflare 520）とは？"
+      updatedAt="2026-08-25"
       lead={[
-        "Cloudflare 520 は「Cloudflareがオリジンサーバーから“想定外の応答”を受け取った」時に表示されるエラーです。",
-        "Cloudflare自体が落ちているというより、背後のWebサーバー（オリジン）側で何かが起きているケースがほとんどです。まずは“自分だけ”か“サイト全体”かを確認するのが最短です。",
+        "「Web server is returning an unknown error」はCloudflareのエラーコード520です。Cloudflareが接続先のWebサーバーから空・不正・想定外の応答を受けたことを示します。",
+        "ほかのサイトが開くなら、まずサイト側の問題を疑います。閲覧者は別回線で一度だけ確認し、同じなら待つのが基本です。",
       ]}
       sections={[
         {
           type: "list",
-          title: "まず結論：520で起きていること",
+          title: "520エラーの意味と最短判断",
           items: [
             "ブラウザ → Cloudflare までは到達している",
-            "Cloudflare → オリジン間で、Cloudflareが解釈できない/不正な応答が返っている",
-            "原因はサイト側（オリジン）にあることが多い",
+            "Cloudflare → 接続先サーバー間で、空・不正・想定外の応答が返っている",
+            "別回線でも同じ520なら、サイト側の復旧を待つ",
           ],
         },
 

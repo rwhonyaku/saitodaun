@@ -7,8 +7,9 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.youtube;
 
 export const metadata: Metadata = {
-  title: "YouTubeのトラブル解決 | サイトダウン",
+  title: "YouTubeのトラブル解決",
   description: "YouTubeが見れない・読み込めない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/youtube" }
 };
 
 export default function YouTubeHubPage() {

@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.paypay;
 
 export const metadata: Metadata = {
-  title: "PayPayのトラブル解決 | サイトダウン",
+  title: "PayPayのトラブル解決",
   description:
     "PayPayが使えない・開かない・支払いできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/paypay" }
 };
 
 export default function PayPayHubPage() {

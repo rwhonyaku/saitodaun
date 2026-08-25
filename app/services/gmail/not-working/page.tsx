@@ -9,9 +9,10 @@ const service = SERVICES.gmail;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Gmailが送受信できない？（障害か自分側か） | サイトダウン",
+  title: "Gmailが送受信できない？（障害か自分側か）",
   description:
     "Gmailが開かない・送れない・受信できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/gmail/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

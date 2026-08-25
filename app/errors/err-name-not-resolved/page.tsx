@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_NAME_NOT_RESOLVEDとは？原因と対処 | サイトダウン",
+  title: "ERR_NAME_NOT_RESOLVEDとは？原因と対処",
   description:
     "ERR_NAME_NOT_RESOLVED の意味、DNS設定やドメインの問題、ユーザー側での確認方法、NXDOMAINとの違いを実用的に解説します。",
+  alternates: { canonical: "/errors/err-name-not-resolved" }
 };
 
 export default function ErrNameNotResolvedPage() {

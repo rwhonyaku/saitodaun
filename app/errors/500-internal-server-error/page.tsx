@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "500 Internal Server Errorとは？原因と対処 | サイトダウン",
+  title: "500 Internal Server Errorとは？原因と対処",
   description:
     "500 Internal Server Error の意味、よくある原因（設定ミス/プログラム/DB/プラグイン）、ユーザー側でできること、運営者側の復旧手順を解説します。",
+  alternates: { canonical: "/errors/500-internal-server-error" }
 };
 
 export default function Error500InternalServerErrorPage() {

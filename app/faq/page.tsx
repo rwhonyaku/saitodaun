@@ -3,8 +3,9 @@ import { SITE } from "@/lib/siteMeta";
 import Link from "next/link";
 
 export const metadata = {
-  title: "よくある質問（FAQ） | サイトダウン",
+  title: "よくある質問（FAQ）",
   description: `${SITE.name}の使い方や、接続判定結果の見方、トラブルシューティングの手順を分かりやすく解説します。`,
+  alternates: { canonical: "/faq" }
 };
 
 export default function FaqPage() {

@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "SSL Handshake Failedとは？原因・直し方・確認方法 | サイトダウン",
+  title: "SSL Handshake Failedとは？原因・直し方・確認方法",
   description:
     "SSL Handshake Failed の意味、最短の確認手順、サーバー側・ネットワーク側・端末側の原因の見分け方、関連するSSLエラーへの進み方を簡潔に整理します。",
+  alternates: { canonical: "/errors/ssl-handshake-failed" }
 };
 
 export default function SSLHandshakePage() {

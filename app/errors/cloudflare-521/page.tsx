@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 521エラーとは？原因と直し方 | サイトダウン",
+  title: "Cloudflare 521エラーとは？原因と直し方",
   description:
     "Cloudflare 521（Web server is down）の意味、オリジンサーバーが接続を拒否する主な原因、ユーザー側でできる確認し、運営者側の確認ポイントを実用的に解説します。",
+  alternates: { canonical: "/errors/cloudflare-521" }
 };
 
 export default function Cloudflare521Page() {

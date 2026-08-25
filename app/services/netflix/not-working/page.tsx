@@ -9,9 +9,10 @@ const service = SERVICES.netflix;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Netflixが見れない・再生できない？（障害か自分側か） | サイトダウン",
+  title: "Netflixが見れない・再生できない？（障害か自分側か）",
   description:
     "Netflixが再生できない・読み込めない・途中で止まる時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/netflix/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

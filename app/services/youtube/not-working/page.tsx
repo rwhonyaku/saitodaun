@@ -9,9 +9,10 @@ const service = SERVICES.youtube;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "YouTubeが見れない・開かない？（障害か自分側か） | サイトダウン",
+  title: "YouTubeが見れない・開かない？（障害か自分側か）",
   description:
     "YouTubeが見れない・読み込めない・再生できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/youtube/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

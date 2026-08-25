@@ -9,9 +9,10 @@ const service = SERVICES.zoom;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Zoomが入れない・接続できない？（障害か自分側か） | サイトダウン",
+  title: "Zoomが入れない・接続できない？（障害か自分側か）",
   description:
     "Zoomが開かない・会議に入れない・接続できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/zoom/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

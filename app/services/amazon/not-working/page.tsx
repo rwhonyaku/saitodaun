@@ -9,9 +9,10 @@ const service = SERVICES.amazon;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Amazonがログインできない・注文できない？（障害か自分側か） | サイトダウン",
+  title: "Amazonがログインできない・注文できない？（障害か自分側か）",
   description:
     "Amazonが開かない・ログインできない・注文できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アカウント）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/amazon/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

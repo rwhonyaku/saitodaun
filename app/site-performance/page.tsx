@@ -1,9 +1,10 @@
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata = {
-  title: "サイトが重い・表示が遅い時の測定と対策 | サイトダウン",
+  title: "サイトが重い・表示が遅い時の測定と対策",
   description:
     "サイトが落ちているわけではないのに、表示が極端に遅い原因と測定方法を解説します。",
+  alternates: { canonical: "/site-performance" }
 };
 
 export default function PerformancePage() {

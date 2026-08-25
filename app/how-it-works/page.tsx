@@ -2,8 +2,9 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata = {
-  title: "仕組み・チェック内容について | サイトダウン",
+  title: "仕組み・チェック内容について",
   description: `${SITE.name}が採用している外形監視技術と、接続判定のプロセスを専門的に解説します。`,
+  alternates: { canonical: "/how-it-works" }
 };
 
 export default function HowItWorksPage() {

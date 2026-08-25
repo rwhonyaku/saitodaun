@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.gmail;
 
 export const metadata: Metadata = {
-  title: "Gmailのトラブル解決 | サイトダウン",
+  title: "Gmailのトラブル解決",
   description:
     "Gmailが開かない・送受信できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/gmail" }
 };
 
 export default function GmailHubPage() {

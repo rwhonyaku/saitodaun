@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "「この接続ではプライバシーが保護されません」とは？原因と対処 | サイトダウン",
+  title: "「この接続ではプライバシーが保護されません」とは？原因と対処",
   description:
     "「この接続ではプライバシーが保護されません」の意味、証明書エラーや時刻ずれ、社内ネットワーク干渉などの原因、ユーザー側での確認方法を解説します。",
+  alternates: { canonical: "/errors/your-connection-is-not-private" }
 };
 
 export default function YourConnectionIsNotPrivatePage() {

@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_EMPTY_RESPONSEとは？原因と対処 | サイトダウン",
+  title: "ERR_EMPTY_RESPONSEとは？原因と対処",
   description:
     "ERR_EMPTY_RESPONSE の意味、サーバーが応答を返さない原因、ブラウザ・回線・サーバー側の見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-empty-response" }
 };
 
 export default function ErrEmptyResponsePage() {

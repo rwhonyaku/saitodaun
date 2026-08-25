@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CERT_DATE_INVALIDとは？原因と対処 | サイトダウン",
+  title: "ERR_CERT_DATE_INVALIDとは？原因と対処",
   description:
     "ERR_CERT_DATE_INVALID の意味、証明書の期限切れや端末時刻ずれで起きる原因、ユーザー側での見分け方、運営者側の確認ポイントを実用的に解説します。",
+  alternates: { canonical: "/errors/err-cert-date-invalid" }
 };
 
 export default function ErrCertDateInvalidPage() {

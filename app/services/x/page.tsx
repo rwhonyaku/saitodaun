@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.x;
 
 export const metadata: Metadata = {
-  title: "Xのトラブル解決 | サイトダウン",
+  title: "Xのトラブル解決",
   description:
     "X（旧Twitter）が開かない・読み込めない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/x" }
 };
 
 export default function XHubPage() {

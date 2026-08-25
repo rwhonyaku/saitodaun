@@ -6,9 +6,10 @@ const service = SERVICES.jira;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Jiraが使えない時の対処法 | サイトダウン",
+  title: "Jiraが使えない時の対処法",
   description:
     "Jiraが開かない・ログインできない・更新できない時に、障害か自分の環境（回線、DNS、ブラウザ、SSO、VPN）かを確認して対処します。",
+  alternates: { canonical: "/services/jira/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

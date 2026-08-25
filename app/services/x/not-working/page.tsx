@@ -9,14 +9,15 @@ const service = SERVICES.x;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "X（旧Twitter）が開かない・ログインできない時の原因確認 | サイトダウン",
+  title: "X（旧Twitter）が開かない・ログインできない時の原因確認",
   description:
     "X（旧Twitter）が広く落ちていないのに開かない、読み込めない、ログインできない時に、自分側の回線・アプリ・端末が原因かを確認します。",
+  alternates: { canonical: "/services/x/not-working" }
 };
 
 const ERROR_LABELS: Record<string, string> = {
   "err-connection-timed-out": "接続がタイムアウトするとき",
-  "err-connection-reset": "接続が途中でリセットされるとき",
+  "connection-reset": "接続が途中でリセットされるとき",
   "dns-probe-finished-nxdomain": "DNS で接続先が見つからないとき",
   "ssl-handshake-failed": "SSL / TLS の接続に失敗するとき",
   "503-service-unavailable": "503 Service Unavailable が出るとき",

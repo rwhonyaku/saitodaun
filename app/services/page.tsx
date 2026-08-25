@@ -5,9 +5,10 @@ import type { Metadata } from "next";
 import { listServices } from "@/lib/services/registry";
 
 export const metadata: Metadata = {
-  title: "サービス別トラブル解決 | サイトダウン",
+  title: "サービス別トラブル解決",
   description:
     "YouTube、LINE、X、Amazon、PayPay、楽天、Yahoo! JAPAN、TikTok、Zoomなど、サービスが使えない時に「障害か自分側か」を最短で確認して対処するガイド集です。",
+  alternates: { canonical: "/services" }
 };
 
 export default function ServicesIndexPage() {

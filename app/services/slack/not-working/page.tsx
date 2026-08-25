@@ -6,9 +6,10 @@ const service = SERVICES.slack;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Slackが使えない・送れない時の原因確認｜障害か自分側か | サイトダウン",
+  title: "Slackが使えない・送れない時の原因確認｜障害か自分側か",
   description:
     "Slackが開かない、メッセージを送れない、通知が来ない、ログインできない時に、Slack側の障害か回線・DNS・ブラウザ・アプリ・VPN側かを確認します。",
+  alternates: { canonical: "/services/slack/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

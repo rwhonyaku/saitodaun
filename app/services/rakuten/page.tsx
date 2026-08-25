@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.rakuten;
 
 export const metadata: Metadata = {
-  title: "楽天のトラブル解決 | サイトダウン",
+  title: "楽天のトラブル解決",
   description:
     "楽天が開かない・ログインできない・購入できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/rakuten" }
 };
 
 export default function RakutenHubPage() {

@@ -90,7 +90,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "503-service-unavailable",
@@ -124,7 +124,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["youtube 見れない", "youtube 開かない", "youtube 読み込めない", "youtube 再生できない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "err-connection-refused",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
@@ -166,7 +166,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["line 開かない", "line 送れない", "line 通話 できない", "line 繋がらない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
         ],
@@ -198,7 +198,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["twitter 開かない", "x 開かない", "x 読み込めない", "x ログインできない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "503-service-unavailable",
@@ -233,7 +233,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "503-service-unavailable",
@@ -267,7 +267,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["instagram 読み込めない", "インスタ 開かない", "インスタ 表示されない", "インスタ ログインできない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
         ],
@@ -296,7 +296,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["amazon ログインできない", "amazon 開かない", "amazon 購入できない", "amazon エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -328,7 +328,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["chatgpt 使えない", "chatgpt ログインできない", "chatgpt 開かない", "chatgpt エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "429-too-many-requests",
@@ -431,7 +431,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["netflix 再生できない", "netflix 読み込めない", "netflix エラー", "ネトフリ 見れない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "504-gateway-timeout",
@@ -461,7 +461,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["discord つながらない", "discord 読み込めない", "discord 接続できない", "discord エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -523,7 +523,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["楽天 開かない", "楽天 ログインできない", "楽天市場 エラー", "楽天 つながらない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -555,7 +555,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["yahoo 開かない", "yahoo japan 開かない", "yahoo 検索できない", "yahoo エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -586,7 +586,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["tiktok 開かない", "tiktok 読み込めない", "tiktok 見れない", "tiktok エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "503-service-unavailable",
@@ -616,7 +616,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["zoom 入れない", "zoom 接続できない", "zoom 開かない", "zoom エラー"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "504-gateway-timeout",
@@ -646,7 +646,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         intentPhrases: ["メルカリ 開かない", "メルカリ ログインできない", "メルカリ エラー", "メルカリ 使えない"],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -743,7 +743,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "502-bad-gateway",
@@ -783,7 +783,7 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
         ],
         relatedErrorSlugs: [
           "err-connection-timed-out",
-          "err-connection-reset",
+          "connection-reset",
           "dns-probe-finished-nxdomain",
           "ssl-handshake-failed",
           "503-service-unavailable",

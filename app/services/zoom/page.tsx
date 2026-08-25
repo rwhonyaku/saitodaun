@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.zoom;
 
 export const metadata: Metadata = {
-  title: "Zoomのトラブル解決 | サイトダウン",
+  title: "Zoomのトラブル解決",
   description:
     "Zoomが開かない・入れない・接続できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/zoom" }
 };
 
 export default function ZoomHubPage() {

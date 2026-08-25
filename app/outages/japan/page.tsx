@@ -5,7 +5,7 @@ import Link from "next/link";
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata: Metadata = {
-  title: "日本でネット障害？（広域障害か自分側か） | サイトダウン",
+  title: "日本でネット障害？（広域障害か自分側か）",
   description:
     "「どのサイトも見れない」「ネットが繋がらない」時に、広域障害の可能性と自分側（回線/DNS/端末）の確認を2分で完了できるガイドです。主要サービスの障害確認リンクもまとめています。",
   alternates: { canonical: "/outages/japan" },
@@ -41,7 +41,7 @@ const COMMON_ERRORS: ErrorLink[] = [
   { slug: "cloudflare-524", label: "Cloudflare 524" },
   { slug: "dns-probe-finished-nxdomain", label: "DNS_PROBE_FINISHED_NXDOMAIN" },
   { slug: "err-connection-timed-out", label: "ERR_CONNECTION_TIMED_OUT" },
-  { slug: "err-connection-reset", label: "ERR_CONNECTION_RESET" },
+  { slug: "connection-reset", label: "ERR_CONNECTION_RESET" },
   { slug: "err-connection-refused", label: "ERR_CONNECTION_REFUSED" },
   { slug: "ssl-handshake-failed", label: "SSL_HANDSHAKE_FAILED" },
 ];

@@ -4,9 +4,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "503 Service Unavailableとは？原因と直し方 | サイトダウン",
+  title: "503 Service Unavailableとは？原因と直し方",
   description:
     "503 Service Unavailable の意味、アクセス集中・メンテナンス・リソース不足などの原因、待つべきか確認する方法、運営者側の対処を解説します。",
+  alternates: { canonical: "/errors/503-service-unavailable" }
 };
 
 export default function Error503ServiceUnavailablePage() {

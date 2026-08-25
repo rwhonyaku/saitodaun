@@ -45,7 +45,7 @@ export async function generateMetadata(
 
   if (!isSiteCategory(key)) {
     return {
-      title: `カテゴリが見つかりません｜${SITE.name}`,
+      title: "カテゴリが見つかりません",
       description: "指定されたカテゴリは見つかりませんでした。",
       alternates: { canonical: `${base}/status` },
       robots: { index: false, follow: false },
@@ -53,7 +53,7 @@ export async function generateMetadata(
   }
 
   const label = SITE_CATEGORIES[key];
-  const title = `${label}の障害・稼働状況｜${SITE.name}`;
+  const title = `${label}の障害・稼働状況`;
   const description = `${label}に分類される主要サービスの障害・稼働状況を一覧で確認できます。`;
 
   return {

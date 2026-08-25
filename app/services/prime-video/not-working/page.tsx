@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import IMobileAd from "@/components/ads/IMobileAd";
 
 export const metadata: Metadata = {
-  title: "プライムビデオが見れない・再生できない時の原因確認｜障害か自分側か | サイトダウン",
+  title: "プライムビデオが見れない・再生できない時の原因確認｜障害か自分側か",
   description:
     "プライムビデオが今日見れない、再生できない、エラーが出る、テレビだけ見れない時に、Amazon側の障害か端末・アプリ・回線側かを確認します。",
+  alternates: { canonical: "/services/prime-video/not-working" }
 };
 
 export default function PrimeVideoNotWorkingPage() {

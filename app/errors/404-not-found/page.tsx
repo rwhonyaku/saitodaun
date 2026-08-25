@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "404 Not Foundとは？原因と対処 | サイトダウン",
+  title: "404 Not Foundとは？原因と対処",
   description:
     "404 Not Found の意味、URL間違い・ページ削除・リンク切れなどの原因、ユーザー側でできる対処、運営者側の改善（リダイレクト/404設計）を解説します。",
+  alternates: { canonical: "/errors/404-not-found" }
 };
 
 export default function Error404NotFoundPage() {

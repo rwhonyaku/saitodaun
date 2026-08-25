@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.mercari;
 
 export const metadata: Metadata = {
-  title: "メルカリのトラブル解決 | サイトダウン",
+  title: "メルカリのトラブル解決",
   description:
     "メルカリが開かない・ログインできない・購入できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/mercari" }
 };
 
 export default function MercariHubPage() {

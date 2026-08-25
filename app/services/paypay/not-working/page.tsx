@@ -9,9 +9,10 @@ const service = SERVICES.paypay;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "PayPayが使えない・支払いできない？（障害か自分側か） | サイトダウン",
+  title: "PayPayが使えない・支払いできない？（障害か自分側か）",
   description:
     "PayPayが開かない・使えない・支払いできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ、アカウント）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/paypay/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

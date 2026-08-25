@@ -9,9 +9,10 @@ const service = SERVICES.instagram;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Instagramが見れない・投稿できない？（障害か自分側か） | サイトダウン",
+  title: "Instagramが見れない・投稿できない？（障害か自分側か）",
   description:
     "Instagram（インスタ）が読み込めない・表示されない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/instagram/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

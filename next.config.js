@@ -15,6 +15,11 @@ const nextConfig = {
         destination: "/status/sites/twitter",
         permanent: true,
       },
+      {
+        source: "/errors/err-connection-reset",
+        destination: "/errors/connection-reset",
+        permanent: true,
+      },
     ];
   },
 };

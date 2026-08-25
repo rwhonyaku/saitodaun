@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.outlook;
 
 export const metadata: Metadata = {
-  title: "Outlookのトラブル解決 | サイトダウン",
+  title: "Outlookのトラブル解決",
   description:
     "Outlookが開かない・ログインできない・メールを送受信できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/outlook" }
 };
 
 export default function OutlookHubPage() {

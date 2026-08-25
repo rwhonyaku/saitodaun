@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.notion;
 
 export const metadata: Metadata = {
-  title: "Notionのトラブル解決 | サイトダウン",
+  title: "Notionのトラブル解決",
   description:
     "Notionが開かない・重い・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/notion" }
 };
 
 export default function NotionHubPage() {

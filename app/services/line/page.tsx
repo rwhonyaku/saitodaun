@@ -7,8 +7,9 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.line;
 
 export const metadata: Metadata = {
-  title: "LINEのトラブル解決 | サイトダウン",
+  title: "LINEのトラブル解決",
   description: "LINEが開かない・送れない・通話できない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/line" }
 };
 
 export default function LineHubPage() {

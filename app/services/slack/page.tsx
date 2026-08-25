@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.slack;
 
 export const metadata: Metadata = {
-  title: "Slackのトラブル解決 | サイトダウン",
+  title: "Slackのトラブル解決",
   description:
     "Slackが開かない、送れない、通知が来ない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/slack" }
 };
 
 export default function SlackHubPage() {

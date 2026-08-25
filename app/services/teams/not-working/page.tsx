@@ -2,9 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Teamsが使えない・会議に入れない時の対処法｜自分側か確認 | サイトダウン",
+  title: "Teamsが使えない・会議に入れない時の対処法｜自分側か確認",
   description:
     "Teamsが使えない、会議に入れない、ログインできない、チャットが送れない時に、Microsoft側の障害、SSO、会社VPN・ファイアウォール、アプリ不具合を確認します。",
+  alternates: { canonical: "/services/teams/not-working" }
 };
 
 export default function TeamsNotWorkingPage() {

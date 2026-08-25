@@ -8,9 +8,10 @@ const service = SERVICES.tiktok;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "TikTokが開かない・見れない？（障害か自分側か） | サイトダウン",
+  title: "TikTokが開かない・見れない？（障害か自分側か）",
   description:
     "TikTokが開かない・読み込めない・動画が見れない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/tiktok/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

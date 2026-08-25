@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
-  title: "プライバシーポリシー | サイトダウン",
+  title: "プライバシーポリシー",
   description: `${SITE.name}における情報の取り扱い、広告・解析・アフィリエイトに関する方針を掲載しています。`,
   alternates: { canonical: "/privacy" },
 };

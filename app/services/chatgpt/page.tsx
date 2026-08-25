@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.chatgpt;
 
 export const metadata: Metadata = {
-  title: "ChatGPTのトラブル解決 | サイトダウン",
+  title: "ChatGPTのトラブル解決",
   description:
     "ChatGPTが開かない・使えない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/chatgpt" }
 };
 
 export default function ChatGPTHubPage() {

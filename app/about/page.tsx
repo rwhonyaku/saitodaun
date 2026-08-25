@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
-  title: "このサイトについて | サイトダウン",
+  title: "このサイトについて",
   description: `${SITE.name}の運営方針、接続チェックの仕組み、および情報の正確性に関するガイドラインを掲載しています。`,
+  alternates: { canonical: "/about" }
 };
 
 export default function AboutPage() {

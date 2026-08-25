@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "Cloudflare 526エラーとは？原因と直し方 | サイトダウン",
+  title: "Cloudflare 526エラーとは？原因と直し方",
   description:
     "Cloudflare 526（Invalid SSL certificate）の意味、Cloudflare とオリジンサーバー間の証明書不整合、525 や一般的な証明書警告との違い、見分け方を解説します。",
+  alternates: { canonical: "/errors/cloudflare-526" }
 };
 
 export default function Cloudflare526Page() {

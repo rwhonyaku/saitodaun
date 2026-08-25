@@ -8,9 +8,10 @@ const service = SERVICES.outlook;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Outlookが開かない・メール送受信できない？（障害か自分側か） | サイトダウン",
+  title: "Outlookが開かない・メール送受信できない？（障害か自分側か）",
   description:
     "Outlookが開かない・ログインできない・メールを送受信できない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/outlook/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

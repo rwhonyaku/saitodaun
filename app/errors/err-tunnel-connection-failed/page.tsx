@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_TUNNEL_CONNECTION_FAILEDとは？原因と対処 | サイトダウン",
+  title: "ERR_TUNNEL_CONNECTION_FAILEDとは？原因と対処",
   description:
     "ERR_TUNNEL_CONNECTION_FAILED の意味、プロキシやVPN、社内ネットワーク、ブラウザ設定の不整合で起きる原因と見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-tunnel-connection-failed" }
 };
 
 export default function ErrTunnelConnectionFailedPage() {

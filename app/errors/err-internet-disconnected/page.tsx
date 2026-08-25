@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_INTERNET_DISCONNECTEDとは？原因と対処 | サイトダウン",
+  title: "ERR_INTERNET_DISCONNECTEDとは？原因と対処",
   description:
     "ERR_INTERNET_DISCONNECTED の意味、Wi-Fi切断やルーター不調、回線障害、端末側の接続切れで起きる原因と、ユーザー側での見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-internet-disconnected" }
 };
 
 export default function ErrInternetDisconnectedPage() {

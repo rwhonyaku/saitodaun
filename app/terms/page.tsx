@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
-  title: "利用規約 | サイトダウン",
+  title: "利用規約",
   description: `${SITE.name}の利用条件（免責・禁止事項等）を定めています。`,
   alternates: { canonical: "/terms" },
 };

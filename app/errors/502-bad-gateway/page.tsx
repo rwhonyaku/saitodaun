@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "502 Bad Gatewayとは？原因と直し方 | サイトダウン",
+  title: "502 Bad Gatewayとは？原因と直し方",
   description:
     "502 Bad Gateway の意味、よくある原因（Cloudflare/Nginx/負荷/上流障害）、ユーザー側でできる対処、運営者側の確認ポイントを具体的に解説します。",
+  alternates: { canonical: "/errors/502-bad-gateway" }
 };
 
 export default function Error502BadGatewayPage() {

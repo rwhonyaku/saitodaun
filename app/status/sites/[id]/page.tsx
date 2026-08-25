@@ -1474,7 +1474,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
   if (!site) {
     return {
-      title: `ステータスが見つかりません｜${SITE.name}`,
+      title: "ステータスが見つかりません",
       description: "指定されたサービスは見つかりませんでした。",
       alternates: { canonical: `${base}/status` },
       robots: { index: false, follow: false },
@@ -1482,7 +1482,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   }
 
   const effectiveTitle =
-    statusOverrides[site.id]?.title ?? `${site.name} は今落ちてる？（障害・稼働状況チェック）｜${SITE.name}`;
+    statusOverrides[site.id]?.title ?? `${site.name} は今落ちてる？（障害・稼働状況チェック）`;
   const effectiveDescription =
     statusOverrides[site.id]?.description ??
     `${site.name} の稼働状況（オンライン／オフライン）を簡易チェック。HTTPステータスや応答時間も確認できます。`;

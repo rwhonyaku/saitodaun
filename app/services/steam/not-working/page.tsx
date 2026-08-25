@@ -2,9 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Steamが使えない・開かない時の対処法｜ログイン・接続・重い | サイトダウン",
+  title: "Steamが使えない・開かない時の対処法｜ログイン・接続・重い",
   description:
     "Steamが使えない・開かない時に、ログインできない・接続できない・ストアが重い症状を短く確認するためのページです。",
+  alternates: { canonical: "/services/steam/not-working" }
 };
 
 export default function SteamNotWorkingPage() {

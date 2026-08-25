@@ -8,9 +8,10 @@ const service = SERVICES.chatgpt;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "ChatGPTが使えない？（障害か自分側か） | サイトダウン",
+  title: "ChatGPTが使えない？（障害か自分側か）",
   description:
     "ChatGPTが開かない・使えない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、VPN）かを最短で確認し、すぐ試せる対処をまとめます。",
+  alternates: { canonical: "/services/chatgpt/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

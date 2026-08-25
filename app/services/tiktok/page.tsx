@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.tiktok;
 
 export const metadata: Metadata = {
-  title: "TikTokのトラブル解決 | サイトダウン",
+  title: "TikTokのトラブル解決",
   description:
     "TikTokが開かない・読み込めない・見れない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/tiktok" }
 };
 
 export default function TikTokHubPage() {

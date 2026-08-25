@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "403 Forbiddenとは？原因と直し方 | サイトダウン",
+  title: "403 Forbiddenとは？原因と直し方",
   description:
     "403 Forbidden の意味、IP/地域制限・WAF・権限不足などの原因、ユーザー側の対処、運営者側の設定ポイントを解説します。",
+  alternates: { canonical: "/errors/403-forbidden" }
 };
 
 export default function Error403ForbiddenPage() {

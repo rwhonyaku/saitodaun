@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_TOO_MANY_REDIRECTSとは？原因と対処 | サイトダウン",
+  title: "ERR_TOO_MANY_REDIRECTSとは？原因と対処",
   description:
     "ERR_TOO_MANY_REDIRECTS の意味、リダイレクトループが起きる原因、Cookieやログイン状態の不整合、HTTPSやWWWの転送設定ミス、ユーザー側での見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-too-many-redirects" }
 };
 
 export default function ErrTooManyRedirectsPage() {

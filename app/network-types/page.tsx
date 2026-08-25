@@ -1,9 +1,10 @@
 import EvergreenPageShell from "@/components/EvergreenPageShell";
 
 export const metadata = {
-  title: "モバイル回線とWi-Fiで判定が異なる理由 | サイトダウン",
+  title: "モバイル回線とWi-Fiで判定が異なる理由",
   description:
     "なぜ4G/5Gでは見れるのに、自宅のWi-Fiではサイトが見れないのか？その理由を解説します。",
+  alternates: { canonical: "/network-types" }
 };
 
 export default function NetworkTypesPage() {

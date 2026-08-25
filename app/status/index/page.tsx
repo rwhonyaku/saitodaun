@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE } from "@/lib/siteMeta";
 import { SITE_CATEGORIES, type SiteCategory } from "@/lib/statusSites";
 
 export const metadata: Metadata = {
-  title: `カテゴリ別ステータス一覧｜${SITE.name}`,
+  title: "カテゴリ別ステータス一覧",
   description: "カテゴリ別に主要サービスの障害・稼働状況ページを探せます。",
   alternates: { canonical: "/status/index" },
 };

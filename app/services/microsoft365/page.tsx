@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.microsoft365;
 
 export const metadata: Metadata = {
-  title: "Microsoft 365のトラブル解決 | サイトダウン",
+  title: "Microsoft 365のトラブル解決",
   description:
     "Microsoft 365が使えない・ログインできない・OutlookやTeamsが不安定な時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/microsoft365" }
 };
 
 export default function Microsoft365HubPage() {

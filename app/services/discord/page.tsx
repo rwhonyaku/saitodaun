@@ -7,9 +7,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.discord;
 
 export const metadata: Metadata = {
-  title: "Discordのトラブル解決 | サイトダウン",
+  title: "Discordのトラブル解決",
   description:
     "Discordがつながらない・読み込めない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/discord" }
 };
 
 export default function DiscordHubPage() {

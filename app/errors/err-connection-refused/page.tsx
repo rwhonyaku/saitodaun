@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_CONNECTION_REFUSEDとは？接続が拒否されましたの原因と確認方法 | サイトダウン",
+  title: "ERR_CONNECTION_REFUSEDとは？接続が拒否されましたの原因と確認方法",
   description:
     "ERR_CONNECTION_REFUSED（接続が拒否されました）の意味、サイト側/ユーザー側の典型原因、最短確認、社内ネットワークやVPNの影響を解説します。",
+  alternates: { canonical: "/errors/err-connection-refused" }
 };
 
 export default function ErrConnectionRefusedPage() {

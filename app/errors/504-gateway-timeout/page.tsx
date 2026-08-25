@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "504 Gateway Timeoutとは？原因と直し方 | サイトダウン",
+  title: "504 Gateway Timeoutとは？原因と直し方",
   description:
     "504 Gateway Timeout の意味、上流サーバーの遅延・障害・DB/API遅延などの原因、ユーザー側でできる対処、運営者側の改善ポイントを解説します。",
+  alternates: { canonical: "/errors/504-gateway-timeout" }
 };
 
 export default function Error504GatewayTimeoutPage() {

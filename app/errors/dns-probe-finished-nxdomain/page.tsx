@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "DNS_PROBE_FINISHED_NXDOMAINとは？原因と直し方 | サイトダウン",
+  title: "DNS_PROBE_FINISHED_NXDOMAINとは？原因と直し方",
   description:
     "DNS_PROBE_FINISHED_NXDOMAIN の意味、DNSの仕組み、原因、最短で直す方法（DNS変更・キャッシュ削除など）を解説します。",
+  alternates: { canonical: "/errors/dns-probe-finished-nxdomain" }
 };
 
 export default function DnsProbeFinishedPage() {

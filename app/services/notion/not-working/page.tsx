@@ -6,14 +6,15 @@ const service = SERVICES.notion;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "Notionが開かない・重い・同期できない時の確認 | サイトダウン",
+  title: "Notionが開かない・重い・同期できない時の確認",
   description:
     "Notionが広く落ちていないのに使えない時に、読み込み、ログイン、同期、表示不良、アプリやブラウザ、ネットワーク制限の原因を確認します。",
+  alternates: { canonical: "/services/notion/not-working" }
 };
 
 const ERROR_LABELS: Record<string, string> = {
   "err-connection-timed-out": "接続がタイムアウトするとき",
-  "err-connection-reset": "接続が途中でリセットされるとき",
+  "connection-reset": "接続が途中でリセットされるとき",
   "dns-probe-finished-nxdomain": "DNS で接続先が見つからないとき",
   "ssl-handshake-failed": "SSL / TLS の接続に失敗するとき",
   "503-service-unavailable": "503 Service Unavailable が出るとき",

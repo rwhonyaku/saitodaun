@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "NET::ERR_CERT_COMMON_NAME_INVALIDとは？原因と対処 | サイトダウン",
+  title: "NET::ERR_CERT_COMMON_NAME_INVALIDとは？原因と対処",
   description:
     "NET::ERR_CERT_COMMON_NAME_INVALID の意味、証明書のドメイン不一致が起きる原因、ユーザー側でできる確認し、運営者側の確認ポイントを実用的に解説します。",
+  alternates: { canonical: "/errors/net-err-cert-common-name-invalid" }
 };
 
 export default function NetErrCertCommonNameInvalidPage() {

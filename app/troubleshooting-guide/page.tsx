@@ -1,116 +1,113 @@
-import EvergreenPageShell from "@/components/EvergreenPageShell";
-import { SITE } from "@/lib/siteMeta";
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
-  title: "サイトが見れない時の解消ガイド｜オンラインなのに開かない原因",
+const GROUPS = [
+  {
+    title: "まず状況を切り分ける",
+    items: [
+      ["website-not-loading", "サイトが開かない"],
+      ["this-site-cant-be-reached", "このサイトにアクセスできませんと表示される"],
+      ["specific-site-not-working", "特定のサイトだけ開かない"],
+      ["how-to-check-if-a-website-is-down", "サイトが落ちているか確認したい"],
+      ["internet-not-working", "インターネット全体につながらない"],
+      ["device-cannot-connect", "端末・回線によって結果が違う"],
+    ],
+  },
+  {
+    title: "Wi-Fi・ルーター・回線",
+    items: [
+      ["wifi-not-working", "Wi-Fiがつながらない"],
+      ["router-not-working", "ルーターがつながらない"],
+      ["router-vs-isp-problem", "ルーターか回線障害か見分ける"],
+      ["isp-outage", "インターネット回線の障害を確認する"],
+      ["slow-internet", "インターネットが遅い"],
+      ["website-slow-but-internet-is-fine", "特定のサイトだけ遅い"],
+      ["website-loads-on-phone-not-wifi", "モバイル回線では開くがWi-Fiでは開かない"],
+      ["website-works-on-wifi-not-mobile-data", "Wi-Fiでは開くがモバイル回線では開かない"],
+      ["site-works-on-phone-not-computer", "スマホでは開くがパソコンでは開かない"],
+      ["public-wifi-login-page-not-showing", "公共Wi-Fiのログイン画面が出ない"],
+    ],
+  },
+  {
+    title: "ページは開くが表示・操作がおかしい",
+    items: [
+      ["browser-not-loading-sites", "特定のブラウザで開かない"],
+      ["site-loads-forever", "読み込み中のまま終わらない"],
+      ["site-opens-but-is-blank", "ページが真っ白になる"],
+      ["site-loads-without-images", "画像だけ表示されない"],
+      ["site-opens-but-buttons-do-not-work", "ボタンが反応しない"],
+      ["site-opens-but-does-not-work", "表示されるが機能しない"],
+      ["form-submit-not-working", "フォームを送信できない"],
+      ["website-keeps-reloading", "再読み込みを繰り返す"],
+    ],
+  },
+  {
+    title: "ログイン・認証・アクセス制限",
+    items: [
+      ["cant-log-in", "ログインできない症状から選ぶ"],
+      ["site-opens-but-login-fails", "サイトは開くがログインできない"],
+      ["signed-in-but-site-not-working", "ログイン後だけ使えない"],
+      ["website-keeps-logging-me-out", "何度もログアウトされる"],
+      ["captcha-or-verification-loop", "CAPTCHA・本人確認がループする"],
+      ["website-keeps-asking-are-you-human", "Are you human? が何度も出る"],
+      ["access-denied", "アクセスが拒否される"],
+      ["website-blocked", "サイトがブロックされている"],
+      ["site-blocked-by-firewall", "ファイアウォールや組織の制限を疑う"],
+    ],
+  },
+  {
+    title: "DNS・安全な接続・アプリ",
+    items: [
+      ["server-not-found", "サーバーが見つからない"],
+      ["secure-connection-failed", "安全な接続を確立できない"],
+      ["dns-propagation", "DNS変更が反映されない"],
+      ["cdn-or-server-edge-issues", "CDN・地域経路で結果が違う"],
+      ["app-not-working", "アプリが使えない症状から選ぶ"],
+      ["internet-working-but-apps-not-loading", "ネットは使えるがアプリだけ開かない"],
+    ],
+  },
+] as const;
+
+export const metadata: Metadata = {
+  title: "サイト・接続トラブル解決ガイド一覧",
   description:
-    "接続チェックではオンラインなのに自分の端末でサイトが見れない時に、回線、DNS、ブラウザ、端末差を順番に確認するための実用ガイドです。",
+    "サイトが開かない、Wi-FiやDNS、ログイン、表示・操作、アクセス制限など、現在の症状から適切な確認手順を選べるトラブルシューティング一覧です。",
+  alternates: { canonical: "/troubleshooting-guide" },
 };
 
 export default function TroubleshootingGuidePage() {
   return (
-    <EvergreenPageShell
-      h1="サイトが見れない時の解消ガイド"
-      updatedAt="2026-02-22"
-      lead={[
-        `${SITE.name}で「オンライン」と判定されているのに、あなたのブラウザでサイトが開けない場合、原因はサイト側ではなく「手元の環境（回線・端末・ブラウザ設定）」にある可能性が高いです。`,
-        "この状況は、サイトが落ちているのではなく「あなたの環境からだけ到達できない」ことで起こります。焦って何度も更新する前に、確認を一つずつ進めるのが最短ルートです。",
-        "ここでは、初心者の方でもそのまま試せるように、効果が出やすい順にステップ形式でまとめました。"
-      ]}
-      sections={[
-        {
-          type: "list",
-          title: "このページを使う状況",
-          items: [
-            "接続チェックではオンラインなのに、自分のブラウザだけで開かない",
-            "同じサイトが、Wi-Fiでは開かないがモバイル回線では開く",
-            "エラー名ははっきりしないが、特定の端末やブラウザだけ失敗する",
-            "サイト全体の障害ではなく、自分側の回線・DNS・ブラウザを切り分けたい"
-          ]
-        },
-        {
-          type: "p",
-          title: "ステップ1：まずは「別の回線」で試す（最重要）",
-          body: [
-            "最も早く原因を特定する方法は、通信経路を変えて結果が変わるかを確認することです。Wi-Fiを使っているなら一度オフにして、スマホのモバイル通信（4G/5G）で同じページを開いてみてください（逆に、普段モバイル通信ならWi-Fiでも試します）。",
-            "モバイル通信で開ける場合：原因はご自宅や職場のWi-Fi、ルーター、または契約しているプロバイダ（ISP）側にある可能性が高いです。特定の回線だけでDNSが不安定、経路（ルーティング）が不調、通信が一部ブロックされているなどがよくあります。",
-            "どちらでも開けない場合：サイト側で障害が起きている可能性もありますが、サイトが地域制限をかけている、特定の条件のアクセスだけを弾いている（WAF/Bot対策）などのケースもあります。後述のステップでさらに確認します。",
-            "ポイントは「回線を変えたら結果が変わるか」です。ここで結果が変わるなら、サイト全体の障害である可能性は下がり、手元の環境（回線側）へ原因が寄ります。"
-          ]
-        },
-        {
-          type: "list",
-          title: "ステップ2：ブラウザのトラブルシューティング（再現条件を崩す）",
-          items: [
-            "シークレットモード（プライベートブラウズ）で開く：拡張機能やログイン状態、過去のキャッシュの影響を一時的に排除できます。",
-            "ブラウザのキャッシュとクッキーを削除：古いデータが残っていると、表示崩れや無限読み込み、ログイン不能などが起きることがあります。",
-            "別のブラウザで試す（ChromeならSafariやEdgeなど）：ブラウザ固有の設定・証明書・拡張機能・セキュリティ機能の影響を確認できます。",
-            "別の端末で試す（スマホ⇔PC）：端末固有の設定やセキュリティソフト、プロファイル設定の影響を見分けられます。"
-          ]
-        },
-        {
-          type: "p",
-          title: "ステップ3：エラーメッセージを読む（原因の方向性を決める）",
-          body: [
-            "表示されないときに出ているメッセージは、原因を当てずっぽうで探すよりもはるかに有力な手がかりです。特に次のパターンは確認に役立ちます。",
-            "・DNSエラー（DNS_PROBE_FINISHED_NXDOMAIN など）：名前解決ができていない可能性が高いです（次のステップへ）。",
-            "・403 / 429：アクセスが拒否されている可能性があります（WAF、IP制限、回数制限、VPN/海外IPブロックなど）。",
-            "・500 / 503：サイト運営側の障害や過負荷の可能性が高く、ユーザー側でできることは限定的です。",
-            "エラーが出ないのに真っ白・読み込みが終わらない場合は、広告タグや拡張機能、外部スクリプトの不調など“ブラウザ側の要因”が関係していることもあります。",
-            <Link
-              key="errors-link"
-              href="/errors"
-              className="text-sky-600 font-bold underline"
-            >
-              → エラー名やHTTPステータスから原因を確認する
-            </Link>
-          ]
-        },
-        {
-          type: "p",
-          title: "ステップ4：ネットワーク設定（DNS）の見直し（特定サイトだけ開けない時に強い）",
-          body: [
-            "「特定のサイトだけが開けない」「昨日まで見れていたのに急に見れない」「回線によって見れたり見れなかったりする」場合、DNS（名前解決）の問題がよく原因になります。",
-            "DNSは、ドメイン名（example.com）をIPアドレスに変換する仕組みです。ここが不安定だと、サイト自体は稼働していても“宛先が引けず”アクセスできません。",
-            "解決策として、Google Public DNS（8.8.8.8 / 8.8.4.4）やCloudflare DNS（1.1.1.1 / 1.0.0.1）への変更を推奨します。設定変更だけで改善するケースは実際に多く、試す価値が高い手順です。",
-            <Link
-              key="dns-link"
-              href="/troubleshooting-dns"
-              className="text-sky-600 font-bold underline"
-            >
-              → DNSの設定変更ガイドはこちら
-            </Link>
-          ]
-        },
-        {
-          type: "note",
-          title: "それでも解決しない場合（最後の確認）",
-          body: [
-            "PCやスマホのセキュリティソフト（ウイルス対策ソフト）や、企業ネットワークのフィルタリングが、誤判定でサイトをブロックしているケースがあります。可能であれば一時的に保護を無効化、または別ネットワーク（自宅⇔外出先）で確認してみてください。",
-            "また、海外サイトや一部サービスでは、日本からのアクセスやVPN経由のアクセスを制限していることがあります。この場合、回線を変えても結果が変わらないことがあり、VPNで接続地点を切り替えるのが有効なケースもあります。",
-            "ただし、VPNが必要かどうかは状況により異なります。まずは回線切り替えとDNS変更で確認し、そのうえで必要なら検討するのが無駄がありません。",
-            <>
-              主要サービスの障害が疑わしい場合は{" "}
-              <Link
-                key="services-link"
-                href="/services"
-                className="text-sky-600 font-bold underline"
-              >
-                サービス別トラブルページ
-              </Link>{" "}
-              も確認してください。このガイドは外部からの到達性と手元環境の切り分け用で、ログイン後の画面やアプリ内機能まで保証するものではありません。
-            </>,
-            <Link
-              key="vpn-link"
-              href="/recommendations"
-              className="text-sky-600 font-bold underline"
-            >
-              → 接続トラブルを解決するVPNをチェックする
-            </Link>
-          ]
-        }
-      ]}
-    />
+    <main className="mx-auto w-full max-w-5xl px-4 py-10 text-slate-900">
+      <header className="max-w-3xl space-y-3">
+        <h1 className="text-3xl font-semibold tracking-tight">サイト・接続トラブル解決ガイド</h1>
+        <p className="text-neutral-600">
+          原因を推測する前に、今の症状に最も近い項目を選んでください。エラー番号や英語のエラー名が表示されている場合は、エラー解説から探す方が早く確認できます。
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/" className="inline-flex min-h-11 items-center rounded-xl bg-sky-600 px-5 text-sm font-bold text-white hover:bg-sky-700">URLを接続チェック</Link>
+          <Link href="/errors" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-bold hover:bg-slate-50">エラー名から探す</Link>
+        </div>
+      </header>
+
+      <div className="mt-10 space-y-10">
+        {GROUPS.map((group) => (
+          <section key={group.title}>
+            <h2 className="text-xl font-bold">{group.title}</h2>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {group.items.map(([slug, label]) => (
+                <Link key={slug} href={`/troubleshooting/${slug}`} className="flex min-h-16 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm transition hover:border-sky-200 hover:bg-sky-50">
+                  <span className="text-sm font-semibold">{label}</span>
+                  <span aria-hidden="true" className="text-sky-600">→</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <p className="mt-12 text-sm text-slate-600">
+        YouTube、LINE、X、Discordなど特定サービスの状況は <Link href="/services" className="font-semibold underline">サービス別トラブル一覧</Link> から確認できます。
+      </p>
+    </main>
   );
 }

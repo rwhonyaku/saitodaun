@@ -9,9 +9,10 @@ const service = SERVICES.line;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "LINEが使えない・送れない時の原因確認｜障害か自分側か | サイトダウン",
+  title: "LINEが使えない・送れない時の原因確認｜障害か自分側か",
   description:
     "LINEが開かない、送れない、通話できない、通知が来ない時に、LINE側の障害か回線・Wi-Fi・DNS・端末・アプリ側かを確認します。",
+  alternates: { canonical: "/services/line/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

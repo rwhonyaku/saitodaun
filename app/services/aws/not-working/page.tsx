@@ -6,9 +6,10 @@ const service = SERVICES.aws;
 const issue = service.issues["not-working"];
 
 export const metadata: Metadata = {
-  title: "AWSが使えない時の対処法 | サイトダウン",
+  title: "AWSが使えない時の対処法",
   description:
     "AWSコンソールが開かない・ログインできない・APIが失敗する時に、障害か自分の環境（回線、DNS、ブラウザ、VPN）かを確認して対処します。",
+  alternates: { canonical: "/services/aws/not-working" }
 };
 
 function ErrorLinks({ slugs }: { slugs: string[] }) {

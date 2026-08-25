@@ -3,9 +3,10 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "ERR_SSL_PROTOCOL_ERRORとは？原因と対処 | サイトダウン",
+  title: "ERR_SSL_PROTOCOL_ERRORとは？原因と対処",
   description:
     "ERR_SSL_PROTOCOL_ERROR の意味、TLS設定不整合や証明書問題、ブラウザ・ネットワーク側の影響、ユーザー側での見分け方を実用的に解説します。",
+  alternates: { canonical: "/errors/err-ssl-protocol-error" }
 };
 
 export default function ErrSslProtocolErrorPage() {

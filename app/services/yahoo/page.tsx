@@ -5,9 +5,10 @@ import { SERVICES } from "@/lib/services/registry";
 const service = SERVICES.yahoo;
 
 export const metadata: Metadata = {
-  title: "Yahoo! JAPANのトラブル解決 | サイトダウン",
+  title: "Yahoo! JAPANのトラブル解決",
   description:
     "Yahoo! JAPANが開かない・検索できない・ログインできない時に、障害か自分側かを確認し、最短で対処します。",
+  alternates: { canonical: "/services/yahoo" }
 };
 
 export default function YahooHubPage() {

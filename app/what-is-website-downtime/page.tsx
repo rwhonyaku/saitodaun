@@ -3,9 +3,10 @@ import EvergreenPageShell from "@/components/EvergreenPageShell";
 import Link from "next/link";
 
 export const metadata = {
-  title: "サイトダウンとは？サーバーダウンとの違い・確認方法 | サイトダウン",
+  title: "サイトダウンとは？サーバーダウンとの違い・確認方法",
   description:
     "サイトダウンやサーバーダウンの意味、サイトが落ちてる時の代表的なエラー、サイト側か自分側かを確認する方法を整理します。",
+  alternates: { canonical: "/what-is-website-downtime" }
 };
 
 export default function WhatIsDowntimePage() {
