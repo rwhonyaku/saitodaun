@@ -5,14 +5,22 @@ import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
   title: { absolute: "Service Outages Right Now | Live Website & App Status" },
-  description: "See services showing unusual outage-report activity right now, search major apps and websites, and check official and independent status sources.",
+  applicationName: "SiteDown",
+  description: "Check whether a website responds right now, then review user reports, official status pages, and independent outage sources for major services.",
   alternates: { canonical: "/en" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Service Outages Right Now | Live Website & App Status",
-    description: "Check current outage signals for major websites and apps, then investigate through official and independent status sources.",
+    description: "Check whether a website responds right now, then compare user reports with official and independent outage sources.",
     url: "/en",
+    siteName: "SiteDown",
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Service Outages Right Now | Live Website & App Status",
+    description: "Check whether a website responds right now, then compare user reports with official and independent outage sources.",
   },
 };
 
@@ -34,11 +42,29 @@ const faq = [
 export default function EnglishPage() {
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: "Service Outages Right Now — Live Website & App Status",
-    url: `${SITE.origin}/en`,
-    inLanguage: "en",
-    description: "A live outage-discovery page with Japan-based report signals, service search, authoritative status links, and a website reachability checker.",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${SITE.origin}/en#webpage`,
+        name: "Service Outages Right Now — Live Website & App Status",
+        url: `${SITE.origin}/en`,
+        inLanguage: "en-US",
+        description: "Check whether a website responds, then compare user reports with official and independent outage sources.",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE.origin}/en#faq`,
+        inLanguage: "en-US",
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (

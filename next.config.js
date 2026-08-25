@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: "/en",
+        headers: [{ key: "Content-Language", value: "en" }],
+      },
+    ];
+  },
   async redirects() {
     return [
       {

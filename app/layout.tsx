@@ -35,6 +35,11 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.lang=location.pathname==='/en'?'en':'ja';`,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
