@@ -1057,7 +1057,7 @@ const EDITORIAL_BY_ID: Record<string, StatusEditorial> = {
 
     relatedServices: [
       {
-        href: "/status/sites/microsoft-365",
+        href: "/status/sites/outlook",
         label: "Outlook",
         note:
           "メール送受信や予定表だけ不安定な場合、Outlook側の状態を比較できます。",
@@ -1345,7 +1345,7 @@ const EDITORIAL_BY_ID: Record<string, StatusEditorial> = {
           "TeamsだけでなくOutlookやOneDriveも不安定な場合、Microsoft 365全体の影響を確認できます。",
       },
       {
-        href: "/status/sites/microsoft-365",
+        href: "/status/sites/outlook",
         label: "Outlook",
         note:
           "会議招待や予定表、メール通知も同時に不安定なら、Outlook側の状態も比較できます。",

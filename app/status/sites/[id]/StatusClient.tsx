@@ -8,6 +8,7 @@ import { getEditorialById } from "@/lib/statusEditorial";
 import OutageReportPanel, { type ReportSummary } from "@/components/OutageReportPanel";
 import { getStatusVerdict } from "@/lib/statusVerdict";
 import { isReportingServiceId } from "@/lib/outageReports";
+import { getStatusRelatedServices } from "@/lib/statusRelatedServices";
 
 type CheckResult = {
   online: boolean;
@@ -200,6 +201,9 @@ export default function StatusClient({
   const assessment = getStatusVerdict(result, loading, communitySummary);
   const officialVerdictUrl = site.officialStatusUrl || site.supportUrl || site.xUrl;
   const reportingEnabled = isReportingServiceId(site.id);
+  const fallbackRelatedServices = editorial?.relatedServices?.length
+    ? []
+    : getStatusRelatedServices(site.id);
   const verdictUpdatedAt = communitySummary?.updatedAt
     ? new Intl.DateTimeFormat("ja-JP", {
         timeZone: "Asia/Tokyo",
@@ -632,6 +636,25 @@ export default function StatusClient({
               </>
             ) : null}
           </>
+        )}
+
+        {fallbackRelatedServices.length > 0 && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">関連サービスと比較する</h2>
+            <p className="mt-2 text-xs leading-relaxed text-slate-600">
+              同じ種類のサービスも確認すると、個別サービスの障害か、自分の回線・端末側の問題かを切り分けやすくなります。
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              {fallbackRelatedServices.map((related) => (
+                <div key={related.href} className="rounded-lg border border-slate-200 p-3">
+                  <Link href={related.href} prefetch={false} className="text-xs font-semibold text-sky-600 underline hover:text-sky-700">
+                    {related.label}の現在状況 →
+                  </Link>
+                  <p className="mt-2 text-[11px] leading-relaxed text-slate-500">{related.note}</p>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
 
         {/* Official links (optional) */}
