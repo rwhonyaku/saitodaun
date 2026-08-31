@@ -7,7 +7,14 @@ export const metadata: Metadata = {
   title: { absolute: "Service Outages Right Now | Live Website & App Status" },
   applicationName: "SiteDown",
   description: "Check whether a website responds right now, then review user reports, official status pages, and independent outage sources for major services.",
-  alternates: { canonical: "/en" },
+  alternates: {
+    canonical: "/en",
+    languages: {
+      "en-US": "/en",
+      "ja-JP": "/",
+      "x-default": "/",
+    },
+  },
   robots: { index: true, follow: true },
   openGraph: {
     title: "Service Outages Right Now | Live Website & App Status",

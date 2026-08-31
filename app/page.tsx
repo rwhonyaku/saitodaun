@@ -10,7 +10,14 @@ export const metadata: Metadata = {
   title: "サイトダウン確認ツール｜障害・接続エラーをチェック",
   description:
     "URLを入力してサイトが落ちているか、接続エラー・DNS・HTTPエラーかを確認。主要サービスの障害状況も見ながら、自分側の問題か整理できます。",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "ja-JP": "/",
+      "en-US": "/en",
+      "x-default": "/",
+    },
+  },
 };
 
 const primaryNavLinks = [
