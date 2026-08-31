@@ -4,7 +4,7 @@ import EnglishStatusDashboard from "@/components/EnglishStatusDashboard";
 import { SITE } from "@/lib/siteMeta";
 
 export const metadata: Metadata = {
-  title: { absolute: "Service Outages Right Now | Live Website & App Status" },
+  title: { absolute: "Is a Website Down? Live Service Outage Checker | SiteDown" },
   applicationName: "SiteDown",
   description: "Check whether a website responds right now, then review user reports, official status pages, and independent outage sources for major services.",
   alternates: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   openGraph: {
-    title: "Service Outages Right Now | Live Website & App Status",
+    title: "Is a Website Down? Live Service Outage Checker | SiteDown",
     description: "Check whether a website responds right now, then compare user reports with official and independent outage sources.",
     url: "/en",
     siteName: "SiteDown",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Service Outages Right Now | Live Website & App Status",
+    title: "Is a Website Down? Live Service Outage Checker | SiteDown",
     description: "Check whether a website responds right now, then compare user reports with official and independent outage sources.",
   },
 };
@@ -53,7 +53,7 @@ export default function EnglishPage() {
       {
         "@type": "WebPage",
         "@id": `${SITE.origin}/en#webpage`,
-        name: "Service Outages Right Now — Live Website & App Status",
+        name: "Is a Website Down? Live Service Outage Checker",
         url: `${SITE.origin}/en`,
         inLanguage: "en-US",
         description: "Check whether a website responds, then compare user reports with official and independent outage sources.",

@@ -52,6 +52,14 @@ function track(name: string, parameters: Record<string, string>) {
   analyticsWindow.gtag?.("event", name, parameters);
 }
 
+function trackWebsiteCheckResult(result: CheckResult) {
+  const inconclusive = Boolean(result.probeBlocked || result.error || result.status == null);
+  track("english_website_check_result", {
+    outcome: inconclusive ? "inconclusive" : result.online ? "responded" : "no_response",
+    http_status_class: result.status == null ? "none" : `${Math.floor(result.status / 100)}xx`,
+  });
+}
+
 function presentation(level: SignalLevel) {
   if (level === "spike") return { label: "Unusual spike", text: "text-rose-700", dot: "bg-rose-500", line: "#f43f5e" };
   if (level === "elevated") return { label: "Higher than usual", text: "text-amber-700", dot: "bg-amber-500", line: "#f59e0b" };
@@ -126,9 +134,12 @@ export default function EnglishStatusDashboard() {
       const response = await fetch("/api/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: raw }) });
       const data = (await response.json()) as CheckResult;
       setResult(data);
+      trackWebsiteCheckResult(data);
       if (data.checkedUrl) setUrl(data.checkedUrl);
     } catch {
-      setResult({ online: false, status: null, responseTime: null, error: "The check could not be completed. Try again shortly." });
+      const failedResult = { online: false, status: null, responseTime: null, error: "The check could not be completed. Try again shortly." };
+      setResult(failedResult);
+      trackWebsiteCheckResult(failedResult);
     } finally { setChecking(false); }
   }
 
@@ -138,7 +149,16 @@ export default function EnglishStatusDashboard() {
   return <>
     <section className="relative overflow-hidden bg-slate-950 px-4 py-8 text-white sm:py-10">
       <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.28),transparent_32%),radial-gradient(circle_at_10%_90%,rgba(37,99,235,0.2),transparent_30%)]" />
-      <div className="relative mx-auto max-w-5xl"><div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs font-semibold text-sky-200"><span className="h-2 w-2 rounded-full bg-sky-400" /> User reports from Japan</div><h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Service outages right now</h1><p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">See which websites and apps are showing unusual report activity, then confirm the signal through official and independent status sources.</p></div>
+      <div className="relative mx-auto max-w-5xl">
+        <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs font-semibold text-sky-200"><span className="h-2 w-2 rounded-full bg-sky-400" /> User reports from Japan</div>
+        <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Is a website down right now?</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">Run a live URL response check, then compare Japan user-report activity with official and independent status sources.</p>
+        <ul className="mt-5 flex flex-wrap gap-2 text-xs font-semibold text-slate-200" aria-label="Evidence available on this page">
+          <li className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">External URL response</li>
+          <li className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">Japan report trends</li>
+          <li className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">Official status sources</li>
+        </ul>
+      </div>
     </section>
 
     <section className="border-b border-slate-200 bg-white" aria-labelledby="check-heading">
@@ -147,8 +167,8 @@ export default function EnglishStatusDashboard() {
         <h2 id="check-heading" className="mt-2 text-2xl font-bold tracking-tight text-slate-950">What do you want to check?</h2>
         <div className="mt-5 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
           <div className="grid grid-cols-2 gap-2" role="tablist" aria-label="Check type">
-            <button type="button" role="tab" aria-selected={checkMode === "website"} aria-controls="website-check-panel" onClick={() => setCheckMode("website")} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "website" ? "bg-sky-600 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Website URL</button>
-            <button type="button" role="tab" aria-selected={checkMode === "service"} aria-controls="service-check-panel" onClick={() => setCheckMode("service")} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "service" ? "bg-slate-950 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Service reports</button>
+            <button type="button" role="tab" aria-selected={checkMode === "website"} aria-controls="website-check-panel" onClick={() => { setCheckMode("website"); track("english_check_mode_select", { mode: "website" }); }} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "website" ? "bg-sky-600 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Website URL</button>
+            <button type="button" role="tab" aria-selected={checkMode === "service"} aria-controls="service-check-panel" onClick={() => { setCheckMode("service"); track("english_check_mode_select", { mode: "service" }); }} className={`min-h-12 rounded-xl px-3 text-sm font-bold transition ${checkMode === "service" ? "bg-slate-950 text-white shadow-sm" : "bg-white text-slate-600 hover:text-slate-950"}`}>Service reports</button>
           </div>
 
           {checkMode === "service" ? <div id="service-check-panel" role="tabpanel" className="p-3 sm:p-4">
@@ -178,7 +198,7 @@ export default function EnglishStatusDashboard() {
       {feedError && !summary ? <p className="mt-5 rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">Live report data is temporarily unavailable.</p> : null}
 
       <h2 className="mt-8 text-xl font-bold text-slate-950">Major services</h2><p className="mt-1 text-xs text-slate-500">Sparklines show recent user-report activity from Japan. Source links open the service owner or a separate independent reporting site.</p>
-      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">{featured.map((service) => { const state = presentation(service.report?.level ?? "normal"); return <article key={service.id} className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4"><div className="flex items-start justify-between gap-2"><span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${service.color}`}>{service.mark}</span><span className={`flex items-center gap-1 text-[10px] font-bold ${service.report ? state.text : "text-slate-400"}`}><span className={`h-2 w-2 rounded-full ${service.report ? state.dot : "bg-slate-300"}`} />{service.report ? state.label : "Loading"}</span></div><p className="mt-3 text-sm font-bold text-slate-950">{service.name}</p><div className="mt-2"><Sparkline values={service.report?.trend ?? [0, 0]} level={service.report?.level ?? "normal"} /></div><p className="mt-1 text-[10px] leading-4 text-slate-500">{service.report ? `${service.report.reporters} reporters · ${service.report.reports} reports / 30 min` : "Fetching reports…"}</p><div className="mt-2 border-t border-slate-100 pt-1">{service.official ? <SourceLink source={service.official} serviceId={service.id} kind="official" /> : service.independent ? <SourceLink source={service.independent} serviceId={service.id} kind="independent" /> : null}</div></article>; })}</div>
+      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">{featured.map((service) => { const state = presentation(service.report?.level ?? "normal"); return <article key={service.id} className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4"><div className="flex items-start justify-between gap-2"><span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${service.color}`}>{service.mark}</span><span className={`flex items-center gap-1 text-[10px] font-bold ${service.report ? state.text : "text-slate-400"}`}><span className={`h-2 w-2 rounded-full ${service.report ? state.dot : "bg-slate-300"}`} />{service.report ? state.label : "Loading"}</span></div><p className="mt-3 text-sm font-bold text-slate-950">{service.name}</p><div className="mt-2"><Sparkline values={service.report?.trend ?? [0, 0]} level={service.report?.level ?? "normal"} /></div><p className="mt-1 text-[10px] leading-4 text-slate-500">{service.report ? `${service.report.reporters} reporters · ${service.report.reports} reports / 30 min` : "Fetching reports…"}</p><div className="mt-2 flex flex-col items-start border-t border-slate-100 pt-1">{service.official ? <SourceLink source={service.official} serviceId={service.id} kind={service.id === "steam" ? "independent_specialist" : "official"} /> : null}{service.independent ? <SourceLink source={service.independent} serviceId={service.id} kind="independent" /> : null}</div></article>; })}</div>
       <div className="mt-5 rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-xs leading-5 text-slate-600"><b>Coverage note:</b> elevated reporting in Japan is additional regional evidence, not proof of a worldwide outage. External sources are independent and their data is not reproduced here.</div>
     </section>
 
