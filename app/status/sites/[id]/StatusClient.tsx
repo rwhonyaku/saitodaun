@@ -59,7 +59,47 @@ function getGuideHrefFromResult(result: CheckResult | null): string | null {
   return "/status-codes";
 }
 
-export default function StatusClient({ id: propId }: { id: string }) {
+function getCurrentReportIncreaseStart(summary: ReportSummary | null): string | null {
+  if (!summary || summary.signal.level === "normal") return null;
+
+  let latestAbnormalIndex = -1;
+  for (let index = summary.timeline.length - 1; index >= 0; index -= 1) {
+    if (summary.timeline[index].level !== "normal") {
+      latestAbnormalIndex = index;
+      break;
+    }
+  }
+
+  if (latestAbnormalIndex === -1) return null;
+
+  let startAt = summary.timeline[latestAbnormalIndex].startAt;
+  for (let index = latestAbnormalIndex - 1; index >= 0; index -= 1) {
+    if (summary.timeline[index].level === "normal") break;
+    startAt = summary.timeline[index].startAt;
+  }
+
+  return startAt;
+}
+
+function formatJstDateTime(value: string) {
+  return new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+export default function StatusClient({
+  id: propId,
+  selfCheckHref,
+  selfCheckLabel,
+}: {
+  id: string;
+  selfCheckHref?: string;
+  selfCheckLabel?: string;
+}) {
   const params = useParams();
 
   const id = useMemo(() => {
@@ -167,6 +207,25 @@ export default function StatusClient({ id: propId }: { id: string }) {
         minute: "2-digit",
       }).format(new Date(communitySummary.updatedAt))
     : result?.timestamp;
+  const reportIncreaseStartedAt = getCurrentReportIncreaseStart(communitySummary);
+  const reportSummaryLabel = communitySummary
+    ? communitySummary.signal.level === "spike"
+      ? `急増（${communitySummary.signal.currentReporters}人）`
+      : communitySummary.signal.level === "elevated"
+        ? `増加（${communitySummary.signal.currentReporters}人）`
+        : communitySummary.count > 0
+          ? `通常範囲（${communitySummary.count}件）`
+          : "直近30分は0件"
+    : reportingEnabled
+      ? "取得中"
+      : "報告受付対象外";
+  const reachabilityLabel = loading || !result
+    ? "確認中"
+    : resultUnconfirmed
+      ? "確認不可"
+      : result.online
+        ? `応答あり${result.status ? `（HTTP ${result.status}）` : ""}`
+        : `応答なし${result.status ? `（HTTP ${result.status}）` : ""}`;
 
   return (
     <main className="flex-1 bg-slate-50">
@@ -200,21 +259,59 @@ export default function StatusClient({ id: propId }: { id: string }) {
                 {assessment.main}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-slate-600">{assessment.detail}</p>
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:max-w-xl">
+              <div className="mt-4 border-t border-black/10 pt-4">
+                <h2 className="text-xs font-bold text-slate-900">現在の調査サマリー</h2>
+                <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">外部接続チェック</p>
-                  <p className="mt-1 text-xs font-bold text-slate-800">{loading || !result ? "確認中" : resultUnconfirmed ? "確認不可" : result.online ? "応答あり" : "応答なし"}</p>
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">現在の判定</dt>
+                  <dd className="mt-1 text-xs font-bold text-slate-800">{assessment.badge}</dd>
                 </div>
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">日本の利用者報告</p>
-                  <p className="mt-1 text-xs font-bold text-slate-800">{communitySummary
-                    ? communitySummary.signal.level === "spike"
-                      ? "急増"
-                      : communitySummary.signal.level === "elevated"
-                        ? "増加"
-                        : "通常範囲"
-                    : reportingEnabled ? "取得中" : "対象外"}</p>
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">日本の利用者報告</dt>
+                  <dd className="mt-1 text-xs font-bold text-slate-800">{reportSummaryLabel}</dd>
                 </div>
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">主な症状</dt>
+                  <dd className="mt-1 text-xs font-bold text-slate-800">
+                    {communitySummary?.topProblem
+                      ? `${communitySummary.topProblem.label}（${communitySummary.topProblem.count}件）`
+                      : reportingEnabled
+                        ? communitySummary ? "報告なし" : "取得中"
+                        : "データなし"}
+                  </dd>
+                </div>
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">報告増加の検出開始</dt>
+                  <dd className="mt-1 text-xs font-bold text-slate-800">
+                    {reportIncreaseStartedAt ? `${formatJstDateTime(reportIncreaseStartedAt)}頃` : communitySummary ? "増加なし" : reportingEnabled ? "取得中" : "対象外"}
+                  </dd>
+                </div>
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">サイト到達性</dt>
+                  <dd className="mt-1 text-xs font-bold text-slate-800">{reachabilityLabel}</dd>
+                </div>
+                <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">確認先</dt>
+                  <dd className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs font-bold">
+                    {officialVerdictUrl ? (
+                      <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        公式情報 ↗
+                      </a>
+                    ) : (
+                      <span className="text-slate-600">公式リンク未登録</span>
+                    )}
+                    {selfCheckHref ? (
+                      <Link href={selfCheckHref} prefetch={false} className="text-sky-700 underline underline-offset-2">
+                        {selfCheckLabel || "自分側を確認"} →
+                      </Link>
+                    ) : (
+                      <Link href="/troubleshooting/specific-site-not-working" prefetch={false} className="text-sky-700 underline underline-offset-2">
+                        自分側を確認 →
+                      </Link>
+                    )}
+                  </dd>
+                </div>
+                </dl>
               </div>
               {verdictUpdatedAt ? (
                 <p className="mt-2 text-[10px] text-slate-500">判定更新：{verdictUpdatedAt} JST</p>

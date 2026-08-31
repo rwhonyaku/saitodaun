@@ -1600,7 +1600,11 @@ export default async function Page(props: PageProps) {
       </div>
 
       <section className="mb-8">
-        <StatusClient id={site.id} />
+        <StatusClient
+          id={site.id}
+          selfCheckHref={activeHero?.notWorkingHref || undefined}
+          selfCheckLabel={activeHero?.notWorkingLabel || undefined}
+        />
       </section>
 
       {showStatusAd ? <IMobileAd slot="status_mid" /> : null}
