@@ -298,6 +298,29 @@ export default function HomeClient() {
                   </div>
                 )}
 
+                {!resultUnconfirmed && (
+                  <div className="mt-4 rounded-lg border border-slate-200 bg-white/80 p-3 text-xs leading-relaxed text-slate-600">
+                    <p className="font-semibold text-slate-900">
+                      {result.online
+                        ? "外部サーバーからは応答しています"
+                        : "外部サーバーから正常な応答を確認できませんでした"}
+                    </p>
+                    <p className="mt-1">
+                      {result.online
+                        ? "この結果だけでは、ログイン・決済・動画再生・アプリなど一部機能の状態や、あなたの回線からの接続までは判定できません。"
+                        : "一時的な通信エラー、地域差、アクセス制限でも失敗するため、直ちにサイト全体の障害とは断定できません。"}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                      <Link href="/status" className="inline-flex min-h-11 items-center font-semibold text-sky-700 underline underline-offset-2">
+                        主要サービスの利用者報告を確認 →
+                      </Link>
+                      <Link href="/troubleshooting/specific-site-not-working" className="inline-flex min-h-11 items-center font-semibold text-sky-700 underline underline-offset-2">
+                        自分だけ開けない時の確認 →
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-4 pt-4 border-t border-slate-200/60 flex justify-between items-center text-[10px] text-slate-400 font-medium">
                   <span>チェック時刻: {result.timestamp}</span>
                   {(resultUnconfirmed || !result.online) && (

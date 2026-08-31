@@ -196,6 +196,7 @@ export default function StatusClient({
   const isTwitterStatus = site.id === "twitter";
   const isLineStatus = site.id === "line";
   const isNotionStatus = site.id === "notion";
+  const isTeamsStatus = site.id === "teams";
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const assessment = getStatusVerdict(result, loading, communitySummary);
@@ -412,6 +413,35 @@ export default function StatusClient({
         </div>
 
         <OutageReportPanel serviceId={site.id} onSummaryChange={setCommunitySummary} />
+
+        {isTeamsStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">Teamsに繋がらない・会議に入れない時の見分け方</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い障害が疑われる</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  日本の利用者報告が増え、別端末・別回線でも会議やチャットが失敗する場合は、Teams側の広い障害が疑われます。公式情報も確認します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">会議だけ入れない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  チャットは使えるのに会議だけ失敗する場合は、会議URL、サインイン中の組織、ゲスト参加、ロビーや主催者側の設定も確認対象です。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い障害が見つからない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  報告が通常範囲なら、ブラウザ版との比較、アプリ再起動、別回線、会社VPN・ファイアウォール、アカウント状態を順に確認します。
+                </p>
+                <Link href="/services/teams/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
+                  Teamsが使えない時の確認 →
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
 
         {isTwitterStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
