@@ -10,7 +10,7 @@ type ReportService = { serviceId: string; level: SignalLevel; reports: number; r
 type HotSummary = { hot: ReportService[]; services: ReportService[]; monitoredServices: number; updatedAt: string };
 type CheckResult = { online: boolean; probeBlocked?: boolean; status: number | null; responseTime: number | null; checkedUrl?: string; error?: string };
 
-const DD = (slug: string): ExternalSource => ({ label: "Independent reports", href: `https://downdetector.com/status/${slug}/` });
+const DD = (slug: string): ExternalSource => ({ label: "Downdetector Japan", href: `https://downdetector.jp/shougai/${slug}/` });
 
 const SERVICES: DirectoryService[] = [
   { id: "twitter", name: "X (Twitter)", aliases: "x twitter social", independent: DD("twitter") },
@@ -78,7 +78,7 @@ function Sparkline({ values, level }: { values: number[]; level: SignalLevel }) 
 }
 
 function SourceLink({ source, serviceId, kind }: { source: ExternalSource; serviceId: string; kind: string }) {
-  return <a href={source.href} target="_blank" rel="noopener noreferrer" onClick={() => track("english_status_source_click", { service_id: serviceId, source_type: kind })} className="inline-flex min-h-10 items-center text-xs font-semibold text-sky-700 underline underline-offset-2 hover:text-sky-900">{source.label} ↗</a>;
+  return <a href={source.href} target="_blank" rel="noopener noreferrer" onClick={() => track("english_status_source_click", { service_id: serviceId, source_type: kind })} className="inline-flex min-h-11 items-center whitespace-nowrap text-xs font-semibold text-sky-700 underline underline-offset-2 hover:text-sky-900">{source.label} ↗</a>;
 }
 
 function validUrl(raw: string) {
