@@ -15,10 +15,34 @@ export const metadata: Metadata = {
 };
 
 export default function RecommendationsPage() {
+  const vpnOptions = [
+    {
+      name: "Surfshark",
+      href: AFFILIATE_LINKS.surfshark.url,
+      product: "surfshark",
+      fit: "複数の端末で使う条件を重視する場合",
+      check: "同時接続の条件、契約期間、更新時の料金",
+    },
+    {
+      name: "NordVPN",
+      href: AFFILIATE_LINKS.nordvpn.url,
+      product: "nordvpn",
+      fit: "機能と使いやすさを一通り比較したい場合",
+      check: "必要な機能、対応端末、契約更新の条件",
+    },
+    {
+      name: "ExpressVPN",
+      href: AFFILIATE_LINKS.expressvpn.url,
+      product: "expressvpn",
+      fit: "設定の分かりやすさを優先して比較したい場合",
+      check: "対応端末、利用地域、返金・更新の条件",
+    },
+  ];
+
   return (
     <EvergreenPageShell
       h1="症状から選ぶ推奨ツール・サービス"
-      updatedAt="2026-08-21"
+      updatedAt="2026-08-31"
       lead={[
         "最初に自分の症状を選んでください。サービス自体が障害中の場合、サーバー契約やVPNを追加しても復旧しません。",
         "このページには広告・アフィリエイトリンクが含まれます。必要な場面と役立たない場面を分けて案内します。",
@@ -82,23 +106,29 @@ export default function RecommendationsPage() {
           title: "回線・地域条件を確認する場合",
           body: [
             "Wi-Fiでは開けずモバイル通信では開ける、公共Wi-Fiや会社回線だけ制限されるなど、接続経路によって差が出る場合に限ってVPNを検討します。サービス全体の障害、アカウント停止、端末故障はVPNでは直りません。",
+            <div key="vpn-before-buying" className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+              <p className="text-sm font-bold text-slate-950">契約前に無料でできる確認</p>
+              <ol className="mt-3 space-y-2 text-xs leading-6 text-slate-700">
+                <li>1. Wi-Fiとモバイル通信を切り替え、結果が変わるか確認する</li>
+                <li>2. 別の端末・ブラウザでも同じ症状か確認する</li>
+                <li>3. 既にVPNやプロキシを使っている場合は、いったんOFFにする</li>
+              </ol>
+              <p className="mt-3 text-xs leading-6 text-slate-600">
+                回線を変えても複数端末で同じなら、VPN購入よりサービス側の障害・アカウント・端末の確認を優先してください。
+              </p>
+            </div>,
             <div key="vpn-options" className="grid gap-3 sm:grid-cols-3">
-              {[
-                ["Surfshark", AFFILIATE_LINKS.surfshark.url, "surfshark"],
-                ["NordVPN", AFFILIATE_LINKS.nordvpn.url, "nordvpn"],
-                ["ExpressVPN", AFFILIATE_LINKS.expressvpn.url, "expressvpn"],
-              ].map(([name, href, product], index) => (
-                <div key={name} className={`rounded-2xl border p-4 ${index === 0 ? "border-sky-200 bg-sky-50" : "border-slate-200 bg-white"}`}>
+              {vpnOptions.map(({ name, href, product, fit, check }) => (
+                <div key={name} className="rounded-2xl border border-slate-200 bg-white p-4">
                   <p className="text-sm font-bold text-slate-950">{name}</p>
-                  <p className="mt-2 text-xs leading-5 text-slate-600">
-                    {index === 0
-                      ? "複数端末での利用条件を比較したい場合の第一候補。"
-                      : "料金、対応地域、利用条件を比較するための代替候補。"}
-                  </p>
+                  <p className="mt-2 text-xs font-semibold leading-5 text-slate-700">向く比較条件</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-600">{fit}</p>
+                  <p className="mt-3 text-xs font-semibold leading-5 text-slate-700">申込前に見る点</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-600">{check}</p>
                   <AffiliateLink
                     href={href}
                     product={product}
-                    placement={`recommendations_vpn_${index === 0 ? "primary" : "alternative"}`}
+                    placement={`recommendations_vpn_${product}`}
                     className="mt-4 inline-flex min-h-11 items-center text-xs font-bold text-sky-700 underline underline-offset-4"
                   >
                     公式サイトで条件を確認する
@@ -107,6 +137,9 @@ export default function RecommendationsPage() {
                 </div>
               ))}
             </div>,
+            <p key="vpn-comparison-policy" className="text-xs leading-6 text-slate-600">
+              特定の1社を万能な解決策として推奨していません。公式画面で総額と更新条件を確認し、必要な条件に合わなければ契約しない判断を優先してください。
+            </p>,
           ],
         },
         {

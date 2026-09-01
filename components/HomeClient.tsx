@@ -317,6 +317,9 @@ export default function HomeClient() {
                       <Link href="/troubleshooting/specific-site-not-working" className="inline-flex min-h-11 items-center font-semibold text-sky-700 underline underline-offset-2">
                         自分だけ開けない時の確認 →
                       </Link>
+                      <Link href="/vpn" className="inline-flex min-h-11 items-center font-semibold text-sky-700 underline underline-offset-2">
+                        回線を変えると開ける場合 →
+                      </Link>
                     </div>
                   </div>
                 )}
