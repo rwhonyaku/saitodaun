@@ -179,9 +179,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Outlookで障害や不具合が起きているか確認できます。メール送受信だけ失敗する、ログインできない、予定表だけ不安定な時に影響範囲を確認します。",
   },
   discord: {
-    title: "Discordは今落ちてる？（障害・接続状況チェック）",
+    title: "Discord障害・不具合は今？リアルタイムのサーバー状況",
     description:
-      "Discordで障害や不具合が起きているか確認できます。接続できない、サーバーに入れない、ログインできない、メッセージやボイスチャットだけ使えない時に影響範囲を確認します。",
+      "Discordで現在障害や不具合が起きているか、日本の利用者報告と接続結果から確認できます。サーバーに入れない、メッセージを送れない、ログインできない、ボイスチャットだけ使えない場合も確認できます。",
   },
   steam: {
     title: "Steam障害・サーバー状況｜落ちてる・ログインできない時の現在状況",
@@ -273,6 +273,21 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
     description:
       "kintoneで現在広い障害や不具合が起きているか確認できます。アプリ表示、レコード更新、APIだけ失敗する場合は、一部機能の問題かも確認できます。",
   },
+  ekinet: {
+    title: "えきねっと障害・不具合｜今繋がらない・サーバーダウン時の状況",
+    description:
+      "えきねっとが今繋がらない、開かない時に、通信障害やサーバーダウンが起きているか確認できます。ログイン、列車検索、指定席予約だけ失敗する場合も確認できます。",
+  },
+  radiko: {
+    title: "radiko障害・不具合｜今日繋がらない時の現在状況",
+    description:
+      "radikoで今日障害や不具合が起きているか確認できます。繋がらない、開かない、再生できない時に、広い通信障害か地域・端末側の問題かを確認します。",
+  },
+  "hello-work": {
+    title: "ハローワークシステム障害｜インターネットサービスの現在状況",
+    description:
+      "ハローワークインターネットサービスでシステム障害や不具合が起きているか確認できます。求人検索、ログイン、応募機能だけ使えない場合も確認できます。",
+  },
   confluence: {
     title: "Confluence障害・不具合｜開かない・編集できない時の現在状況",
     description:
@@ -289,9 +304,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Trelloで現在広い障害や不具合が起きているか確認できます。ボードは開くがカード編集や同期だけ失敗する場合は、一部機能の問題かも確認できます。",
   },
   "prime-video": {
-    title: "Amazon Prime Videoは今見れない？（障害・再生状況チェック）",
+    title: "Amazonプライムビデオ不具合・障害｜今日の状況を確認",
     description:
-      "Prime Videoが今日見れない、再生できない、読み込めない、テレビアプリだけ止まる時に、Amazon側の障害か端末・回線側の問題かを確認できます。",
+      "Amazonプライムビデオ（アマプラ）で今日不具合や障害が起きているか確認できます。見れない、再生できない、通信エラー、テレビアプリだけ止まる場合も確認できます。",
   },
   line: {
     title: "LINE障害・不具合｜今日繋がらない・送れない時の現在状況",
@@ -314,9 +329,14 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "ABEMAが今繋がらない、見れない、再生できない時に、広い障害か一部機能だけの不具合かを確認できます。生放送やコメントだけ不安定な場合も確認できます。",
   },
   zozotown: {
-    title: "ZOZOTOWN障害・不具合｜購入手続き・最終確認に進まない時の現在状況",
+    title: "ZOZOTOWNシステム障害・不具合｜今日の状況を確認",
     description:
       "ZOZOTOWNで今日システム障害や不具合が起きているか確認できます。商品は見られるが購入手続きや最終確認に進まない、注文できない場合にも対応します。",
+  },
+  roblox: {
+    title: "ロブロックス（Roblox）障害・不具合｜今日のサーバー状況",
+    description:
+      "ロブロックス（Roblox）で今日障害や不具合が起きているか確認できます。ゲームに入れない、接続できない、通信障害やサーバーダウンが疑われる場合も確認できます。",
   },
   rakuten: {
     title: "楽天市場障害・不具合｜注文できない・決済できない時の現在状況",
@@ -737,8 +757,8 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "使えない場合はこちら",
   },
   discord: {
-    heading: "Discord障害・不具合",
-    lead: "Discordが今接続できない、サーバーに入れない原因が広い障害かを確認します。",
+    heading: "Discord障害・不具合は今？リアルタイム状況",
+    lead: "Discordが今接続できない、サーバーに入れない原因が広い障害か、日本の利用者報告と接続結果から確認します。",
     reinforcement:
       "ログインだけ失敗する、メッセージだけ送れない、ボイスチャットだけ接続できない、通知だけ遅いなど、一部機能だけの不具合もあります。",
     secondaryReinforcement:
@@ -1156,6 +1176,39 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingHref: "",
     notWorkingLabel: "",
   },
+  ekinet: {
+    heading: "えきねっとは今繋がらない？障害・不具合状況",
+    lead: "えきねっとで現在、通信障害やサーバーダウンなど広い不具合が起きているかを確認します。",
+    reinforcement:
+      "トップページは開くが、ログイン、列車検索、指定席予約、決済だけ失敗する場合は、一部機能の問題の可能性があります。",
+    secondaryReinforcement:
+      "広い障害でなければ、ブラウザ・回線・ログイン状態・決済時の認証を順に確認します。",
+    symptomChips: ["繋がらない", "障害", "サーバーダウン", "開かない", "ログイン", "予約できない"],
+    notWorkingHref: "",
+    notWorkingLabel: "",
+  },
+  radiko: {
+    heading: "radikoの今日の障害・不具合状況",
+    lead: "radikoが今繋がらない、開かない、再生できない原因が広い障害かを確認します。",
+    reinforcement:
+      "サイトは開くが音声だけ再生できない場合は、地域判定、配信局、端末、アプリだけの問題の可能性もあります。",
+    secondaryReinforcement:
+      "広い障害でなければ、位置情報・地域設定・アプリ・ブラウザ・回線を順に確認します。",
+    symptomChips: ["障害", "不具合", "今日", "繋がらない", "開かない", "再生できない"],
+    notWorkingHref: "",
+    notWorkingLabel: "",
+  },
+  "hello-work": {
+    heading: "ハローワークのシステム障害・不具合状況",
+    lead: "ハローワークインターネットサービスで現在システム障害が起きているかを確認します。",
+    reinforcement:
+      "サイト全体ではなく、求人検索、マイページへのログイン、応募機能だけ利用できない場合もあります。",
+    secondaryReinforcement:
+      "広い障害でなければ、利用時間・メンテナンス情報・ブラウザ・回線・ログイン状態を確認します。",
+    symptomChips: ["システム障害", "インターネット障害", "不具合", "開かない", "求人検索", "ログイン"],
+    notWorkingHref: "",
+    notWorkingLabel: "",
+  },
   confluence: {
     heading: "Confluence障害・不具合",
     lead: "Confluenceで現在広い障害や不具合が起きているか、リアルタイムの状況を確認します。",
@@ -1226,8 +1279,8 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "",
   },
   "prime-video": {
-    heading: "Amazonプライムビデオ障害・不具合",
-    lead: "Prime Video（アマプラ・Amazonプライムビデオ）で現在障害や不具合が発生しているか確認できます。",
+    heading: "Amazonプライムビデオの今日の不具合・障害状況",
+    lead: "Prime Video（アマプラ・Amazonプライムビデオ）で今日不具合や障害が発生しているか確認できます。",
     reinforcement:
       "作品一覧は開くが再生だけ失敗する、テレビアプリだけ止まる、ログイン後の視聴開始でエラーになる場合もあります。",
     secondaryReinforcement:
@@ -1330,8 +1383,8 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "",
   },
   zozotown: {
-    heading: "ZOZOTOWN障害・不具合",
-    lead: "ZOZOTOWNで現在システム障害や不具合が起きているかを確認します。",
+    heading: "ZOZOTOWNの今日のシステム障害・不具合",
+    lead: "ZOZOTOWNで今日システム障害や不具合が起きているかを確認します。",
     reinforcement:
       "商品ページは見られるが、購入手続きや最終確認に進まない、注文確定だけ失敗する場合もあります。",
     secondaryReinforcement:
@@ -1348,6 +1401,29 @@ const statusHero: Record<string, StatusHero> = {
       { label: "楽天市場", href: "/status/sites/rakuten" },
       { label: "Yahoo!ショッピング", href: "/status/sites/yahoo-shopping" },
       { label: "Qoo10", href: "/status/sites/qoo10" },
+    ],
+    notWorkingHref: "",
+    notWorkingLabel: "",
+  },
+  roblox: {
+    heading: "ロブロックス（Roblox）の今日の障害・不具合",
+    lead: "ロブロックスで現在、通信障害やサーバーダウンなど広い不具合が起きているかを確認します。",
+    reinforcement:
+      "一部のゲームだけ入れない、ログインだけ失敗する、特定サーバーだけ接続できない場合は、Roblox全体ではなく一部機能やゲーム側の問題の可能性もあります。",
+    secondaryReinforcement:
+      "広い障害でなければ、アプリ・端末・回線・アカウント側の原因を確認します。",
+    symptomChips: [
+      "障害",
+      "不具合",
+      "できない",
+      "通信障害",
+      "サーバー障害",
+      "鯖落ち",
+    ],
+    relatedStatusLinks: [
+      { label: "Steam", href: "/status/sites/steam" },
+      { label: "VALORANT", href: "/status/sites/valorant" },
+      { label: "PlayStation Network", href: "/status/sites/playstation-network" },
     ],
     notWorkingHref: "",
     notWorkingLabel: "",

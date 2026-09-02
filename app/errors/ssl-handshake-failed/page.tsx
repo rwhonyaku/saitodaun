@@ -3,16 +3,16 @@ import Link from "next/link";
 import ErrorRelatedLinks from "@/components/ErrorRelatedLinks";
 
 export const metadata = {
-  title: "SSL Handshake Failedとは？原因・直し方・確認方法",
+  title: "SSL Handshake Failedとは？意味・原因と直し方",
   description:
-    "SSL Handshake Failed の意味、最短の確認手順、サーバー側・ネットワーク側・端末側の原因の見分け方、関連するSSLエラーへの進み方を簡潔に整理します。",
+    "SSL Handshake Failedの意味と原因を解説。証明書・TLS設定などのサーバー側、ネットワーク側、端末側の問題を切り分ける手順と直し方を確認できます。",
   alternates: { canonical: "/errors/ssl-handshake-failed" }
 };
 
 export default function SSLHandshakePage() {
   return (
     <EvergreenPageShell
-      h1="SSL Handshake Failedとは？原因と直し方"
+      h1="SSL Handshake Failedとは？意味・原因と直し方"
       updatedAt="2026-04-16"
       lead={[
         "「SSL Handshake Failed」は、ブラウザとサーバー間で安全な通信（SSL/TLS）の確立に失敗したときに表示されます。",

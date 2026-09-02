@@ -197,6 +197,7 @@ export default function StatusClient({
   const isLineStatus = site.id === "line";
   const isNotionStatus = site.id === "notion";
   const isTeamsStatus = site.id === "teams";
+  const isDiscordStatus = site.id === "discord";
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const assessment = getStatusVerdict(result, loading, communitySummary);
@@ -437,6 +438,35 @@ export default function StatusClient({
                 </p>
                 <Link href="/services/teams/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
                   Teamsが使えない時の確認 →
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {isDiscordStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">Discordの障害・不具合を見分ける目安</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い障害が疑われる</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  日本の利用者報告が増え、別端末・別回線でもログインやサーバー接続が失敗する場合は、Discord側の広い障害が疑われます。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">一部機能だけの不具合</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  メッセージは送れるがボイスチャットだけ接続できないなど、ログイン・通話・通知・特定サーバーだけの問題もあります。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">自分側の可能性</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  別回線やブラウザ版では使える場合は、アプリ・回線・DNS・VPN・端末側を順に確認します。
+                </p>
+                <Link href="/services/discord/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
+                  Discordがつながらない時の確認 →
                 </Link>
               </div>
             </div>

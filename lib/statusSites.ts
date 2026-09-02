@@ -1169,6 +1169,7 @@ export const STATUS_SITES: SiteConfig[] = [
     supportUrl: "https://en.help.roblox.com/hc/en-us",
     serviceNote:
       "ログイン不可や一部ゲームサーバーのみ接続できないなど、サーバー単位の障害として発生することがあります。",
+    aliases: ["ロブロックス"],
   },
   {
     id: "valorant",
