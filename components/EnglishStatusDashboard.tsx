@@ -8,7 +8,7 @@ type ExternalSource = { label: string; href: string };
 type DirectoryService = { id: string; name: string; aliases: string; official?: ExternalSource; independent?: ExternalSource };
 type ReportService = { serviceId: string; level: SignalLevel; reports: number; reporters: number; trend: number[] };
 type HotSummary = { hot: ReportService[]; services: ReportService[]; monitoredServices: number; updatedAt: string };
-type CheckResult = { online: boolean; probeBlocked?: boolean; status: number | null; responseTime: number | null; checkedUrl?: string; error?: string };
+type CheckResult = { online: boolean; probeBlocked?: boolean; status: number | null; responseTime: number | null; checkedUrl?: string; error?: string; checkedAt?: string };
 
 const DD = (slug: string): ExternalSource => ({ label: "Downdetector Japan", href: `https://downdetector.jp/shougai/${slug}/` });
 
@@ -133,11 +133,11 @@ export default function EnglishStatusDashboard() {
     try {
       const response = await fetch("/api/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: raw }) });
       const data = (await response.json()) as CheckResult;
-      setResult(data);
+      setResult({ ...data, checkedAt: new Date().toISOString() });
       trackWebsiteCheckResult(data);
       if (data.checkedUrl) setUrl(data.checkedUrl);
     } catch {
-      const failedResult = { online: false, status: null, responseTime: null, error: "The check could not be completed. Try again shortly." };
+      const failedResult = { online: false, status: null, responseTime: null, error: "The check could not be completed. Try again shortly.", checkedAt: new Date().toISOString() };
       setResult(failedResult);
       trackWebsiteCheckResult(failedResult);
     } finally { setChecking(false); }
@@ -145,14 +145,41 @@ export default function EnglishStatusDashboard() {
 
   const featured = FEATURED_IDS.map((id) => ({ ...SERVICES.find((service) => service.id === id)!, ...FEATURED_STYLE[id], report: summary?.services.find((service) => service.serviceId === id) }));
   const resultUnconfirmed = Boolean(result && (result.probeBlocked || result.error || result.status == null));
+  const resultServerFailure = Boolean(result?.status && result.status >= 500);
+  const resultHttpError = Boolean(result?.status && result.status >= 400 && result.status < 500 && !result.probeBlocked);
+  const resultTitle = resultUnconfirmed
+    ? "Status could not be confirmed"
+    : result?.online
+      ? "This website appears reachable"
+      : resultServerFailure
+        ? "This website may be having a server-side problem"
+        : resultHttpError
+          ? "The website responded with an HTTP error"
+          : "This website may be unavailable";
+  const resultExplanation = resultUnconfirmed
+    ? result?.probeBlocked
+      ? "The website appears to have blocked or limited this automated check. That does not mean the website is down."
+      : "Our external server could not complete the check. A timeout, DNS, TLS, routing, or temporary checker problem may be responsible."
+    : result?.online
+      ? "The requested URL returned a successful HTTP response to our external server. It may still fail for your connection, account, app, or location."
+      : resultServerFailure
+        ? `The server was reachable but returned HTTP ${result?.status}, which usually indicates a problem on the website or an upstream service.`
+        : resultHttpError
+          ? `The server was reachable but returned HTTP ${result?.status}. The requested page may be missing, restricted, or unavailable to this checker.`
+          : "The URL did not return a normal response to our external server. One check cannot prove that it is down everywhere.";
+  const resultNextStep = resultUnconfirmed
+    ? "Retry once, then compare the site’s official status page or reports from other users."
+    : result?.online
+      ? "If it still fails for you, compare Wi-Fi with mobile data, try another device, and temporarily disable a VPN or proxy."
+      : "Retry once and check the service’s official status source before changing account or payment settings.";
 
   return <>
     <section className="relative overflow-hidden bg-slate-950 px-4 py-8 text-white sm:py-10">
       <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.28),transparent_32%),radial-gradient(circle_at_10%_90%,rgba(37,99,235,0.2),transparent_30%)]" />
       <div className="relative mx-auto max-w-5xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs font-semibold text-sky-200"><span className="h-2 w-2 rounded-full bg-sky-400" /> User reports from Japan</div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs font-semibold text-sky-200"><span className="h-2 w-2 rounded-full bg-sky-400" /> Free external website check</div>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Is a website down right now?</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">Run a live URL response check, then compare Japan user-report activity with official and independent status sources.</p>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">Enter any public website or domain to see whether it responds to our server right now. For major services, you can also compare Japan user reports with official and independent status sources.</p>
         <ul className="mt-5 flex flex-wrap gap-2 text-xs font-semibold text-slate-200" aria-label="Evidence available on this page">
           <li className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">External URL response</li>
           <li className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">Japan report trends</li>
@@ -182,11 +209,11 @@ export default function EnglishStatusDashboard() {
               return <div key={service.id} className="p-4 sm:flex sm:items-center sm:justify-between sm:gap-4"><div><div className="flex flex-wrap items-center gap-2"><p className="font-bold text-slate-950">{service.name}</p>{state ? <span className={`flex items-center gap-1 text-[10px] font-bold ${state.text}`}><span className={`h-2 w-2 rounded-full ${state.dot}`} />Reports from Japan: {state.label}</span> : <span className="text-[10px] text-slate-400">User-report monitoring is not available</span>}</div><Link href={`/status/sites/${service.id}`} onClick={() => track("english_service_detail_click", { service_id: service.id })} className="inline-flex min-h-10 items-center text-xs font-semibold text-slate-500 underline underline-offset-2">Our detailed page (Japanese) →</Link></div><div className="flex flex-wrap gap-x-4">{service.official ? <SourceLink source={service.official} serviceId={service.id} kind={service.id === "steam" ? "independent_specialist" : "official"} /> : null}{service.independent ? <SourceLink source={service.independent} serviceId={service.id} kind="independent" /> : null}</div></div>;
             })}</div> : null}
           </div> : <div id="website-check-panel" role="tabpanel" className="p-3 sm:p-4">
-            <label htmlFor="english-website-url" className="font-bold text-slate-950">Run a technical reachability test</label>
+            <label htmlFor="english-website-url" className="font-bold text-slate-950">Enter a website or domain</label>
             <p className="mt-1 text-xs leading-5 text-slate-500">Enter a web address. Our server will test whether that URL responds; it cannot verify every feature, account, app, or location.</p>
-            <div className="mt-3 flex gap-2"><input id="english-website-url" value={url} onChange={(event) => { setUrl(event.target.value); setInputError(""); }} onKeyDown={(event) => { if (event.key === "Enter") checkWebsite(); }} type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" spellCheck={false} placeholder="example.com" aria-invalid={Boolean(inputError)} className="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm text-slate-950 outline-none focus:ring-2 focus:ring-sky-400" /><button onClick={checkWebsite} disabled={checking} className="min-h-12 rounded-xl bg-sky-600 px-5 text-sm font-bold text-white hover:bg-sky-700 disabled:opacity-60 sm:px-7">{checking ? "Checking…" : "Check URL"}</button></div>
+            <div className="mt-3 flex gap-2"><input id="english-website-url" value={url} onChange={(event) => { setUrl(event.target.value); setInputError(""); }} onKeyDown={(event) => { if (event.key === "Enter") checkWebsite(); }} type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" spellCheck={false} placeholder="example.com" aria-invalid={Boolean(inputError)} className="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm text-slate-950 outline-none focus:ring-2 focus:ring-sky-400" /><button onClick={checkWebsite} disabled={checking} className="min-h-12 rounded-xl bg-sky-600 px-5 text-sm font-bold text-white hover:bg-sky-700 disabled:opacity-60 sm:px-7">{checking ? "Checking…" : "Check status"}</button></div>
             {inputError ? <p className="mt-2 text-sm font-medium text-red-700" role="alert">{inputError}</p> : null}
-            {result ? <div className={`mt-4 rounded-xl border p-5 ${resultUnconfirmed ? "border-amber-200 bg-amber-50" : result.online ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`} role="status"><div className="flex flex-wrap items-start justify-between gap-4"><div><p className="font-bold text-slate-950">{resultUnconfirmed ? "Result inconclusive" : result.online ? "The website responded" : "The website did not respond normally"}</p>{result.checkedUrl ? <p className="mt-1 max-w-xl break-all font-mono text-xs text-slate-500">{result.checkedUrl}</p> : null}</div><div className="flex gap-2 text-xs"><span className="rounded-lg bg-white px-3 py-2">HTTP <b>{result.status ?? "—"}</b></span><span className="rounded-lg bg-white px-3 py-2">{result.responseTime != null ? `${result.responseTime} ms` : "—"}</span></div></div></div> : null}
+            {result ? <div className={`mt-4 rounded-xl border p-5 ${resultUnconfirmed ? "border-amber-200 bg-amber-50" : result.online ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`} role="status" aria-live="polite"><div className="flex flex-wrap items-start justify-between gap-4"><div className="max-w-xl"><p className="font-bold text-slate-950">{resultTitle}</p>{result.checkedUrl ? <p className="mt-1 break-all font-mono text-xs text-slate-500">{result.checkedUrl}</p> : null}<p className="mt-3 text-sm leading-6 text-slate-700">{resultExplanation}</p><p className="mt-2 text-sm leading-6 text-slate-700"><b>Next:</b> {resultNextStep}</p>{resultUnconfirmed && result.error ? <p className="mt-2 text-xs font-medium text-amber-900">The probe returned no conclusive website response.</p> : null}{result.checkedAt ? <p className="mt-3 text-xs text-slate-500">Checked {formatUpdateTime(result.checkedAt)} from SiteDown&apos;s external server.</p> : null}</div><div className="flex gap-2 text-xs"><span className="rounded-lg bg-white px-3 py-2">HTTP <b>{result.status ?? "—"}</b></span><span className="rounded-lg bg-white px-3 py-2">{result.responseTime != null ? `${result.responseTime} ms` : "—"}</span></div></div></div> : null}
           </div>}
         </div>
       </div>
