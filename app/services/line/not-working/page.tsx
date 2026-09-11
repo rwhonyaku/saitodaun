@@ -1,343 +1,152 @@
-// app/services/line/not-working/page.tsx
-
 import Link from "next/link";
 import type { Metadata } from "next";
-import { SERVICES } from "@/lib/services/registry";
 import IMobileAd from "@/components/ads/IMobileAd";
-
-const service = SERVICES.line;
-const issue = service.issues["not-working"];
+import ServiceStatusBridge from "@/components/ServiceStatusBridge";
 
 export const metadata: Metadata = {
   title: "LINEが使えない・送れない時の原因確認｜障害か自分側か",
   description:
-    "LINEが開かない、送れない、通話できない、通知が来ない時に、LINE側の障害か回線・Wi-Fi・DNS・端末・アプリ側かを確認します。",
-  alternates: { canonical: "/services/line/not-working" }
+    "LINEが開かない、メッセージを送れない、通話できない、通知が来ない時に、広いLINE障害か端末・アプリ・回線側かを確認します。",
+  alternates: { canonical: "/services/line/not-working" },
 };
-
-function ErrorLinks({ slugs }: { slugs: string[] }) {
-  return (
-    <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {slugs.map((slug) => (
-        <li key={slug} className="rounded-xl border border-neutral-200 px-4 py-3">
-          <Link className="text-sm underline" href={`/errors/${slug}`}>
-            /errors/{slug}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function LineNotWorkingPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
-        <p className="text-sm text-neutral-500">
-          <Link className="underline" href="/services">
-            サービス別トラブル
-          </Link>{" "}
-          /{" "}
-          <Link className="underline" href={service.hubHref}>
-            {service.name}
-          </Link>{" "}
-          / 不具合
-        </p>
-
         <h1 className="text-3xl font-semibold tracking-tight">
-          LINEが開かない・送れない・通話できない？（障害か自分側かを確認）
+          LINEが使えない・メッセージを送れない時の確認
         </h1>
-
         <p className="text-base text-neutral-600">
-          LINEの不具合は、LINE側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、アプリの不調、権限設定でも起きます。
-          最初に原因の方向を確認しておくと、不要な再インストールや設定変更を避けながら、より早く復旧しやすくなります。
+          まず広い不具合の兆候を確認し、その後でメッセージ、通話、接続・アプリ起動、通知・ログインのどこに問題があるかを切り分けます。
         </p>
-        <p className="text-sm text-neutral-700">
-          メッセージは送れるが通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗する場合は、見るべき原因が変わります。
-        </p>
-
-        <div className="rounded-2xl border border-neutral-200 p-5">
-          <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
-          <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
-            <li>
-              まず状態を確認：{" "}
-              <Link className="underline" href={issue.statusPageHref}>
-                LINEのステータスチェック
-              </Link>
-            </li>
-            <li>
-              他のサイトやアプリも不安定なら、自分側の可能性が高いです：{" "}
-              <Link className="underline" href="/troubleshooting/internet-not-working">
-                インターネットにつながらない原因
-              </Link>
-            </li>
-            <li>
-              Wi-Fiではだめでモバイル通信では使えるなら、{" "}
-              <Link className="underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fi
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting/router-not-working">
-                ルーター
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting-dns">
-                DNS
-              </Link>{" "}
-              を優先して確認します。
-            </li>
-            <li>
-              LINEだけだめなら、アプリ状態、権限、端末側、または通話時の回線品質の問題が多いです。
-            </li>
-          </ol>
-        </div>
       </header>
 
+      <div className="mt-6">
+        <ServiceStatusBridge
+          serviceId="line"
+          serviceName="LINE"
+          serviceUrl="https://line.me"
+          statusHref="/status/sites/line"
+          officialLinks={[
+            { label: "LINEヘルプセンター", href: "https://help.line.me/line/?lang=ja" },
+            { label: "LINE公式（X）", href: "https://x.com/LINEjp_official" },
+          ]}
+          featureLimitNote="LINE公式サイトへの接続を確認できても、トーク送受信、音声・ビデオ通話、通知、アプリ認証の状態までは判定できません。日本の利用者報告と自分の症状を合わせて判断します。"
+          advice={{
+            likely:
+              "LINE側の広い問題が疑われます。再インストール、ログアウト、アカウント移行や大きな設定変更は急がず、最も多い症状と自分の症状が一致するか確認してください。急ぎの連絡は電話、SMS、メールなど相手と使える別手段へ切り替えます。",
+            partial:
+              "メッセージや通話など一部機能の問題が疑われます。上の多い症状と一致する場合は端末を大きく変更せず公式情報を確認し、一致しなければ下の症状別確認へ進んでください。",
+            normal:
+              "広い不具合の兆候は強くありません。下から症状を選び、別の相手、Wi-Fiとモバイル通信、別端末で差が出るか確認すると、機能・回線・アプリ・アカウントのどこに原因があるか絞れます。",
+            unknown:
+              "自動確認だけでは判断できません。LINEの詳しい状況と公式情報を確認し、広い不具合が見つからなければ下の症状別確認へ進んでください。",
+          }}
+        />
+      </div>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">1) 今、LINEは障害？</h2>
+      <nav className="mt-6 rounded-xl border border-neutral-200 bg-white p-4" aria-label="LINEの症状を選ぶ">
+        <p className="text-sm font-semibold">当てはまる症状から確認</p>
+        <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#messaging">メッセージを送受信できない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#calls">LINE通話ができない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#connection">LINEにつながらない・開かない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#account">通知が来ない・ログインできない</a>
+        </div>
+      </nav>
+
+      <section id="messaging" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">1) メッセージを送れない・受信できない</h2>
         <p className="text-sm text-neutral-700">
-          まずここから確認します。LINE側で障害が起きているときは、端末やアプリを触っても改善しないことが多いです。
-          先に全体状況を見ておくと、無駄な再設定や再インストールを避けやすくなります。
+          一つのトークだけか、すべての相手・グループで起きるかを最初に確認します。次に文字と画像・動画で差があるかを見ます。
         </p>
-
-        <div className="flex flex-wrap gap-3">
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.statusPageHref}
-          >
-            LINEのステータスを確認する
-          </Link>
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.mainToolHref}
-          >
-            URL疎通チェック（メインツール）
-          </Link>
-        </div>
-
-        <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>別の相手にも短い文字メッセージを送り、一つのトーク固有か全体かを確認する。</li>
+          <li>文字は送れるが画像・動画・スタンプだけ失敗するなら、添付送信や購入機能の部分不具合、容量、回線品質を確認する。</li>
+          <li>送信はできるが受信や既読だけ遅い場合は、通知だけではなくトーク画面を直接開いて状態を確認する。</li>
+          <li>Wi-Fiとモバイル通信で差が出るなら、動く回線を一時的に使う。両方で複数人が失敗するならLINE側の可能性が上がります。</li>
+        </ul>
+        <p className="text-sm text-neutral-600">
+          送信結果が不明なときは同じ内容を連続送信せず、トーク上に表示されたか確認してから再試行します。
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短で確認すること（2分）</h2>
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>
-              <b>回線を切り替える</b>（Wi-Fi ↔ モバイル通信）。片方で動くなら、回線、DNS、ルーター、VPNの可能性が高いです。
-            </li>
-            <li>
-              <b>別端末</b>で試す。同じWi-Fiで複数端末がだめなら、回線やルーター寄りです。端末ごとに差が出るなら、端末やアプリ寄りです。
-            </li>
-            <li>
-              <b>どの機能だけ使えないかを見る</b>。送受信だけ、通話だけ、ログインだけなど症状が分かれるなら、権限、アプリ状態、回線品質を確認しやすくなります。
-            </li>
-          </ul>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-              インターネット全体が不安定な場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-              Wi-Fiが怪しい場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-              ルーターが怪しい場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-              端末だけつながらない場合
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">3) よくある原因</h2>
-
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">LINE側の障害</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              メッセージ送信が遅い、通知が来ない、ログインしづらい、通話が不安定といった症状は、LINE側の障害でも起きます。
-              この場合は利用者側でいろいろ変えても改善しにくいため、まずは状況確認が先です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">DNSや通信経路の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              LINEだけ不安定に見えても、実際はDNS解決、通信経路、VPN、プロキシ、ルーター側の影響で起きていることがあります。
-              特にWi-Fiではだめでモバイル通信では使える場合は、この方向を先に疑う方が効率的です。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting-dns">
-                DNSトラブル対処へ
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の確認
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fiがつながらない原因
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-                ルーターが原因か確認する
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">アプリ状態・権限・端末側の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              アプリの一時不具合、通知権限、マイク権限、バックグラウンド通信制限、壊れたキャッシュなどで、LINEだけ挙動がおかしくなることがあります。
-              特に「開くが送れない」「通知だけ来ない」「通話だけ不安定」といった症状は、この方向を疑いやすいです。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-                端末だけつながらない場合
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-                ブラウザ側の原因を確認する
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">通話時の回線品質不足</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              LINE通話は、単に「つながるか」だけでなく、通信の安定性や遅延の影響も受けます。
-              Web閲覧は問題なくても、混雑したWi-Fi、公衆Wi-Fi、弱い電波環境では通話だけ不安定になることがあります。
-            </p>
-          </div>
+      <section id="calls" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">2) LINE通話・ビデオ通話ができない</h2>
+        <p className="text-sm text-neutral-700">
+          通話を開始できないのか、接続後に音が出ないのか、途中で切れるのかで確認先が変わります。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>別の相手にも発信できないか確認する。一人だけなら相手側の状態も候補です。</li>
+          <li>接続するが声が届かない場合は、LINEのマイク権限、消音状態、出力先のイヤホン・スピーカーを確認する。</li>
+          <li>通話が途切れる場合はWi-Fiとモバイル通信を切り替える。Web閲覧ができても、遅延や通信の揺れで通話だけ不安定になることがあります。</li>
+          <li>複数人が別回線でも通話を開始できない場合は、端末設定を変え続けずLINEの現在状況を確認する。</li>
+        </ul>
+        <div className="rounded-xl border border-sky-100 bg-sky-50 p-4 text-sm text-slate-700">
+          <p className="font-semibold text-slate-900">急ぎの通話</p>
+          <p className="mt-1">携帯電話の音声通話など、相手と利用できる別の連絡方法へ切り替えます。</p>
         </div>
       </section>
 
       <IMobileAd slot="notworking_mid" />
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
-
-        <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
-          <li>LINEを完全終了して、もう一度開く。</li>
-          <li>Wi-Fi ↔ モバイル通信に切り替える。</li>
-          <li>VPNやプロキシを一時的にOFFにする。</li>
-          <li>端末を再起動して、通信状態をリフレッシュする。</li>
-          <li>アプリを最新版に更新する。</li>
-          <li>障害ではないと見えたら、ルーターを再起動する。</li>
-          <li>それでも改善しなければ、権限やバックグラウンド制限を確認する。</li>
-        </ol>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">「送れない」場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>他のサイトやアプリもだめなら、まず回線側を疑います。</li>
-            <li>LINEだけだめなら、アプリの一時不具合やセッション不整合のことがあります。</li>
-            <li>Wi-Fiだけだめなら、モバイル通信で試して回線差を確認します。</li>
-          </ul>
-        </div>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">「通話できない」場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>回線品質の影響が大きいので、別回線で試すのが早いです。</li>
-            <li>VPNやプロキシは一時的にOFFにします。</li>
-            <li>ホテルや公衆Wi-Fiなど制限が強い回線では、モバイル通信の方が安定することがあります。</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">5) 具体的なエラー表示が出る場合</h2>
+      <section id="connection" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">3) LINEにつながらない・アプリが開かない</h2>
         <p className="text-sm text-neutral-700">
-          DNS、SSL、タイムアウト、または 502、503、504 などが出たら、下の解説ページを確認してください。
-          LINE自体の問題に見えても、実際は通信や端末側の症状であることがあります。
+          LINEだけ開かないのか、他のアプリも通信できないのか、起動画面で止まるのかを確認します。
         </p>
-
-        <ErrorLinks slugs={issue.relatedErrorSlugs} />
-
-        <div className="mt-4 text-sm">
-          <Link className="underline" href="/status-codes">
-            ステータスコード一覧 →
-          </Link>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">6) 公式情報</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-          {issue.officialSources.map((s) => (
-            <li key={s.href}>
-              <a className="underline" href={s.href} target="_blank" rel="noreferrer">
-                {s.label}
-              </a>
-            </li>
-          ))}
+          <li>他のアプリやWebサイトも通信できないなら、LINEより先に端末の接続状態を確認する。</li>
+          <li>Wi-Fiだけ失敗するならモバイル通信で試し、VPNやプロキシを使っている場合は一時的に外して差を確認する。</li>
+          <li>通信は正常なのにLINEだけ起動画面で止まる場合は、アプリを完全終了し、端末再起動とアプリ更新を順に試す。</li>
+          <li>同じ回線の別端末ではLINEを使えるなら、その端末やアプリ側の可能性が高くなります。</li>
         </ul>
+        <p className="text-sm text-neutral-700">
+          他のサービスにもつながらない場合は、
+          <Link className="underline" href="/troubleshooting/internet-not-working">インターネット接続の確認</Link>
+          へ進みます。
+        </p>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-neutral-200 p-6">
-        <h2 className="text-lg font-semibold">関連リンク（サイト内）</h2>
-        <div className="mt-3 flex flex-wrap gap-3">
-          <Link className="text-sm underline" href={service.hubHref}>
-            {service.name}のトラブル一覧
-          </Link>
-          <Link className="text-sm underline" href={issue.statusPageHref}>
-            {service.name}のステータスチェック
-          </Link>
-          <Link className="text-sm underline" href={issue.mainToolHref}>
-            接続チェックツール
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-            インターネットにつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-            Wi-Fiがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-            ルーターがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-            ブラウザでサイトが開かない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-            端末だけつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting-dns">
-            DNSトラブル対処
-          </Link>
-          <Link className="text-sm underline" href="/status-codes">
-            ステータスコード一覧
-          </Link>
+      <section id="account" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">4) 通知が来ない・ログインできない</h2>
+        <div className="space-y-4 text-sm text-neutral-700">
+          <div>
+            <h3 className="font-semibold text-slate-900">通知だけ来ない</h3>
+            <ul className="mt-2 list-disc space-y-2 pl-5">
+              <li>トーク画面を開くと新着があるなら、メッセージ受信より通知経路の問題が疑われます。</li>
+              <li>LINEとOSの通知許可、集中モード、省電力・バックグラウンド通信制限を確認する。</li>
+              <li>一つのトークだけ通知されない場合は、そのトークの通知設定を確認する。</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-slate-900">ログイン・認証できない</h3>
+            <ul className="mt-2 list-disc space-y-2 pl-5">
+              <li>広い障害が疑われる間は、ログアウト、再インストール、アカウント移行を急がない。</li>
+              <li>機種変更や再認証中なら、登録済みの電話番号・メール・連携アカウントを確認してから操作する。</li>
+              <li>個別の認証問題なら、LINE公式ヘルプの案内を優先する。</li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">よくある質問</h2>
+      <section className="mt-10 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <h2 className="text-lg font-semibold">再インストールは最後に判断</h2>
+        <p className="mt-2 text-sm text-neutral-700">
+          再インストール前に、アカウントへ再ログインできることと必要なトーク履歴のバックアップ状況を確認してください。広い障害や回線問題なら、再インストールしても改善しません。
+        </p>
+      </section>
 
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">障害かどうかを確実に見分けるには？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              ステータス確認をしたうえで、回線や端末を変えても状況がほぼ変わらないなら、障害の可能性が高いです。
-              その場合は大きく触らず待つ方が近道です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">モバイル通信だと動くのに、Wi-Fiだとだめなのはなぜ？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側のDNS、ルーター、VPN、プロキシの問題が濃厚です。まずは回線切り替えで差を確認し、DNSやルーター側を確認してください。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">最初に避けたほうがいいことは？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              障害確認をする前の再インストールや大きな設定変更は避けた方が安全です。原因が回線やDNSなら直らないうえ、再ログインや認証の手間だけ増えることがあります。
-            </p>
-          </div>
+      <section className="mt-10 rounded-2xl border border-neutral-200 p-5">
+        <h2 className="text-lg font-semibold">詳しい報告推移と公式情報</h2>
+        <p className="mt-2 text-sm text-neutral-700">
+          LINEのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。LINE Developers向けのプラットフォーム状況は、一般利用者のトーク・通話障害とは対象が異なるため、このページでは消費者向けヘルプと公式案内を優先します。
+        </p>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm">
+          <Link className="underline" href="/status/sites/line">LINEの詳しい状況・報告推移</Link>
+          <a className="underline" href="https://help.line.me/line/?lang=ja" target="_blank" rel="noopener noreferrer">LINEヘルプセンター ↗</a>
+          <a className="underline" href="https://x.com/LINEjp_official" target="_blank" rel="noopener noreferrer">LINE公式（X） ↗</a>
         </div>
       </section>
     </main>

@@ -1,259 +1,129 @@
-// app/services/x/not-working/page.tsx
-
 import Link from "next/link";
 import type { Metadata } from "next";
-import { SERVICES } from "@/lib/services/registry";
 import IMobileAd from "@/components/ads/IMobileAd";
-
-const service = SERVICES.x;
-const issue = service.issues["not-working"];
+import ServiceStatusBridge from "@/components/ServiceStatusBridge";
 
 export const metadata: Metadata = {
-  title: "X（旧Twitter）が開かない・ログインできない時の原因確認",
+  title: "X（旧Twitter）が開かない・読み込めない時の原因確認",
   description:
-    "X（旧Twitter）が広く落ちていないのに開かない、読み込めない、ログインできない時に、自分側の回線・アプリ・端末が原因かを確認します。",
-  alternates: { canonical: "/services/x/not-working" }
+    "X（旧Twitter）のタイムラインが読み込めない、投稿できない、DMや画像だけ使えない、ログインできない時に、広い障害か自分側かを確認します。",
+  alternates: { canonical: "/services/x/not-working" },
 };
-
-const ERROR_LABELS: Record<string, string> = {
-  "err-connection-timed-out": "接続がタイムアウトするとき",
-  "connection-reset": "接続が途中でリセットされるとき",
-  "dns-probe-finished-nxdomain": "DNS で接続先が見つからないとき",
-  "ssl-handshake-failed": "SSL / TLS の接続に失敗するとき",
-  "503-service-unavailable": "503 Service Unavailable が出るとき",
-};
-
-function ErrorLinks({ slugs }: { slugs: string[] }) {
-  return (
-    <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {slugs.map((slug) => (
-        <li key={slug} className="rounded-xl border border-neutral-200 px-4 py-3">
-          <Link className="text-sm underline" href={`/errors/${slug}`}>
-            {ERROR_LABELS[slug] ?? "関連エラーの解説"}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function XNotWorkingPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
-        <p className="text-sm text-neutral-500">
-          <Link className="underline" href="/services">
-            サービス別トラブル
-          </Link>{" "}
-          /{" "}
-          <Link className="underline" href={service.hubHref}>
-            {service.name}
-          </Link>{" "}
-          / 不具合
-        </p>
-
         <h1 className="text-3xl font-semibold tracking-tight">
-          X（旧Twitter）が開かない・読み込めない・ログインできない？（自分側かを確認）
+          X（旧Twitter）が開かない・読み込めない時の確認
         </h1>
-
         <p className="text-base text-neutral-600">
-          X（旧Twitter）が広く落ちていないのに使えない時は、回線、Wi-Fi、DNS、端末、ブラウザ、アプリ、ログイン状態など自分側の条件を確認する方が早いです。
-          まず全体障害を除外したうえで、このページでは「自分だけかもしれない」不具合を整理します。
+          まず広い障害の兆候を確認し、その後でタイムライン、投稿、DM・画像、ログインのどこに問題があるかを切り分けます。
         </p>
-        <p className="text-sm text-neutral-700">
-          タイムラインは見れるが投稿だけできない、通知だけ来ない、ログインだけ失敗する場合は、見るべき原因が変わります。
-        </p>
-
-        <div className="rounded-2xl border border-neutral-200 bg-slate-50 p-5">
-          <h2 className="text-lg font-semibold">最初に確認すること</h2>
-          <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
-            <li>
-              まず広く落ちていないか確認：
-              {" "}
-              <Link className="underline" href={issue.statusPageHref}>
-                X（旧Twitter）のステータスチェック
-              </Link>
-            </li>
-            <li>
-              他のサイトやアプリも不安定なら、
-              {" "}
-              <Link className="underline" href="/troubleshooting/internet-not-working">
-                インターネットにつながらない原因
-              </Link>
-              {" "}
-              を優先
-            </li>
-            <li>X（旧Twitter）だけ使いにくいなら、このページで自分側の原因を確認する</li>
-          </ol>
-        </div>
       </header>
 
+      <div className="mt-6">
+        <ServiceStatusBridge
+          serviceId="twitter"
+          serviceName="X（旧Twitter）"
+          serviceUrl="https://twitter.com"
+          statusHref="/status/sites/twitter"
+          officialLinks={[
+            { label: "Xサポート", href: "https://help.x.com/ja" },
+            { label: "X Support（公式アカウント）", href: "https://x.com/Support" },
+          ]}
+          featureLimitNote="外部からXへの接続を確認できても、タイムライン更新、投稿、DM、画像・動画、特定アカウントの状態までは判定できません。利用者報告と自分の症状を合わせて判断します。"
+          advice={{
+            likely:
+              "X側の広い問題が疑われます。アプリの再インストール、ログアウト、パスワード変更は急がず、最も多い症状と自分の症状が一致するか確認してください。急ぎの連絡は別の連絡手段を使い、送信状態が不明な投稿は連続して再送しない方が安全です。",
+            partial:
+              "一部機能の問題が疑われます。上の多い症状がタイムライン、投稿、DMなど自分の症状と一致する場合は、端末設定を大きく変えず公式情報を確認します。一致しなければ下の症状別確認へ進んでください。",
+            normal:
+              "広い障害の兆候は強くありません。下から症状を選び、アプリとブラウザ、別回線、別アカウントで差が出るか確認すると、X側の部分不具合か自分側かを絞れます。",
+            unknown:
+              "自動確認だけでは判断できません。Xの詳しい状況と公式情報を確認し、広い障害が見つからなければ下の症状別確認へ進んでください。",
+          }}
+        />
+      </div>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">1) 今、X（旧Twitter）は広く落ちている？</h2>
+      <nav className="mt-6 rounded-xl border border-neutral-200 bg-white p-4" aria-label="Xの症状を選ぶ">
+        <p className="text-sm font-semibold">当てはまる症状から確認</p>
+        <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#timeline">タイムラインが読み込めない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#posting">投稿・更新できない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#partial">DM・画像など一部だけ使えない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#login">ログインできない</a>
+        </div>
+      </nav>
+
+      <section id="timeline" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">1) タイムラインが読み込めない・更新されない</h2>
         <p className="text-sm text-neutral-700">
-          まずここから確認します。広く落ちているなら、端末やブラウザの設定を触っても改善しないことが多いです。
-          逆に広く落ちていないなら、この先の確認が有効です。
+          画面全体が開かないのか、古い投稿は見えるが新しい投稿だけ取得できないのかを最初に確認します。
         </p>
-
-        <div className="flex flex-wrap gap-3">
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.statusPageHref}
-          >
-            X（旧Twitter）のステータスを確認する
-          </Link>
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.mainToolHref}
-          >
-            URL疎通チェック（メインツール）
-          </Link>
-        </div>
-
-        <p className="text-xs text-neutral-500">
-          広く落ちていないことを確認してから自分側の原因を見る方が、無駄が少なくなります。
-        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>検索、プロフィール、通知も開かないなら、広いX障害または接続問題の可能性が上がります。</li>
+          <li>ブラウザでは更新できるのにアプリだけ止まるなら、アプリを完全終了し、更新の有無を確認します。</li>
+          <li>Wi-Fiとモバイル通信で差が出るなら、動く回線を一時的に使い、VPNや回線側の影響を確認します。</li>
+          <li>一つのアカウントだけ更新できないなら、サービス全体よりアカウントやセッション側の可能性があります。</li>
+        </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 自分側で見たい4つの不具合</h2>
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>アプリだけ不具合</li>
-            <li>ログインできない</li>
-            <li>一部機能だけ使えない</li>
-            <li>通信環境や端末の問題</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">3) 最短で確認すること</h2>
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>Wi-Fi とモバイル通信を切り替えて差が出るか確認する</li>
-            <li>別端末で同じ症状か確認する</li>
-            <li>ブラウザ版とアプリ版の両方で試す</li>
-            <li>シークレットモードや別ブラウザで試して、Cookie や拡張機能の影響を外す</li>
-          </ul>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-              インターネット全体が不安定な場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-              ブラウザだけ開かない場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting-dns">
-              DNS が怪しい場合
-            </Link>
-          </div>
-        </div>
+      <section id="posting" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">2) 投稿・返信・更新ができない</h2>
+        <p className="text-sm text-neutral-700">
+          タイムラインを読めるのに投稿だけ失敗する場合は、X全体の停止ではなく投稿機能の部分障害、添付メディア、またはアカウント固有の制限を確認します。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>短いテキストだけで投稿し、画像・動画のアップロードだけが原因か確認する。</li>
+          <li>アプリで失敗する場合はブラウザ版を試す。ブラウザで送れるなら急ぎの投稿はそちらを使います。</li>
+          <li>投稿後の状態が不明な場合はプロフィールを確認し、同じ内容を繰り返し送信しない。</li>
+          <li>別アカウントでは投稿できる場合、広い障害ではなく対象アカウントの状態をX側で確認する。</li>
+        </ul>
+        <p className="text-sm text-neutral-600">長い下書きや添付前の文章は、再試行前に端末側へ保存しておくと安全です。</p>
       </section>
 
       <IMobileAd slot="notworking_mid" />
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">4) よくある原因</h2>
-
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">アプリだけ不具合</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              アプリだけ落ちる、更新後から開きにくい、タイムラインだけ止まる場合は、アプリ再起動や更新不足、端末側のキャッシュ不整合を疑います。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">ログインできない</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              ログイン画面がループする、認証後に戻る、セッションが続かない場合は、Cookie やログイン状態の不整合を優先して見ます。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">一部機能だけ使えない</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              タイムラインは見えるのに投稿、通知、DM、メディアだけ不安定なら、X（旧Twitter）側の部分不具合か、機能ごとの通信失敗を疑います。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">通信環境や端末の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi ではだめでモバイル通信では使える、端末を変えると改善する場合は、回線、DNS、ルーター、VPN、端末側の条件が原因のことが多いです。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fi がつながらない原因
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-                ルーターが原因か確認する
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-                端末だけつながらない場合
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">5) すぐ試せる対処（順番どおり）</h2>
-
-        <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
-          <li>アプリやブラウザを完全に閉じて再起動する</li>
-          <li>Wi-Fi とモバイル通信を切り替える</li>
-          <li>シークレットモードや別ブラウザで試す</li>
-          <li>X の Cookie / キャッシュを削除して再ログインする</li>
-        </ol>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">6) 具体的なエラー表示が出る場合</h2>
+      <section id="partial" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">3) DM・通知・画像や動画だけ使えない</h2>
         <p className="text-sm text-neutral-700">
-          DNS、SSL、タイムアウト、または 503 などが出たら、下の解説ページを確認してください。
-          X（旧Twitter）の問題に見えても、実際は通信やブラウザ側の症状であることがあります。
+          一部機能だけ失敗する場合、Xのサイトが応答していても部分的な問題は残ります。使えない機能を分けて確認してください。
         </p>
-
-        <ErrorLinks slugs={issue.relatedErrorSlugs} />
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">7) 公式情報</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-          {issue.officialSources.map((s) => (
-            <li key={s.href}>
-              <a className="underline" href={s.href} target="_blank" rel="noreferrer">
-                {s.label}
-              </a>
-            </li>
-          ))}
+          <li>DMだけ送れないなら、別の相手にも送れないか、受信も止まっているかを確認する。</li>
+          <li>画像・動画だけ表示されないなら、文字中心の画面やブラウザ版では動くか確認する。</li>
+          <li>通知だけ来ないなら、アプリ内では通知を読めるか確認し、端末の通知権限とバックグラウンド制限を見ます。</li>
+          <li>急ぎの連絡はDMの復旧を待たず、相手と合意済みの別手段を使います。</li>
         </ul>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-neutral-200 p-6">
-        <h2 className="text-lg font-semibold">関連リンク（サイト内）</h2>
-        <div className="mt-3 flex flex-wrap gap-3">
-          <Link className="text-sm underline" href={service.hubHref}>
-            X のトラブル一覧
-          </Link>
-          <Link className="text-sm underline" href={issue.statusPageHref}>
-            X（旧Twitter）のステータスチェック
-          </Link>
-          <Link className="text-sm underline" href={issue.mainToolHref}>
-            接続チェックツール
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-            インターネットにつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-            ブラウザでサイトが開かない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting-dns">
-            DNSトラブル対処
-          </Link>
+      <section id="login" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">4) Xにログインできない</h2>
+        <p className="text-sm text-neutral-700">
+          ログイン画面が開かない、認証後に戻される、特定アカウントだけ拒否される、のどこで止まるかを確認します。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>ブラウザのプライベートウィンドウでログイン画面が正常に開くか確認する。</li>
+          <li>別回線・別端末でも同じアカウントだけ失敗するなら、接続よりアカウント側の可能性が高くなります。</li>
+          <li>複数の利用者が同時にログインできない場合は、パスワード変更を急がず現在状況を確認する。</li>
+        </ul>
+        <p className="text-sm text-neutral-700">
+          広い障害が見つからず個別の認証だけ失敗する場合は、{" "}
+          <Link className="underline" href="/troubleshooting/cant-log-in">ログインできない時の確認手順</Link>
+          へ進みます。
+        </p>
+      </section>
+
+      <section className="mt-10 rounded-2xl border border-neutral-200 p-5">
+        <h2 className="text-lg font-semibold">詳しい報告推移と公式情報</h2>
+        <p className="mt-2 text-sm text-neutral-700">
+          Xのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。X Supportは公式案内の確認先ですが、案内がないことだけで正常とは断定できません。
+        </p>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm">
+          <Link className="underline" href="/status/sites/twitter">Xの詳しい状況・報告推移</Link>
+          <a className="underline" href="https://help.x.com/ja" target="_blank" rel="noopener noreferrer">Xヘルプセンター ↗</a>
+          <a className="underline" href="https://x.com/Support" target="_blank" rel="noopener noreferrer">X Support ↗</a>
         </div>
       </section>
     </main>

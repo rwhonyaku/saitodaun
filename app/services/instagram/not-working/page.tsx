@@ -1,343 +1,107 @@
-// app/services/instagram/not-working/page.tsx
-
 import Link from "next/link";
 import type { Metadata } from "next";
-import { SERVICES } from "@/lib/services/registry";
 import IMobileAd from "@/components/ads/IMobileAd";
-
-const service = SERVICES.instagram;
-const issue = service.issues["not-working"];
+import ServiceStatusBridge from "@/components/ServiceStatusBridge";
 
 export const metadata: Metadata = {
   title: "Instagramが見れない・投稿できない？（障害か自分側か）",
-  description:
-    "Instagram（インスタ）が読み込めない・表示されない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
-  alternates: { canonical: "/services/instagram/not-working" }
+  description: "Instagram（インスタ）のフィードやストーリーズが見れない、投稿・DM・ログインができない時に、広い障害か機能・アカウント・端末側かを確認します。",
+  alternates: { canonical: "/services/instagram/not-working" },
 };
-
-function ErrorLinks({ slugs }: { slugs: string[] }) {
-  return (
-    <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {slugs.map((slug) => (
-        <li key={slug} className="rounded-xl border border-neutral-200 px-4 py-3">
-          <Link className="text-sm underline" href={`/errors/${slug}`}>
-            /errors/{slug}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function InstagramNotWorkingPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
-        <p className="text-sm text-neutral-500">
-          <Link className="underline" href="/services">
-            サービス別トラブル
-          </Link>{" "}
-          /{" "}
-          <Link className="underline" href={service.hubHref}>
-            {service.name}
-          </Link>{" "}
-          / 不具合
-        </p>
-
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Instagramが見れない・表示されない・投稿できない？（障害か自分側かを最短判定）
-        </h1>
-
-        <p className="text-base text-neutral-600">
-          Instagramの不具合は、障害だけでなく、回線、Wi-Fi、DNS、アプリ状態、キャッシュ、権限、アカウント周りでも起きます。
-          最初に問題の方向を確認しておくと、無駄な再設定を減らしながら早く復旧しやすくなります。
-        </p>
-        <p className="text-sm text-neutral-600">
-          見れない・表示されない・投稿できない・ログインできないなど、症状によって原因の確認が変わります。
-        </p>
-
-        <div className="rounded-2xl border border-neutral-200 p-5">
-          <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
-          <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
-            <li>
-              まず状態を確認：{" "}
-              <Link className="underline" href={issue.statusPageHref}>
-                Instagramのステータスチェック
-              </Link>
-            </li>
-            <li>
-              他のサイトやアプリも不安定なら、自分側の可能性が高いです：{" "}
-              <Link className="underline" href="/troubleshooting/internet-not-working">
-                インターネットにつながらない原因
-              </Link>
-            </li>
-            <li>
-              Wi-Fiではだめでモバイル通信では見られるなら、{" "}
-              <Link className="underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fi
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting/router-not-working">
-                ルーター
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting-dns">
-                DNS
-              </Link>{" "}
-              を優先して確認します。
-            </li>
-            <li>
-              Instagramだけだめなら、アプリ、キャッシュ、権限、端末、アカウント周りの問題が多いです。
-            </li>
-          </ol>
-        </div>
+        <h1 className="text-3xl font-semibold tracking-tight">Instagramが見れない・投稿できない時の確認</h1>
+        <p className="text-base text-neutral-600">まずInstagram全体の障害兆候を確認し、その後でフィード・ストーリーズ・リール、投稿、DM、ログインのどこに問題があるかを切り分けます。</p>
       </header>
 
+      <div className="mt-6">
+        <ServiceStatusBridge
+          serviceId="instagram"
+          serviceName="Instagram"
+          serviceUrl="https://www.instagram.com"
+          statusHref="/status/sites/instagram"
+          officialLinks={[
+            { label: "Meta公式ステータス", href: "https://metastatus.com/instagram" },
+            { label: "Instagramヘルプセンター", href: "https://help.instagram.com/" },
+          ]}
+          featureLimitNote="Instagramの公開Webページに接続できても、フィード、ストーリーズ、リール、投稿、DMや個別アカウントの状態までは判定できません。利用者報告と機能ごとの差を合わせて確認します。"
+          advice={{
+            likely: "Instagram側の広い問題が疑われます。ログアウト、再インストール、パスワード変更は急がず、多い症状とMeta公式ステータスを確認してください。未投稿の下書きがある場合はアプリを削除しないでください。",
+            partial: "一部機能または一部利用者に影響する問題が疑われます。多い症状が自分の症状と一致するなら設定を大きく変えず待ち、一致しなければ下の機能別確認へ進んでください。",
+            normal: "広い障害の兆候は強くありません。フィード、投稿、DMのどれが失敗するかを分け、ブラウザ版、別アカウント、別端末や別回線で差が出るか確認します。",
+            unknown: "自動確認だけでは判断できません。Instagramの詳しい報告推移とMeta公式情報を確認し、広い障害が見つからなければ下の症状別確認へ進んでください。",
+          }}
+        />
+      </div>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">1) 今、Instagramは障害？</h2>
-        <p className="text-sm text-neutral-700">
-          まずここから確認します。障害中にアプリを入れ直したり設定をいじっても改善しないことが多いです。
-          最初に全体状況を見ておくと、無駄な作業を避けやすくなります。
-        </p>
-
-        <div className="flex flex-wrap gap-3">
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.statusPageHref}
-          >
-            Instagramのステータスを確認する
-          </Link>
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.mainToolHref}
-          >
-            URL疎通チェック（メインツール）
-          </Link>
+      <nav className="mt-6 rounded-xl border border-neutral-200 bg-white p-4" aria-label="Instagramの症状を選ぶ">
+        <p className="text-sm font-semibold">当てはまる症状から確認</p>
+        <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#viewing">フィード・ストーリーズを見れない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#posting">投稿・リールを公開できない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#dm">DMを送受信できない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#login">ログイン・一アカウントだけ使えない</a>
         </div>
+      </nav>
 
-        <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
-        </p>
+      <section id="viewing" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">1) フィード・ストーリーズ・リールを見れない</h2>
+        <p className="text-sm text-neutral-700">複数の表示機能が同時に止まるのか、一つだけ読み込めないのかを最初に確認します。</p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>プロフィールやDMは開くか確認し、Instagram全体か表示機能だけかを分ける。</li>
+          <li>アプリだけ失敗するならブラウザ版を開き、アプリ固有か確認する。</li>
+          <li>Wi-Fiとモバイル回線を切り替え、片方だけ読み込めないか確認する。</li>
+          <li>一人の投稿だけ見えない場合は、全体障害より公開範囲、削除、ブロックなど個別条件を疑う。</li>
+        </ul>
+        <p className="text-sm text-neutral-700">他のサービスにも接続できない場合は、<Link className="underline" href="/troubleshooting/internet-not-working">インターネット接続の確認</Link>へ進みます。</p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>
-              <b>回線を切り替える</b>（Wi-Fi ↔ モバイル通信）。片方で動くなら、回線、DNS、ルーター、VPNの可能性が高いです。
-            </li>
-            <li>
-              <b>別端末</b>で試す。同じWi-Fiで全部だめなら、回線、DNS、ルーター寄りです。
-            </li>
-            <li>
-              <b>Web版（ブラウザ）でも試す</b>。アプリだけだめならアプリ状態、Web版もだめなら回線や障害の可能性が上がります。
-            </li>
-          </ul>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-              インターネット全体が不安定な場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-              Wi-Fiが怪しい場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-              ブラウザだけ開かない場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-              端末だけつながらない場合
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">3) よくある原因</h2>
-
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">Instagram側の障害</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              フィード、ストーリー、DMが重い、読み込めない、ログインが不安定といった症状は障害でも起きます。
-              まずステータスを確認し、障害中は待つのが最短です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">DNSや通信経路の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Instagramだけが遅い、開かないように見えても、DNS解決、通信経路、VPN、プロキシの影響で起きることがあります。
-              回線を切り替えて差が出たら、この方向を先に疑う方が効率的です。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting-dns">
-                DNSトラブル対処へ
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の確認
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fiがつながらない原因
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-                ルーターが原因か確認する
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">アプリ状態（キャッシュ・権限・バックグラウンド制限）</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              キャッシュ破損、権限不足、バックグラウンド制限、古いアプリで表示が止まることがあります。
-              アプリだけおかしいときは、ここを疑う価値があります。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-                ブラウザ側の原因を確認する
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-                端末だけつながらない場合
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">アカウント周り（ログイン・認証・制限）</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              ログインできない、操作が急に制限されるといった場合、本人確認や不審判定が絡むことがあります。
-              ただし先に「障害か、自分側の通信か、アプリ状態か」を確認するのが先です。
-            </p>
-          </div>
-        </div>
+      <section id="posting" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">2) 写真・動画・ストーリーズ・リールを投稿できない</h2>
+        <p className="text-sm text-neutral-700">閲覧できても投稿だけ失敗する場合、アップロード機能、メディア、アプリ権限またはアカウント側を確認します。</p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>短い写真投稿など別形式で試し、動画やリールだけ失敗するか確認する。</li>
+          <li>写真・動画へのアクセス権限と端末の空き容量を確認する。</li>
+          <li>アップロード中のままなら連打せず、下書きを保持したまま回線を切り替える。</li>
+          <li>別アカウントでは投稿できるなら、端末全体より対象アカウントの制限や状態を確認する。</li>
+        </ul>
+        <p className="text-sm text-neutral-600">アプリを削除すると端末内の下書きを失う可能性があります。再インストールは下書きの扱いを確認してから最後に判断します。</p>
       </section>
 
       <IMobileAd slot="notworking_mid" />
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
-
-        <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
-          <li>アプリを完全終了して再起動し、もう一度読み込みます。</li>
-          <li>Wi-Fi ↔ モバイル通信に切り替える。</li>
-          <li>VPNやプロキシを一旦OFFにする。</li>
-          <li>端末を再起動して、詰まった状態をリセットする。</li>
-          <li>Instagramアプリを最新版に更新する。</li>
-          <li>改善しない場合は、アプリのキャッシュやストレージを整理する。</li>
-          <li>障害ではないと見えたら、ルーターを再起動する。</li>
-        </ol>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">ログインできない場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>別回線で試して、回線やDNSの問題を除外する。</li>
-            <li>Web版でログインできるか試して、アプリ起因かどうかを確認する。</li>
-            <li>パスワード再設定が必要な場合もありますが、まずは障害確認が先です。</li>
-          </ul>
-        </div>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">読み込みが終わらない場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>回線を変えて試す（Wi-Fi ↔ モバイル通信）。</li>
-            <li>VPNやプロキシをOFFにする。</li>
-            <li>端末の空き容量が極端に少ないと挙動が不安定になることがあります。</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">5) 具体的なエラー表示が出る場合</h2>
-        <p className="text-sm text-neutral-700">
-          DNS、SSL、タイムアウト系の表示が出たら、下の解説ページを確認してください。
-          必要なものだけに絞ってリンクしています。
-        </p>
-
-        <ErrorLinks slugs={issue.relatedErrorSlugs} />
-
-        <div className="mt-4 text-sm">
-          <Link className="underline" href="/status-codes">
-            ステータスコード一覧 →
-          </Link>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">6) 公式情報</h2>
+      <section id="dm" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">3) DMを送れない・届かない</h2>
+        <p className="text-sm text-neutral-700">フィードや投稿が使えるのにDMだけ失敗する場合、Instagram全体の停止とは限りません。</p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-          {issue.officialSources.map((s) => (
-            <li key={s.href}>
-              <a className="underline" href={s.href} target="_blank" rel="noreferrer">
-                {s.label}
-              </a>
-            </li>
-          ))}
+          <li>別の相手へ短いテキストを送り、一つの会話だけかDM全体かを分ける。</li>
+          <li>テキストは送れて画像だけ失敗するなら、メディア送信の問題として確認する。</li>
+          <li>送信済み表示やリクエスト欄を確認し、同じ内容を繰り返し送らない。</li>
+          <li>一人にだけ送れない場合は、相手の受信設定やアカウント状態も候補になります。</li>
         </ul>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-neutral-200 p-6">
-        <h2 className="text-lg font-semibold">関連リンク（サイト内）</h2>
-        <div className="mt-3 flex flex-wrap gap-3">
-          <Link className="text-sm underline" href={service.hubHref}>
-            {service.name}のトラブル一覧
-          </Link>
-          <Link className="text-sm underline" href={issue.statusPageHref}>
-            {service.name}のステータスチェック
-          </Link>
-          <Link className="text-sm underline" href={issue.mainToolHref}>
-            接続チェックツール
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-            インターネットにつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-            Wi-Fiがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-            ルーターがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-            ブラウザでサイトが開かない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-            端末だけつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting-dns">
-            DNSトラブル対処
-          </Link>
-          <Link className="text-sm underline" href="/status-codes">
-            ステータスコード一覧
-          </Link>
-        </div>
+      <section id="login" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">4) ログインできない・一つのアカウントだけ使えない</h2>
+        <p className="text-sm text-neutral-700">別アカウントや別端末では使える場合、広い障害より認証、本人確認、セキュリティ判定または対象アカウント側を確認します。</p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>既にログイン済みの別端末があれば、障害確認が終わるまでログアウトしない。</li>
+          <li>ブラウザ版でも同じアカウントが失敗するか確認し、アプリ固有かを分ける。</li>
+          <li>本人確認や制限の案内が表示される場合は、画面の公式手順とヘルプセンターを使う。</li>
+          <li>パスワード変更を連続せず、不審なメールや非公式の復旧案内を利用しない。</li>
+        </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">よくある質問</h2>
-
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">障害かどうかを確実に見分けるには？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              ステータス確認をしたうえで、回線や端末を変えても状況がほぼ変わらないなら、障害の可能性が高いです。
-              その場合は待つのが最短です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">モバイル通信だと見られるのに、Wi-Fiだとだめなのはなぜ？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Wi-Fi側の問題が濃厚です。DNS、ルーター、VPN、通信経路の順で確認すると見分けやすくなります。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">最初に避けたほうがいいことは？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              障害確認をする前の再インストールや大きな設定変更は避けた方が安全です。原因が回線やDNSなら直らないうえ、後で元に戻す手間が増えます。
-            </p>
-          </div>
+      <section className="mt-10 rounded-2xl border border-neutral-200 p-5">
+        <h2 className="text-lg font-semibold">詳しい報告推移とInstagram公式情報</h2>
+        <p className="mt-2 text-sm text-neutral-700">Instagramのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。公開Webページの応答だけでは、アプリ内の各機能や個別アカウントの状態は分かりません。</p>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm">
+          <Link className="underline" href="/status/sites/instagram">Instagramの詳しい状況・報告推移</Link>
+          <a className="underline" href="https://metastatus.com/instagram" target="_blank" rel="noopener noreferrer">Meta公式ステータス ↗</a>
+          <a className="underline" href="https://help.instagram.com/" target="_blank" rel="noopener noreferrer">Instagramヘルプセンター ↗</a>
         </div>
       </section>
     </main>
