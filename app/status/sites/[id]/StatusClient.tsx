@@ -195,6 +195,7 @@ export default function StatusClient({
   const guideHref = getGuideHrefFromResult(result);
   const isTwitterStatus = site.id === "twitter";
   const isLineStatus = site.id === "line";
+  const isNetflixStatus = site.id === "netflix";
   const isNotionStatus = site.id === "notion";
   const isTeamsStatus = site.id === "teams";
   const isDiscordStatus = site.id === "discord";
@@ -232,6 +233,158 @@ export default function StatusClient({
       : result.online
         ? `応答あり${result.status ? `（HTTP ${result.status}）` : ""}`
         : `応答なし${result.status ? `（HTTP ${result.status}）` : ""}`;
+  const teamsFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const teamsMeetingReports =
+    isTeamsStatus && communitySummary?.topProblem?.type === "meeting"
+      ? communitySummary.topProblem.count
+      : 0;
+  const teamsSituation = !isTeamsStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Teamsの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Teamsサイトへの外部接続は確認できました"
+              : "Teamsサイトへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、会議やチャットなど一部機能の状態は判断できません。",
+          }
+      : assessment.level === "likely"
+        ? {
+            title: "広いTeams障害の可能性があります",
+            detail: "接続結果または利用者報告に異常があります。Microsoft側の案内と影響範囲も確認してください。",
+          }
+        : teamsMeetingReports > 0
+          ? {
+              title: "会議に関する報告があります",
+              detail: `直近30分に会議関連の報告が${teamsMeetingReports}件あります。Teams全体ではなく、会議機能だけの問題も確認してください。`,
+            }
+          : assessment.level === "normal"
+            ? {
+                title: "現在、広いTeams障害の兆候は確認されていません",
+                detail: "自分だけつながらない場合は、組織アカウント、アプリ、VPN、社内ネットワーク側を確認してください。",
+              }
+            : {
+                title: "一部問題またはMicrosoft側の影響を確認してください",
+                detail: "Teams単体か、Microsoft 365側の障害か、自分の組織・接続環境だけの問題かを切り分ける必要があります。",
+              };
+  const lineFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const lineTopProblemDetail = !isLineStatus || !communitySummary?.topProblem
+    ? null
+    : communitySummary.topProblem.type === "messaging"
+      ? "メッセージの送受信に関する報告が最も多くなっています。"
+      : communitySummary.topProblem.type === "audio_video"
+        ? "音声・ビデオ通話に関する報告が最も多くなっています。"
+        : communitySummary.topProblem.type === "notification"
+          ? "通知が来ない・遅いという報告が最も多くなっています。"
+          : communitySummary.topProblem.type === "login"
+            ? "ログイン・認証に関する報告が最も多くなっています。"
+            : communitySummary.topProblem.type === "loading"
+              ? "アプリが開かない・遅いという報告が最も多くなっています。"
+              : "その他のLINE機能に関する報告があります。";
+  const lineSituation = !isLineStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "LINEの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "LINEサイトへの外部接続は確認できました"
+              : "LINEサイトへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、トークや通話などアプリ内機能の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いLINE不具合の可能性があります",
+              detail: communitySummary.signal.level === "spike" && lineTopProblemDetail
+                ? lineTopProblemDetail
+                : "接続結果に異常があります。利用者報告とLINE公式のお知らせも合わせて確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "LINEの不具合報告が通常より増えています",
+                detail: lineTopProblemDetail ?? "一部機能の問題か、利用環境による接続問題かを確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "LINEへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+            : communitySummary.topProblem
+              ? {
+                  title: "広い障害の兆候はなく、報告は通常範囲です",
+                  detail: lineTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                }
+              : {
+                  title: "現在、広いLINE不具合の兆候は確認されていません",
+                  detail: "自分だけ使えない場合は、アプリ、端末、回線、ログイン状態を確認してください。",
+                };
+  const netflixFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const netflixTopProblemDetail = !isNetflixStatus || !communitySummary?.topProblem
+    ? null
+    : communitySummary.topProblem.type === "streaming"
+      ? "動画の再生に関する報告が最も多くなっています。"
+      : communitySummary.topProblem.type === "connection"
+        ? "Netflixへの接続に関する報告が最も多くなっています。"
+        : communitySummary.topProblem.type === "login"
+          ? "ログイン・アカウントに関する報告が最も多くなっています。"
+          : communitySummary.topProblem.type === "loading"
+            ? "アプリや画面の読み込みに関する報告が最も多くなっています。"
+            : communitySummary.topProblem.type === "audio_video"
+              ? "音声・映像に関する報告が最も多くなっています。"
+              : "その他のNetflix機能に関する報告があります。";
+  const netflixSituation = !isNetflixStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Netflixの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Netflixサイトへの外部接続は確認できました"
+              : "Netflixサイトへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、ログイン後の再生やアプリ内機能の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いNetflix不具合の可能性があります",
+              detail: communitySummary.signal.level === "spike" && netflixTopProblemDetail
+                ? netflixTopProblemDetail
+                : "接続結果に異常があります。利用者報告とNetflix公式のサービス状況も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "Netflixの不具合報告が通常より増えています",
+                detail: netflixTopProblemDetail ?? "複数の端末や回線でも同じ症状か確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Netflixへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: netflixTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広いNetflix不具合の兆候は確認されていません",
+                    detail: "自分だけ見れない場合は、作品、端末、アプリ、回線、アカウントの違いを確認してください。",
+                  };
 
   return (
     <main className="flex-1 bg-slate-50">
@@ -255,7 +408,41 @@ export default function StatusClient({
                 >
                   {assessment.badge}
                 </span>
-                {officialVerdictUrl ? (
+                {isTeamsStatus ? (
+                  <span className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] font-semibold">
+                    {site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Microsoft 365サービス正常性（管理者向け）↗
+                      </a>
+                    ) : null}
+                    {site.xUrl ? (
+                      <a href={site.xUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Microsoft 365 Status（X）↗
+                      </a>
+                    ) : null}
+                  </span>
+                ) : isLineStatus ? (
+                  <span className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] font-semibold">
+                    {site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        LINEヘルプのお知らせ ↗
+                      </a>
+                    ) : null}
+                  </span>
+                ) : isNetflixStatus ? (
+                  <span className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] font-semibold">
+                    {site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Netflix公式のサービス状況 ↗
+                      </a>
+                    ) : null}
+                    {site.supportUrl ? (
+                      <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Netflixヘルプ ↗
+                      </a>
+                    ) : null}
+                  </span>
+                ) : officialVerdictUrl ? (
                   <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
                     公式情報 ↗
                   </a>
@@ -265,8 +452,38 @@ export default function StatusClient({
                 {assessment.main}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-slate-600">{assessment.detail}</p>
+              {teamsSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="teams-current-status">
+                  <h2 id="teams-current-status" className="text-xs font-bold text-slate-900">Teamsの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{teamsSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{teamsSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {teamsFreshness ? `更新：${teamsFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {lineSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="line-current-status">
+                  <h2 id="line-current-status" className="text-xs font-bold text-slate-900">LINEの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{lineSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{lineSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {lineFreshness ? `更新：${lineFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {netflixSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="netflix-current-status">
+                  <h2 id="netflix-current-status" className="text-xs font-bold text-slate-900">Netflixの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{netflixSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{netflixSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {netflixFreshness ? `更新：${netflixFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
               <div className="mt-4 border-t border-black/10 pt-4">
-                <h2 className="text-xs font-bold text-slate-900">現在の調査サマリー</h2>
+                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus ? "判断に使った情報" : "現在の調査サマリー"}</h2>
                 <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
                   <dt className="text-[10px] font-semibold tracking-wide text-slate-500">現在の判定</dt>
@@ -299,7 +516,19 @@ export default function StatusClient({
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
                   <dt className="text-[10px] font-semibold tracking-wide text-slate-500">確認先</dt>
                   <dd className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs font-bold">
-                    {officialVerdictUrl ? (
+                    {isTeamsStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Microsoft公式のサービス正常性（管理者向け）↗
+                      </a>
+                    ) : isLineStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        LINEヘルプのお知らせ ↗
+                      </a>
+                    ) : isNetflixStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Netflix公式のサービス状況 ↗
+                      </a>
+                    ) : officialVerdictUrl ? (
                       <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
                         公式情報 ↗
                       </a>
@@ -415,29 +644,75 @@ export default function StatusClient({
 
         <OutageReportPanel serviceId={site.id} onSummaryChange={setCommunitySummary} />
 
+        {isNetflixStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">Netflixが見れない時の見分け方</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">広いNetflix障害</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  利用者報告が増え、別端末・別回線でも接続や再生が失敗する場合は、Netflix側の広い不具合が疑われます。現在状況と公式情報を確認します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">再生だけできない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  作品一覧は開くのに動画だけ始まらない場合は、Netflix全体ではなく、作品、端末、アプリ、映像配信経路の問題も考えられます。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">接続・ログインだけ失敗する</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  サイトやアプリを開けない、または一つのアカウントだけ失敗する場合は、回線、アプリ、端末、アカウント側を切り分けます。
+                </p>
+              </div>
+            </div>
+            {!loading && communitySummary && assessment.level === "normal" ? (
+              <div className="mt-3 rounded-lg border border-sky-100 bg-sky-50 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い障害が見つからない場合</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-slate-600">
+                  別作品、別端末、Wi-Fiとモバイル回線を順に比較し、アプリを再起動します。違いが出た箇所が自分側の原因候補です。
+                </p>
+                <Link href="/services/netflix/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-700 underline underline-offset-2 hover:text-sky-800">
+                  Netflixが見れない時の確認 →
+                </Link>
+              </div>
+            ) : null}
+          </section>
+        )}
+
         {isTeamsStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">Teamsに繋がらない・会議に入れない時の見分け方</h2>
-            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">広い障害が疑われる</p>
+                <p className="text-xs font-semibold text-slate-900">1. 広いTeams障害</p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  日本の利用者報告が増え、別端末・別回線でも会議やチャットが失敗する場合は、Teams側の広い障害が疑われます。公式情報も確認します。
+                  利用者報告が増え、別端末・別回線でも会議やチャットが失敗する場合は、広い障害が疑われます。上の現在状況とMicrosoft公式情報を確認します。
                 </p>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">会議だけ入れない</p>
+                <p className="text-xs font-semibold text-slate-900">2. Teamsは正常だが自分だけつながらない</p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  チャットは使えるのに会議だけ失敗する場合は、会議URL、サインイン中の組織、ゲスト参加、ロビーや主催者側の設定も確認対象です。
-                </p>
-              </div>
-              <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">広い障害が見つからない</p>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  報告が通常範囲なら、ブラウザ版との比較、アプリ再起動、別回線、会社VPN・ファイアウォール、アカウント状態を順に確認します。
+                  報告が通常範囲で別端末やブラウザ版では使える場合は、アプリ、会社VPN、社内ネットワーク、組織アカウントを確認します。
                 </p>
                 <Link href="/services/teams/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
                   Teamsが使えない時の確認 →
+                </Link>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">3. 会議だけ入れない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  チャットは使えるのに会議だけ失敗する場合は、会議URL、参加中の組織、ゲスト参加、ロビー、主催者設定、音声・映像権限を確認します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">4. Microsoft側の障害</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  OutlookやOneDriveも同時に不安定なら、Teams単体ではなくMicrosoft 365側の影響が疑われます。管理者はサービス正常性で組織への影響を確認できます。
+                </p>
+                <Link href="/status/sites/microsoft-365" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
+                  Microsoft 365の現在状況 →
                 </Link>
               </div>
             </div>
@@ -517,40 +792,50 @@ export default function StatusClient({
         {isLineStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">
-              まず確認する
+              LINEの症状を見分ける
             </h2>
-            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-semibold text-slate-900">
-                  全体障害の可能性
+                  1. 広いLINE不具合
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  複数端末や別回線でも同じなら、まずこのページの結果と公式案内を優先します。
+                  利用者報告が増え、別端末・別回線でもトークや通話が失敗する場合は、広い不具合が疑われます。上の現在状況とLINE公式のお知らせを確認します。
                 </p>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-semibold text-slate-900">
-                  自分だけの不具合
+                  2. メッセージが送れない
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  広く落ちていないのに使えないなら、端末・回線・アプリ側の確認に進みます。
+                  通話や他の機能は使えるのに送受信だけ失敗する場合は、トーク機能だけの不具合、通信状態、送信先や添付内容を確認します。
                 </p>
-                <Link
-                  href="/services/line/not-working"
-                  prefetch={false}
-                  className="mt-2 inline-block text-xs font-semibold text-sky-600 underline hover:text-sky-700"
-                >
-                  LINE が使えないときの確認 →
-                </Link>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-semibold text-slate-900">
-                  一部機能の問題
+                  3. 通話だけできない
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  メッセージ、通話、通知のどれだけが不安定なのかで確認が変わります。
+                  トークは使えるのに音声・ビデオ通話だけ失敗する場合は、通話機能、マイク権限、Wi-Fiやモバイル回線の違いを確認します。
                 </p>
               </div>
+              {!loading && communitySummary && assessment.level === "normal" ? (
+                <div className="rounded-lg border border-sky-100 bg-sky-50 p-3">
+                  <p className="text-xs font-semibold text-slate-900">
+                    4. 広い不具合が見つからない
+                  </p>
+                  <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                    報告が通常範囲なら、ログイン・認証、通知、アプリ起動、端末設定、回線のどこで止まるかを確認します。
+                  </p>
+                  <Link
+                    href="/services/line/not-working"
+                    prefetch={false}
+                    className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700"
+                  >
+                    LINEが使えない時の確認 →
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </section>
         )}
@@ -783,7 +1068,7 @@ export default function StatusClient({
           </section>
         )}
 
-        {!isLeanRouter ? (
+        {!isLeanRouter && !isNetflixStatus ? (
           <>
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
               <h2 className="text-sm font-semibold text-slate-900">今やること</h2>

@@ -99,9 +99,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "YouTubeが今日見れない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。動画やライブ配信だけの不具合にも対応します。",
   },
   netflix: {
-    title: "Netflix（ネトフリ）障害・不具合｜今日見れない時の状況",
+    title: "Netflix不具合・障害｜今日のリアルタイム状況",
     description:
-      "Netflix（ネトフリ）が今日見れない、再生できない、繋がらない時に、通信障害やサーバーダウン、メンテナンスの可能性を確認できます。ログインだけの不具合にも対応します。",
+      "Netflixで現在広い不具合が起きているか、接続結果と日本の利用者報告、Netflix公式情報から確認できます。繋がらない、再生できない場合も切り分けます。",
   },
   "disney-plus": {
     title: "Disney+（ディズニープラス）障害｜今日見れない時の状況",
@@ -189,9 +189,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Steamが落ちてる、ログインできない、接続できない、ストアが重い、ダウンロードやフレンド機能だけ不安定な時に、障害か自分側の問題かを確認できます。",
   },
   teams: {
-    title: "Microsoft Teams障害・不具合｜会議に入れない時の現在状況",
+    title: "Microsoft Teams障害情報｜リアルタイムの現在状況",
     description:
-      "Microsoft Teamsで今日障害や不具合が起きているか確認できます。会議に入れない、チャットや通話、ログイン、接続だけ不安定な場合は影響範囲も確認できます。",
+      "Microsoft Teamsで広い障害や不具合が起きているか、現在の接続結果、日本の利用者報告、Microsoft公式情報から確認できます。会議に入れない場合も切り分けます。",
   },
   chatwork: {
     title: "Chatwork障害・不具合｜落ちてる・サーバーダウン時の現在状況",
@@ -309,9 +309,9 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
       "Amazonプライムビデオ（アマプラ）で今日不具合や障害が起きているか確認できます。見れない、再生できない、通信エラー、テレビアプリだけ止まる場合も確認できます。",
   },
   line: {
-    title: "LINE障害・不具合｜今日繋がらない・送れない時の現在状況",
+    title: "LINE（ライン）不具合・障害｜今日のリアルタイム状況",
     description:
-      "LINEで障害や不具合が起きているか確認できます。繋がらない、メッセージが送れない、通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗する時に影響範囲を確認します。",
+      "LINE（ライン）で現在広い不具合が起きているか、接続結果と日本の利用者報告から確認できます。メッセージ、通話、ログインなど症状別の状況も確認できます。",
   },
   expedia: {
     title: "Expedia障害・不具合｜今日どうなってる？今の状況を確認",
@@ -497,17 +497,18 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "使えない場合はこちら",
   },
   netflix: {
-    heading: "Netflix（ネトフリ）障害・不具合",
-    lead: "Netflixが今見れない・再生できない原因が、広い障害か一部機能の不具合かを確認します。",
+    heading: "Netflixの現在の不具合・障害状況",
+    lead: "Netflixが見られない状態が広がっているか、接続結果と直近30分の日本の利用者報告で確認します。",
     reinforcement:
-      "通信障害・サーバーダウン・メンテナンスのほか、再生やログイン、特定端末だけ使えない場合もあります。",
+      "再生、接続、ログイン、アプリ起動のどこに報告が集まっているかを、端末・回線・アカウントだけの問題と分けて表示します。",
+    secondaryReinforcement:
+      "広い障害でなければ、作品、端末、アプリ、回線、アカウントの順に原因を切り分けます。",
     symptomChips: [
-      "見れない",
-      "繋がらない",
       "再生できない",
+      "繋がらない",
       "ログインできない",
-      "メンテナンス",
-      "通信障害",
+      "アプリが開かない",
+      "音声・映像がおかしい",
     ],
     relatedStatusLinks: [
       { label: "Prime Video", href: "/status/sites/prime-video" },
@@ -515,7 +516,7 @@ const statusHero: Record<string, StatusHero> = {
       { label: "TVer", href: "/status/sites/tv-tver" },
     ],
     notWorkingHref: "/services/netflix/not-working",
-    notWorkingLabel: "使えない場合はこちら",
+    notWorkingLabel: "Netflixが見れない時の確認",
   },
   "disney-plus": {
     heading: "Disney+（ディズニープラス）障害・不具合",
@@ -804,20 +805,18 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "Steamが使えない時の確認",
   },
   teams: {
-    heading: "Teams障害情報・稼働状況",
-    lead: "Microsoft Teamsで現在障害や不具合が起きているか、リアルタイムの接続状況を確認します。",
+    heading: "Teams障害情報｜現在のリアルタイム状況",
+    lead: "Teamsへの接続結果と直近30分の日本の利用者報告を照らし合わせ、会議やチャットに影響する広い障害の兆候を確認します。",
     reinforcement:
-      "会議、チャット、通話、ログインなど、一部機能だけ不安定な場合もあります。",
+      "会議、チャット、通話、ログインなど、一部機能だけの問題や、自分の組織・端末だけの問題とは分けて表示します。",
     secondaryReinforcement:
       "広い障害でなければ、自分の組織・端末・アプリ・ネットワーク側を確認します。",
     symptomChips: [
       "障害情報",
-      "リアルタイム",
-      "今日",
-      "会議",
-      "チャット",
-      "繋がらない",
-      "遅い",
+      "会議に入れない",
+      "つながらない",
+      "チャット不具合",
+      "ログインできない",
     ],
     relatedStatusLinks: [
       { label: "Microsoft 365", href: "/status/sites/microsoft-365" },
@@ -1303,20 +1302,18 @@ const statusHero: Record<string, StatusHero> = {
     notWorkingLabel: "Prime Videoが見れない時の確認",
   },
   line: {
-    heading: "LINE障害・不具合情報",
-    lead: "LINEが今広く不安定になっているか確認します。",
+    heading: "LINE（ライン）の現在の不具合・障害状況",
+    lead: "LINEのトークや通話で不具合が広がっているか、接続結果と直近30分の日本の利用者報告で確認します。",
     reinforcement:
-      "メッセージは送れるが通話だけできない、通知だけ来ない、画像やスタンプ送信だけ失敗するなど、部分的な不具合もあります。",
+      "メッセージ、通話、通知、ログイン、アプリ起動のどこに報告が集まっているかも分けて表示します。",
     secondaryReinforcement:
       "まず影響範囲を確認し、自分の端末・回線・アプリだけの問題か見分けます。",
     symptomChips: [
-      "繋がらない",
-      "送れない",
+      "メッセージが送れない",
       "通話できない",
-      "通知が来ない",
-      "画像だけ",
-      "スタンプだけ",
+      "つながらない",
       "ログインできない",
+      "通知が来ない",
     ],
     relatedStatusLinks: [
       { label: "X（旧Twitter）", href: "/status/sites/twitter" },

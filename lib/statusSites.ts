@@ -183,7 +183,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "LINE",
     url: "https://line.me",
     category: "social_messaging",
-    officialStatusUrl: "https://api.line-status.info/",
+    officialStatusUrl: "https://help.line.me/line/?lang=ja",
     supportUrl: "https://help.line.me/",
     serviceNote:
       "メッセージ送信は可能でも通話やスタンプ購入が利用できないなど、機能限定の障害が起きやすいです。",
@@ -338,6 +338,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "Microsoft Teams",
     url: "https://www.microsoft.com/ja-jp/microsoft-teams",
     category: "productivity_saas",
+    officialStatusUrl: "https://admin.microsoft.com/Adminportal/Home#/servicehealth",
     supportUrl: "https://support.microsoft.com/ja-jp/teams",
     xUrl: "https://x.com/MSFT365Status",
     serviceNote:
