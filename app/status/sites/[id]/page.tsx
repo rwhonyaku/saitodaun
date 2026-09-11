@@ -1346,12 +1346,6 @@ const statusHero: Record<string, StatusHero> = {
       "接続障害",
       "サーバーダウン",
     ],
-    relatedStatusLinks: [
-      { label: "Yahoo!メール", href: "/status/sites/yahoo-mail" },
-      { label: "Yahoo!ニュース", href: "/status/sites/yahoo-news-jp" },
-      { label: "ヤフオク", href: "/status/sites/yahoo-auctions" },
-      { label: "Yahoo!ショッピング", href: "/status/sites/yahoo-shopping" },
-    ],
     notWorkingHref: "/services/yahoo/not-working",
     notWorkingLabel: "Yahoo! JAPANが開かない時の確認",
   },

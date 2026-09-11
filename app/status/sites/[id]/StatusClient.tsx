@@ -196,10 +196,12 @@ export default function StatusClient({
   const isTwitterStatus = site.id === "twitter";
   const isLineStatus = site.id === "line";
   const isNetflixStatus = site.id === "netflix";
+  const isPrimeVideoStatus = site.id === "prime-video";
+  const isYahooStatus = site.id === "yahoo-japan";
   const isNotionStatus = site.id === "notion";
   const isTeamsStatus = site.id === "teams";
   const isDiscordStatus = site.id === "discord";
-  const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus;
+  const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus || isYahooStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const assessment = getStatusVerdict(result, loading, communitySummary);
   const officialVerdictUrl = site.officialStatusUrl || site.supportUrl || site.xUrl;
@@ -385,6 +387,68 @@ export default function StatusClient({
                     title: "現在、広いNetflix不具合の兆候は確認されていません",
                     detail: "自分だけ見れない場合は、作品、端末、アプリ、回線、アカウントの違いを確認してください。",
                   };
+  const focusedFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const focusedTopProblemDetail = !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}の報告が最も多くなっています。`;
+  const focusedSituation = !isYahooStatus && !isPrimeVideoStatus && !isDiscordStatus
+    ? null
+    : loading || !result
+      ? {
+          title: `${site.name}の現在状況を確認中`,
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? `${site.name}への外部接続は確認できました`
+              : `${site.name}への外部接続を確認できませんでした`,
+            detail: isYahooStatus
+              ? "利用者報告を取得中です。この結果だけではYahoo!メール、ニュース、ショッピング、ヤフオクの状態は判断できません。"
+              : isPrimeVideoStatus
+                ? "利用者報告を取得中です。ストアへの接続結果だけでは、ログイン後の動画再生やテレビアプリの状態は判断できません。"
+                : "利用者報告を取得中です。サイトへの接続結果だけでは、メッセージ、ボイスチャット、個別サーバーの状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: isYahooStatus
+                ? "広いYahoo! JAPAN障害の可能性があります"
+                : isPrimeVideoStatus
+                  ? "広いPrime Video不具合の可能性があります"
+                  : "Discord全体の障害が疑われます",
+              detail: communitySummary.signal.level === "spike" && focusedTopProblemDetail
+                ? focusedTopProblemDetail
+                : "接続結果または利用者報告に異常があります。公式情報と影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: `${site.name}の不具合報告が通常より増えています`,
+                detail: focusedTopProblemDetail ?? "別端末や別回線でも同じ症状か確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: `${site.name}への接続に一部問題がある可能性があります`,
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: focusedTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: isYahooStatus
+                      ? "現在、Yahoo! JAPAN全体の障害兆候は確認されていません"
+                      : isPrimeVideoStatus
+                        ? "現在、広いPrime Video不具合の兆候は確認されていません"
+                        : "現在、Discord全体の障害兆候は確認されていません",
+                    detail: isYahooStatus
+                      ? "トップが開いても個別サービスだけ不調な場合があります。影響を受けているサービスを選んで確認してください。"
+                      : isPrimeVideoStatus
+                        ? "自分だけ見れない場合は、作品、テレビ・端末、アプリ、回線、アカウントの違いを確認してください。"
+                        : "一つのDiscordサーバーだけ入れない場合は、そのサーバー固有の設定や障害も確認してください。",
+                  };
 
   return (
     <main className="flex-1 bg-slate-50">
@@ -442,6 +506,18 @@ export default function StatusClient({
                       </a>
                     ) : null}
                   </span>
+                ) : isDiscordStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Discord公式ステータス ↗
+                  </a>
+                ) : isYahooStatus && site.supportUrl ? (
+                  <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Yahoo! JAPANサポート ↗
+                  </a>
+                ) : isPrimeVideoStatus && site.supportUrl ? (
+                  <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Prime Videoヘルプ ↗
+                  </a>
                 ) : officialVerdictUrl ? (
                   <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
                     公式情報 ↗
@@ -482,8 +558,32 @@ export default function StatusClient({
                   </p>
                 </section>
               ) : null}
+              {focusedSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby={`${site.id}-current-status`}>
+                  <h2 id={`${site.id}-current-status`} className="text-xs font-bold text-slate-900">{site.name}の現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{focusedSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{focusedSituation.detail}</p>
+                  {isYahooStatus ? (
+                    <div className="mt-3 flex flex-wrap gap-2" aria-label="Yahoo! JAPANの個別サービス">
+                      {[
+                        ["Yahoo!メール", "/status/sites/yahoo-mail"],
+                        ["Yahoo!ニュース", "/status/sites/yahoo-news-jp"],
+                        ["ヤフオク", "/status/sites/yahoo-auctions"],
+                        ["Yahoo!ショッピング", "/status/sites/yahoo-shopping"],
+                      ].map(([label, href]) => (
+                        <Link key={href} href={href} prefetch={false} className="inline-flex min-h-9 items-center rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-sky-700 hover:border-sky-300">
+                          {label} →
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {focusedFreshness ? `更新：${focusedFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
               <div className="mt-4 border-t border-black/10 pt-4">
-                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus ? "判断に使った情報" : "現在の調査サマリー"}</h2>
+                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus || focusedSituation ? "判断に使った情報" : "現在の調査サマリー"}</h2>
                 <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
                   <dt className="text-[10px] font-semibold tracking-wide text-slate-500">現在の判定</dt>
@@ -527,6 +627,18 @@ export default function StatusClient({
                     ) : isNetflixStatus && site.officialStatusUrl ? (
                       <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
                         Netflix公式のサービス状況 ↗
+                      </a>
+                    ) : isDiscordStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Discord公式ステータス ↗
+                      </a>
+                    ) : isYahooStatus && site.supportUrl ? (
+                      <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Yahoo! JAPANサポート ↗
+                      </a>
+                    ) : isPrimeVideoStatus && site.supportUrl ? (
+                      <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Prime Videoヘルプ ↗
                       </a>
                     ) : officialVerdictUrl ? (
                       <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
@@ -644,6 +756,43 @@ export default function StatusClient({
 
         <OutageReportPanel serviceId={site.id} onSummaryChange={setCommunitySummary} />
 
+        {isPrimeVideoStatus && (
+          <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-900">Prime Videoが見れない時の切り分け</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い視聴障害</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  利用者報告が増え、別作品・別端末・別回線でも再生できない場合は、Prime Video側の広い不具合が疑われます。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">テレビ・アプリだけ見れない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  ブラウザでは再生できるのにテレビや一つのアプリだけ止まる場合は、その端末・アプリ側の問題を確認します。
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 p-3">
+                <p className="text-xs font-semibold text-slate-900">作品一覧は開くが再生できない</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                  一覧表示と動画再生は別経路です。別作品でも同じか、ログイン状態や視聴制限に違いがないかを確認します。
+                </p>
+              </div>
+            </div>
+            {!loading && communitySummary && assessment.level === "normal" ? (
+              <div className="mt-3 rounded-lg border border-sky-100 bg-sky-50 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い不具合が見つからない場合</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-slate-600">
+                  別作品、別端末、ブラウザ版、別回線を順に比較し、違いが出る条件を確認します。
+                </p>
+                <Link href="/services/prime-video/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-700 underline underline-offset-2 hover:text-sky-800">
+                  Prime Videoが見れない時の確認 →
+                </Link>
+              </div>
+            ) : null}
+          </section>
+        )}
+
         {isNetflixStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
             <h2 className="text-sm font-semibold text-slate-900">Netflixが見れない時の見分け方</h2>
@@ -721,30 +870,38 @@ export default function StatusClient({
 
         {isDiscordStatus && (
           <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
-            <h2 className="text-sm font-semibold text-slate-900">Discordの障害・不具合を見分ける目安</h2>
+            <h2 className="text-sm font-semibold text-slate-900">Discord全体の障害か、特定サーバーの問題か</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">広い障害が疑われる</p>
+                <p className="text-xs font-semibold text-slate-900">Discord全体の障害</p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  日本の利用者報告が増え、別端末・別回線でもログインやサーバー接続が失敗する場合は、Discord側の広い障害が疑われます。
+                  利用者報告が増え、複数の無関係なサーバー、DM、ログインが別端末・別回線でも失敗する場合は、Discord基盤側の障害が疑われます。
                 </p>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">一部機能だけの不具合</p>
+                <p className="text-xs font-semibold text-slate-900">メッセージ・通話だけの不具合</p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  メッセージは送れるがボイスチャットだけ接続できないなど、ログイン・通話・通知・特定サーバーだけの問題もあります。
+                  サーバー一覧は開くのに送信だけ失敗する、またはボイスチャットだけ接続できない場合は、一部機能の問題です。
                 </p>
               </div>
               <div className="rounded-lg border border-slate-200 p-3">
-                <p className="text-xs font-semibold text-slate-900">自分側の可能性</p>
+                <p className="text-xs font-semibold text-slate-900">一つのサーバーだけ入れない</p>
                 <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                  別回線やブラウザ版では使える場合は、アプリ・回線・DNS・VPN・端末側を順に確認します。
+                  他のサーバーやDMは使える場合、Discord全体のサーバーダウンではなく、そのサーバーの権限・設定・地域・一時的な問題が疑われます。
                 </p>
-                <Link href="/services/discord/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-600 underline underline-offset-2 hover:text-sky-700">
+              </div>
+            </div>
+            {!loading && communitySummary && assessment.level === "normal" ? (
+              <div className="mt-3 rounded-lg border border-sky-100 bg-sky-50 p-3">
+                <p className="text-xs font-semibold text-slate-900">広い障害が見つからない場合</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-slate-600">
+                  ブラウザ版、別回線、別端末を比較し、アプリ、VPN、DNS、ログイン状態のどこで差が出るか確認します。
+                </p>
+                <Link href="/services/discord/not-working" prefetch={false} className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-sky-700 underline underline-offset-2 hover:text-sky-800">
                   Discordがつながらない時の確認 →
                 </Link>
               </div>
-            </div>
+            ) : null}
           </section>
         )}
 
@@ -1068,7 +1225,7 @@ export default function StatusClient({
           </section>
         )}
 
-        {!isLeanRouter && !isNetflixStatus ? (
+        {!isLeanRouter && !isNetflixStatus && !isPrimeVideoStatus && !isDiscordStatus ? (
           <>
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
               <h2 className="text-sm font-semibold text-slate-900">今やること</h2>
