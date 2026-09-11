@@ -209,7 +209,7 @@ export default function OutageReportPanel({
           onClick={() => setShowOptions((value) => !value)}
           className="rounded-xl bg-sky-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-sky-700"
         >
-          問題が起きています
+          問題を報告する
         </button>
       </div>
 

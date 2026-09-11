@@ -201,6 +201,15 @@ export default function StatusClient({
   const isNotionStatus = site.id === "notion";
   const isTeamsStatus = site.id === "teams";
   const isDiscordStatus = site.id === "discord";
+  const isGoogleStatus = site.id === "google";
+  const isUNextStatus = site.id === "u-next";
+  const isJalanStatus = site.id === "jalan";
+  const isRakutenPayStatus = site.id === "rakuten-pay";
+  const isLineWorksStatus = site.id === "line-works";
+  const isRobloxStatus = site.id === "roblox";
+  const isSteamStatus = site.id === "steam";
+  const isAbemaStatus = site.id === "abema";
+  const isInstagramStatus = site.id === "instagram";
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus || isYahooStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const assessment = getStatusVerdict(result, loading, communitySummary);
@@ -387,6 +396,494 @@ export default function StatusClient({
                     title: "現在、広いNetflix不具合の兆候は確認されていません",
                     detail: "自分だけ見れない場合は、作品、端末、アプリ、回線、アカウントの違いを確認してください。",
                   };
+  const googleFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const googleTopProblemDetail = !isGoogleStatus || !communitySummary?.topProblem
+    ? null
+    : communitySummary.topProblem.type === "search"
+      ? "Google検索に関する報告が最も多くなっています。"
+      : communitySummary.topProblem.type === "login"
+        ? "Googleアカウントのログイン・認証に関する報告が最も多くなっています。"
+        : communitySummary.topProblem.type === "loading"
+          ? "Googleが開かない・遅いという報告が最も多くなっています。"
+          : communitySummary.topProblem.type === "connection"
+            ? "Googleサービスへの接続に関する報告が最も多くなっています。"
+            : "その他のGoogle機能に関する報告があります。";
+  const googleSituation = !isGoogleStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Googleの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Google検索への外部接続は確認できました"
+              : "Google検索への外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。この結果だけでは、Gmail、Drive、マップなど個別サービスの状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いGoogle障害の可能性があります",
+              detail: communitySummary.signal.level === "spike" && googleTopProblemDetail
+                ? googleTopProblemDetail
+                : "接続結果または利用者報告に異常があります。Google公式情報と影響を受けているサービスを確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "Googleの不具合報告が通常より増えています",
+                detail: googleTopProblemDetail ?? "検索、ログイン、各Googleサービスのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Google検索への接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広いGoogle障害の兆候はなく、報告は通常範囲です",
+                    detail: googleTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広いGoogle障害の兆候は確認されていません",
+                    detail: "自分だけ使えない場合は、検索だけか、ログインや特定のGoogleサービスだけかを確認してください。",
+                  };
+  const uNextFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const uNextTopProblemDetail = !isUNextStatus || !communitySummary?.topProblem
+    ? null
+    : communitySummary.topProblem.type === "streaming"
+      ? "動画の再生・停止に関する報告が最も多くなっています。"
+      : communitySummary.topProblem.type === "loading"
+        ? "アプリや画面が開かないという報告が最も多くなっています。"
+        : communitySummary.topProblem.type === "login"
+          ? "ログインに関する報告が最も多くなっています。"
+          : communitySummary.topProblem.type === "payment"
+            ? "購入・決済に関する報告が最も多くなっています。"
+            : communitySummary.topProblem.type === "connection"
+              ? "U-NEXTへの接続に関する報告が最も多くなっています。"
+              : "その他のU-NEXT機能に関する報告があります。";
+  const uNextSituation = !isUNextStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "U-NEXTの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "U-NEXTへの外部接続は確認できました"
+              : "U-NEXTへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、ログイン後の再生や作品購入の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いU-NEXT障害の可能性があります",
+              detail: communitySummary.signal.level === "spike" && uNextTopProblemDetail
+                ? uNextTopProblemDetail
+                : "接続結果または利用者報告に異常があります。U-NEXT公式のお知らせと影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "U-NEXTの不具合報告が通常より増えています",
+                detail: uNextTopProblemDetail ?? "再生、アプリ、ログイン、購入のどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "U-NEXTへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: uNextTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広いU-NEXT障害の兆候は確認されていません",
+                    detail: "自分だけ見れない場合は、作品、端末、アプリ、回線、アカウントの違いを確認してください。",
+                  };
+  const twitterFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const twitterTopProblemDetail = !isTwitterStatus || !communitySummary?.topProblem
+    ? null
+    : communitySummary.topProblem.type === "loading"
+      ? "タイムラインの表示・更新に関する報告が最も多くなっています。"
+      : communitySummary.topProblem.type === "posting"
+        ? "投稿・更新に関する報告が最も多くなっています。"
+        : communitySummary.topProblem.type === "messaging"
+          ? "DMに関する報告が最も多くなっています。"
+          : communitySummary.topProblem.type === "login"
+            ? "ログインに関する報告が最も多くなっています。"
+            : communitySummary.topProblem.type === "connection"
+              ? "Xへの接続に関する報告が最も多くなっています。"
+              : "その他のX機能に関する報告があります。";
+  const twitterSituation = !isTwitterStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "X（旧Twitter）の現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Xへの外部接続は確認できました"
+              : "Xへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、タイムライン、投稿、DMなど一部機能の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "X（旧Twitter）が広く落ちている可能性があります",
+              detail: communitySummary.signal.level === "spike" && twitterTopProblemDetail
+                ? twitterTopProblemDetail
+                : "接続結果または利用者報告に異常があります。X Supportの案内と影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "X（旧Twitter）の障害報告が通常より増えています",
+                detail: twitterTopProblemDetail ?? "タイムライン、投稿、DM、ログインのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Xへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広いTwitter障害の兆候はなく、報告は通常範囲です",
+                    detail: twitterTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、X（旧Twitter）の広い障害兆候は確認されていません",
+                    detail: "自分だけ繋がらない場合は、アプリ、ログイン状態、回線、端末の違いを確認してください。",
+                  };
+  const jalanFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const jalanTopProblemDetail = !isJalanStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const jalanSituation = !isJalanStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "じゃらんの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "じゃらんへの外部接続は確認できました"
+              : "じゃらんへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。トップページへの接続結果だけでは、検索、ログイン、予約、決済の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いじゃらん障害の可能性があります",
+              detail: communitySummary.signal.level === "spike" && jalanTopProblemDetail
+                ? jalanTopProblemDetail
+                : "接続結果または利用者報告に異常があります。じゃらん公式のメンテナンス情報と影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "じゃらんのシステムエラー報告が通常より増えています",
+                detail: jalanTopProblemDetail ?? "検索、ログイン、予約、決済のどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "じゃらんへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線やブラウザでも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: jalanTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広いじゃらん障害の兆候は確認されていません",
+                    detail: "自分だけエラーになる場合は、検索だけか、ログイン・予約・決済まで失敗するかを確認してください。",
+                  };
+  const rakutenPayFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const rakutenPayTopProblemDetail = !isRakutenPayStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const rakutenPaySituation = !isRakutenPayStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "楽天ペイの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "楽天ペイへの外部接続は確認できました"
+              : "楽天ペイへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。サイトへの接続結果だけでは、アプリ内のコード表示や実店舗での決済状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広い楽天ペイ障害の可能性があります",
+              detail: communitySummary.signal.level === "spike" && rakutenPayTopProblemDetail
+                ? rakutenPayTopProblemDetail
+                : "接続結果または利用者報告に異常があります。楽天ペイ公式ヘルプと影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "楽天ペイの不具合報告が通常より増えています",
+                detail: rakutenPayTopProblemDetail ?? "コード表示、支払い、ログイン、通信のどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "楽天ペイへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。モバイル回線とWi-Fiを切り替えて同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: rakutenPayTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広い楽天ペイ障害の兆候は確認されていません",
+                    detail: "自分だけ支払えない場合は、別店舗でも同じか、コード表示・通信・支払い元のどこで失敗するか確認してください。",
+                  };
+  const lineWorksFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const lineWorksTopProblemDetail = !isLineWorksStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const lineWorksSituation = !isLineWorksStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "LINE WORKSの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "LINE WORKSへの外部接続は確認できました"
+              : "LINE WORKSへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。接続結果だけでは、トーク、通話、Drive、管理画面など個別機能の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "広いLINE WORKS障害の可能性があります",
+              detail: communitySummary.signal.level === "spike" && lineWorksTopProblemDetail
+                ? lineWorksTopProblemDetail
+                : "接続結果または利用者報告に異常があります。LINE WORKS公式のお知らせと影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "LINE WORKSの不具合報告が通常より増えています",
+                detail: lineWorksTopProblemDetail ?? "トーク、通話、ログイン、管理機能のどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "LINE WORKSへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。社外回線やブラウザ版でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "広い障害の兆候はなく、報告は通常範囲です",
+                    detail: lineWorksTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、広いLINE WORKS障害の兆候は確認されていません",
+                    detail: "自社だけ使えない場合は、組織の認証設定、管理者制限、社内ネットワーク、アプリの違いを確認してください。",
+                  };
+  const robloxFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const robloxTopProblemDetail = !isRobloxStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const robloxSituation = !isRobloxStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Robloxの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Robloxへの外部接続は確認できました"
+              : "Robloxへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。サイトへの接続結果だけでは、ゲーム参加、アプリ、ログインなど各機能の状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "Roblox全体の障害が疑われます",
+              detail: communitySummary.signal.level === "spike" && robloxTopProblemDetail
+                ? robloxTopProblemDetail
+                : "接続結果または利用者報告に異常があります。Roblox公式ステータスと影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "Robloxの不具合報告が通常より増えています",
+                detail: robloxTopProblemDetail ?? "ゲーム参加、ログイン、アプリのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Robloxへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。別回線や別端末でも同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "Roblox全体の障害兆候はなく、報告は通常範囲です",
+                    detail: robloxTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、Roblox全体の障害兆候は確認されていません",
+                    detail: "一つのゲームだけ入れない場合は、その体験や個別サーバー側の問題も確認してください。",
+                  };
+  const steamFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const steamTopProblemDetail = !isSteamStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const steamSituation = !isSteamStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Steamの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Steamストアへの外部接続は確認できました"
+              : "Steamストアへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。ストアへの接続結果だけでは、ログイン、ダウンロード、フレンド、個別ゲームサーバーの状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "Steam全体の障害が疑われます",
+              detail: communitySummary.signal.level === "spike" && steamTopProblemDetail
+                ? steamTopProblemDetail
+                : "接続結果または利用者報告に異常があります。Steamサポートと影響範囲も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "Steamの障害報告が通常より増えています",
+                detail: steamTopProblemDetail ?? "ログイン、ストア、ダウンロード、フレンドのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Steamへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。クライアントとブラウザ、別回線で同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "Steam全体の障害兆候はなく、報告は通常範囲です",
+                    detail: steamTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、Steam全体の障害兆候は確認されていません",
+                    detail: "一つのゲームだけ接続できない場合は、そのゲームまたは個別サーバー側の障害も確認してください。",
+                  };
+  const abemaFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const abemaTopProblemDetail = !isAbemaStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const abemaSituation = !isAbemaStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "ABEMAの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "ABEMAへの外部接続は確認できました"
+              : "ABEMAへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。この結果だけでは、生放送・見逃し配信・コメント・ログインの状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "ABEMA全体の障害が疑われます",
+              detail: communitySummary.signal.level === "spike" && abemaTopProblemDetail
+                ? abemaTopProblemDetail
+                : "接続結果または利用者報告に異常があります。ABEMA公式の案内と影響している機能も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "ABEMAの不具合報告が通常より増えています",
+                detail: abemaTopProblemDetail ?? "生放送、見逃し配信、コメント、ログインのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "ABEMAへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。アプリとブラウザ、Wi-Fiとモバイル回線で同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "ABEMA全体の障害兆候はなく、報告は通常範囲です",
+                    detail: abemaTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、ABEMA全体の障害兆候は確認されていません",
+                    detail: "一つの番組や生放送だけ見られない場合は、配信枠、端末、アプリ、回線の問題を切り分けてください。",
+                  };
+  const instagramFreshness = communitySummary?.updatedAt
+    ? formatJstDateTime(communitySummary.updatedAt)
+    : result?.timestamp ?? null;
+  const instagramTopProblemDetail = !isInstagramStatus || !communitySummary?.topProblem
+    ? null
+    : `${communitySummary.topProblem.label}という報告が最も多くなっています。`;
+  const instagramSituation = !isInstagramStatus
+    ? null
+    : loading || !result
+      ? {
+          title: "Instagramの現在状況を確認中",
+          detail: "外部からの接続結果と日本の利用者報告を取得しています。",
+        }
+      : !communitySummary
+        ? {
+            title: result.online
+              ? "Instagramへの外部接続は確認できました"
+              : "Instagramへの外部接続を確認できませんでした",
+            detail: "日本の利用者報告を取得中です。この結果だけでは、フィード、投稿、ストーリーズ、DM、ログインの状態は判断できません。",
+          }
+        : assessment.level === "likely"
+          ? {
+              title: "Instagram全体の障害が疑われます",
+              detail: communitySummary.signal.level === "spike" && instagramTopProblemDetail
+                ? instagramTopProblemDetail
+                : "接続結果または利用者報告に異常があります。Meta公式ステータスと影響している機能も確認してください。",
+            }
+          : communitySummary.signal.level === "elevated"
+            ? {
+                title: "Instagramの不具合報告が通常より増えています",
+                detail: instagramTopProblemDetail ?? "フィード、投稿、ストーリーズ、DM、ログインのどこに問題があるか確認してください。",
+              }
+            : assessment.level === "partial"
+              ? {
+                  title: "Instagramへの接続に一部問題がある可能性があります",
+                  detail: "利用者報告は通常範囲です。アプリとブラウザ、Wi-Fiとモバイル回線で同じか確認してください。",
+                }
+              : communitySummary.topProblem
+                ? {
+                    title: "Instagram全体の障害兆候はなく、報告は通常範囲です",
+                    detail: instagramTopProblemDetail ?? "一部の利用者から問題が報告されています。",
+                  }
+                : {
+                    title: "現在、Instagram全体の障害兆候は確認されていません",
+                    detail: "一つのアカウントや機能だけ使えない場合は、アプリ、回線、ログイン状態、アカウント側の問題を切り分けてください。",
+                  };
   const focusedFreshness = communitySummary?.updatedAt
     ? formatJstDateTime(communitySummary.updatedAt)
     : result?.timestamp ?? null;
@@ -518,6 +1015,46 @@ export default function StatusClient({
                   <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
                     Prime Videoヘルプ ↗
                   </a>
+                ) : isGoogleStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Google Workspace公式ステータス ↗
+                  </a>
+                ) : isUNextStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    U-NEXT公式のお知らせ ↗
+                  </a>
+                ) : isTwitterStatus && site.xUrl ? (
+                  <a href={site.xUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    X Support ↗
+                  </a>
+                ) : isJalanStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    じゃらん公式メンテナンス情報 ↗
+                  </a>
+                ) : isRakutenPayStatus && site.supportUrl ? (
+                  <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    楽天ペイ公式ヘルプ ↗
+                  </a>
+                ) : isLineWorksStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    LINE WORKS公式のお知らせ ↗
+                  </a>
+                ) : isRobloxStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Roblox公式ステータス ↗
+                  </a>
+                ) : isSteamStatus && site.supportUrl ? (
+                  <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Steamサポート ↗
+                  </a>
+                ) : isAbemaStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    ABEMA公式の障害・メンテナンス情報 ↗
+                  </a>
+                ) : isInstagramStatus && site.officialStatusUrl ? (
+                  <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
+                    Meta公式のInstagramステータス ↗
+                  </a>
                 ) : officialVerdictUrl ? (
                   <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
                     公式情報 ↗
@@ -558,6 +1095,106 @@ export default function StatusClient({
                   </p>
                 </section>
               ) : null}
+              {googleSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="google-current-status">
+                  <h2 id="google-current-status" className="text-xs font-bold text-slate-900">Googleの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{googleSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{googleSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {googleFreshness ? `更新：${googleFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {uNextSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="u-next-current-status">
+                  <h2 id="u-next-current-status" className="text-xs font-bold text-slate-900">U-NEXTの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{uNextSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{uNextSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {uNextFreshness ? `更新：${uNextFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {twitterSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="twitter-current-status">
+                  <h2 id="twitter-current-status" className="text-xs font-bold text-slate-900">X（旧Twitter）の現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{twitterSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{twitterSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {twitterFreshness ? `更新：${twitterFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {jalanSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="jalan-current-status">
+                  <h2 id="jalan-current-status" className="text-xs font-bold text-slate-900">じゃらんの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{jalanSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{jalanSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {jalanFreshness ? `更新：${jalanFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {rakutenPaySituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="rakuten-pay-current-status">
+                  <h2 id="rakuten-pay-current-status" className="text-xs font-bold text-slate-900">楽天ペイの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{rakutenPaySituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{rakutenPaySituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {rakutenPayFreshness ? `更新：${rakutenPayFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {lineWorksSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="line-works-current-status">
+                  <h2 id="line-works-current-status" className="text-xs font-bold text-slate-900">LINE WORKSの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{lineWorksSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{lineWorksSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {lineWorksFreshness ? `更新：${lineWorksFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {robloxSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="roblox-current-status">
+                  <h2 id="roblox-current-status" className="text-xs font-bold text-slate-900">Robloxの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{robloxSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{robloxSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {robloxFreshness ? `更新：${robloxFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {steamSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="steam-current-status">
+                  <h2 id="steam-current-status" className="text-xs font-bold text-slate-900">Steamの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{steamSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{steamSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {steamFreshness ? `更新：${steamFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {abemaSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="abema-current-status">
+                  <h2 id="abema-current-status" className="text-xs font-bold text-slate-900">ABEMAの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{abemaSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{abemaSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {abemaFreshness ? `更新：${abemaFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
+              {instagramSituation ? (
+                <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby="instagram-current-status">
+                  <h2 id="instagram-current-status" className="text-xs font-bold text-slate-900">Instagramの現在状況</h2>
+                  <p className="mt-1 text-sm font-bold leading-snug text-slate-950">{instagramSituation.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{instagramSituation.detail}</p>
+                  <p className="mt-2 text-[10px] text-slate-500">
+                    {instagramFreshness ? `更新：${instagramFreshness} JST` : "更新時刻を取得中"} ・ 利用者報告は直近30分、推移は過去24時間
+                  </p>
+                </section>
+              ) : null}
               {focusedSituation ? (
                 <section className="mt-4 rounded-xl border border-black/10 bg-white/75 p-3" aria-labelledby={`${site.id}-current-status`}>
                   <h2 id={`${site.id}-current-status`} className="text-xs font-bold text-slate-900">{site.name}の現在状況</h2>
@@ -583,7 +1220,7 @@ export default function StatusClient({
                 </section>
               ) : null}
               <div className="mt-4 border-t border-black/10 pt-4">
-                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus || focusedSituation ? "判断に使った情報" : "現在の調査サマリー"}</h2>
+                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus || isGoogleStatus || isUNextStatus || isTwitterStatus || isJalanStatus || isRakutenPayStatus || isLineWorksStatus || isRobloxStatus || isSteamStatus || isAbemaStatus || isInstagramStatus || focusedSituation ? "判断に使った情報" : "現在の調査サマリー"}</h2>
                 <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
                   <dt className="text-[10px] font-semibold tracking-wide text-slate-500">現在の判定</dt>
@@ -639,6 +1276,46 @@ export default function StatusClient({
                     ) : isPrimeVideoStatus && site.supportUrl ? (
                       <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
                         Prime Videoヘルプ ↗
+                      </a>
+                    ) : isGoogleStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Google Workspace公式ステータス ↗
+                      </a>
+                    ) : isUNextStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        U-NEXT公式のお知らせ ↗
+                      </a>
+                    ) : isTwitterStatus && site.xUrl ? (
+                      <a href={site.xUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        X Support ↗
+                      </a>
+                    ) : isJalanStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        じゃらん公式メンテナンス情報 ↗
+                      </a>
+                    ) : isRakutenPayStatus && site.supportUrl ? (
+                      <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        楽天ペイ公式ヘルプ ↗
+                      </a>
+                    ) : isLineWorksStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        LINE WORKS公式のお知らせ ↗
+                      </a>
+                    ) : isRobloxStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Roblox公式ステータス ↗
+                      </a>
+                    ) : isSteamStatus && site.supportUrl ? (
+                      <a href={site.supportUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Steamサポート ↗
+                      </a>
+                    ) : isAbemaStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        ABEMA公式の障害・メンテナンス情報 ↗
+                      </a>
+                    ) : isInstagramStatus && site.officialStatusUrl ? (
+                      <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
+                        Meta公式のInstagramステータス ↗
                       </a>
                     ) : officialVerdictUrl ? (
                       <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">

@@ -944,7 +944,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "U-NEXT",
     url: "https://video.unext.jp",
     category: "streaming_media",
-    officialStatusUrl: "https://help.unext.jp/",
+    officialStatusUrl: "https://help.unext.jp/info-video/list",
     supportUrl: "https://help.unext.jp/",
     serviceNote:
       "再生開始や購入処理が一時的に利用できなくなることがあります。",
@@ -1291,6 +1291,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "じゃらん",
     url: "https://www.jalan.net",
     category: "transport_travel",
+    officialStatusUrl: "https://www.jalan.net/jalan/doc/howto/maintenance.html",
     supportUrl: "https://www.jalan.net/help/",
     serviceNote:
       "宿泊検索は可能でも予約手続きや決済のみ影響を受けることがあります。",
@@ -2420,6 +2421,7 @@ export const STATUS_SITES: SiteConfig[] = [
     name: "LINE WORKS",
     url: "https://line.worksmobile.com",
     category: "productivity_saas",
+    officialStatusUrl: "https://line-works.com/notice/service/line-works/",
     supportUrl: "https://help.worksmobile.com/",
     serviceNote:
       "メッセージは使えても、管理画面やファイル共有だけ使えない場合があります。",

@@ -153,6 +153,11 @@ const statusOverrides: Record<string, { title: string; description: string }> = 
     description:
       "PayPayで障害や不具合が発生しているか、今の状況を確認できます。支払いできない・決済できない・チャージできない・ログインできないなどのトラブルをすぐチェック。",
   },
+  "rakuten-pay": {
+    title: "楽天ペイ障害・不具合｜支払いできない時の現在状況",
+    description:
+      "楽天ペイで現在広い障害や不具合が起きているか確認できます。コード・QR払い、アプリ表示、ログイン、通信だけ失敗する場合も切り分けます。",
+  },
   tiktok: {
     title: "TikTok障害・不具合｜今どうなってる？現在の状況を確認",
     description:
@@ -1528,6 +1533,24 @@ const statusHero: Record<string, StatusHero> = {
       "ログインできない",
       "決済できない",
       "メンテナンス",
+    ],
+    notWorkingHref: "",
+    notWorkingLabel: "",
+  },
+  "rakuten-pay": {
+    heading: "楽天ペイ障害・不具合",
+    lead: "楽天ペイで現在広い障害が起きているか、接続結果と日本の利用者報告から確認します。",
+    reinforcement:
+      "アプリは開くがコード・QR払いだけ失敗する、ログインできない、残高や利用履歴だけ更新されない場合もあります。",
+    secondaryReinforcement:
+      "広い障害でなければ、通信環境、支払い元、利用店舗、アプリの状態を確認します。",
+    symptomChips: [
+      "支払いできない",
+      "コードが出ない",
+      "QRを読めない",
+      "通信エラー",
+      "ログインできない",
+      "残高が反映されない",
     ],
     notWorkingHref: "",
     notWorkingLabel: "",

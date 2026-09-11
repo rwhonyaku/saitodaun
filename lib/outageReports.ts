@@ -17,6 +17,12 @@ export const REPORTING_SERVICE_IDS = [
   "amazon-jp",
   "yahoo-japan",
   "microsoft-365",
+  "u-next",
+  "jalan",
+  "rakuten-pay",
+  "line-works",
+  "roblox",
+  "abema",
 ] as const;
 
 export type ReportingServiceId = (typeof REPORTING_SERVICE_IDS)[number];
@@ -40,6 +46,12 @@ const REPORTING_SERVICE_LABELS: Record<ReportingServiceId, string> = {
   "amazon-jp": "Amazon.co.jp",
   "yahoo-japan": "Yahoo! JAPAN",
   "microsoft-365": "Microsoft 365",
+  "u-next": "U-NEXT",
+  jalan: "じゃらん",
+  "rakuten-pay": "楽天ペイ",
+  "line-works": "LINE WORKS",
+  roblox: "Roblox",
+  abema: "ABEMA",
 };
 
 export const PROBLEM_TYPES = [
@@ -93,10 +105,11 @@ const SERVICE_PROBLEMS: Record<ReportingServiceId, ProblemOption[]> = {
   ],
   steam: [
     { type: "login", label: "ログインできない" },
-    { type: "connection", label: "サーバーに接続できない" },
-    { type: "loading", label: "ストア・ダウンロードが遅い" },
+    { type: "connection", label: "Steam・ゲームサーバーに接続できない" },
+    { type: "loading", label: "ストアが開かない・遅い" },
+    { type: "messaging", label: "フレンド・チャットが使えない" },
     { type: "payment", label: "購入・決済できない" },
-    { type: "other", label: "その他" },
+    { type: "other", label: "ダウンロード・更新が進まない" },
   ],
   line: [
     { type: "messaging", label: "メッセージを送受信できない" },
@@ -175,6 +188,54 @@ const SERVICE_PROBLEMS: Record<ReportingServiceId, ProblemOption[]> = {
     { type: "loading", label: "Googleが開かない・遅い" },
     { type: "login", label: "Googleアカウントにログインできない" },
     { type: "connection", label: "Googleサービスに接続できない" },
+    { type: "other", label: "その他" },
+  ],
+  "u-next": [
+    { type: "streaming", label: "動画を再生できない・途中で止まる" },
+    { type: "loading", label: "アプリ・画面が開かない" },
+    { type: "login", label: "ログインできない" },
+    { type: "payment", label: "購入・決済できない" },
+    { type: "connection", label: "U-NEXTに接続できない" },
+    { type: "other", label: "その他" },
+  ],
+  jalan: [
+    { type: "search", label: "宿泊施設・プランを検索できない" },
+    { type: "login", label: "ログインできない" },
+    { type: "payment", label: "予約・決済を完了できない" },
+    { type: "loading", label: "サイト・アプリが開かない" },
+    { type: "connection", label: "じゃらんに接続できない" },
+    { type: "other", label: "その他のシステムエラー" },
+  ],
+  "rakuten-pay": [
+    { type: "payment", label: "コード・QR払いができない" },
+    { type: "loading", label: "アプリ・支払いコードが開かない" },
+    { type: "login", label: "ログイン・認証できない" },
+    { type: "connection", label: "通信エラーになる" },
+    { type: "other", label: "残高・ポイント・履歴がおかしい" },
+  ],
+  "line-works": [
+    { type: "messaging", label: "トークを送受信できない" },
+    { type: "audio_video", label: "通話・ビデオ会議ができない" },
+    { type: "login", label: "ログイン・認証できない" },
+    { type: "notification", label: "通知が来ない・遅い" },
+    { type: "loading", label: "アプリ・管理画面が開かない" },
+    { type: "connection", label: "接続できない・不安定" },
+    { type: "other", label: "Drive・カレンダーなどその他" },
+  ],
+  roblox: [
+    { type: "connection", label: "ゲーム・体験に参加できない" },
+    { type: "login", label: "ログインできない" },
+    { type: "loading", label: "アプリ・サイトが開かない" },
+    { type: "payment", label: "Robux購入・決済できない" },
+    { type: "messaging", label: "チャット・フレンド機能がおかしい" },
+    { type: "other", label: "その他" },
+  ],
+  abema: [
+    { type: "streaming", label: "動画・生放送を再生できない" },
+    { type: "loading", label: "アプリ・番組ページが開かない" },
+    { type: "connection", label: "ABEMAに接続できない" },
+    { type: "login", label: "ログインできない" },
+    { type: "messaging", label: "コメントを投稿・表示できない" },
     { type: "other", label: "その他" },
   ],
   paypay: [
