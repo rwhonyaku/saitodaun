@@ -24,15 +24,15 @@ export default function InstagramNotWorkingPage() {
           serviceUrl="https://www.instagram.com"
           statusHref="/status/sites/instagram"
           officialLinks={[
-            { label: "Meta公式ステータス", href: "https://metastatus.com/instagram" },
+            { label: "Meta公式ステータス（ビジネス製品）", href: "https://metastatus.com/instagram" },
             { label: "Instagramヘルプセンター", href: "https://help.instagram.com/" },
           ]}
           featureLimitNote="Instagramの公開Webページに接続できても、フィード、ストーリーズ、リール、投稿、DMや個別アカウントの状態までは判定できません。利用者報告と機能ごとの差を合わせて確認します。"
           advice={{
-            likely: "Instagram側の広い問題が疑われます。ログアウト、再インストール、パスワード変更は急がず、多い症状とMeta公式ステータスを確認してください。未投稿の下書きがある場合はアプリを削除しないでください。",
+            likely: "Instagram側で多くの利用者に影響する問題が疑われます。ログアウト、再インストール、パスワード変更は急がず、多い症状とInstagramヘルプを確認してください。未投稿の下書きがある場合はアプリを削除しないでください。",
             partial: "一部機能または一部利用者に影響する問題が疑われます。多い症状が自分の症状と一致するなら設定を大きく変えず待ち、一致しなければ下の機能別確認へ進んでください。",
             normal: "広い障害の兆候は強くありません。フィード、投稿、DMのどれが失敗するかを分け、ブラウザ版、別アカウント、別端末や別回線で差が出るか確認します。",
-            unknown: "自動確認だけでは判断できません。Instagramの詳しい報告推移とMeta公式情報を確認し、広い障害が見つからなければ下の症状別確認へ進んでください。",
+            unknown: "まだ状況を断定できません。詳しい報告推移を確認し、利用者報告が増えていなければ当てはまる症状から原因を絞ってください。",
           }}
         />
       </div>
@@ -63,7 +63,7 @@ export default function InstagramNotWorkingPage() {
         <h2 className="text-xl font-semibold">2) 写真・動画・ストーリーズ・リールを投稿できない</h2>
         <p className="text-sm text-neutral-700">閲覧できても投稿だけ失敗する場合、アップロード機能、メディア、アプリ権限またはアカウント側を確認します。</p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-          <li>短い写真投稿など別形式で試し、動画やリールだけ失敗するか確認する。</li>
+          <li>まず1枚の写真など、より単純な形式で試し、動画やリールだけ失敗するか確認する。</li>
           <li>写真・動画へのアクセス権限と端末の空き容量を確認する。</li>
           <li>アップロード中のままなら連打せず、下書きを保持したまま回線を切り替える。</li>
           <li>別アカウントでは投稿できるなら、端末全体より対象アカウントの制限や状態を確認する。</li>
@@ -100,9 +100,10 @@ export default function InstagramNotWorkingPage() {
         <p className="mt-2 text-sm text-neutral-700">Instagramのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。公開Webページの応答だけでは、アプリ内の各機能や個別アカウントの状態は分かりません。</p>
         <div className="mt-3 flex flex-wrap gap-3 text-sm">
           <Link className="underline" href="/status/sites/instagram">Instagramの詳しい状況・報告推移</Link>
-          <a className="underline" href="https://metastatus.com/instagram" target="_blank" rel="noopener noreferrer">Meta公式ステータス ↗</a>
+          <a className="underline" href="https://metastatus.com/instagram" target="_blank" rel="noopener noreferrer">Meta公式ステータス（ビジネス製品）↗</a>
           <a className="underline" href="https://help.instagram.com/" target="_blank" rel="noopener noreferrer">Instagramヘルプセンター ↗</a>
         </div>
+        <p className="mt-3 text-xs text-neutral-500">Metaのステータスページはビジネス製品向けで、一般利用者向けInstagramアプリのすべての問題を示すものではありません。</p>
       </section>
     </main>
   );

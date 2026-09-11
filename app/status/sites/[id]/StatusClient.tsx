@@ -210,6 +210,7 @@ export default function StatusClient({
   const isSteamStatus = site.id === "steam";
   const isAbemaStatus = site.id === "abema";
   const isInstagramStatus = site.id === "instagram";
+  const isSpecializedStatus = isTeamsStatus || isLineStatus || isNetflixStatus || isGoogleStatus || isUNextStatus || isTwitterStatus || isJalanStatus || isRakutenPayStatus || isLineWorksStatus || isRobloxStatus || isSteamStatus || isAbemaStatus || isInstagramStatus || isYahooStatus || isPrimeVideoStatus || isDiscordStatus || isNotionStatus;
   const isLeanRouter = isTwitterStatus || isLineStatus || isNotionStatus || isYahooStatus;
   const serviceLabel = isTwitterStatus ? "X（旧Twitter）" : site.name;
   const assessment = getStatusVerdict(result, loading, communitySummary);
@@ -863,7 +864,7 @@ export default function StatusClient({
               title: "Instagram全体の障害が疑われます",
               detail: communitySummary.signal.level === "spike" && instagramTopProblemDetail
                 ? instagramTopProblemDetail
-                : "接続結果または利用者報告に異常があります。Meta公式ステータスと影響している機能も確認してください。",
+                : "接続結果または利用者報告に異常があります。Instagramヘルプと、必要に応じてMetaのビジネス製品向けステータスも確認してください。",
             }
           : communitySummary.signal.level === "elevated"
             ? {
@@ -1053,7 +1054,7 @@ export default function StatusClient({
                   </a>
                 ) : isInstagramStatus && site.officialStatusUrl ? (
                   <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
-                    Meta公式のInstagramステータス ↗
+                    Meta公式ステータス（ビジネス製品）↗
                   </a>
                 ) : officialVerdictUrl ? (
                   <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
@@ -1220,7 +1221,7 @@ export default function StatusClient({
                 </section>
               ) : null}
               <div className="mt-4 border-t border-black/10 pt-4">
-                <h2 className="text-xs font-bold text-slate-900">{isTeamsStatus || isLineStatus || isNetflixStatus || isGoogleStatus || isUNextStatus || isTwitterStatus || isJalanStatus || isRakutenPayStatus || isLineWorksStatus || isRobloxStatus || isSteamStatus || isAbemaStatus || isInstagramStatus || focusedSituation ? "判断に使った情報" : "現在の調査サマリー"}</h2>
+                <h2 className="text-xs font-bold text-slate-900">{isSpecializedStatus || focusedSituation ? "現在の判断材料" : "現在の調査サマリー"}</h2>
                 <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
                   <dt className="text-[10px] font-semibold tracking-wide text-slate-500">現在の判定</dt>
@@ -1241,13 +1242,13 @@ export default function StatusClient({
                   </dd>
                 </div>
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
-                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">報告増加の検出開始</dt>
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">報告が増え始めた時刻</dt>
                   <dd className="mt-1 text-xs font-bold text-slate-800">
                     {reportIncreaseStartedAt ? `${formatJstDateTime(reportIncreaseStartedAt)}頃` : communitySummary ? "増加なし" : reportingEnabled ? "取得中" : "対象外"}
                   </dd>
                 </div>
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
-                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">サイト到達性</dt>
+                  <dt className="text-[10px] font-semibold tracking-wide text-slate-500">公式サイトへの接続</dt>
                   <dd className="mt-1 text-xs font-bold text-slate-800">{reachabilityLabel}</dd>
                 </div>
                 <div className="rounded-xl border border-black/5 bg-white/70 px-3 py-2.5">
@@ -1315,7 +1316,7 @@ export default function StatusClient({
                       </a>
                     ) : isInstagramStatus && site.officialStatusUrl ? (
                       <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
-                        Meta公式のInstagramステータス ↗
+                        Meta公式ステータス（ビジネス製品）↗
                       </a>
                     ) : officialVerdictUrl ? (
                       <a href={officialVerdictUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
@@ -1902,7 +1903,7 @@ export default function StatusClient({
           </section>
         )}
 
-        {!isLeanRouter && !isNetflixStatus && !isPrimeVideoStatus && !isDiscordStatus ? (
+        {!isSpecializedStatus ? (
           <>
             <section className="mt-6 rounded-xl bg-white p-4 shadow-sm">
               <h2 className="text-sm font-semibold text-slate-900">今やること</h2>

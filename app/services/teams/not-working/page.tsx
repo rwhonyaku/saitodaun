@@ -15,7 +15,7 @@ export default function TeamsNotWorkingPage() {
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">Teamsが使えない・開かない時の対処法</h1>
         <p className="text-base text-neutral-600">
-          まず広い障害の兆候を確認し、その後で会議、接続、ログイン、チャットのどこに問題があるかを切り分けます。
+          現在の利用者報告とMicrosoft側の情報を確認してから、会議、接続、ログイン、チャットのどこで止まっているかを調べます。
         </p>
       </header>
 
@@ -41,7 +41,7 @@ export default function TeamsNotWorkingPage() {
             normal:
               "広い障害の兆候は強くありません。下から自分の症状を選び、ブラウザ版、別端末、別の利用者との差を確認すると、アプリ・組織・端末・ネットワークのどこに原因があるか絞れます。",
             unknown:
-              "自動確認だけでは判断できません。詳しいTeams状況とMicrosoft公式情報を確認し、広い障害が見つからなければ下の症状別確認へ進んでください。",
+              "まだ状況を断定できません。詳しいTeams状況とMicrosoft公式情報を確認し、問題が広がっていなければ該当する機能から原因を絞ってください。",
           }}
         />
       </div>

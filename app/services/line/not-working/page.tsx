@@ -18,7 +18,7 @@ export default function LineNotWorkingPage() {
           LINEが使えない・メッセージを送れない時の確認
         </h1>
         <p className="text-base text-neutral-600">
-          まず広い不具合の兆候を確認し、その後でメッセージ、通話、接続・アプリ起動、通知・ログインのどこに問題があるかを切り分けます。
+          直近の利用者報告を見たうえで、メッセージ、通話、接続・アプリ起動、通知・ログインのどこで止まっているかを確認します。
         </p>
       </header>
 
@@ -41,7 +41,7 @@ export default function LineNotWorkingPage() {
             normal:
               "広い不具合の兆候は強くありません。下から症状を選び、別の相手、Wi-Fiとモバイル通信、別端末で差が出るか確認すると、機能・回線・アプリ・アカウントのどこに原因があるか絞れます。",
             unknown:
-              "自動確認だけでは判断できません。LINEの詳しい状況と公式情報を確認し、広い不具合が見つからなければ下の症状別確認へ進んでください。",
+              "まだ状況を断定できません。LINEの詳しい報告推移と公式情報を確認し、報告が増えていなければ当てはまる機能から確認してください。",
           }}
         />
       </div>
@@ -141,7 +141,7 @@ export default function LineNotWorkingPage() {
       <section className="mt-10 rounded-2xl border border-neutral-200 p-5">
         <h2 className="text-lg font-semibold">詳しい報告推移と公式情報</h2>
         <p className="mt-2 text-sm text-neutral-700">
-          LINEのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。LINE Developers向けのプラットフォーム状況は、一般利用者のトーク・通話障害とは対象が異なるため、このページでは消費者向けヘルプと公式案内を優先します。
+          LINEのステータスページでは、外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。LINE Developers向けのプラットフォーム状況は、一般利用者のトーク・通話障害とは対象が異なるため、このページでは一般利用者向けヘルプと公式案内を優先します。
         </p>
         <div className="mt-3 flex flex-wrap gap-3 text-sm">
           <Link className="underline" href="/status/sites/line">LINEの詳しい状況・報告推移</Link>

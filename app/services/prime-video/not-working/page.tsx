@@ -14,7 +14,7 @@ export default function PrimeVideoNotWorkingPage() {
     <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight">プライムビデオが見れない・再生できない時の対処法</h1>
-        <p className="text-base text-neutral-600">まず広いPrime Video不具合の兆候を確認し、その後で再生、作品、テレビ・アプリ、アカウントのどこに問題があるかを切り分けます。</p>
+        <p className="text-base text-neutral-600">現在の報告状況を見たうえで、再生、作品、テレビ・アプリ、アカウントのどこで止まっているかを確認します。</p>
       </header>
 
       <div className="mt-6">
@@ -29,7 +29,7 @@ export default function PrimeVideoNotWorkingPage() {
             likely: "Prime Video側の広い問題が疑われます。アプリの再インストール、ログアウト、テレビやネットワーク設定の初期化は急がず、多い症状とAmazon公式ヘルプを確認してください。急ぎの場合は別の動画サービスを利用します。",
             partial: "再生や接続など一部機能の問題が疑われます。多い症状と一致する場合は設定を大きく変えず情報を確認し、一致しなければ下の症状別確認へ進んでください。",
             normal: "広い不具合の兆候は強くありません。別作品、別端末、アプリとブラウザ、別回線で差が出るか確認すると、作品・端末・アプリ・回線のどこに原因があるか絞れます。",
-            unknown: "自動確認だけでは判断できません。Prime Videoの詳しい報告推移を確認し、広い不具合が見つからなければ下の症状別確認へ進んでください。",
+            unknown: "まだ状況を断定できません。Prime Videoの詳しい報告推移を確認し、報告が増えていなければ当てはまる再生症状から確認してください。",
           }}
         />
       </div>

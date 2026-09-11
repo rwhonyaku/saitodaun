@@ -107,9 +107,9 @@ export default function ServiceStatusBridge({
     : !reports
       ? "利用者報告を取得できませんでした"
       : reports.signal.level === "spike"
-        ? `急増・直近30分に異なる${reports.signal.currentReporters}人から${reports.count}件`
+        ? `急増：直近30分に${reports.signal.currentReporters}人から${reports.count}件`
         : reports.signal.level === "elevated"
-          ? `増加・直近30分に異なる${reports.signal.currentReporters}人から${reports.count}件`
+          ? `増加：直近30分に${reports.signal.currentReporters}人から${reports.count}件`
           : reports.count > 0
             ? `通常範囲・直近30分に${reports.count}件`
             : "通常範囲・直近30分は0件";
@@ -156,7 +156,7 @@ export default function ServiceStatusBridge({
       </dl>
 
       <div className="mt-4 rounded-lg border border-black/5 bg-white/70 px-3 py-3">
-        <p className="text-xs font-bold text-slate-900">この状況での進み方</p>
+        <p className="text-xs font-bold text-slate-900">次に確認すること</p>
         <p className="mt-1 text-xs leading-relaxed text-slate-700">{adviceText}</p>
       </div>
 
@@ -179,7 +179,11 @@ export default function ServiceStatusBridge({
         ))}
       </div>
       <p className="mt-3 text-[11px] text-slate-500">
-        {updatedAt ? `利用者報告の更新：${updatedAt} JST` : "表示中の情報は自動更新されます。"}
+        {updatedAt
+          ? `利用者報告の更新：${updatedAt} JST`
+          : reportsLoading
+            ? "利用者報告を取得中です。"
+            : "利用者報告は取得できませんでした。自動的に再試行します。"}
       </p>
     </section>
   );
