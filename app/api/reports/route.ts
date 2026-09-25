@@ -31,6 +31,11 @@ type ServiceReportRow = ReportRow & {
 
 type SignalLevel = "normal" | "elevated" | "spike";
 
+function logReportingFailure(operation: string, error: unknown) {
+  const message = error instanceof Error ? error.message : "Unknown reporting error";
+  console.error(`[reporting:${operation}] ${message}`);
+}
+
 function getConfig() {
   const url = process.env.SUPABASE_URL?.replace(/\/$/, "");
   const secretKey = process.env.SUPABASE_SECRET_KEY;
@@ -315,7 +320,8 @@ export async function GET(request: Request) {
       return NextResponse.json(await getHotReports(), {
         headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60" },
       });
-    } catch {
+    } catch (error) {
+      logReportingFailure("hot-read", error);
       return NextResponse.json(
         { error: "注目の障害情報を取得できませんでした。" },
         { status: 503 }
@@ -332,7 +338,8 @@ export async function GET(request: Request) {
     return NextResponse.json(await getRecentReports(serviceId), {
       headers: { "Cache-Control": "no-store" },
     });
-  } catch {
+  } catch (error) {
+    logReportingFailure(`service-read:${serviceId}`, error);
     return NextResponse.json(
       { error: "利用者報告を取得できませんでした。" },
       { status: 503 }
@@ -409,7 +416,8 @@ export async function POST(request: Request) {
     if (!insertResponse.ok) throw new Error("Report insert failed");
 
     return NextResponse.json({ ok: true, reports: await getRecentReports(serviceId) });
-  } catch {
+  } catch (error) {
+    logReportingFailure("submit", error);
     return NextResponse.json(
       { error: "報告を送信できませんでした。時間をおいて再度お試しください。" },
       { status: 503 }

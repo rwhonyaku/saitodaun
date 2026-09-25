@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:status-probes": "node scripts/validate-status-probes.mjs"
+    "check:status-probes": "node scripts/validate-status-probes.mjs",
+    "check:reporting": "node scripts/check-reporting-health.mjs"
   },
   "dependencies": {
     "next": "14.2.5",
