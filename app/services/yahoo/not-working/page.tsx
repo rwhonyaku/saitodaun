@@ -1,339 +1,127 @@
-// app/services/yahoo/not-working/page.tsx
-
 import Link from "next/link";
 import type { Metadata } from "next";
-import { SERVICES } from "@/lib/services/registry";
-
-const service = SERVICES.yahoo;
-const issue = service.issues["not-working"];
+import IMobileAd from "@/components/ads/IMobileAd";
+import ServiceStatusBridge from "@/components/ServiceStatusBridge";
 
 export const metadata: Metadata = {
   title: "Yahoo! JAPANが開かない・検索できない？（障害か自分側か）",
   description:
-    "Yahoo! JAPANが開かない・検索できない・ログインできない時に、障害か自分の環境（回線、Wi-Fi、DNS、端末、ブラウザ、アプリ）かを最短で確認し、すぐ試せる対処をまとめます。",
-  alternates: { canonical: "/services/yahoo/not-working" }
+    "Yahoo! JAPANが開かない、検索できない、ログインできない時に、Yahoo全体の問題か、メール・ショッピングなど一部サービスの問題かを確認します。",
+  alternates: { canonical: "/services/yahoo/not-working" },
 };
-
-function ErrorLinks({ slugs }: { slugs: string[] }) {
-  return (
-    <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-      {slugs.map((slug) => (
-        <li key={slug} className="rounded-xl border border-neutral-200 px-4 py-3">
-          <Link className="text-sm underline" href={`/errors/${slug}`}>
-            /errors/{slug}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function YahooNotWorkingPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 text-slate-900">
       <header className="space-y-3">
-        <p className="text-sm text-neutral-500">
-          <Link className="underline" href="/services">
-            サービス別トラブル
-          </Link>{" "}
-          /{" "}
-          <Link className="underline" href={service.hubHref}>
-            {service.name}
-          </Link>{" "}
-          / 不具合
-        </p>
-
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Yahoo! JAPANが開かない・検索できない・ログインできない？（障害か自分側かを最短判定）
-        </h1>
-
+        <h1 className="text-3xl font-semibold tracking-tight">Yahoo! JAPANが開かない・使えない時の確認</h1>
         <p className="text-base text-neutral-600">
-          Yahoo! JAPANの不具合は、Yahoo! JAPAN側の障害だけでなく、回線、Wi-Fi、DNS、端末状態、ブラウザ、ログイン状態でも起きます。
-          最初に問題の方向を確認しておくと、無駄な設定変更を減らしながら早く復旧しやすくなります。
+          まずYahoo! JAPAN全体の障害兆候を確認し、トップページ、検索、ログイン、Yahoo!メール、ショッピング・ヤフオクのどこに問題があるかを分けます。
         </p>
-        <p className="text-sm text-neutral-600">
-          検索できない・ログインできない・表示されないなど、症状によって原因の確認が変わります。
-        </p>
-
-        <div className="rounded-2xl border border-neutral-200 p-5">
-          <h2 className="text-lg font-semibold">結論（先にこれだけ）</h2>
-          <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-neutral-700">
-            <li>
-              まず状態を確認：{" "}
-              <Link className="underline" href={issue.statusPageHref}>
-                Yahoo! JAPANのステータスチェック
-              </Link>
-            </li>
-            <li>
-              他のサイトやアプリも不安定なら、自分側の可能性が高いです：{" "}
-              <Link className="underline" href="/troubleshooting/internet-not-working">
-                インターネットにつながらない原因
-              </Link>
-            </li>
-            <li>
-              Wi-Fiではだめでモバイル通信では使えるなら、{" "}
-              <Link className="underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fi
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting/router-not-working">
-                ルーター
-              </Link>
-              、{" "}
-              <Link className="underline" href="/troubleshooting-dns">
-                DNS
-              </Link>{" "}
-              を優先して確認します。
-            </li>
-            <li>
-              Yahoo! JAPANだけだめなら、ブラウザ、ログイン状態、端末側の問題が多いです。
-            </li>
-          </ol>
-        </div>
       </header>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">1) 今、Yahoo! JAPANは障害？</h2>
+      <div className="mt-6">
+        <ServiceStatusBridge
+          serviceId="yahoo-japan"
+          serviceName="Yahoo! JAPAN"
+          serviceUrl="https://www.yahoo.co.jp"
+          statusHref="/status/sites/yahoo-japan"
+          officialLinks={[{ label: "Yahoo! JAPANサポート", href: "https://support.yahoo-net.jp/" }]}
+          featureLimitNote="Yahoo! JAPANのトップページに接続できても、Yahoo!メール、ログイン、ショッピング、ヤフオクなど各サービスの状態までは判定できません。利用者報告と、使えない機能の範囲を合わせて確認します。"
+          advice={{
+            likely:
+              "Yahoo! JAPAN側の広い問題が疑われます。ログアウト、アプリの再インストール、ブラウザやネットワーク設定の初期化は急がず、多い症状とYahoo! JAPANの案内を確認してください。",
+            partial:
+              "一部のYahooサービスまたは一部利用者に影響する問題が疑われます。多い症状と自分の症状が一致するか確認し、一致しなければ下のサービス別確認へ進んでください。",
+            normal:
+              "広い障害の兆候は強くありません。トップページと検索、ログイン、メールなどを比較し、Yahoo全体か一つの機能だけかを確認してください。",
+            unknown:
+              "まだ状況を断定できません。詳しい報告推移とYahoo! JAPANサポートを確認し、問題が広がっていなければ該当する機能から原因を絞ってください。",
+          }}
+        />
+      </div>
+
+      <nav className="mt-6 rounded-xl border border-neutral-200 bg-white p-4" aria-label="Yahoo! JAPANの症状を選ぶ">
+        <p className="text-sm font-semibold">当てはまる症状から確認</p>
+        <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#portal">トップページ・検索が使えない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#login">ログインできない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#mail">Yahoo!メールだけ使えない</a>
+          <a className="rounded-lg bg-slate-50 px-3 py-2 font-medium underline" href="#services">ショッピング・ヤフオクなど一部だけ</a>
+        </div>
+      </nav>
+
+      <section id="portal" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">1) Yahoo! JAPANのトップページ・検索が使えない</h2>
         <p className="text-sm text-neutral-700">
-          まずここから確認します。Yahoo! JAPAN側で障害が起きているときは、端末やブラウザをいろいろ触っても改善しないことが多いです。
-          最初に全体状況を見ておくと、無駄な作業を避けやすくなります。
+          トップページと検索の両方が複数の端末や回線で開かない場合は、Yahoo側または広い通信経路の問題が疑われます。
         </p>
-
-        <div className="flex flex-wrap gap-3">
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.statusPageHref}
-          >
-            Yahoo! JAPANのステータスを確認する
-          </Link>
-          <Link
-            className="rounded-xl border border-neutral-200 px-4 py-2 text-sm underline"
-            href={issue.mainToolHref}
-          >
-            URL疎通チェック（メインツール）
-          </Link>
-        </div>
-
-        <p className="text-xs text-neutral-500">
-          先に障害を除外してから自分側の確認に進む方が、全体として早く原因にたどり着けます。
-        </p>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">2) 最短の確認（2分）</h2>
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">まずはこの3つだけ</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>
-              <b>回線を切り替える</b>（Wi-Fi ↔ モバイル通信）。片方で動くなら、回線、DNS、ルーター、VPNの可能性が高いです。
-            </li>
-            <li>
-              <b>シークレットモードや別ブラウザで試す</b>。片方だけだめなら、その側の問題を疑いやすくなります。
-            </li>
-            <li>
-              <b>別端末</b>で試す。同じ症状が続くなら障害や回線寄り、端末で差があるなら端末やブラウザ寄りです。
-            </li>
-          </ul>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-              インターネット全体が不安定な場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-              Wi-Fiが怪しい場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-              ブラウザだけ開かない場合
-            </Link>
-            <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-              端末だけつながらない場合
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">3) よくある原因</h2>
-
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">Yahoo! JAPAN側の障害</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Yahoo! JAPANが開かない、検索結果が表示されない、ログインが不安定、ページ表示が極端に遅いといった症状は、Yahoo! JAPAN側の障害でも起きます。
-              この場合は利用者側でいろいろ変えても改善しにくいため、まず状況確認が先です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">DNSや通信経路の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Yahoo! JAPANだけ不安定に見えても、DNS解決、通信経路、VPN、プロキシの影響で起きることがあります。
-              特にWi-Fiではだめでモバイル通信では使える場合は、この方向を先に疑う方が効率的です。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting-dns">
-                DNSトラブル対処へ
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-                インターネット全体の確認
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-                Wi-Fiがつながらない原因
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-                ルーターが原因か確認する
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">ブラウザやログイン状態の問題</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              キャッシュ、Cookie、拡張機能、ログイン状態の不整合などで、Yahoo! JAPANだけ正常に使えないことがあります。
-              特に「開かない」「検索はできるがログインだけ不安定」といった症状は、この方向を疑いやすいです。
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-                ブラウザ側の原因を確認する
-              </Link>
-              <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-                端末だけつながらない場合
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-6">
-            <h3 className="text-base font-semibold">一部機能だけ不安定な状態</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              Yahoo! JAPANは検索、ログイン、ニュース、メールなど機能が分かれているため、全体が落ちていなくても一部だけ不安定になることがあります。
-              症状がどの機能に出ているかを先に整理すると、確認が早くなります。
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">4) すぐ試せる対処（順番どおり）</h2>
-
-        <ol className="list-decimal space-y-2 pl-5 text-sm text-neutral-700">
-          <li>ページを再読み込みし、必要ならブラウザやアプリを再起動する。</li>
-          <li>Wi-Fi ↔ モバイル通信に切り替える。</li>
-          <li>VPNやプロキシを一時的にOFFにする。</li>
-          <li>シークレットモードや別ブラウザで試す。</li>
-          <li>ブラウザのキャッシュとCookieを削除し、必要なら再ログインする。</li>
-          <li>必要なら端末を再起動する。</li>
-          <li>障害ではないと見えたら、ルーターを再起動する。</li>
-        </ol>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">「ログインできない」場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>別ブラウザやシークレットモードで試して、ブラウザ起因かどうかを確認します。</li>
-            <li>別回線で試して、回線やDNSの問題を除外します。</li>
-            <li>障害の可能性が高いときは、無理に何度も試さず少し待ちます。</li>
-          </ul>
-        </div>
-
-        <div className="rounded-2xl border border-neutral-200 p-6">
-          <h3 className="text-base font-semibold">「検索できない・ページが出ない」場合（追加チェック）</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-700">
-            <li>他のサイトも不安定なら、まず回線側を疑います。</li>
-            <li>Yahoo! JAPANだけ不安定なら、ブラウザやDNSの問題を優先して確認します。</li>
-            <li>Wi-Fiとモバイル通信の両方で試して、回線差が出るか確認します。</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">5) 具体的なエラー表示が出る場合</h2>
-        <p className="text-sm text-neutral-700">
-          DNS、SSL、タイムアウト、または 502、503、504 などが出たら、下の解説ページを確認してください。
-          Yahoo! JAPAN自体の問題に見えても、実際は通信やブラウザ側の症状であることがあります。
-        </p>
-
-        <ErrorLinks slugs={issue.relatedErrorSlugs} />
-
-        <div className="mt-4 text-sm">
-          <Link className="underline" href="/status-codes">
-            ステータスコード一覧 →
-          </Link>
-        </div>
-      </section>
-
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">6) 公式情報</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
-          {issue.officialSources.map((s) => (
-            <li key={s.href}>
-              <a className="underline" href={s.href} target="_blank" rel="noreferrer">
-                {s.label}
-              </a>
-            </li>
-          ))}
+          <li>Yahoo以外のサイトが開くか確認し、インターネット全体の問題と分ける。</li>
+          <li>トップページは開くが検索結果だけ出ない場合は、検索機能に限定した問題として確認する。</li>
+          <li>ブラウザとYahooアプリで差が出るか確認し、一方だけならアプリ・ブラウザ側を優先する。</li>
+          <li>Wi-Fiとモバイル回線で差が出る場合は、利用中の回線やネットワーク設定を確認する。</li>
+        </ul>
+        <p className="text-sm text-neutral-700">
+          他のサイトも開かない場合は、<Link className="underline" href="/troubleshooting/internet-not-working">インターネット接続の確認</Link>へ進みます。
+        </p>
+      </section>
+
+      <section id="login" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">2) Yahoo! JAPAN IDでログインできない</h2>
+        <p className="text-sm text-neutral-700">
+          ログアウト状態でもYahooのページを閲覧できるなら、サイト全体より認証、確認コード、アカウントまたはブラウザの問題を疑います。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>閲覧だけはできるか確認し、ログイン機能だけの問題かを分ける。</li>
+          <li>表示されたエラーを控え、パスワード失敗と確認コード・本人確認の問題を区別する。</li>
+          <li>別ブラウザやアプリで差が出るか確認する。広い障害中は正常な端末からログアウトしない。</li>
+          <li>一つのIDだけ失敗する場合は、設定初期化よりYahoo! JAPANサポートのアカウント案内を優先する。</li>
         </ul>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-neutral-200 p-6">
-        <h2 className="text-lg font-semibold">関連リンク（サイト内）</h2>
-        <div className="mt-3 flex flex-wrap gap-3">
-          <Link className="text-sm underline" href={service.hubHref}>
-            {service.name}のトラブル一覧
-          </Link>
-          <Link className="text-sm underline" href={issue.statusPageHref}>
-            {service.name}のステータスチェック
-          </Link>
-          <Link className="text-sm underline" href={issue.mainToolHref}>
-            接続チェックツール
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/internet-not-working">
-            インターネットにつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/wifi-not-working">
-            Wi-Fiがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/router-not-working">
-            ルーターがつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/browser-not-loading-sites">
-            ブラウザでサイトが開かない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting/device-cannot-connect">
-            端末だけつながらない原因
-          </Link>
-          <Link className="text-sm underline" href="/troubleshooting-dns">
-            DNSトラブル対処
-          </Link>
-          <Link className="text-sm underline" href="/status-codes">
-            ステータスコード一覧
-          </Link>
-        </div>
+      <IMobileAd slot="notworking_mid" />
+
+      <section id="mail" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">3) Yahoo!メールだけ送受信できない</h2>
+        <p className="text-sm text-neutral-700">
+          Yahooのトップページや検索が使えるのにメールだけ失敗する場合は、Yahoo全体の停止ではなく、メール機能、アカウントまたはメールアプリ側を確認します。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>Web版Yahoo!メールとメールアプリの両方で同じか確認する。</li>
+          <li>受信だけ、送信だけ、添付ファイルだけのどこで失敗するかを分ける。</li>
+          <li>Web版は使える場合、メールアプリの同期・認証状態を確認する。</li>
+          <li>送信を繰り返さず、下書きや送信済みへの反映を確認してから再試行する。</li>
+        </ul>
+        <a className="text-sm font-semibold text-sky-700 underline underline-offset-2" href="https://support.yahoo-net.jp/PccMail/s/" target="_blank" rel="noopener noreferrer">
+          Yahoo!メール公式サポートを見る ↗
+        </a>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold">よくある質問</h2>
+      <section id="services" className="mt-10 scroll-mt-6 space-y-4">
+        <h2 className="text-xl font-semibold">4) ショッピング・ヤフオクなど一部サービスだけ使えない</h2>
+        <p className="text-sm text-neutral-700">
+          検索やメールが正常なら、Yahoo! JAPAN全体ではなく対象サービスの機能、ログイン状態または取引処理の問題を確認します。
+        </p>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+          <li>Yahoo!ショッピングで注文確定だけ失敗する場合は、商品閲覧、カート、決済のどこで止まるかを確認する。</li>
+          <li>ヤフオクで入札・取引だけ失敗する場合は、公式のお知らせと取引画面のエラーを確認する。</li>
+          <li>ニュースだけ更新されない場合は、別記事やトップページが開くか確認する。</li>
+          <li>注文・入札・決済操作を連打せず、履歴に反映されていないことを確認してから再試行する。</li>
+        </ul>
+        <a className="text-sm font-semibold text-sky-700 underline underline-offset-2" href="https://auctions.yahoo.co.jp/topic/notice/troubleRepo/" target="_blank" rel="noopener noreferrer">
+          ヤフオク公式の障害情報を見る ↗
+        </a>
+      </section>
 
-        <div className="space-y-3">
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">障害かどうかを確実に見分けるには？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              ステータス確認をしたうえで、回線や端末を変えても状況がほぼ変わらないなら、障害の可能性が高いです。
-              その場合は大きく触らず待つ方が近道です。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">Wi-Fiだとだめで、モバイル通信だと使えるのはなぜ？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              DNS、ルーター、VPN、プロキシなど、Wi-Fi側の問題が濃厚です。まずは回線差を確認し、DNSやルーター側の確認を進めてください。
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 p-5">
-            <h3 className="text-base font-semibold">最初に避けたほうがいいことは？</h3>
-            <p className="mt-2 text-sm text-neutral-700">
-              障害確認をする前の再インストールや大きな設定変更は避けた方が安全です。原因が回線やDNSなら直らないうえ、後で元に戻す手間が増えます。
-            </p>
-          </div>
+      <section className="mt-10 rounded-2xl border border-neutral-200 p-5">
+        <h2 className="text-lg font-semibold">詳しい報告推移とYahoo! JAPAN公式情報</h2>
+        <p className="mt-2 text-sm text-neutral-700">
+          Yahoo! JAPANのステータスページでは、トップページへの外部接続、日本の利用者報告、直近30分で多い症状、過去24時間の推移を確認できます。
+        </p>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm">
+          <Link className="underline" href="/status/sites/yahoo-japan">Yahoo! JAPANの詳しい状況・報告推移</Link>
+          <a className="underline" href="https://support.yahoo-net.jp/" target="_blank" rel="noopener noreferrer">Yahoo! JAPANサポート ↗</a>
         </div>
       </section>
     </main>
