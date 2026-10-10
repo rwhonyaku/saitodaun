@@ -9,20 +9,14 @@ import OutageReportPanel, { type ReportSummary } from "@/components/OutageReport
 import { getStatusVerdict } from "@/lib/statusVerdict";
 import { isReportingServiceId } from "@/lib/outageReports";
 import { getStatusRelatedServices } from "@/lib/statusRelatedServices";
-
-type CheckResult = {
-  online: boolean;
-  probeBlocked?: boolean;
-  status: number | null;
-  responseTime: number | null;
-  timestamp: string;
-  error?: string;
-  checkedUrl?: string;
-};
+import type { CheckResult } from "@/lib/checkTypes";
+import { getGuideHrefFromResult as getSharedGuideHref } from "@/lib/errorGuideMap";
 
 function getGuideHrefFromResult(result: CheckResult | null): string | null {
   if (!result) return null;
   if (result.probeBlocked) return null;
+
+  if (result.errorType) return getSharedGuideHref({ status: result.status, error: result.error, errorType: result.errorType });
 
   const status = result.status;
 
@@ -135,6 +129,9 @@ export default function StatusClient({
     } catch {
       setResult({
         online: false,
+        reachable: false,
+        outcome: "inconclusive",
+        errorType: "unknown",
         probeBlocked: false,
         status: null,
         responseTime: null,
@@ -172,20 +169,22 @@ export default function StatusClient({
     );
   }
 
-  const resultUnconfirmed = Boolean(
-    result && (result.probeBlocked || result.error || result.status == null)
-  );
+  const resultUnconfirmed = Boolean(result && (result.outcome === "inconclusive" || result.outcome === "connection_error"));
 
   const statusLabel = !result
     ? "未判定"
+    : result.probeBlocked
+    ? "判定保留"
     : resultUnconfirmed
     ? "確認不可"
     : result.online
     ? "オンライン"
-    : "オフライン";
+    : result.reachable
+    ? "HTTPエラー"
+    : "接続失敗";
   const statusColor = !result
     ? "text-slate-400"
-    : resultUnconfirmed
+    : result.probeBlocked || resultUnconfirmed
     ? "text-amber-600"
     : result.online
     ? "text-green-600"
@@ -1385,7 +1384,7 @@ export default function StatusClient({
                   このサイトは当サイトのチェック環境から確認できませんでした。実際には利用できる場合があります。
                 </p>
               )}
-              {result.checkedUrl && (
+              {result.checkedUrl && result.checkedUrl !== result.requestedUrl && (
                 <p className="text-[11px] text-slate-500 [overflow-wrap:anywhere]">
                   実際にチェックしたURL：{result.checkedUrl}
                 </p>

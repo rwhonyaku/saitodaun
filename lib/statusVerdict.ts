@@ -1,5 +1,7 @@
 export type VerdictCheck = {
   online: boolean;
+  reachable?: boolean;
+  outcome?: "success" | "http_error" | "blocked" | "connection_error" | "inconclusive";
   probeBlocked?: boolean;
   status: number | null;
   error?: string;
@@ -72,7 +74,7 @@ export function getStatusVerdict(
   const signal = community?.signal.level;
   const symptom = community?.topProblem?.label;
   const currentReporters = community?.signal.currentReporters ?? 0;
-  const checkUnknown = Boolean(check.probeBlocked || check.error || check.status == null);
+  const checkUnknown = Boolean(check.probeBlocked || check.outcome === "inconclusive" || check.outcome === "connection_error" || (!check.outcome && (check.error || check.status == null)));
   const serverFailure = !checkUnknown && !check.online && check.status != null && check.status >= 500;
 
   if (signal === "spike") {

@@ -76,8 +76,9 @@ export function getGuideHref(status: number | null | undefined) {
 export function getGuideHrefFromResult(opts: {
   status: number | null | undefined;
   error?: string;
+  errorType?: string;
 }) {
-  const { status, error } = opts;
+  const { status, error, errorType } = opts;
 
   // If we have a known HTTP status, always prioritize the exact guide.
   const byStatus = getGuideHref(status);
@@ -85,6 +86,12 @@ export function getGuideHrefFromResult(opts: {
 
   // Only apply "no HTTP code" heuristics when status is null/undefined.
   if (status != null) return "/status-codes";
+
+  if (errorType === "dns") return "/troubleshooting-dns";
+  if (errorType === "tls") return "/errors/ssl-handshake-failed";
+  if (errorType === "connection_refused") return "/errors/err-connection-refused";
+  if (errorType === "timeout") return "/errors/err-connection-timed-out";
+  if (errorType === "connection_reset") return "/errors/connection-reset";
 
   const e = normalizeError(error);
 

@@ -62,6 +62,8 @@ export default function ServiceStatusBridge({
     } catch {
       setCheck({
         online: false,
+        reachable: false,
+        outcome: "inconclusive",
         probeBlocked: true,
         status: null,
         error: "接続チェックを取得できませんでした。",

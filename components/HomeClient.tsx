@@ -4,16 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getGuideHrefFromResult } from "@/lib/errorGuideMap";
-
-type CheckResult = {
-  online: boolean;
-  probeBlocked?: boolean;
-  status: number | null;
-  responseTime: number | null;
-  timestamp: string;
-  error?: string;
-  checkedUrl?: string;
-};
+import type { CheckResult } from "@/lib/checkTypes";
 
 function getUrlInputError(raw: string) {
   if (!raw) return "チェックしたいサイトのURLを入力してください。";
@@ -82,10 +73,12 @@ export default function HomeClient() {
       const data: CheckResult = await res.json();
       setResult(data);
 
-      if (data.checkedUrl) setUrl(data.checkedUrl);
     } catch {
       setResult({
         online: false,
+        reachable: false,
+        outcome: "inconclusive",
+        errorType: "unknown",
         status: null,
         responseTime: null,
         timestamp: new Date().toLocaleString("ja-JP", {
@@ -103,20 +96,20 @@ export default function HomeClient() {
     if (e.key === "Enter") handleCheck();
   };
 
-  const resultUnconfirmed = Boolean(
-    result && (result.probeBlocked || result.error || result.status == null)
-  );
+  const resultUnconfirmed = Boolean(result && (result.outcome === "inconclusive" || result.outcome === "connection_error"));
 
-  const statusLabel = resultUnconfirmed
-    ? "確認不可"
-    : result?.probeBlocked
+  const statusLabel = result?.probeBlocked
     ? "判定保留"
+    : resultUnconfirmed
+    ? "確認不可"
     : result?.online
     ? "オンライン"
-    : "オフライン";
+    : result?.reachable
+    ? "HTTPエラー"
+    : "接続失敗";
 
   const guideHref = result
-    ? getGuideHrefFromResult({ status: result.status, error: result.error })
+    ? getGuideHrefFromResult({ status: result.status, error: result.error, errorType: result.errorType })
     : "/status-codes";
 
   return (
@@ -196,7 +189,7 @@ export default function HomeClient() {
           </p>
 
           {/* Result Area */}
-          <div className="mt-6 min-h-[116px]">
+          <div className="mt-6 min-h-[116px]" role="status" aria-live="polite" aria-atomic="true">
             {!result && !loading && (
               <div className="grid grid-cols-3 divide-x divide-white/10 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-4 text-center backdrop-blur-sm">
                 <div><p className="text-xs font-semibold text-white">外部接続</p><p className="mt-1 text-[10px] text-slate-400">サーバーから確認</p></div>
@@ -216,7 +209,7 @@ export default function HomeClient() {
             {result && (
               <div
                 className={`rounded-xl border-2 p-5 transition-all shadow-sm ${
-                  resultUnconfirmed
+                  result.probeBlocked || resultUnconfirmed
                     ? "border-amber-100 bg-amber-50/30"
                     : result.online
                     ? "border-green-100 bg-green-50/30"
@@ -232,7 +225,7 @@ export default function HomeClient() {
                         )}
                         <span
                           className={`relative inline-flex rounded-full h-3 w-3 ${
-                            resultUnconfirmed
+                            result.probeBlocked || resultUnconfirmed
                               ? "bg-amber-500"
                               : result.online
                               ? "bg-green-500"
@@ -244,9 +237,9 @@ export default function HomeClient() {
                         判定：{statusLabel}
                       </h3>
                     </div>
-                    {result.checkedUrl && (
+                    {(result.requestedUrl || result.checkedUrl) && (
                       <p className="max-w-[280px] text-xs text-slate-500 [overflow-wrap:anywhere] sm:max-w-md font-mono">
-                        {result.checkedUrl}
+                        {result.requestedUrl || result.checkedUrl}
                       </p>
                     )}
                   </div>
@@ -287,9 +280,13 @@ export default function HomeClient() {
                 </div>
 
                 {result.error && (
-                  <div className="mt-4 p-3 bg-red-100/50 rounded-lg text-xs text-red-700 border border-red-200">
+                  <div className="mt-4 rounded-lg border border-amber-200 bg-amber-100/50 p-3 text-xs text-amber-800">
                     {result.error}
                   </div>
+                )}
+
+                {result.requestedUrl && result.checkedUrl && result.requestedUrl !== result.checkedUrl && (
+                  <p className="mt-3 text-[11px] text-slate-500 [overflow-wrap:anywhere]">実際に確認したURL：{result.checkedUrl}</p>
                 )}
 
                 {result.probeBlocked && !result.error && (
@@ -303,12 +300,16 @@ export default function HomeClient() {
                     <p className="font-semibold text-slate-900">
                       {result.online
                         ? "外部サーバーからは応答しています"
-                        : "外部サーバーから正常な応答を確認できませんでした"}
+                        : result.reachable
+                        ? `サーバーは応答しましたが、HTTP ${result.status}を返しました`
+                        : "外部サーバーから接続を完了できませんでした"}
                     </p>
                     <p className="mt-1">
                       {result.online
                         ? "この結果だけでは、ログイン・決済・動画再生・アプリなど一部機能の状態や、あなたの回線からの接続までは判定できません。"
-                        : "一時的な通信エラー、地域差、アクセス制限でも失敗するため、直ちにサイト全体の障害とは断定できません。"}
+                        : result.reachable
+                        ? "サイトには到達しています。ページの削除、認証、アクセス制限、またはサーバー側エラーの可能性があります。"
+                        : "一時的な通信エラーや地域差でも失敗するため、直ちにサイト全体の障害とは断定できません。"}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                       <Link href="/status" className="inline-flex min-h-11 items-center font-semibold text-sky-700 underline underline-offset-2">
@@ -329,7 +330,7 @@ export default function HomeClient() {
                   {(resultUnconfirmed || !result.online) && (
                     <span
                       className={`px-2 py-0.5 rounded-full ${
-                        resultUnconfirmed
+                        result.probeBlocked || resultUnconfirmed
                           ? "bg-amber-100 text-amber-700"
                           : "bg-red-100 text-red-600"
                       }`}

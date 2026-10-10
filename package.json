@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:checker": "node --test tests/check-outcome.test.mjs",
     "check:status-probes": "node scripts/validate-status-probes.mjs",
     "check:reporting": "node scripts/check-reporting-health.mjs"
   },

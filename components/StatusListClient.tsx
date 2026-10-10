@@ -10,16 +10,7 @@ import {
 } from "@/lib/statusSites";
 import { getGuideHrefFromResult } from "@/lib/errorGuideMap";
 import { isReportingServiceId } from "@/lib/outageReports";
-
-type CheckResult = {
-  online: boolean;
-  probeBlocked?: boolean;
-  status: number | null;
-  responseTime: number | null;
-  timestamp: string;
-  error?: string;
-  checkedUrl?: string;
-};
+import type { CheckResult } from "@/lib/checkTypes";
 
 const FAVORITES_KEY = "saitodaun_status_favorites";
 const INITIAL_VISIBLE_SERVICES = 40;
@@ -271,6 +262,9 @@ export default function StatusListClient() {
         ...prev,
         [site.id]: {
           online: false,
+          reachable: false,
+          outcome: "inconclusive",
+          errorType: "unknown",
           status: null,
           responseTime: null,
           timestamp: new Date().toLocaleString("ja-JP", {
@@ -403,9 +397,7 @@ export default function StatusListClient() {
                 {visibleSites.map((site) => {
                   const result = results[site.id] || null;
                   const isLoading = loading[site.id] || false;
-                  const resultUnknown = Boolean(
-                    result && (result.error || result.status == null)
-                  );
+                  const resultUnknown = Boolean(result && (result.outcome === "inconclusive" || result.outcome === "connection_error"));
                   const statusLabel = result
                     ? result.probeBlocked
                       ? "判定保留"
@@ -413,7 +405,9 @@ export default function StatusListClient() {
                       ? "確認不可"
                       : result.online
                       ? "オンライン"
-                      : "オフライン"
+                      : result.reachable
+                      ? "HTTPエラー"
+                      : "接続失敗"
                     : "未チェック";
                   const statusColor = !result
                     ? "bg-slate-100 text-slate-400"
@@ -429,6 +423,7 @@ export default function StatusListClient() {
                     ? getGuideHrefFromResult({
                         status: result.status,
                         error: result.error,
+                        errorType: result.errorType,
                       })
                     : "/status-codes";
 

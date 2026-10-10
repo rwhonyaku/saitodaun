@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import type { CheckResult as ApiCheckResult } from "@/lib/checkTypes";
 
 type SignalLevel = "normal" | "elevated" | "spike";
 type ExternalSource = { label: string; href: string };
 type DirectoryService = { id: string; name: string; aliases: string; official?: ExternalSource; independent?: ExternalSource };
 type ReportService = { serviceId: string; level: SignalLevel; reports: number; reporters: number; trend: number[] };
 type HotSummary = { hot: ReportService[]; services: ReportService[]; monitoredServices: number; updatedAt: string };
-type CheckResult = { online: boolean; probeBlocked?: boolean; status: number | null; responseTime: number | null; checkedUrl?: string; error?: string; checkedAt?: string };
+type CheckResult = ApiCheckResult & { checkedAt?: string };
 
 const DD = (slug: string): ExternalSource => ({ label: "Downdetector Japan", href: `https://downdetector.jp/shougai/${slug}/` });
 
@@ -135,20 +136,21 @@ export default function EnglishStatusDashboard() {
       const data = (await response.json()) as CheckResult;
       setResult({ ...data, checkedAt: new Date().toISOString() });
       trackWebsiteCheckResult(data);
-      if (data.checkedUrl) setUrl(data.checkedUrl);
     } catch {
-      const failedResult = { online: false, status: null, responseTime: null, error: "The check could not be completed. Try again shortly.", checkedAt: new Date().toISOString() };
+      const failedResult: CheckResult = { online: false, reachable: false, outcome: "inconclusive", errorType: "unknown", status: null, responseTime: null, timestamp: new Date().toISOString(), error: "The check could not be completed. Try again shortly.", checkedAt: new Date().toISOString() };
       setResult(failedResult);
       trackWebsiteCheckResult(failedResult);
     } finally { setChecking(false); }
   }
 
   const featured = FEATURED_IDS.map((id) => ({ ...SERVICES.find((service) => service.id === id)!, ...FEATURED_STYLE[id], report: summary?.services.find((service) => service.serviceId === id) }));
-  const resultUnconfirmed = Boolean(result && (result.probeBlocked || result.error || result.status == null));
+  const resultUnconfirmed = Boolean(result && (result.outcome === "inconclusive" || result.outcome === "connection_error"));
   const resultServerFailure = Boolean(result?.status && result.status >= 500);
   const resultHttpError = Boolean(result?.status && result.status >= 400 && result.status < 500 && !result.probeBlocked);
   const resultTitle = resultUnconfirmed
     ? "Status could not be confirmed"
+    : result?.probeBlocked
+      ? "The website limited this automated check"
     : result?.online
       ? "This website appears reachable"
       : resultServerFailure
@@ -213,7 +215,7 @@ export default function EnglishStatusDashboard() {
             <p className="mt-1 text-xs leading-5 text-slate-500">Enter a web address. Our server will test whether that URL responds; it cannot verify every feature, account, app, or location.</p>
             <div className="mt-3 flex gap-2"><input id="english-website-url" value={url} onChange={(event) => { setUrl(event.target.value); setInputError(""); }} onKeyDown={(event) => { if (event.key === "Enter") checkWebsite(); }} type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" spellCheck={false} placeholder="example.com" aria-invalid={Boolean(inputError)} className="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm text-slate-950 outline-none focus:ring-2 focus:ring-sky-400" /><button onClick={checkWebsite} disabled={checking} className="min-h-12 rounded-xl bg-sky-600 px-5 text-sm font-bold text-white hover:bg-sky-700 disabled:opacity-60 sm:px-7">{checking ? "Checking…" : "Check status"}</button></div>
             {inputError ? <p className="mt-2 text-sm font-medium text-red-700" role="alert">{inputError}</p> : null}
-            {result ? <div className={`mt-4 rounded-xl border p-5 ${resultUnconfirmed ? "border-amber-200 bg-amber-50" : result.online ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`} role="status" aria-live="polite"><div className="flex flex-wrap items-start justify-between gap-4"><div className="max-w-xl"><p className="font-bold text-slate-950">{resultTitle}</p>{result.checkedUrl ? <p className="mt-1 break-all font-mono text-xs text-slate-500">{result.checkedUrl}</p> : null}<p className="mt-3 text-sm leading-6 text-slate-700">{resultExplanation}</p><p className="mt-2 text-sm leading-6 text-slate-700"><b>Next:</b> {resultNextStep}</p>{resultUnconfirmed && result.error ? <p className="mt-2 text-xs font-medium text-amber-900">The probe returned no conclusive website response.</p> : null}{result.checkedAt ? <p className="mt-3 text-xs text-slate-500">Checked {formatUpdateTime(result.checkedAt)} from SiteDown&apos;s external server.</p> : null}</div><div className="flex gap-2 text-xs"><span className="rounded-lg bg-white px-3 py-2">HTTP <b>{result.status ?? "—"}</b></span><span className="rounded-lg bg-white px-3 py-2">{result.responseTime != null ? `${result.responseTime} ms` : "—"}</span></div></div></div> : null}
+            {result ? <div className={`mt-4 rounded-xl border p-5 ${resultUnconfirmed || result.probeBlocked ? "border-amber-200 bg-amber-50" : result.online ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"}`} role="status" aria-live="polite"><div className="flex flex-wrap items-start justify-between gap-4"><div className="max-w-xl"><p className="font-bold text-slate-950">{resultTitle}</p>{(result.requestedUrl || result.checkedUrl) ? <p className="mt-1 break-all font-mono text-xs text-slate-500">{result.requestedUrl || result.checkedUrl}</p> : null}{result.requestedUrl && result.checkedUrl && result.requestedUrl !== result.checkedUrl ? <p className="mt-1 break-all text-xs text-slate-500">Actually checked: {result.checkedUrl}</p> : null}<p className="mt-3 text-sm leading-6 text-slate-700">{resultExplanation}</p><p className="mt-2 text-sm leading-6 text-slate-700"><b>Next:</b> {resultNextStep}</p>{resultUnconfirmed && result.error ? <p className="mt-2 text-xs font-medium text-amber-900">{result.error}</p> : null}{result.checkedAt ? <p className="mt-3 text-xs text-slate-500">Checked {formatUpdateTime(result.checkedAt)} from SiteDown&apos;s external server.</p> : null}</div><div className="flex gap-2 text-xs"><span className="rounded-lg bg-white px-3 py-2">HTTP <b>{result.status ?? "—"}</b></span><span className="rounded-lg bg-white px-3 py-2">{result.responseTime != null ? `${result.responseTime} ms` : "—"}</span></div></div></div> : null}
           </div>}
         </div>
       </div>
