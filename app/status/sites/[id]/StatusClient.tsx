@@ -1017,7 +1017,7 @@ export default function StatusClient({
                   </a>
                 ) : isGoogleStatus && site.officialStatusUrl ? (
                   <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
-                    Google Workspace公式ステータス ↗
+                    Google Workspace公式ステータス（検索・マップは対象外）↗
                   </a>
                 ) : isUNextStatus && site.officialStatusUrl ? (
                   <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] font-semibold text-sky-700 underline underline-offset-2">
@@ -1279,7 +1279,7 @@ export default function StatusClient({
                       </a>
                     ) : isGoogleStatus && site.officialStatusUrl ? (
                       <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">
-                        Google Workspace公式ステータス ↗
+                        Google Workspace公式ステータス（検索・マップは対象外）↗
                       </a>
                     ) : isUNextStatus && site.officialStatusUrl ? (
                       <a href={site.officialStatusUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 underline underline-offset-2">

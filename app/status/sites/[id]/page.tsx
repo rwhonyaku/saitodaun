@@ -64,7 +64,7 @@ const STATUS_AD_ENABLED_IDS = new Set([
 
 const statusOverrides: Record<string, { title: string; description: string }> = {
   google: {
-    title: "Google障害・不具合｜検索できない・各サービスの現在状況",
+    title: "Google障害・不具合は今日発生中？現在状況を確認",
     description:
       "Googleで障害や不具合が起きているか確認できます。検索できない、ログインできない、Gmail・マップ・Driveなど一部サービスだけ開かない時に影響範囲を確認します。",
   },
@@ -383,16 +383,16 @@ type StatusHero = {
 
 const statusHero: Record<string, StatusHero> = {
   google: {
-    heading: "Google障害・不具合",
-    lead: "Google全体ではなく、どのサービスが不安定かをまず確認します。",
+    heading: "Google障害・不具合は今日発生中？",
+    lead: "Google検索が今繋がらないのか、Gmail・Drive・マップなど個別サービスだけ不安定なのかをまず確認します。",
     reinforcement:
       "検索、Gmail、Google マップ、Drive、Analyticsなど、Google内の一部サービスだけ不安定になる場合があります。",
     secondaryReinforcement:
       "検索だけ使えないのか、ログインやWorkspace系まで影響しているのかを見て、自分側かGoogle側かを確認します。",
     symptomChips: [
-      "障害",
+      "今日の障害",
+      "繋がらない",
       "検索できない",
-      "検索",
       "Gmail",
       "Drive",
       "Maps",
