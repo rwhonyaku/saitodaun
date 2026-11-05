@@ -823,7 +823,7 @@ export const STATUS_SITES: SiteConfig[] = [
     url: "https://www.eki-net.com",
     category: "transport_travel",
     officialStatusUrl: "https://www.jreast.co.jp/press/",
-    supportUrl: "https://www.eki-net.com/support/",
+    supportUrl: "https://secure.okbiz.jp/eki-net/faq/show/1937?site_domain=default",
     serviceNote:
       "指定席予約やログイン処理が集中時に失敗することがあります。",
   },
