@@ -108,8 +108,15 @@ export default function HotOutages() {
 
   useEffect(() => {
     load();
-    const timer = window.setInterval(load, 60_000);
-    return () => window.clearInterval(timer);
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") load();
+    };
+    const timer = window.setInterval(refreshIfVisible, 60_000);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
   }, [load]);
 
   const featuredServices = FEATURED_SERVICE_IDS.map((serviceId) =>
@@ -136,7 +143,7 @@ export default function HotOutages() {
                 日本の利用者報告を直近の通常水準と比較しています
               </p>
             </div>
-            <Link href="/status" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-sky-300 hover:text-sky-700">
+            <Link href="/status" prefetch={false} className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-sky-300 hover:text-sky-700">
               全サービスを見る →
             </Link>
           </div>
@@ -192,7 +199,7 @@ export default function HotOutages() {
           {summary && summary.hot.length > 0 ? (
             <div className="grid gap-3 sm:grid-cols-2">
               {summary.hot.slice(0, 6).map((service) => (
-                <Link key={service.serviceId} href={`/status/sites/${service.serviceId}`} className={`rounded-xl border p-4 transition hover:-translate-y-0.5 hover:shadow-sm ${service.level === "spike" ? "border-rose-200 bg-rose-50" : "border-amber-200 bg-amber-50"}`}>
+                <Link key={service.serviceId} href={`/status/sites/${service.serviceId}`} prefetch={false} className={`rounded-xl border p-4 transition hover:-translate-y-0.5 hover:shadow-sm ${service.level === "spike" ? "border-rose-200 bg-rose-50" : "border-amber-200 bg-amber-50"}`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="font-bold text-slate-950">{service.label}</p>
                     <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${service.level === "spike" ? "bg-rose-100 text-rose-800" : "bg-amber-100 text-amber-900"}`}>
@@ -220,7 +227,7 @@ export default function HotOutages() {
               const mark = SERVICE_MARKS[service.serviceId] ?? { mark: service.label.slice(0, 1), className: "bg-slate-800 text-white" };
 
               return (
-                <Link key={service.serviceId} href={`/status/sites/${service.serviceId}`} className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-md">
+                <Link key={service.serviceId} href={`/status/sites/${service.serviceId}`} prefetch={false} className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-md">
                   <div className="flex items-start justify-between gap-3">
                     <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black shadow-sm ${mark.className}`} aria-hidden="true">{mark.mark}</span>
                     <span className={`flex items-center gap-1.5 text-[11px] font-bold ${presentation.text}`}>

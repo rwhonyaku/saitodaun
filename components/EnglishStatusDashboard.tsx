@@ -112,8 +112,15 @@ export default function EnglishStatusDashboard() {
 
   useEffect(() => {
     loadReports();
-    const timer = window.setInterval(loadReports, 60_000);
-    return () => window.clearInterval(timer);
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") loadReports();
+    };
+    const timer = window.setInterval(refreshIfVisible, 60_000);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
   }, [loadReports]);
 
   const searchResults = useMemo(() => {

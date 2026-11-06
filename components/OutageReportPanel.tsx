@@ -145,8 +145,15 @@ export default function OutageReportPanel({
 
   useEffect(() => {
     loadSummary();
-    const timer = window.setInterval(loadSummary, 60_000);
-    return () => window.clearInterval(timer);
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") loadSummary();
+    };
+    const timer = window.setInterval(refreshIfVisible, 60_000);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
   }, [loadSummary]);
 
   if (!enabled) return null;
