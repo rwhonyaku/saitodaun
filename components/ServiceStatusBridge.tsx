@@ -90,8 +90,15 @@ export default function ServiceStatusBridge({
   useEffect(() => {
     loadCheck();
     loadReports();
-    const reportTimer = window.setInterval(loadReports, 60_000);
-    return () => window.clearInterval(reportTimer);
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") loadReports();
+    };
+    const reportTimer = window.setInterval(refreshIfVisible, 60_000);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    return () => {
+      window.clearInterval(reportTimer);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
   }, [loadCheck, loadReports]);
 
   const verdict = getStatusVerdict(check, checkLoading, reports);
